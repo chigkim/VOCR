@@ -1,0 +1,905 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Activate</key>
+		<string>Normal</string>
+		<key>CreationDate</key>
+		<real>516811587.50109702</real>
+		<key>Macros</key>
+		<array>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>IncludeStdErr</key>
+						<true/>
+						<key>MacroActionType</key>
+						<string>ExecuteJavaScriptForAutomation</string>
+						<key>Path</key>
+						<string></string>
+						<key>Text</key>
+						<string>kme = Application("Keyboard Maestro Engine")
+ocrLocation = kme.getvariable('ocrLocation')
+l = ocrLocation.split(",")[0]
+w = ocrLocation.split(",")[1]
+ocr = JSON.parse(kme.getvariable('ocr'))
+l++
+if (l&lt;=-1) l=0
+else if (l&gt;=ocr.length) {
+l=ocr.length-1
+kme.playSound(Path("/System/Library/Sounds/Tink.aiff"))
+}
+words = ocr[l]
+word = words[0]
+x=word.x
+y=word.y
+word = ""
+for (w in words) {
+word+=words[w].w+" "
+}
+w=0
+kme.setvariable('ocrLocation', {to:l+","+w})
+kme.setvariable('x', {to:""+x})
+kme.setvariable('y', {to:""+y})
+
+Application("VoiceOver").output(word)
+</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<true/>
+						<key>TrimResultsNew</key>
+						<true/>
+						<key>UseText</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>Move</string>
+						<key>Button</key>
+						<integer>0</integer>
+						<key>ClickCount</key>
+						<integer>0</integer>
+						<key>DisplayMatches</key>
+						<false/>
+						<key>DragHorizontalPosition</key>
+						<string>0</string>
+						<key>DragVerticalPosition</key>
+						<string>0</string>
+						<key>Fuzz</key>
+						<integer>15</integer>
+						<key>HorizontalPositionExpression</key>
+						<string>x</string>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>MouseMoveAndClick</string>
+						<key>Modifiers</key>
+						<integer>512</integer>
+						<key>MouseDrag</key>
+						<string>None</string>
+						<key>Relative</key>
+						<string>Window</string>
+						<key>RelativeCorner</key>
+						<string>TopLeft</string>
+						<key>RestoreMouseLocation</key>
+						<false/>
+						<key>VerticalPositionExpression</key>
+						<string>y</string>
+					</dict>
+				</array>
+				<key>CreationDate</key>
+				<real>516893270.40356201</real>
+				<key>ModificationDate</key>
+				<real>517032043.11541301</real>
+				<key>Name</key>
+				<string>Next Line</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>125</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>4864</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>E4E34E0C-3929-4C02-9662-D1F99BC2771F</string>
+			</dict>
+		</array>
+		<key>Name</key>
+		<string>VOCR</string>
+		<key>ToggleMacroUID</key>
+		<string>54FC268C-B439-4D38-9DB0-78E8C57BB183</string>
+		<key>UID</key>
+		<string>CD3AB506-7095-46AB-8124-41F1F0B25689</string>
+	</dict>
+	<dict>
+		<key>Activate</key>
+		<string>Normal</string>
+		<key>CreationDate</key>
+		<real>516811587.50109702</real>
+		<key>Macros</key>
+		<array>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>IncludeStdErr</key>
+						<true/>
+						<key>MacroActionType</key>
+						<string>ExecuteJavaScriptForAutomation</string>
+						<key>Path</key>
+						<string></string>
+						<key>Text</key>
+						<string>kme = Application("Keyboard Maestro Engine")
+ocrLocation = kme.getvariable('ocrLocation')
+l = ocrLocation.split(",")[0]
+if (l==-1) l=0
+w = ocrLocation.split(",")[1]
+ocr = JSON.parse(kme.getvariable('ocr'))
+words = ocr[l]
+w++
+if (w&gt;=words.length) {
+w = words.length-1
+kme.playSound(Path("/System/Library/Sounds/Tink.aiff"))
+}
+word = words[w]
+x=word.x
+y=word.y
+word=word.w
+
+kme.setvariable('ocrLocation', {to:l+","+w})
+kme.setvariable('x', {to:""+x})
+kme.setvariable('y', {to:""+y})
+
+Application("VoiceOver").output(word)
+</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<true/>
+						<key>TrimResultsNew</key>
+						<true/>
+						<key>UseText</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>Move</string>
+						<key>Button</key>
+						<integer>0</integer>
+						<key>ClickCount</key>
+						<integer>0</integer>
+						<key>DisplayMatches</key>
+						<false/>
+						<key>DragHorizontalPosition</key>
+						<string>0</string>
+						<key>DragVerticalPosition</key>
+						<string>0</string>
+						<key>Fuzz</key>
+						<integer>15</integer>
+						<key>HorizontalPositionExpression</key>
+						<string>x</string>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>MouseMoveAndClick</string>
+						<key>Modifiers</key>
+						<integer>512</integer>
+						<key>MouseDrag</key>
+						<string>None</string>
+						<key>Relative</key>
+						<string>Window</string>
+						<key>RelativeCorner</key>
+						<string>TopLeft</string>
+						<key>RestoreMouseLocation</key>
+						<false/>
+						<key>VerticalPositionExpression</key>
+						<string>y</string>
+					</dict>
+				</array>
+				<key>CreationDate</key>
+				<real>516814289.23870701</real>
+				<key>ModificationDate</key>
+				<real>517032051.81202501</real>
+				<key>Name</key>
+				<string>Next Word</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>124</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>4864</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>55DDF516-28CD-444B-950B-0DC0798E1201</string>
+			</dict>
+		</array>
+		<key>Name</key>
+		<string>VOCR</string>
+		<key>ToggleMacroUID</key>
+		<string>54FC268C-B439-4D38-9DB0-78E8C57BB183</string>
+		<key>UID</key>
+		<string>CD3AB506-7095-46AB-8124-41F1F0B25689</string>
+	</dict>
+	<dict>
+		<key>Activate</key>
+		<string>Normal</string>
+		<key>CreationDate</key>
+		<real>516811587.50109702</real>
+		<key>Macros</key>
+		<array>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>MacroActionType</key>
+						<string>SetVariableToText</string>
+						<key>Text</key>
+						<string>%ExecutingThisMacro%</string>
+						<key>Variable</key>
+						<string>ocr</string>
+					</dict>
+					<dict>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>IncludeStdErr</key>
+						<true/>
+						<key>MacroActionType</key>
+						<string>ExecuteJavaScriptForAutomation</string>
+						<key>Path</key>
+						<string></string>
+						<key>Text</key>
+						<string>kme = Application("Keyboard Maestro Engine")
+Application("VoiceOver").output("Please Wait")
+app = Application.currentApplication()
+app.includeStandardAdditions = true
+sys = Application("System Events")
+p = sys.applicationProcesses.whose({frontmost:true})
+win = p.windows[0]
+position = win.position()
+size = win.size()
+screen = Application("Finder").desktop.window.bounds()
+sw=screen["width"]
+sh=screen["height"]
+cmd = "screencapture ~/Screenshot.png"
+app.doShellScript(cmd)
+cmd = 'sips -g pixelWidth ~/Screenshot.png|grep -Eo "(\\d+)"'
+sw = app.doShellScript(cmd)
+cmd = 'sips -g pixelHeight ~/Screenshot.png|grep -Eo "(\\d+)"'
+sh = app.doShellScript(cmd)
+density = kme.getvariable("ocr").match(/\d+/g)[0]
+density = Math.floor(Math.sqrt(Math.pow(sw,2)+Math.pow(sh,2))/density)
+msg = "Desktop: "+sw+","+sh+","+density+"\n"
+msg += "App: "+p.name()+": "+win.name()+"\n"
+
+cmd = "screencapture -R"+position+","+size+" ~/Screenshot.png"
+app.doShellScript(cmd)
+cmd = 'sips -g pixelWidth ~/Screenshot.png|grep -Eo "(\\d+)"'
+width = app.doShellScript(cmd)
+cmd = 'sips -g pixelHeight ~/Screenshot.png|grep -Eo "(\\d+)"'
+height = app.doShellScript(cmd)
+msg += "Original: "+width+", "+height+"\n"
+
+cmd = "/usr/local/bin/convert ~/Screenshot.png -colorspace Gray -density "+density+" -resample 300 ~/Screenshot.png"
+//cmd = "/usr/local/bin/convert ~/Screenshot.png -type Grayscale -resize 400% ~/Screenshot.png"
+app.doShellScript(cmd)
+cmd = 'sips -g pixelWidth ~/Screenshot.png|grep -Eo "(\\d+)"'
+width = app.doShellScript(cmd)
+cmd = 'sips -g pixelHeight ~/Screenshot.png|grep -Eo "(\\d+)"'
+height = app.doShellScript(cmd)
+msg += "Enlarged: "+width+", "+height+"\n"
+
+cmd = "/usr/local/bin/tesseract ~/Screenshot.png ~/Screenshot hocr"
+app.doShellScript(cmd)
+
+home = sys.currentUser.homeDirectory()
+fileName = home+"/Screenshot.hocr"
+str = app.read(Path(fileName))
+
+kme.setvariable("point1", {to:size[0]+","+size[1]})
+kme.setvariable("point2", {to:width+","+height})
+kme.setvariable("ocr", {to:str})
+console.log(msg)
+</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<true/>
+						<key>TrimResultsNew</key>
+						<true/>
+						<key>UseText</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>MacroActionType</key>
+						<string>CustomPrompt</string>
+						<key>Text</key>
+						<string>&lt;script&gt;
+function text(el){
+  var n, a="", walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false);
+  while(n=walk.nextNode()) a+=n.nodeValue+" ";
+  return a;
+}
+
+function KMInit() {
+point1 = window.KeyboardMaestro.GetVariable('point1')
+point2 = window.KeyboardMaestro.GetVariable('point2')
+point1 = point1.match(/\d+/g)
+point2 = point2.match(/\d+/g)
+wscale = point2[0]/point1[0]
+hscale = point2[1]/point1[1]
+
+xml = window.KeyboardMaestro.GetVariable('ocr')
+parser = new DOMParser()
+xml = parser.parseFromString(xml, "text/xml")
+words = xml.getElementsByClassName("ocrx_word")
+data = []
+for (i=0; i&lt;words.length; i++) {
+word = words[i]
+title = word.getAttribute("title")
+title = title.match(/\d+/g)
+x1 = title[0]/wscale
+y1 = title[1]/hscale
+x2 = title[2]/wscale
+y2 = title[3]/hscale
+x = Math.ceil(x1+((x2-x1)/2))
+y = Math.ceil(y1+((y2-y1)/2))
+w = text(word)
+data.push({"w":w,"x":x,"y":y})
+}
+     window.KeyboardMaestro.SetVariable('ocr', JSON.stringify(data))
+     window.KeyboardMaestro.Submit('OK')
+}
+&lt;/script&gt;
+</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>UseText</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>DisplayKind</key>
+						<string>Window</string>
+						<key>IncludeStdErr</key>
+						<true/>
+						<key>MacroActionType</key>
+						<string>ExecuteJavaScriptForAutomation</string>
+						<key>Path</key>
+						<string></string>
+						<key>Text</key>
+						<string>kme = Application("Keyboard Maestro Engine")
+data = JSON.parse(kme.getvariable("ocr"))
+data.sort(function (a,b) {
+if (Math.abs(a.y-b.y)&lt;10) {
+return a.x&gt;b.x?1:(a.x&lt;b.x?-1:0)
+} else return a.y&gt;b.y?1:(a.y&lt;b.y?-1:0)
+})
+ocr = []
+line = []
+last = 100000
+for (d in data) {
+if (Math.abs(data[d].y-last&gt;10)) {
+ocr.push(line)
+line = []
+}
+line.push(data[d])
+last = data[d].y
+}
+kme.setvariable("ocr", {to:JSON.stringify(ocr)})
+kme.setvariable("ocrLocation", {to:"-1,-1"})
+Application("VoiceOver").output("Ready")
+kme.playSound(Path("/System/Library/Sounds/Glass.aiff"))</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<true/>
+						<key>TrimResultsNew</key>
+						<true/>
+						<key>UseText</key>
+						<true/>
+					</dict>
+				</array>
+				<key>CreationDate</key>
+				<real>459885009.22238803</real>
+				<key>ModificationDate</key>
+				<real>523582373.89126498</real>
+				<key>Name</key>
+				<string>OCR Front Window 27</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>31</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>4864</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>6DEBA1A4-935B-419A-A2AB-54BBDA44FBC4</string>
+			</dict>
+		</array>
+		<key>Name</key>
+		<string>VOCR</string>
+		<key>ToggleMacroUID</key>
+		<string>54FC268C-B439-4D38-9DB0-78E8C57BB183</string>
+		<key>UID</key>
+		<string>CD3AB506-7095-46AB-8124-41F1F0B25689</string>
+	</dict>
+	<dict>
+		<key>Activate</key>
+		<string>Normal</string>
+		<key>CreationDate</key>
+		<real>516811587.50109702</real>
+		<key>Macros</key>
+		<array>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>MacroActionType</key>
+						<string>SetVariableToText</string>
+						<key>Text</key>
+						<string>%ExecutingThisMacro%</string>
+						<key>Variable</key>
+						<string>ocr</string>
+					</dict>
+					<dict>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>IncludeStdErr</key>
+						<true/>
+						<key>MacroActionType</key>
+						<string>ExecuteJavaScriptForAutomation</string>
+						<key>Path</key>
+						<string></string>
+						<key>Text</key>
+						<string>kme = Application("Keyboard Maestro Engine")
+Application("VoiceOver").output("Please Wait")
+app = Application.currentApplication()
+app.includeStandardAdditions = true
+sys = Application("System Events")
+p = sys.applicationProcesses.whose({frontmost:true})
+win = p.windows[0]
+position = win.position()
+size = win.size()
+density = kme.getvariable("ocr").match(/\d+/g)[0]
+screen = Application("Finder").desktop.window.bounds()
+sw=screen["width"]
+sh=screen["height"]
+density = Math.floor(Math.sqrt(Math.pow(sw,2)+Math.pow(sh,2))/density)
+msg = "Desktop: "+sw+","+sh+","+density+"\n"
+msg += position+" : "+size+"\n"
+cmd = "screencapture -R"+position+","+size+" ~/Screenshot.png"
+app.doShellScript(cmd)
+
+cmd = "/usr/local/bin/convert ~/Screenshot.png -colorspace Gray -density "+density+" -resample 300 ~/Screenshot.png"
+app.doShellScript(cmd)
+
+cmd = 'sips -g pixelWidth ~/Screenshot.png|grep -Eo "(\\d+)"'
+width = app.doShellScript(cmd)
+cmd = 'sips -g pixelHeight ~/Screenshot.png|grep -Eo "(\\d+)"'
+height = app.doShellScript(cmd)
+
+msg+=width+", "+height+"\n"
+
+cmd = "/usr/local/bin/tesseract ~/Screenshot.png ~/Screenshot hocr"
+app.doShellScript(cmd)
+
+home = sys.currentUser.homeDirectory()
+fileName = home+"/Screenshot.hocr"
+str = app.read(Path(fileName))
+kme.setvariable("point1", {to:size[0]+","+size[1]})
+kme.setvariable("point2", {to:width+","+height})
+kme.setvariable("ocr", {to:str})
+console.log(msg)
+</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<true/>
+						<key>TrimResultsNew</key>
+						<true/>
+						<key>UseText</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>MacroActionType</key>
+						<string>CustomPrompt</string>
+						<key>Text</key>
+						<string>&lt;script&gt;
+function removeOne(element) {
+try {
+if (element.getAttribute("class") == "ocrx_word") return
+var children = element.children
+parent = element.parentNode
+if (children.length == 1) {
+parent.replaceChild(children[0], element)
+removeOne(parent.children[0])
+} else if (children.length &gt; 1) {
+for (var c=0; c&lt;children.length; c++) {
+removeOne(children[c])
+}
+}
+} catch(err) {
+console.log(err)
+}
+}
+
+function KMInit() {
+try {
+point1 = window.KeyboardMaestro.GetVariable('point1')
+point2 = window.KeyboardMaestro.GetVariable('point2')
+point1 = point1.match(/\d+/g)
+point2 = point2.match(/\d+/g)
+wscale = point2[0]/point1[0]
+hscale = point2[1]/point1[1]
+
+xml = window.KeyboardMaestro.GetVariable('ocr')
+parser = new DOMParser()
+xml = parser.parseFromString(xml, "text/xml")
+words = xml.getElementsByClassName("ocrx_word")
+for (i=0; i&lt;words.length; i++) {
+word = words[i]
+title = word.getAttribute("title")
+title = title.match(/\d+/g)
+x1 = title[0]/wscale
+y1 = title[1]/hscale
+x2 = title[2]/wscale
+y2 = title[3]/hscale
+x = Math.ceil(x1+((x2-x1)/2))
+y = Math.ceil(y1+((y2-y1)/2))
+words[i].setAttribute("title", x+","+y)
+words[i].setAttribute("onclick", "submitIt(this)")
+}
+removeOne(xml.body.children[0])
+window.document.body.innerHTML = xml.body.innerHTML
+} catch(err) {
+console.log(err)
+}
+}
+
+function submitIt(element) {
+title = element.getAttribute("title")
+loc = title.match(/\d+/g)
+window.KeyboardMaestro.SetVariable('x', ""+loc[0])
+window.KeyboardMaestro.SetVariable('y', ""+loc[1])
+window.KeyboardMaestro.Submit('OK')
+}
+&lt;/script&gt;
+</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>UseText</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>MacroActionType</key>
+						<string>Pause</string>
+						<key>Time</key>
+						<string>0.1</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>Move</string>
+						<key>Button</key>
+						<integer>0</integer>
+						<key>ClickCount</key>
+						<integer>0</integer>
+						<key>DisplayMatches</key>
+						<false/>
+						<key>DragHorizontalPosition</key>
+						<string>0</string>
+						<key>DragVerticalPosition</key>
+						<string>0</string>
+						<key>Fuzz</key>
+						<integer>15</integer>
+						<key>HorizontalPositionExpression</key>
+						<string>x</string>
+						<key>MacroActionType</key>
+						<string>MouseMoveAndClick</string>
+						<key>Modifiers</key>
+						<integer>512</integer>
+						<key>MouseDrag</key>
+						<string>None</string>
+						<key>Relative</key>
+						<string>Window</string>
+						<key>RelativeCorner</key>
+						<string>TopLeft</string>
+						<key>RestoreMouseLocation</key>
+						<false/>
+						<key>VerticalPositionExpression</key>
+						<string>y</string>
+					</dict>
+				</array>
+				<key>CreationDate</key>
+				<real>517026384.20642602</real>
+				<key>ModificationDate</key>
+				<real>517187570.88942099</real>
+				<key>Name</key>
+				<string>OCR Front Window HTML 27</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>4</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>4864</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>E372C2AB-3E00-4B73-9614-5F9A5024F1E8</string>
+			</dict>
+		</array>
+		<key>Name</key>
+		<string>VOCR</string>
+		<key>ToggleMacroUID</key>
+		<string>54FC268C-B439-4D38-9DB0-78E8C57BB183</string>
+		<key>UID</key>
+		<string>CD3AB506-7095-46AB-8124-41F1F0B25689</string>
+	</dict>
+	<dict>
+		<key>Activate</key>
+		<string>Normal</string>
+		<key>CreationDate</key>
+		<real>516811587.50109702</real>
+		<key>Macros</key>
+		<array>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>IncludeStdErr</key>
+						<true/>
+						<key>MacroActionType</key>
+						<string>ExecuteJavaScriptForAutomation</string>
+						<key>Path</key>
+						<string></string>
+						<key>Text</key>
+						<string>kme = Application("Keyboard Maestro Engine")
+ocrLocation = kme.getvariable('ocrLocation')
+l = ocrLocation.split(",")[0]
+w = ocrLocation.split(",")[1]
+ocr = JSON.parse(kme.getvariable('ocr'))
+l--
+if (l&lt;=-1) {
+l=0
+kme.playSound(Path("/System/Library/Sounds/Tink.aiff"))
+} else if (l&gt;=ocr.length) l=ocr.length-1
+words = ocr[l]
+word = words[0]
+x=word.x
+y=word.y
+word = ""
+for (w in words) {
+word+=words[w].w+" "
+}
+w=0
+kme.setvariable('ocrLocation', {to:l+","+w})
+kme.setvariable('x', {to:""+x})
+kme.setvariable('y', {to:""+y})
+
+Application("VoiceOver").output(word)
+</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<true/>
+						<key>TrimResultsNew</key>
+						<true/>
+						<key>UseText</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>Move</string>
+						<key>Button</key>
+						<integer>0</integer>
+						<key>ClickCount</key>
+						<integer>0</integer>
+						<key>DisplayMatches</key>
+						<false/>
+						<key>DragHorizontalPosition</key>
+						<string>0</string>
+						<key>DragVerticalPosition</key>
+						<string>0</string>
+						<key>Fuzz</key>
+						<integer>15</integer>
+						<key>HorizontalPositionExpression</key>
+						<string>x</string>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>MouseMoveAndClick</string>
+						<key>Modifiers</key>
+						<integer>512</integer>
+						<key>MouseDrag</key>
+						<string>None</string>
+						<key>Relative</key>
+						<string>Window</string>
+						<key>RelativeCorner</key>
+						<string>TopLeft</string>
+						<key>RestoreMouseLocation</key>
+						<false/>
+						<key>VerticalPositionExpression</key>
+						<string>y</string>
+					</dict>
+				</array>
+				<key>CreationDate</key>
+				<real>516902563.641801</real>
+				<key>ModificationDate</key>
+				<real>517032059.64294797</real>
+				<key>Name</key>
+				<string>Previous LIne</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>126</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>4864</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>5C2B467D-850E-455D-8934-571861C52D9B</string>
+			</dict>
+		</array>
+		<key>Name</key>
+		<string>VOCR</string>
+		<key>ToggleMacroUID</key>
+		<string>54FC268C-B439-4D38-9DB0-78E8C57BB183</string>
+		<key>UID</key>
+		<string>CD3AB506-7095-46AB-8124-41F1F0B25689</string>
+	</dict>
+	<dict>
+		<key>Activate</key>
+		<string>Normal</string>
+		<key>CreationDate</key>
+		<real>516811587.50109702</real>
+		<key>Macros</key>
+		<array>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>IncludeStdErr</key>
+						<true/>
+						<key>MacroActionType</key>
+						<string>ExecuteJavaScriptForAutomation</string>
+						<key>Path</key>
+						<string></string>
+						<key>Text</key>
+						<string>kme = Application("Keyboard Maestro Engine")
+ocrLocation = kme.getvariable('ocrLocation')
+l = ocrLocation.split(",")[0]
+w = ocrLocation.split(",")[1]
+if (l==-1) l=0
+w--
+ocr = JSON.parse(kme.getvariable('ocr'))
+words = ocr[l]
+if (w&lt;0) {
+w=0
+kme.playSound(Path("/System/Library/Sounds/Tink.aiff"))
+} else if (w&gt;=words.length) w = words.length-1
+word = words[w]
+x=word.x
+y=word.y
+word=word.w
+
+kme.setvariable('ocrLocation', {to:l+","+w})
+kme.setvariable('x', {to:""+x})
+kme.setvariable('y', {to:""+y})
+
+Application("VoiceOver").output(word)
+</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<true/>
+						<key>TrimResultsNew</key>
+						<true/>
+						<key>UseText</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>Move</string>
+						<key>Button</key>
+						<integer>0</integer>
+						<key>ClickCount</key>
+						<integer>0</integer>
+						<key>DisplayMatches</key>
+						<false/>
+						<key>DragHorizontalPosition</key>
+						<string>0</string>
+						<key>DragVerticalPosition</key>
+						<string>0</string>
+						<key>Fuzz</key>
+						<integer>15</integer>
+						<key>HorizontalPositionExpression</key>
+						<string>x</string>
+						<key>IsDisclosed</key>
+						<false/>
+						<key>MacroActionType</key>
+						<string>MouseMoveAndClick</string>
+						<key>Modifiers</key>
+						<integer>512</integer>
+						<key>MouseDrag</key>
+						<string>None</string>
+						<key>Relative</key>
+						<string>Window</string>
+						<key>RelativeCorner</key>
+						<string>TopLeft</string>
+						<key>RestoreMouseLocation</key>
+						<false/>
+						<key>VerticalPositionExpression</key>
+						<string>y</string>
+					</dict>
+				</array>
+				<key>CreationDate</key>
+				<real>516893164.54868603</real>
+				<key>ModificationDate</key>
+				<real>517032066.5837</real>
+				<key>Name</key>
+				<string>Previous Word</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>123</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>4864</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>67C9BEB3-5D41-41E7-B1BD-1743CBF2AD8A</string>
+			</dict>
+		</array>
+		<key>Name</key>
+		<string>VOCR</string>
+		<key>ToggleMacroUID</key>
+		<string>54FC268C-B439-4D38-9DB0-78E8C57BB183</string>
+		<key>UID</key>
+		<string>CD3AB506-7095-46AB-8124-41F1F0B25689</string>
+	</dict>
+</array>
+</plist>
