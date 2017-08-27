@@ -323,12 +323,19 @@ vo.output(error)
 msg += error
 }
 
-
 home = sys.currentUser.homeDirectory()
 fileName = home+"/Screenshot.hocr"
-str = app.read(Path(fileName))
-msg += "OCR Result:\n"
+msg += "OCR Result from "+fileName+"\n"
+//str = app.read(Path(fileName))
+try {
+cmd = "cat ~/Screenshot.hocr"
+str = app.doShellScript(cmd)
 msg += str
+} catch (err) {
+error = "Error: Can't find output file.\n"
+vo.output(error)
+msg += error
+}
 kme.setvariable("point1", {to:size[0]+","+size[1]})
 kme.setvariable("point2", {to:width+","+height})
 kme.setvariable("ocr", {to:str})
@@ -437,7 +444,7 @@ kme.playSound(Path("/System/Library/Sounds/Glass.aiff"))</string>
 				<key>CreationDate</key>
 				<real>459885009.22238803</real>
 				<key>ModificationDate</key>
-				<real>525515530.12876898</real>
+				<real>525525564.30806398</real>
 				<key>Name</key>
 				<string>OCR Front Window 27</string>
 				<key>Triggers</key>
