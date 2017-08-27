@@ -336,10 +336,10 @@ error = "Error: Can't find output file.\n"
 vo.output(error)
 msg += error
 }
+console.log(msg)
 kme.setvariable("point1", {to:size[0]+","+size[1]})
 kme.setvariable("point2", {to:width+","+height})
 kme.setvariable("ocr", {to:str})
-console.log(msg)
 </string>
 						<key>TimeOutAbortsMacro</key>
 						<true/>
@@ -441,7 +441,7 @@ kme.playSound(Path("/System/Library/Sounds/Glass.aiff"))</string>
 				<key>CreationDate</key>
 				<real>459885009.22238803</real>
 				<key>ModificationDate</key>
-				<real>525540832.81058598</real>
+				<real>525548493.34839702</real>
 				<key>Name</key>
 				<string>OCR Front Window 27</string>
 				<key>Triggers</key>
