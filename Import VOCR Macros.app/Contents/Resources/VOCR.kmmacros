@@ -298,14 +298,14 @@ width = app.doShellScript(cmd)
 cmd = 'sips -g pixelHeight ~/Screenshot.png|grep -Eo "(\\d+)"'
 height = app.doShellScript(cmd)
 msg += "Original: "+width+", "+height+"\n"
-
-cmd = "/usr/local/bin/convert ~/Screenshot.png -colorspace Gray -density "+density+" -resample 300 ~/Screenshot.png"
+error = ""
 //cmd = "/usr/local/bin/convert ~/Screenshot.png -type Grayscale -resize 400% ~/Screenshot.png"
 try {
+cmd = "/usr/local/bin/convert ~/Screenshot.png -colorspace Gray -density "+density+" -resample 300 ~/Screenshot.png"
 app.doShellScript(cmd)
 } catch (err) {
-error = "Error: Can't find imagemagick.\n"
-vo.output(error)
+console.log(err)
+error += "Error: Can't find imagemagick.\n"
 msg += error
 }
 cmd = 'sips -g pixelWidth ~/Screenshot.png|grep -Eo "(\\d+)"'
@@ -314,12 +314,12 @@ cmd = 'sips -g pixelHeight ~/Screenshot.png|grep -Eo "(\\d+)"'
 height = app.doShellScript(cmd)
 msg += "Enlarged: "+width+", "+height+"\n"
 
-cmd = "/usr/local/bin/tesseract ~/Screenshot.png ~/Screenshot hocr"
 try {
+cmd = "/usr/local/bin/tesseract ~/Screenshot.png ~/Screenshot hocr"
 app.doShellScript(cmd)
 } catch (err) {
-error = "Error: Can't find Tesseract.\n"
-vo.output(error)
+console.log(err)
+error += "Error: Can't find Tesseract.\n"
 msg += error
 }
 
@@ -332,11 +332,13 @@ cmd = "cat ~/Screenshot.hocr"
 str = app.doShellScript(cmd)
 msg += str
 } catch (err) {
-error = "Error: Can't find output file.\n"
-vo.output(error)
+console.log(err)
+error += "Error: Can't find output file.\n"
 msg += error
 }
 console.log(msg)
+if (error == "") vo.output("Ready")
+else vo.output(error)
 kme.setvariable("point1", {to:size[0]+","+size[1]})
 kme.setvariable("point2", {to:width+","+height})
 kme.setvariable("ocr", {to:str})
@@ -441,7 +443,7 @@ kme.playSound(Path("/System/Library/Sounds/Glass.aiff"))</string>
 				<key>CreationDate</key>
 				<real>459885009.22238803</real>
 				<key>ModificationDate</key>
-				<real>525548493.34839702</real>
+				<real>525565098.22804898</real>
 				<key>Name</key>
 				<string>OCR Front Window 27</string>
 				<key>Triggers</key>
