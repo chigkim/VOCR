@@ -20,10 +20,13 @@ Keyboard Maestro is limited by a 30-day trial period. After this time, a purchas
 More information about purchasing a license can be found [here.](https://wiki.keyboardmaestro.com/manual/Purchase)
 
 ### Installing VOCR
-* Run install.command in terminal and follow the instruction. This will install HOme Brew, Tesseract, and Image Magick.
+* Open VoiceOver Utility and check "Allow VoiceOver to be controlled with AppleScript" in the General category.
+* Run install.command in terminal and follow the instruction.  
+    * This will install HOme Brew, Tesseract, and Image Magick.
+    * When it asks for a password, you need to enter password for an administrator account with root privilage.
+    * It will download large data and compile, so the Installation may take a long time depending on your internet speed and system resources.
 * Run Import VOCR Macros
 * Rename the macro OCR Front Window to match your screen size. For example OCR Front Window 13 for Macbook Pro 13 inch.
-* Open VoiceOver Utility and check "Allow VoiceOver to be controlled with AppleScript" in the General category.
 
 ## Getting Started
 * Try performing OCR on the Keyboard Maestro Editor window first before trying on other applications.
