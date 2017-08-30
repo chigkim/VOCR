@@ -25,7 +25,7 @@ More information about purchasing a license can be found [here.](https://wiki.ke
     * This will install HOme Brew, Tesseract, and Image Magick.
     * When it asks for a password, you need to enter password for an administrator account with root privilage.
     * It will download large data and compile, so the Installation may take a long time depending on your internet speed and system resources.
-* Run Import VOCR Macros
+* Press vo+shift+m on "Import VOCR Macros.app" and choose open. This will allow the unsigned app to run.
 * Rename the macro OCR Front Window to match your screen size. For example OCR Front Window 13 for Macbook Pro 13 inch.
 
 ## Getting Started
