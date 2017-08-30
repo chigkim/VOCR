@@ -1,9 +1,11 @@
 # Welcome to VOCR
-*WARNING*: USE AT YOUR OWN RISK! This is in alpha cycle. Many things may not work and change frequently without notice.
+**WARNING**: USE AT YOUR OWN RISK! This is in alpha cycle. Many things may not work and change frequently without notice.
 
 VOCR is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY, expressed or implied, of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Please see the [GNU General Public License](http://www.gnu.org/licenses/) for more details.
 
 ## Installation
+**IMPORTANT**: Installation involves few steps, and it is critical that you follow each step carefully.
+
 VOCR relies on a third party program called Keyboard Maestro to perform its functions. Download instructions for Keyboard Maestro are below.
 
 ### Keyboard Maestro Installation
@@ -25,6 +27,7 @@ More information about purchasing a license can be found [here.](https://wiki.ke
     * This will install HOme Brew, Tesseract, and Image Magick.
     * When it asks for a password, you need to enter password for an administrator account with root privilage.
     * It will download large data and compile, so the Installation may take a long time depending on your internet speed and system resources.
+    * Read through the terminal output and make sure there's is no error before proceeding to next step.
 * Press vo+shift+m on "Import VOCR Macros.app" and choose open. This will allow the unsigned app to run.
 * Rename the macro OCR Front Window to match your screen size. For example OCR Front Window 13 for Macbook Pro 13 inch.
 
@@ -33,6 +36,8 @@ More information about purchasing a license can be found [here.](https://wiki.ke
 * Make sure screen curtain is off with vo+shift+f11.
 * Press command+control+shift+o to and wait for the OCR process to finish.
 * Press command+control+shift+arrows to read the result and press vo+shift+space to click.
+
+**NOTE**: Keep in mind that many app interfaces use icons, and Tesseract may recognize them as weird symbols. For example, right arrow as > sign and left arrow as < sign. Tesseract may also ignore icons entirely that cannot be recognized as a character or symbol.
 
 ## Reporting Issues
 GitHub provides a convenient and reliable way to track and resolve issues. Please click [here,](https://github.com/chigkim/vocr/issues) and search for your issue. If you don't find an open issue relating to your problem, you can create a new one by clicking on "new issue" and filling out the required fields.

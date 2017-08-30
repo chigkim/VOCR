@@ -330,11 +330,13 @@ kbd {
 
 <h1 id="toc_0">Welcome to VOCR</h1>
 
-<p><em>WARNING</em>: USE AT YOUR OWN RISK! This is in alpha cycle. Many things may not work and change frequently without notice.</p>
+<p><strong>WARNING</strong>: USE AT YOUR OWN RISK! This is in alpha cycle. Many things may not work and change frequently without notice.</p>
 
 <p>VOCR is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY, expressed or implied, of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Please see the <a href="http://www.gnu.org/licenses/">GNU General Public License</a> for more details.</p>
 
 <h2 id="toc_1">Installation</h2>
+
+<p><strong>IMPORTANT</strong>: Installation involves few steps, and it is critical that you follow each step carefully.</p>
 
 <p>VOCR relies on a third party program called Keyboard Maestro to perform its functions. Download instructions for Keyboard Maestro are below.</p>
 
@@ -365,6 +367,7 @@ kbd {
 <li>This will install HOme Brew, Tesseract, and Image Magick.</li>
 <li>When it asks for a password, you need to enter password for an administrator account with root privilage.</li>
 <li>It will download large data and compile, so the Installation may take a long time depending on your internet speed and system resources.</li>
+<li>Read through the terminal output and make sure there&#39;s is no error before proceeding to next step.</li>
 </ul></li>
 <li>Press vo+shift+m on &quot;Import VOCR Macros.app&quot; and choose open. This will allow the unsigned app to run.</li>
 <li>Rename the macro OCR Front Window to match your screen size. For example OCR Front Window 13 for Macbook Pro 13 inch.</li>
@@ -378,6 +381,8 @@ kbd {
 <li>Press command+control+shift+o to and wait for the OCR process to finish.</li>
 <li>Press command+control+shift+arrows to read the result and press vo+shift+space to click.</li>
 </ul>
+
+<p><strong>NOTE</strong>: Keep in mind that many app interfaces use icons, and Tesseract may recognize them as weird symbols. For example, right arrow as &gt; sign and left arrow as &lt; sign. Tesseract may also ignore icons entirely that cannot be recognized as a character or symbol.</p>
 
 <h2 id="toc_6">Reporting Issues</h2>
 
