@@ -17,7 +17,7 @@ VOCR relies on a third party program called Keyboard Maestro to perform its func
 ### Important Notes about Keyboard Maestro
 Keyboard Maestro contains some default macro groups that conflict with common Mac OS keyboard shortcuts. These are found in the switcher group, and clipboard group, which are disabled by default after installing VOCR. If you choose to reenable them, you can do so by selecting each group and pressing the enable button.
 
-Keyboard Maestro is limited by a 30-day trial period. After this time, a purchase of a one-time license is required to continue using the program, and subsequently, Flogic.
+Keyboard Maestro is limited by a 30-day trial period. After this time, a purchase of a one-time license is required to continue using the program, and subsequently, VOCR.
 
 More information about purchasing a license can be found [here.](https://wiki.keyboardmaestro.com/manual/Purchase)
 
