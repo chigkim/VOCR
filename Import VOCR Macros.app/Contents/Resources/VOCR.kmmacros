@@ -276,20 +276,19 @@ app.includeStandardAdditions = true
 cmd = "screencapture ~/Screenshot.png"
 app.doShellScript(cmd)
 cmd = 'sips -g pixelWidth ~/Screenshot.png|grep -Eo "(\\d+)"'
-sw = app.doShellScript(cmd)
+width = app.doShellScript(cmd)
 cmd = 'sips -g pixelHeight ~/Screenshot.png|grep -Eo "(\\d+)"'
-sh = app.doShellScript(cmd)
-density = kme.getvariable("ocr").match(/\d+/g)[0]
-density = Math.floor(Math.sqrt(Math.pow(sw,2)+Math.pow(sh,2))/density)
-console.log("Desktop: "+sw+","+sh+","+density)
+height = app.doShellScript(cmd)
+hyp = kme.getvariable("ocr").match(/\d+/g)[0]
+density = Math.floor(Math.sqrt(Math.pow(width,2)+Math.pow(height,2))/hyp)
+console.log("Desktop: "+width+","+height+","+density)
 
 sys = Application("System Events")
 p = sys.applicationProcesses.whose({frontmost:true})
 win = p.windows[0]
 position = win.position()
-size = win.size()
-kme.setvariable("point1", {to:size[0]+","+size[1]})
-console.log("App: "+p.name()+": "+win.name())
+size = win.size()[0]
+console.log(p.name()+" - "+win.name()+": "+size[0]+","+size[1])
 
 cmd = "screencapture -R"+position+","+size+" ~/Screenshot.png"
 app.doShellScript(cmd)
@@ -308,12 +307,15 @@ cmd = 'sips -g pixelWidth ~/Screenshot.png|grep -Eo "(\\d+)"'
 width = app.doShellScript(cmd)
 cmd = 'sips -g pixelHeight ~/Screenshot.png|grep -Eo "(\\d+)"'
 height = app.doShellScript(cmd)
-kme.setvariable("point2", {to:width+","+height})
 console.log("Enlarged: "+width+", "+height)
 } catch (err) {
 console.log("Error: Can't find imagemagick.\n"+err)
 error += "Error: Can't find imagemagick.\n"
 }
+
+wscale = width/size[0]
+hscale = height/size[1]
+console.log("Scale: "+wscale+", "+hscale)
 
 try {
 cmd = "/usr/local/bin/tesseract ~/Screenshot.png ~/Screenshot hocr"
@@ -327,14 +329,17 @@ try {
 cmd = "cat ~/Screenshot.hocr"
 str = app.doShellScript(cmd)
 console.log(str)
-kme.setvariable("ocr", {to:str})
 } catch (err) {
 console.log("Error: Can't find output file.\n"+err)
 error += "Error: Can't find output file.\n"
+str = ""
 }
 
 if (error == "") vo.output("Ready")
 else vo.output(error)
+
+kme.setvariable("OCRLocation", {to:wscale+","+hscale})
+kme.setvariable("ocr", {to:str})
 </string>
 						<key>TimeOutAbortsMacro</key>
 						<true/>
@@ -357,12 +362,9 @@ function text(el){
 }
 
 function KMInit() {
-point1 = window.KeyboardMaestro.GetVariable('point1')
-point2 = window.KeyboardMaestro.GetVariable('point2')
-point1 = point1.match(/\d+/g)
-point2 = point2.match(/\d+/g)
-wscale = point2[0]/point1[0]
-hscale = point2[1]/point1[1]
+scale = window.KeyboardMaestro.GetVariable('OCRLocation').split(/,/)
+wscale = scale[0]
+hscale = scale[1]
 
 xml = window.KeyboardMaestro.GetVariable('ocr')
 parser = new DOMParser()
@@ -422,7 +424,8 @@ last = data[d].y
 }
 kme.setvariable("ocr", {to:JSON.stringify(ocr)})
 kme.setvariable("ocrLocation", {to:"-1,-1"})
-kme.playSound(Path("/System/Library/Sounds/Glass.aiff"))</string>
+kme.playSound(Path("/System/Library/Sounds/Glass.aiff"))
+</string>
 						<key>TimeOutAbortsMacro</key>
 						<true/>
 						<key>TrimResults</key>
@@ -436,7 +439,7 @@ kme.playSound(Path("/System/Library/Sounds/Glass.aiff"))</string>
 				<key>CreationDate</key>
 				<real>459885009.22238803</real>
 				<key>ModificationDate</key>
-				<real>525834008.92720199</real>
+				<real>525890805.31352001</real>
 				<key>Name</key>
 				<string>OCR Front Window 27</string>
 				<key>Triggers</key>
