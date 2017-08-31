@@ -30,8 +30,12 @@ More information about purchasing a license can be found [here.](https://wiki.ke
     * Read through the terminal output and make sure there's is no error before proceeding to next step.
 * Press vo+shift+m on "Import VOCR Macros.app" and choose open. This will allow the unsigned app to run.
 * Rename the macro OCR Front Window to match your screen size. For example OCR Front Window 13 for Macbook Pro 13 inch.
+    * In Keyboard Maestro, enable edit macros. Go to view menu, and click "start editing macros." If you can only find "Stop Editing Macros" instead, it means you're already able to edit macros.
+    * Interact with Macro Groups Scroll Area, and select VOCR with vo+space.
+    * Stop interact with Macro Groups Scroll Area, interact with Macros Scroll Area, and select OCR Front Window 27 with vo+space.
+    * Press tab to go to Macro Edit Detail Scroll Area, and then you should be able to rename the macro from the first text field.
 
-## Getting Started
+    ## Getting Started
 * Try performing OCR on the Keyboard Maestro Editor window first before trying on other applications.
 * Make sure screen curtain is off with vo+shift+f11.
 * Press command+control+shift+o to and wait for the OCR process to finish.
