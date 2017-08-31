@@ -272,14 +272,7 @@ vo = Application("VoiceOver")
 vo.output("Please Wait")
 app = Application.currentApplication()
 app.includeStandardAdditions = true
-sys = Application("System Events")
-p = sys.applicationProcesses.whose({frontmost:true})
-win = p.windows[0]
-position = win.position()
-size = win.size()
-screen = Application("Finder").desktop.window.bounds()
-sw=screen["width"]
-sh=screen["height"]
+
 cmd = "screencapture ~/Screenshot.png"
 app.doShellScript(cmd)
 cmd = 'sips -g pixelWidth ~/Screenshot.png|grep -Eo "(\\d+)"'
@@ -288,8 +281,15 @@ cmd = 'sips -g pixelHeight ~/Screenshot.png|grep -Eo "(\\d+)"'
 sh = app.doShellScript(cmd)
 density = kme.getvariable("ocr").match(/\d+/g)[0]
 density = Math.floor(Math.sqrt(Math.pow(sw,2)+Math.pow(sh,2))/density)
-msg = "Desktop: "+sw+","+sh+","+density+"\n"
-msg += "App: "+p.name()+": "+win.name()+"\n"
+console.log("Desktop: "+sw+","+sh+","+density)
+
+sys = Application("System Events")
+p = sys.applicationProcesses.whose({frontmost:true})
+win = p.windows[0]
+position = win.position()
+size = win.size()
+kme.setvariable("point1", {to:size[0]+","+size[1]})
+console.log("App: "+p.name()+": "+win.name())
 
 cmd = "screencapture -R"+position+","+size+" ~/Screenshot.png"
 app.doShellScript(cmd)
@@ -297,51 +297,44 @@ cmd = 'sips -g pixelWidth ~/Screenshot.png|grep -Eo "(\\d+)"'
 width = app.doShellScript(cmd)
 cmd = 'sips -g pixelHeight ~/Screenshot.png|grep -Eo "(\\d+)"'
 height = app.doShellScript(cmd)
-msg += "Original: "+width+", "+height+"\n"
+console.log("Original: "+width+", "+height)
+
 error = ""
-//cmd = "/usr/local/bin/convert ~/Screenshot.png -type Grayscale -resize 400% ~/Screenshot.png"
 try {
+//cmd = "/usr/local/bin/convert ~/Screenshot.png -type Grayscale -resize 400% ~/Screenshot.png"
 cmd = "/usr/local/bin/convert ~/Screenshot.png -colorspace Gray -density "+density+" -resample 300 ~/Screenshot.png"
 app.doShellScript(cmd)
-} catch (err) {
-console.log(err)
-error += "Error: Can't find imagemagick.\n"
-msg += error
-}
 cmd = 'sips -g pixelWidth ~/Screenshot.png|grep -Eo "(\\d+)"'
 width = app.doShellScript(cmd)
 cmd = 'sips -g pixelHeight ~/Screenshot.png|grep -Eo "(\\d+)"'
 height = app.doShellScript(cmd)
-msg += "Enlarged: "+width+", "+height+"\n"
+kme.setvariable("point2", {to:width+","+height})
+console.log("Enlarged: "+width+", "+height)
+} catch (err) {
+console.log("Error: Can't find imagemagick.\n"+err)
+error += "Error: Can't find imagemagick.\n"
+}
 
 try {
 cmd = "/usr/local/bin/tesseract ~/Screenshot.png ~/Screenshot hocr"
 app.doShellScript(cmd)
 } catch (err) {
-console.log(err)
+console.log("Error: Can't find Tesseract.\n"+err)
 error += "Error: Can't find Tesseract.\n"
-msg += error
 }
 
-home = sys.currentUser.homeDirectory()
-fileName = home+"/Screenshot.hocr"
-msg += "OCR Result from "+fileName+"\n"
-//str = app.read(Path(fileName))
 try {
 cmd = "cat ~/Screenshot.hocr"
 str = app.doShellScript(cmd)
-msg += str
+console.log(str)
+kme.setvariable("ocr", {to:str})
 } catch (err) {
-console.log(err)
+console.log("Error: Can't find output file.\n"+err)
 error += "Error: Can't find output file.\n"
-msg += error
 }
-console.log(msg)
+
 if (error == "") vo.output("Ready")
 else vo.output(error)
-kme.setvariable("point1", {to:size[0]+","+size[1]})
-kme.setvariable("point2", {to:width+","+height})
-kme.setvariable("ocr", {to:str})
 </string>
 						<key>TimeOutAbortsMacro</key>
 						<true/>
@@ -443,7 +436,7 @@ kme.playSound(Path("/System/Library/Sounds/Glass.aiff"))</string>
 				<key>CreationDate</key>
 				<real>459885009.22238803</real>
 				<key>ModificationDate</key>
-				<real>525565098.22804898</real>
+				<real>525834008.92720199</real>
 				<key>Name</key>
 				<string>OCR Front Window 27</string>
 				<key>Triggers</key>
