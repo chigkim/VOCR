@@ -27,7 +27,6 @@ vo = Application("VoiceOver")
 app = Application.currentApplication()
 app.includeStandardAdditions = true
 
-lang = ""
 try {
 cmd = "/usr/local/bin/tesseract --list-langs"
 langs = app.doShellScript(cmd).split(/\r/)
@@ -36,14 +35,18 @@ title = langs.length+" languages"
 prompt = "Choose languages to recognize."
 ok = "Set"
 selections = app.chooseFromList(langs, {withTitle:title, withPrompt:prompt, okButtonName:ok, multipleSelectionsAllowed:true})
+lang = ""
 for (s in selections) {
 lang += "+"+selections[s]
 }
+if (lang != "") {
 lang = lang.substring(1,lang.length)
+kme.setvariable("ocrLang", {to:lang})
+}
 } catch (err) {
 console.log("Error: Can't find Tesseract.\n"+err)
 }
-kme.setvariable("ocrLang", {to:lang})</string>
+</string>
 						<key>TimeOutAbortsMacro</key>
 						<true/>
 						<key>TrimResults</key>
@@ -57,7 +60,7 @@ kme.setvariable("ocrLang", {to:lang})</string>
 				<key>CreationDate</key>
 				<real>526053144.07308</real>
 				<key>ModificationDate</key>
-				<real>526055449.86212599</real>
+				<real>526065194.96801198</real>
 				<key>Name</key>
 				<string>Choose Language</string>
 				<key>Triggers</key>
