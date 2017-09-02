@@ -23,6 +23,88 @@
 						<string></string>
 						<key>Text</key>
 						<string>kme = Application("Keyboard Maestro Engine")
+vo = Application("VoiceOver")
+app = Application.currentApplication()
+app.includeStandardAdditions = true
+
+lang = ""
+try {
+cmd = "/usr/local/bin/tesseract --list-langs"
+langs = app.doShellScript(cmd).split(/\r/)
+langs = langs.splice(1,langs.length-1)
+title = langs.length+" languages"
+prompt = "Choose languages to recognize."
+ok = "Set"
+selections = app.chooseFromList(langs, {withTitle:title, withPrompt:prompt, okButtonName:ok, multipleSelectionsAllowed:true})
+for (s in selections) {
+lang += "+"+selections[s]
+}
+lang = lang.substring(1,lang.length)
+} catch (err) {
+console.log("Error: Can't find Tesseract.\n"+err)
+}
+kme.setvariable("ocrLang", {to:lang})</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<true/>
+						<key>TrimResultsNew</key>
+						<true/>
+						<key>UseText</key>
+						<true/>
+					</dict>
+				</array>
+				<key>CreationDate</key>
+				<real>526053144.07308</real>
+				<key>ModificationDate</key>
+				<real>526055449.86212599</real>
+				<key>Name</key>
+				<string>Choose Language</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>37</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>4864</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>E3F9A31E-C08F-425B-8F88-500A0C619B14</string>
+			</dict>
+		</array>
+		<key>Name</key>
+		<string>VOCR</string>
+		<key>ToggleMacroUID</key>
+		<string>5057C268-E202-40EA-9554-DCCF3FFD4ECF</string>
+		<key>UID</key>
+		<string>E515A30C-395B-4967-AD64-B519B18764B9</string>
+	</dict>
+	<dict>
+		<key>Activate</key>
+		<string>Normal</string>
+		<key>CreationDate</key>
+		<real>516811587.50109702</real>
+		<key>Macros</key>
+		<array>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>IncludeStdErr</key>
+						<true/>
+						<key>MacroActionType</key>
+						<string>ExecuteJavaScriptForAutomation</string>
+						<key>Path</key>
+						<string></string>
+						<key>Text</key>
+						<string>kme = Application("Keyboard Maestro Engine")
 ocrLocation = kme.getvariable('ocrLocation')
 l = ocrLocation.split(",")[0]
 w = ocrLocation.split(",")[1]
@@ -318,7 +400,9 @@ hscale = height/size[1]
 console.log("Scale: "+wscale+", "+hscale)
 
 try {
-cmd = "/usr/local/bin/tesseract ~/Screenshot.png ~/Screenshot hocr"
+lang = kme.getvariable("ocrLang")
+if (lang == "") lang = "eng"
+cmd = "/usr/local/bin/tesseract -l "+lang+" ~/Screenshot.png ~/Screenshot hocr"
 app.doShellScript(cmd)
 } catch (err) {
 console.log("Error: Can't find Tesseract.\n"+err)
@@ -439,7 +523,7 @@ kme.playSound(Path("/System/Library/Sounds/Glass.aiff"))
 				<key>CreationDate</key>
 				<real>459885009.22238803</real>
 				<key>ModificationDate</key>
-				<real>525890805.31352001</real>
+				<real>526054675.85059202</real>
 				<key>Name</key>
 				<string>OCR Front Window 27</string>
 				<key>Triggers</key>

@@ -336,7 +336,7 @@ kbd {
 
 <h2 id="toc_1">Installation</h2>
 
-<p><strong>IMPORTANT</strong>: Installation involves few steps, and it is critical that you follow each step carefully.</p>
+<p><strong>IMPORTANT</strong>: Installation involves several steps, and it is critical that you follow each step carefully.</p>
 
 <p>VOCR relies on a third party program called Keyboard Maestro to perform its functions. Download instructions for Keyboard Maestro are below.</p>
 
@@ -345,7 +345,7 @@ kbd {
 <ul>
 <li><a href="https://www.keyboardmaestro.com/">Download the Keyboard Maestro</a>.</li>
 <li>Copy the Keyboard Maestro application from the downloads folder to the applications folder. From there, open Keyboard Maestro.</li>
-<li>If using Keyboard Maestro for the first time, please check the boxes for both Keyboard Maestro and Keyboard Maestro Engine in system preferences, under &quot;Security and Privacy&quot;, &quot;Accessibility.&quot; These must be enabled for VOCR to function correctly.</li>
+<li>If using Keyboard Maestro for the first time, in System Preferences, go to the Security and Privacy pane and select the Privacy tab. Under the Accessibility category, check the boxes for both Keyboard Maestro and Keyboard Maestro Engine. These must be enabled for VOCR to function correctly.</li>
 <li>Open Keyboard Maestro Preferences, and under the general tab, check the box labeled, &quot;Start Keyboard Maestro Engine at log-in.&quot; Note that the Keyboard Maestro window does not need to be open for the scripts to run.</li>
 </ul>
 
@@ -353,7 +353,7 @@ kbd {
 
 <p>Keyboard Maestro contains some default macro groups that conflict with common Mac OS keyboard shortcuts. These are found in the switcher group, and clipboard group, which are disabled by default after installing VOCR. If you choose to reenable them, you can do so by selecting each group and pressing the enable button.</p>
 
-<p>Keyboard Maestro is limited by a 30-day trial period. After this time, a purchase of a one-time license is required to continue using the program, and subsequently, VOCR.</p>
+<p>Keyboard Maestro is limited by a 30-day trial period. After  which a purchase of a one-time license is required to continue using the program, and subsequently, Flo Tools and Flogic.</p>
 
 <p>More information about purchasing a license can be found <a href="https://wiki.keyboardmaestro.com/manual/Purchase">here.</a></p>
 
@@ -361,32 +361,40 @@ kbd {
 
 <ul>
 <li>Open VoiceOver Utility and check &quot;Allow VoiceOver to be controlled with AppleScript&quot; in the General category.</li>
-<li>Run install.command in terminal and follow the instruction.<br>
+<li>Run install.command in terminal and follow the instructions.<br>
 
 <ul>
 <li>This will install HOme Brew, Tesseract, and Image Magick.</li>
-<li>When it asks for a password, you need to enter password for an administrator account with root privilage.</li>
-<li>It will download large data and compile, so the Installation may take a long time depending on your internet speed and system resources.</li>
-<li>Read through the terminal output and make sure there&#39;s is no error before proceeding to next step.</li>
+<li>When it asks for a password, you need to enter the password for an administrator account with root privilege.</li>
+<li>The download is large and will compile, so the Installation may take a long time depending on your internet speed and system resources.</li>
+<li>Read through the terminal output and make sure there&#39;s no error before proceeding to the next step.</li>
 </ul></li>
 <li>Press vo+shift+m on &quot;Import VOCR Macros.app&quot; and choose open. This will allow the unsigned app to run.</li>
-<li><p>Rename the macro OCR Front Window to match your screen size. For example OCR Front Window 13 for Macbook Pro 13 inch.</p>
+<li>Rename the macro OCR Front Window to match your screen size. For example OCR Front Window 13 for a Macbook Pro 13 inch.
 
 <ul>
-<li>In Keyboard Maestro, enable edit macros. Go to view menu, and click &quot;start editing macros.&quot; If you can only find &quot;Stop Editing Macros&quot; instead, it means you&#39;re already able to edit macros.</li>
-<li>Interact with Macro Groups Scroll Area, and select VOCR with vo+space.</li>
-<li>Stop interact with Macro Groups Scroll Area, interact with Macros Scroll Area, and select OCR Front Window 27 with vo+space.</li>
-<li>Press tab to go to Macro Edit Detail Scroll Area, and then you should be able to rename the macro from the first text field.</li>
+<li>Make sure Keyboard Maestro is set to edit macros by selecting &quot;Start Editing Macros&quot; from the View menu.</li>
+<li>Press vo+j until you jump to the macro groups scroll area.</li>
+<li>Navigate to the VOCR macro group and select it with vo+Space.</li>
+<li>Press vo+j to jump to the Macros scroll area.</li>
+<li>Navigate to the OCR FrontWindow 27 macro, and select it with vo+Space Bar.</li>
+<li>Press vo+j to jump to the Macro edit detail scroll area.</li>
+<li>Press vo+Right Arrow to move to the macro name edit field.</li>
+<li>Delete the existing number 27 and type the number that matches your screen size in inches.</li>
+</ul></li>
 </ul>
 
-<h2 id="toc_5">Getting Started</h2></li>
-<li><p>Try performing OCR on the Keyboard Maestro Editor window first before trying on other applications.</p></li>
-<li><p>Make sure screen curtain is off with vo+shift+f11.</p></li>
-<li><p>Press command+control+shift+o to and wait for the OCR process to finish.</p></li>
-<li><p>Press command+control+shift+arrows to read the result and press vo+shift+space to click.</p></li>
+<h2 id="toc_5">Getting Started</h2>
+
+<ul>
+<li>Try performing OCR on the Keyboard Maestro Editor window first before trying it in other applications.</li>
+<li>Make sure the screen curtain is off with vo+shift+f11.</li>
+<li>Press command+control+shift+o and wait for the OCR process to finish. VOCR will prompt you with a &quot;Ready&quot; message when it&#39;s done with the OCR process.</li>
+<li>Press command+control+shift+arrows to read the result and press vo+shift+space to click.</li>
+<li>To choose different language, press vo+shift+l. Vo+command+return will allow you to selecte more than one language.</li>
 </ul>
 
-<p><strong>NOTE</strong>: Keep in mind that many app interfaces use icons, and Tesseract may recognize them as weird symbols. For example, right arrow as &gt; sign and left arrow as &lt; sign. Tesseract may also ignore icons entirely that cannot be recognized as a character or symbol.</p>
+<p><strong>NOTE</strong>: Keep in mind that many app interfaces use icons, and Tesseract may recognize them as weird symbols. For example, a right arrow might appear as a &quot;&gt; than&quot;  sign and a left arrow as a &quot;&lt; than&quot;  sign. Tesseract may also ignore icons entirely that cannot be recognized as a character or symbol.</p>
 
 <h2 id="toc_6">Reporting Issues</h2>
 
