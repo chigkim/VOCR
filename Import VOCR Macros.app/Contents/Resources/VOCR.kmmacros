@@ -19,8 +19,12 @@
 						<true/>
 						<key>MacroActionType</key>
 						<string>ExecuteJavaScriptForAutomation</string>
+						<key>NotifyOnFailure</key>
+						<false/>
 						<key>Path</key>
 						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>kme = Application("Keyboard Maestro Engine")
 vo = Application("VoiceOver")
@@ -104,8 +108,12 @@ console.log("Error: Can't find Tesseract.\n"+err)
 						<true/>
 						<key>MacroActionType</key>
 						<string>ExecuteJavaScriptForAutomation</string>
+						<key>NotifyOnFailure</key>
+						<false/>
 						<key>Path</key>
 						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>kme = Application("Keyboard Maestro Engine")
 ocrLocation = kme.getvariable('ocrLocation')
@@ -224,8 +232,12 @@ Application("VoiceOver").output(word)
 						<true/>
 						<key>MacroActionType</key>
 						<string>ExecuteJavaScriptForAutomation</string>
+						<key>NotifyOnFailure</key>
+						<false/>
 						<key>Path</key>
 						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>kme = Application("Keyboard Maestro Engine")
 ocrLocation = kme.getvariable('ocrLocation')
@@ -349,8 +361,12 @@ Application("VoiceOver").output(word)
 						<true/>
 						<key>MacroActionType</key>
 						<string>ExecuteJavaScriptForAutomation</string>
+						<key>NotifyOnFailure</key>
+						<false/>
 						<key>Path</key>
 						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>kme = Application("Keyboard Maestro Engine")
 vo = Application("VoiceOver")
@@ -438,6 +454,8 @@ kme.setvariable("ocr", {to:str})
 						<true/>
 					</dict>
 					<dict>
+						<key>Floating</key>
+						<true/>
 						<key>MacroActionType</key>
 						<string>CustomPrompt</string>
 						<key>Text</key>
@@ -448,7 +466,7 @@ function text(el){
   return a;
 }
 
-function KMInit() {
+function KMDidShowWindow() {
 scale = window.KeyboardMaestro.GetVariable('OCRLocation').split(/,/)
 wscale = scale[0]
 hscale = scale[1]
@@ -488,8 +506,12 @@ data.push({"w":w,"x":x,"y":y})
 						<true/>
 						<key>MacroActionType</key>
 						<string>ExecuteJavaScriptForAutomation</string>
+						<key>NotifyOnFailure</key>
+						<false/>
 						<key>Path</key>
 						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>kme = Application("Keyboard Maestro Engine")
 data = JSON.parse(kme.getvariable("ocr"))
@@ -526,7 +548,7 @@ kme.playSound(Path("/System/Library/Sounds/Glass.aiff"))
 				<key>CreationDate</key>
 				<real>459885009.22238803</real>
 				<key>ModificationDate</key>
-				<real>526054675.85059202</real>
+				<real>542780363.34885097</real>
 				<key>Name</key>
 				<string>OCR Front Window 27</string>
 				<key>Triggers</key>
@@ -570,8 +592,12 @@ kme.playSound(Path("/System/Library/Sounds/Glass.aiff"))
 						<true/>
 						<key>MacroActionType</key>
 						<string>ExecuteJavaScriptForAutomation</string>
+						<key>NotifyOnFailure</key>
+						<false/>
 						<key>Path</key>
 						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>kme = Application("Keyboard Maestro Engine")
 ocrLocation = kme.getvariable('ocrLocation')
@@ -689,8 +715,12 @@ Application("VoiceOver").output(word)
 						<true/>
 						<key>MacroActionType</key>
 						<string>ExecuteJavaScriptForAutomation</string>
+						<key>NotifyOnFailure</key>
+						<false/>
 						<key>Path</key>
 						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
 						<key>Text</key>
 						<string>kme = Application("Keyboard Maestro Engine")
 ocrLocation = kme.getvariable('ocrLocation')
