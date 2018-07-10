@@ -102,6 +102,183 @@ console.log("Error: Can't find Tesseract.\n"+err)
 				<key>Actions</key>
 				<array>
 					<dict>
+						<key>Action</key>
+						<string>Disable</string>
+						<key>MacroActionType</key>
+						<string>SetMacroEnable</string>
+						<key>MacroUID</key>
+						<string>F418516D-0EC4-49F6-B375-091775EEC79F</string>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>Disable</string>
+						<key>MacroActionType</key>
+						<string>SetMacroEnable</string>
+						<key>MacroUID</key>
+						<string>75261CAD-7530-4023-89B7-9181EA5F724E</string>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>Disable</string>
+						<key>MacroActionType</key>
+						<string>SetMacroEnable</string>
+						<key>MacroUID</key>
+						<string>5D5D7E48-B478-4CFA-81BA-60D8D1BF1F69</string>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>Disable</string>
+						<key>MacroActionType</key>
+						<string>SetMacroEnable</string>
+						<key>MacroUID</key>
+						<string>4E9CF8EA-62D9-4AB4-97B8-F1A2B7F390DE</string>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>Disable</string>
+						<key>MacroActionType</key>
+						<string>SetMacroEnable</string>
+						<key>MacroUID</key>
+						<string>DEBFF6E4-0FDC-4289-8E86-74D0C209BCAB</string>
+					</dict>
+					<dict>
+						<key>DisplayKind</key>
+						<string>None</string>
+						<key>IncludeStdErr</key>
+						<true/>
+						<key>MacroActionType</key>
+						<string>ExecuteJavaScriptForAutomation</string>
+						<key>NotifyOnFailure</key>
+						<false/>
+						<key>Path</key>
+						<string></string>
+						<key>StopOnFailure</key>
+						<false/>
+						<key>Text</key>
+						<string>vo = Application("VoiceOver").output("Disable VOCR Navigation")</string>
+						<key>TimeOutAbortsMacro</key>
+						<true/>
+						<key>TrimResults</key>
+						<true/>
+						<key>TrimResultsNew</key>
+						<true/>
+						<key>UseText</key>
+						<true/>
+					</dict>
+				</array>
+				<key>CreationDate</key>
+				<real>552956167.56664598</real>
+				<key>IsActive</key>
+				<false/>
+				<key>ModificationDate</key>
+				<real>552956821.39356601</real>
+				<key>Name</key>
+				<string>Disable VOCR Navigation</string>
+				<key>Triggers</key>
+				<array>
+					<dict>
+						<key>FireType</key>
+						<string>Pressed</string>
+						<key>KeyCode</key>
+						<integer>53</integer>
+						<key>MacroTriggerType</key>
+						<string>HotKey</string>
+						<key>Modifiers</key>
+						<integer>0</integer>
+					</dict>
+				</array>
+				<key>UID</key>
+				<string>DEBFF6E4-0FDC-4289-8E86-74D0C209BCAB</string>
+			</dict>
+		</array>
+		<key>Name</key>
+		<string>VOCR</string>
+		<key>ToggleMacroUID</key>
+		<string>5057C268-E202-40EA-9554-DCCF3FFD4ECF</string>
+		<key>UID</key>
+		<string>E515A30C-395B-4967-AD64-B519B18764B9</string>
+	</dict>
+	<dict>
+		<key>Activate</key>
+		<string>Normal</string>
+		<key>CreationDate</key>
+		<real>516811587.50109702</real>
+		<key>Macros</key>
+		<array>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
+						<key>Action</key>
+						<string>Enable</string>
+						<key>MacroActionType</key>
+						<string>SetMacroEnable</string>
+						<key>MacroUID</key>
+						<string>F418516D-0EC4-49F6-B375-091775EEC79F</string>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>Enable</string>
+						<key>MacroActionType</key>
+						<string>SetMacroEnable</string>
+						<key>MacroUID</key>
+						<string>75261CAD-7530-4023-89B7-9181EA5F724E</string>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>Enable</string>
+						<key>MacroActionType</key>
+						<string>SetMacroEnable</string>
+						<key>MacroUID</key>
+						<string>5D5D7E48-B478-4CFA-81BA-60D8D1BF1F69</string>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>Enable</string>
+						<key>MacroActionType</key>
+						<string>SetMacroEnable</string>
+						<key>MacroUID</key>
+						<string>4E9CF8EA-62D9-4AB4-97B8-F1A2B7F390DE</string>
+					</dict>
+					<dict>
+						<key>Action</key>
+						<string>Enable</string>
+						<key>MacroActionType</key>
+						<string>SetMacroEnable</string>
+						<key>MacroUID</key>
+						<string>DEBFF6E4-0FDC-4289-8E86-74D0C209BCAB</string>
+					</dict>
+				</array>
+				<key>CreationDate</key>
+				<real>552956167.56664598</real>
+				<key>ModificationDate</key>
+				<real>552956598.65029895</real>
+				<key>Name</key>
+				<string>Enable VOCR Navigation</string>
+				<key>Triggers</key>
+				<array/>
+				<key>UID</key>
+				<string>69B6C676-E3CF-4B40-AFF6-F62DE809219C</string>
+			</dict>
+		</array>
+		<key>Name</key>
+		<string>VOCR</string>
+		<key>ToggleMacroUID</key>
+		<string>5057C268-E202-40EA-9554-DCCF3FFD4ECF</string>
+		<key>UID</key>
+		<string>E515A30C-395B-4967-AD64-B519B18764B9</string>
+	</dict>
+	<dict>
+		<key>Activate</key>
+		<string>Normal</string>
+		<key>CreationDate</key>
+		<real>516811587.50109702</real>
+		<key>Macros</key>
+		<array>
+			<dict>
+				<key>Actions</key>
+				<array>
+					<dict>
 						<key>DisplayKind</key>
 						<string>None</string>
 						<key>IncludeStdErr</key>
@@ -187,6 +364,8 @@ Application("VoiceOver").output(word)
 				</array>
 				<key>CreationDate</key>
 				<real>516893270.40356201</real>
+				<key>IsActive</key>
+				<false/>
 				<key>ModificationDate</key>
 				<real>517032043.11541301</real>
 				<key>Name</key>
@@ -308,6 +487,8 @@ Application("VoiceOver").output(word)
 				</array>
 				<key>CreationDate</key>
 				<real>516814289.23870701</real>
+				<key>IsActive</key>
+				<false/>
 				<key>ModificationDate</key>
 				<real>517032051.81202501</real>
 				<key>Name</key>
@@ -421,7 +602,7 @@ console.log("Scale: "+wscale+", "+hscale)
 try {
 lang = kme.getvariable("ocrLang")
 if (lang == "") lang = "eng"
-cmd = "/usr/local/bin/tesseract -l "+lang+" ~/Screenshot.png ~/Screenshot hocr"
+cmd = "/usr/local/bin/tesseract --oem 1 --psm 6 -l "+lang+" ~/Screenshot.png ~/Screenshot hocr"
 app.doShellScript(cmd)
 } catch (err) {
 console.log("Error: Can't find Tesseract.\n"+err)
@@ -438,9 +619,10 @@ error += "Error: Can't find output file.\n"
 str = ""
 }
 
-if (error == "") vo.output("Ready")
-else vo.output(error)
-
+if (error == "") {
+kme.doScript("69B6C676-E3CF-4B40-AFF6-F62DE809219C")
+vo.output("Ready! Press esc to disable VOCR navigation")
+} else vo.output(error)
 kme.setvariable("OCRLocation", {to:wscale+","+hscale})
 kme.setvariable("ocr", {to:str})
 </string>
@@ -548,7 +730,7 @@ kme.playSound(Path("/System/Library/Sounds/Glass.aiff"))
 				<key>CreationDate</key>
 				<real>459885009.22238803</real>
 				<key>ModificationDate</key>
-				<real>542780363.34885097</real>
+				<real>552960672.55673206</real>
 				<key>Name</key>
 				<string>OCR Front Window 27</string>
 				<key>Triggers</key>
@@ -670,6 +852,8 @@ Application("VoiceOver").output(word)
 				</array>
 				<key>CreationDate</key>
 				<real>516902563.641801</real>
+				<key>IsActive</key>
+				<false/>
 				<key>ModificationDate</key>
 				<real>517032059.64294797</real>
 				<key>Name</key>
@@ -791,6 +975,8 @@ Application("VoiceOver").output(word)
 				</array>
 				<key>CreationDate</key>
 				<real>516893164.54868603</real>
+				<key>IsActive</key>
+				<false/>
 				<key>ModificationDate</key>
 				<real>517032066.5837</real>
 				<key>Name</key>
