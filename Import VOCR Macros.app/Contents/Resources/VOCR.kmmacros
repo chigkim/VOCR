@@ -557,10 +557,14 @@ app.includeStandardAdditions = true
 
 cmd = "screencapture ~/Screenshot.png"
 app.doShellScript(cmd)
-cmd = 'sips -g pixelWidth ~/Screenshot.png|grep -Eo "(\\d+)"'
+cmd = 'sips -g pixelWidth ~/Screenshot.png'
 width = app.doShellScript(cmd)
-cmd = 'sips -g pixelHeight ~/Screenshot.png|grep -Eo "(\\d+)"'
+regex = /pixelWidth: (\d+)/
+width = regex.exec(width)[1]
+cmd = 'sips -g pixelHeight ~/Screenshot.png'
 height = app.doShellScript(cmd)
+regex = /pixelHeight: (\d+)/
+height = regex.exec(height)[1]
 hyp = kme.getvariable("ocr").match(/\d+/g)[0]
 density = Math.floor(Math.sqrt(Math.pow(width,2)+Math.pow(height,2))/hyp)
 console.log("Desktop: "+width+","+height+","+density)
@@ -574,10 +578,14 @@ console.log(p.name()+" - "+win.name()+": "+size[0]+","+size[1])
 
 cmd = "screencapture -R"+position+","+size+" ~/Screenshot.png"
 app.doShellScript(cmd)
-cmd = 'sips -g pixelWidth ~/Screenshot.png|grep -Eo "(\\d+)"'
+cmd = 'sips -g pixelWidth ~/Screenshot.png'
 width = app.doShellScript(cmd)
-cmd = 'sips -g pixelHeight ~/Screenshot.png|grep -Eo "(\\d+)"'
+regex = /pixelWidth: (\d+)/
+width = regex.exec(width)[1]
+cmd = 'sips -g pixelHeight ~/Screenshot.png'
 height = app.doShellScript(cmd)
+regex = /pixelHeight: (\d+)/
+height = regex.exec(height)[1]
 console.log("Original: "+width+", "+height)
 
 error = ""
@@ -585,10 +593,14 @@ try {
 //cmd = "/usr/local/bin/convert ~/Screenshot.png -type Grayscale -resize 400% ~/Screenshot.png"
 cmd = "/usr/local/bin/convert ~/Screenshot.png -colorspace Gray -density "+density+" -resample 300 ~/Screenshot.png"
 app.doShellScript(cmd)
-cmd = 'sips -g pixelWidth ~/Screenshot.png|grep -Eo "(\\d+)"'
+cmd = 'sips -g pixelWidth ~/Screenshot.png'
 width = app.doShellScript(cmd)
-cmd = 'sips -g pixelHeight ~/Screenshot.png|grep -Eo "(\\d+)"'
+regex = /pixelWidth: (\d+)/
+width = regex.exec(width)[1]
+cmd = 'sips -g pixelHeight ~/Screenshot.png'
 height = app.doShellScript(cmd)
+regex = /pixelHeight: (\d+)/
+height = regex.exec(height)[1]
 console.log("Enlarged: "+width+", "+height)
 } catch (err) {
 console.log("Error: Can't find imagemagick.\n"+err)
@@ -730,7 +742,7 @@ kme.playSound(Path("/System/Library/Sounds/Glass.aiff"))
 				<key>CreationDate</key>
 				<real>459885009.22238803</real>
 				<key>ModificationDate</key>
-				<real>552960672.55673206</real>
+				<real>553184411.24261999</real>
 				<key>Name</key>
 				<string>OCR Front Window 27</string>
 				<key>Triggers</key>
