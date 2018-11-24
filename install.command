@@ -1,4 +1,6 @@
 #!/bin/bash
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-brew reinstall imagemagick --HEAD
-brew reinstall tesseract --HEAD
+brew uninstall --force imagemagick
+brew install --HEAD imagemagick
+brew uninstall --force tesseract
+brew install --HEAD tesseract  --with-all-languages
