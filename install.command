@@ -3,4 +3,4 @@
 brew uninstall --force imagemagick
 brew install --HEAD imagemagick
 brew uninstall --force tesseract
-brew install --HEAD tesseract  --with-all-languages
+brew install --HEAD tesseract
