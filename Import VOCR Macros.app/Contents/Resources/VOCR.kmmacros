@@ -614,7 +614,7 @@ console.log("Scale: "+wscale+", "+hscale)
 try {
 lang = kme.getvariable("ocrLang")
 if (lang == "") lang = "eng"
-cmd = "/usr/local/bin/tesseract --oem 1 --psm 6 -l "+lang+" ~/Screenshot.png ~/Screenshot hocr"
+cmd = "/usr/local/bin/tesseract --oem 1 --psm 12 -l "+lang+" ~/Screenshot.png ~/Screenshot hocr"
 app.doShellScript(cmd)
 } catch (err) {
 console.log("Error: Can't find Tesseract.\n"+err)
@@ -654,12 +654,6 @@ kme.setvariable("ocr", {to:str})
 						<string>CustomPrompt</string>
 						<key>Text</key>
 						<string>&lt;script&gt;
-function text(el){
-  var n, a="", walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false);
-  while(n=walk.nextNode()) a+=n.nodeValue+" ";
-  return a;
-}
-
 function KMDidShowWindow() {
 scale = window.KeyboardMaestro.GetVariable('OCRLocation').split(/,/)
 wscale = scale[0]
@@ -670,8 +664,7 @@ parser = new DOMParser()
 xml = parser.parseFromString(xml, "text/xml")
 words = xml.getElementsByClassName("ocrx_word")
 data = []
-for (i=0; i&lt;words.length; i++) {
-word = words[i]
+for (word of words) {
 title = word.getAttribute("title")
 title = title.match(/\d+/g)
 x1 = title[0]/wscale
@@ -680,11 +673,11 @@ x2 = title[2]/wscale
 y2 = title[3]/hscale
 x = Math.ceil(x1+((x2-x1)/2))
 y = Math.ceil(y1+((y2-y1)/2))
-w = text(word)
+w = word.childNodes[0].textContent
 data.push({"w":w,"x":x,"y":y})
 }
-     window.KeyboardMaestro.SetVariable('ocr', JSON.stringify(data))
-     window.KeyboardMaestro.Submit('OK')
+window.KeyboardMaestro.SetVariable('ocr', JSON.stringify(data))
+window.KeyboardMaestro.Submit('OK')
 }
 &lt;/script&gt;
 </string>
@@ -708,23 +701,28 @@ data.push({"w":w,"x":x,"y":y})
 						<false/>
 						<key>Text</key>
 						<string>kme = Application("Keyboard Maestro Engine")
-data = JSON.parse(kme.getvariable("ocr"))
+data = kme.getvariable("ocr")
+data = JSON.parse(data)
+
 data.sort(function (a,b) {
 if (Math.abs(a.y-b.y)&lt;10) {
 return a.x&gt;b.x?1:(a.x&lt;b.x?-1:0)
 } else return a.y&gt;b.y?1:(a.y&lt;b.y?-1:0)
 })
+
 ocr = []
 line = []
 last = 100000
-for (d in data) {
-if (Math.abs(data[d].y-last&gt;10)) {
+for (d of data) {
+if (Math.abs(d.y-last&gt;10)) {
 ocr.push(line)
 line = []
 }
-line.push(data[d])
-last = data[d].y
+line.push(d)
+last = d.y
 }
+ocr.push(line)
+
 kme.setvariable("ocr", {to:JSON.stringify(ocr)})
 kme.setvariable("ocrLocation", {to:"-1,-1"})
 kme.playSound(Path("/System/Library/Sounds/Glass.aiff"))
@@ -742,7 +740,7 @@ kme.playSound(Path("/System/Library/Sounds/Glass.aiff"))
 				<key>CreationDate</key>
 				<real>459885009.22238803</real>
 				<key>ModificationDate</key>
-				<real>553184411.24261999</real>
+				<real>584219993.66146803</real>
 				<key>Name</key>
 				<string>OCR Front Window 27</string>
 				<key>Triggers</key>
