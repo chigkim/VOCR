@@ -1,9 +1,10 @@
 import Cocoa
 import Vision
+import AVFoundation
 
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, AVCapturePhotoCaptureDelegate {
 
 	let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 	var results: [VNRecognizedTextObservation]?
@@ -18,12 +19,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	var c = -1
 
 	var windows:[NSWindow] = []
-	
+	var captureSession: AVCaptureSession!
+	var cameraOutput: AVCapturePhotoOutput!
+
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		if !Accessibility.isTrusted(ask:true) {
 			print("Accessibility not enabled.")
 		}
-
+		askCameraPermission()
 		let menu = NSMenu()
 		menu.addItem(withTitle: "Show", action: #selector(AppDelegate.click(_:)), keyEquivalent: "")
 		menu.addItem(withTitle: "Quit", action: #selector(AppDelegate.quit(_:)), keyEquivalent: "")
@@ -68,12 +71,81 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	@objc func quit(_ sender: AnyObject?) {
 		NSApplication.shared.terminate(self)
 	}
+	func askCameraPermission() {
+		let cameraPermissionStatus = AVCaptureDevice.authorizationStatus(for: .video)
+		switch cameraPermissionStatus {
+		case .authorized:
+			print("Already Authorized")
+		case .denied:
+			print("denied")
+		case .restricted:
+			print("restricted")
+		default:
+			print("ok")
+			AVCaptureDevice.requestAccess(for: .video) { granted in
+				if granted == true {
+					print("User granted")
+				} else {
+					print("User denied")
+				}
+			}
+
+		}
+	}
 
 	func start() {
 		NSSound(contentsOfFile: "/System/Library/Sounds/Tink.aiff", byReference: true)?.play()
 		if let  cgImage = TakeScreensShots() {
 			requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
 			performOCRRequest()
+		}
+	}
+
+	func takePicture() {
+		let pop = NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)
+		let tink = NSSound(contentsOfFile: "/System/Library/Sounds/Tink.aiff", byReference: true)
+		for _ in 1...4 {
+			pop?.play()
+			sleep(1)
+			pop?.stop()
+		}
+		tink?.play()
+		captureSession = AVCaptureSession()
+		captureSession.sessionPreset = AVCaptureSession.Preset.photo
+		cameraOutput = AVCapturePhotoOutput()
+
+		if let device = AVCaptureDevice.default(for: .video),
+		   let input = try? AVCaptureDeviceInput(device: device) {
+			if (captureSession.canAddInput(input)) {
+				captureSession.addInput(input)
+				if (captureSession.canAddOutput(cameraOutput)) {
+					captureSession.addOutput(cameraOutput)
+					captureSession.startRunning()
+					let settings = AVCapturePhotoSettings()
+					cameraOutput.capturePhoto(with: settings, delegate: self)
+				}
+			} else {
+				print("issue here : captureSesssion.canAddInput")
+			}
+		} else {
+			print("some problem here")
+		}
+	}
+
+	func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+		if let error = error {
+			print("error occured : \(error.localizedDescription)")
+		}
+
+		if let dataImage = photo.fileDataRepresentation() {
+			let dataProvider = CGDataProvider(data: dataImage as CFData)
+			if let cgImage = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent) {
+				NSSound(contentsOfFile: "/System/Library/Components/CoreAudio.component/Contents/SharedSupport/SystemSounds/system/Shutter.aif", byReference: true)?.play()
+				requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+				performOCRRequest()
+			}
+			} else {
+			print("some error here")
 		}
 	}
 
@@ -144,6 +216,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 					} else {
 						return false
 					}
+				}
+				if results.count == 0 {
+					Accessibility.speak("Nothing found")
+					return
 				}
 				results = results.sorted(by: sort)
 				self.displayResults = []

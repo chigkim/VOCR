@@ -13,6 +13,7 @@ import Cocoa
 class Shortcuts {
 	
 	let start = HotKey(key:.o, modifiers:[.command,.shift])
+	let picture = HotKey(key:.p, modifiers:[.command,.shift])
 	let right = HotKey(key:.rightArrow, modifiers:[.command,.shift])
 	let left = HotKey(key:.leftArrow, modifiers:[.command,.shift])
 	let up = HotKey(key:.upArrow, modifiers:[.command,.shift])
@@ -32,6 +33,11 @@ class Shortcuts {
 		start.keyDownHandler = {
 			let app = NSApplication.shared.delegate as! AppDelegate
 			app.start()
+		}
+
+		picture.keyDownHandler = {
+			let app = NSApplication.shared.delegate as! AppDelegate
+			app.takePicture()
 		}
 
 		location.keyDownHandler = {
