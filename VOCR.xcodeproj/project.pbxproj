@@ -16,6 +16,7 @@
 		EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1AB232EB1D600D31031 /* Accessibility.swift */; };
 		EA2DA1AF232EB22300D31031 /* NSRunningApplication Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */; };
 		EA2DA1B1232EB25A00D31031 /* AXUIElement Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1B0232EB25A00D31031 /* AXUIElement Extension.swift */; };
+		EAA12C4F234C89030036AF6A /* NavigationShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */; };
 		EADE59B5232EB09A00E2F65A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE59B4232EB09A00E2F65A /* AppDelegate.swift */; };
 		EADE59B7232EB09A00E2F65A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE59B6232EB09A00E2F65A /* ViewController.swift */; };
 		EADE59B9232EB09A00E2F65A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EADE59B8232EB09A00E2F65A /* Assets.xcassets */; };
@@ -32,6 +33,7 @@
 		EA2DA1AB232EB1D600D31031 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSRunningApplication Extension.swift"; sourceTree = "<group>"; };
 		EA2DA1B0232EB25A00D31031 /* AXUIElement Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AXUIElement Extension.swift"; sourceTree = "<group>"; };
+		EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationShortcuts.swift; sourceTree = "<group>"; };
 		EADE59B1232EB09A00E2F65A /* VOCR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VOCR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EADE59B4232EB09A00E2F65A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EADE59B6232EB09A00E2F65A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 		EADE59B3232EB09A00E2F65A /* VOCR */ = {
 			isa = PBXGroup;
 			children = (
+				EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */,
 				EA2DA1B0232EB25A00D31031 /* AXUIElement Extension.swift */,
 				EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */,
 				EA2DA1AB232EB1D600D31031 /* Accessibility.swift */,
@@ -125,7 +128,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = "Chi Kim";
 				TargetAttributes = {
 					EADE59B0232EB09A00E2F65A = {
@@ -179,6 +182,7 @@
 				EA2DA1A5232EB18800D31031 /* NSEventModifierFlags+HotKey.swift in Sources */,
 				EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */,
 				EA2DA1A9232EB18800D31031 /* HotKey.swift in Sources */,
+				EAA12C4F234C89030036AF6A /* NavigationShortcuts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +318,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = VOCR/VOCR.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9N598S2535;
@@ -334,6 +339,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = VOCR/VOCR.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9N598S2535;

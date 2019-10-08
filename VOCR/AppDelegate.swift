@@ -11,6 +11,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, AVCapturePhotoCaptureDelegat
 	var requestHandler: VNImageRequestHandler?
 	var textRecognitionRequest: VNRecognizeTextRequest!
 	let shortcuts = Shortcuts()
+	var navigationShortcuts:NavigationShortcuts?
 	var cgPosition = CGPoint(x: 0, y: 0)
 	var cgSize = CGSize(width: 0, height: 0)
 	var displayResults:[[VNRecognizedTextObservation]] = []
@@ -25,8 +26,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, AVCapturePhotoCaptureDelegat
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		if !Accessibility.isTrusted(ask:true) {
 			print("Accessibility not enabled.")
+			NSApplication.shared.terminate(self)
 		}
-		askCameraPermission()
+		// askCameraPermission()
 		let menu = NSMenu()
 		menu.addItem(withTitle: "Show", action: #selector(AppDelegate.click(_:)), keyEquivalent: "")
 		menu.addItem(withTitle: "Quit", action: #selector(AppDelegate.quit(_:)), keyEquivalent: "")
@@ -71,6 +73,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, AVCapturePhotoCaptureDelegat
 	@objc func quit(_ sender: AnyObject?) {
 		NSApplication.shared.terminate(self)
 	}
+
 	func askCameraPermission() {
 		let cameraPermissionStatus = AVCaptureDevice.authorizationStatus(for: .video)
 		switch cameraPermissionStatus {
@@ -95,6 +98,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, AVCapturePhotoCaptureDelegat
 
 	func start() {
 		NSSound(contentsOfFile: "/System/Library/Sounds/Tink.aiff", byReference: true)?.play()
+
 		if let  cgImage = TakeScreensShots() {
 			requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
 			performOCRRequest()
@@ -184,6 +188,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, AVCapturePhotoCaptureDelegat
 	}
 
 	func performOCRRequest() {
+		l = -1
+		w = -1
+		c = -1
+
 		textRecognitionRequest.cancel()
 		DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async { [unowned self] in
 			do {
@@ -203,6 +211,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, AVCapturePhotoCaptureDelegat
 
 	func recognizeTextHandler(request: VNRequest, error: Error?) {
 		DispatchQueue.main.async { [unowned self] in
+			self.displayResults = []
 			if var results = self.textRecognitionRequest.results as? [VNRecognizedTextObservation] {
 
 				func sort(_ a:VNRecognizedTextObservation, _ b:VNRecognizedTextObservation) -> Bool {
@@ -222,7 +231,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, AVCapturePhotoCaptureDelegat
 					return
 				}
 				results = results.sorted(by: sort)
-				self.displayResults = []
+
 				var line:[VNRecognizedTextObservation] = []
 				var y = results[0].boundingBox.midY
 				for r in results {
@@ -236,12 +245,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, AVCapturePhotoCaptureDelegat
 				}
 				self.displayResults.append(line)
 			}
-			Accessibility.speak("Finished!")
+			Accessibility.speak("Finished! Press escape to exit navigation.")
+			self.navigationShortcuts = NavigationShortcuts()
 		}
 	}
 
 	func location() {
-		let center = convert2coordinates(displayResults[l][w].boundingBox)
+		var center = convert2coordinates(displayResults[l][w].boundingBox)
+		center.x -= cgPosition.x
+		center.y -= cgPosition.y
 		Accessibility.speak("\(Int(center.x)), \(Int(center.y))")
 	}
 
