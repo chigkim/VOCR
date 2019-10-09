@@ -6,7 +6,7 @@ This is a standalone app, and it does not rely on Keyboard Maestro, Imagemagick,
 
 ## Download
 
-Here is the direct link to download [VOCR v0.1.0-alpha.1](https://github.com/chigkim/VOCR/releases/download/v0.1.0-alpha.1/VOCR.v0.1.0-alpha.1.zip).  
+Here is the direct link to download [VOCR v0.1.0-alpha.2](https://github.com/chigkim/VOCR/releases/download/v0.1.0-alpha.2/VOCR.v0.1.0-alpha.2.zip).  
 
 ## Upgrade
 You can simply remove VOCR group from Keyboard Maestro and follow the instruction for setup below.
