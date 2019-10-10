@@ -1,4 +1,8 @@
-# ***HIGHLY EXPERIMENTAL***
+# Welcome to VOCR
+**WARNING**: USE AT YOUR OWN RISK! This is in alpha cycle. Many things may not work and change frequently without notice.
+VOCR is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY, expressed or implied, of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Please see the [GNU General Public License](http://www.gnu.org/licenses/) for more details.
+
+## ***HIGHLY EXPERIMENTAL***
 
 This branch utilizes VisionKit on MacOS Catalina that take advantage of machine learning for OCR.
 
