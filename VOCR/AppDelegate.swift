@@ -257,7 +257,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, AVCapturePhotoCaptureDelegat
 		Accessibility.speak("\(Int(center.x)), \(Int(center.y))")
 	}
 
-	
 	func correctLimit() {
 		if l < 0 {
 			l = 0

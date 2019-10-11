@@ -1,6 +1,7 @@
 # Welcome to VOCR
 **WARNING**: USE AT YOUR OWN RISK! This is in alpha cycle. Many things may not work and change frequently without notice.
-VOCR is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY, expressed or implied, of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Please see the [GNU General Public License](http://www.gnu.org/licenses/) for more details.
+
+VOCR is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY, expressed or implied, of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Please see the [GNU General Public License](http://www.gnu.org/licenses/) for more details.
 
 ## ***HIGHLY EXPERIMENTAL***
 
@@ -26,12 +27,12 @@ The following steps are optional if you want to remove Imagemagick and Tesseract
 3. After allowing accessibility permission, and run the app again.
 4. Make sure you can find the app on the menu extra .
 5. Make sure screen curtain is off by pressing vo+shift+f11.
-6. Go to system preference, and press command+shift+o, and you should get another notification asking you to allow VOCR to take screenshot. If you don't get the alert, see if you can find it in the system dialog as you did in the previous step.
+6. Go to system preference, and press command+shift+control+o, and you should get another notification asking you to allow VOCR to take screenshot. If you don't get the alert, see if you can find it in the system dialog as you did in the previous step.
 7. If you can't find it from the system dialog, go to security and privacy, unlock, then go to choose screen recording under privacy tab, and you should be able to find VOCR app.
 8. When you check it to allow, it should tell you to quit.
 9. After restarting the app, and make sure you can find it on the menu extra.
-10. As a test, go back to the system preference, and press command+shift+o, and you should hear a beep and a Voice prompt saying finished.
-11. At that point, you should be able to navigate the result with command+shift+arrows, and your mouse should be also moving. Use command+option+shift+left/right to navigate between characters within the focussed word.
+10. As a test, go back to the system preference, and press command+shift+control+o, and you should hear a beep and a Voice prompt saying finished.
+11. At that point, you should be able to navigate the result with command+control+arrows, and your mouse should be also moving. Use command+control+shift+left/right to navigate between characters within the focused words.
 12. Try to navigate to Siri preference Using VOCR cursor, and then press vo+f5. VoiceOver should say your mouse is also under Siri.
 13. Press escape to exit navigation mode and free up navigation shortcuts.
 
