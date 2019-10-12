@@ -11,7 +11,7 @@ This is a standalone app, and it does not rely on Keyboard Maestro, Imagemagick,
 
 ## Download
 
-Here is the direct link to download [VOCR v0.1.0-alpha.3](https://github.com/chigkim/VOCR/releases/download/v0.1.0-alpha.3/VOCR.v0.1.0-alpha.3.zip).  
+Here is the direct link to download [VOCR v0.1.0-alpha.4](https://github.com/chigkim/VOCR/releases/download/v0.1.0-alpha.4/VOCR.v0.1.0-alpha.4.zip).  
 
 ## Upgrade
 You can simply remove VOCR group from Keyboard Maestro and follow the instruction for setup below.
@@ -38,4 +38,31 @@ The following steps are optional if you want to remove Imagemagick and Tesseract
 
 VOCR just looks for front most window of front most app, so don't try VOCR on a window that's not attached to a regular app. For example, desktop and menu bar app like Dropbox that opens its window in System dialog.
 
+## Using Image Recognition under VoiceOver Cursor
+1. Complete the setup above.
+2. Move your VoiceOver cursor to the element that you want to recognize.
+3. Press command+shift+control+v
+4. If you use this feature for the first time, you will get a series of alerts asking you to allow VOCR to: 1. run AppleScript; 2. control VoiceOver to take screenshots; and 3. access desktop folder where VoiceOVer saves screenshots.
+5. After granting the permission, press the shortcut command+shift+control+v again.
+
+If everything goes well, VOCR will report the top 3 image categories in confidence order. If VOCR categorizes the image as a document, it will apply OCR. You can review the OCR result the same way as the section above, but this does not work with mouse movement.
+
+## Additional settings
+* Positional audio (command+shift+control+p): As mouse moves you'll hear audio feedback with pitch changes for vertical move, and left/right for horizontal move.
+* Reset position (command+shift+control+r): Every new scan, the cursor will reset to top left corner.
+
+# Shortcuts
+* OCR screen: command+shift+control+o
+* Recognize image under VoiceOver cursor: command+shift+control+v
+* Toggle reset position at scan: command+shift+control+r
+* Toggle positional audio feedback: command+shift+control+p
+* Exit navigation: escape
+
+The following shortcuts only works after a scan.
+
+* Move down/up: command+control+down/up
+* Left/right: command+control+left/right
+* Previous/next character: command+shift+control+left/right
+
 Please enjoy and send me your feedback!
+

@@ -6,7 +6,6 @@
 //  Copyright © 2018 Chi Kim. All rights reserved.
 //
 
-import Foundation
 import Cocoa
 
 class Accessibility {
@@ -21,7 +20,7 @@ class Accessibility {
 
 	static func notify(_ message:String) {
 		let announcement = [NSAccessibility.NotificationUserInfoKey.announcement:message, NSAccessibility.NotificationUserInfoKey.priority:"High"]
-		var element = NSApplication.shared as Any
+		let element = NSApplication.shared as Any
 		NSAccessibility.post(element:element, notification: NSAccessibility.Notification.announcementRequested, userInfo: announcement)
 	}
 

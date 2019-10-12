@@ -6,9 +6,6 @@
 //  Copyright © 2019 Chi Kim. All rights reserved.
 //
 
-import Cocoa
-
-
 class NavigationShortcuts {
 	
 	let right = HotKey(key:.rightArrow, modifiers:[.command,.control])
@@ -22,44 +19,36 @@ class NavigationShortcuts {
 	
 	init() {
 		location.keyDownHandler = {
-			let app = NSApplication.shared.delegate as! AppDelegate
-			app.location()
+			Navigation.shared.location()
 		}
 		
 		right.keyDownHandler = {
-			let app = NSApplication.shared.delegate as! AppDelegate
-			app.right()
+			Navigation.shared.right()
 		}
 		
 		left.keyDownHandler = {
-			let app = NSApplication.shared.delegate as! AppDelegate
-			app.left()
+			Navigation.shared.left()
 		}
 		
 		up.keyDownHandler = {
-			let app = NSApplication.shared.delegate as! AppDelegate
-			app.up()
+			Navigation.shared.up()
 		}
 		
 		down.keyDownHandler = {
-			let app = NSApplication.shared.delegate as! AppDelegate
-			app.down()
+			Navigation.shared.down()
 		}
 		
 		nextCharacter.keyDownHandler = {
-			let app = NSApplication.shared.delegate as! AppDelegate
-			app.nextCharacter()
+			Navigation.shared.nextCharacter()
 		}
 		
 		previousCharacter.keyDownHandler = {
-			let app = NSApplication.shared.delegate as! AppDelegate
-			app.previousCharacter()
+			Navigation.shared.previousCharacter()
 		}
 		
 		exit.keyDownHandler = {
 			Accessibility.speak("Exit navigation.")
-			let app = NSApplication.shared.delegate as! AppDelegate
-			app.navigationShortcuts = nil
+			Navigation.shared.navigationShortcuts = nil
 		}
 		
 	}

@@ -26,6 +26,8 @@
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>LSUIElement</key>
 	<true/>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>Take Screenshot With VoiceOver</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Capture a photo to OCR.</string>
 	<key>NSHumanReadableCopyright</key>

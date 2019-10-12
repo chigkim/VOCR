@@ -6,7 +6,6 @@
 //  Copyright © 2018 Chi Kim. All rights reserved.
 //
 
-import Foundation
 import Cocoa
 
 extension NSRunningApplication {
