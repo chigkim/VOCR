@@ -7,44 +7,40 @@
 //
 
 import AudioKit
-
 class Player {
 
 	static let shared = Player()
-	let osc = AKOscillator()
-	let env:AKAmplitudeEnvelope
-	var panner = AKPanner()
+
+	let osc:AKPinkNoise
+	let panner:AKPanner
+	let eq:AKBandPassButterworthFilter
+		let env:AKAmplitudeEnvelope
 
 	init() {
-		osc.amplitude = 0.3
+		osc = AKPinkNoise(amplitude: 1.0)
 		env = AKAmplitudeEnvelope(osc)
 		env.attackDuration = 0.05
 		env.decayDuration = 0.1
-		env.sustainLevel = 0.01
+		env.sustainLevel = 0.8
 		env.releaseDuration = 0.05
-		panner = AKPanner(env)
+		
+		eq = AKBandPassButterworthFilter(env)
+		eq.bandwidth = 100
+let mixer = AKMixer(eq)
+		mixer.volume = 2.0
+		panner = AKPanner(mixer)
 		AudioKit.output = panner
 		try! AudioKit.start()
-		osc.start()
-		panner.start()
 	}
 
 	func play(_ freq:Double, _ pan:Double) {
-		osc.frequency = freq
+		eq.centerFrequency = freq
 		panner.pan = pan
 		env.start()
 		usleep(200000)
 		env.stop()
-	}
-
-	func change() {
-			osc.frequency = random(100, 5000)
-			panner.pan = random(-1, 1)
-			env.start()
-			usleep(200000)
-			env.stop()
+		
 		}
 
-
-
 }
+
