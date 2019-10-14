@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EA1F63F92352427A0089C967 /* Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F63F82352427A0089C967 /* Shortcuts.swift */; };
+		EA1F63F92352427A0089C967 /* VOCR Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */; };
 		EA1F642C2352503D0089C967 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F642B2352503D0089C967 /* Player.swift */; };
 		EA1F642D235282DB0089C967 /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA1F642723524C150089C967 /* AudioKit.framework */; };
 		EA1F642E235282DB0089C967 /* AudioKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EA1F642723524C150089C967 /* AudioKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -32,6 +32,7 @@
 		EADE59B7232EB09A00E2F65A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE59B6232EB09A00E2F65A /* ViewController.swift */; };
 		EADE59B9232EB09A00E2F65A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EADE59B8232EB09A00E2F65A /* Assets.xcassets */; };
 		EADE59BC232EB09A00E2F65A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EADE59BA232EB09A00E2F65A /* Main.storyboard */; };
+		EAF9C3C82354A66200D4D77C /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF9C3C72354A66200D4D77C /* Settings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -49,7 +50,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		EA1F63F82352427A0089C967 /* Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
+		EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VOCR Shortcuts.swift"; sourceTree = "<group>"; };
 		EA1F63FB2352496E0089C967 /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioKit.framework; path = ../../Downloads/AudioKitPlaygrounds/AudioKitPlaygrounds/AudioKit.framework; sourceTree = "<group>"; };
 		EA1F63FF235249C80089C967 /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioKit.framework; path = Frameworks/AudioKit.framework; sourceTree = "<group>"; };
 		EA1F640423524C150089C967 /* VOCR.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = VOCR.xcodeproj; sourceTree = "<group>"; };
@@ -106,6 +107,7 @@
 		EADE59BB232EB09A00E2F65A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EADE59BD232EB09A00E2F65A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EADE59BE232EB09A00E2F65A /* VOCR.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VOCR.entitlements; sourceTree = "<group>"; };
+		EAF9C3C72354A66200D4D77C /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,7 +249,7 @@
 			children = (
 				EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */,
 				EA1F642B2352503D0089C967 /* Player.swift */,
-				EA1F63F82352427A0089C967 /* Shortcuts.swift */,
+				EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */,
 				EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */,
 				EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */,
 				EA8AD6402352B4A000D26871 /* Double Extension.swift */,
@@ -261,6 +263,7 @@
 				EA5C7AC72351B3F500D84042 /* OCR.swift */,
 				EA5C7AC92351B96D00D84042 /* Take Screenshot.swift */,
 				EA5C7ACB2351BB6D00D84042 /* Navigation.swift */,
+				EAF9C3C72354A66200D4D77C /* Settings.swift */,
 				EA5C7AD32351D44B00D84042 /* RecognizeVOCursor.swift */,
 				EA6C26AB2354656D00665D4D /* Clasifier.swift */,
 				EA5C7ACD2351C10100D84042 /* MacCamera.swift */,
@@ -352,7 +355,7 @@
 				EA8AD6412352B4A000D26871 /* Double Extension.swift in Sources */,
 				EA5C7AD02351C8DE00D84042 /* AXUIElement Extension.swift in Sources */,
 				EA2DA1A7232EB18800D31031 /* Key.swift in Sources */,
-				EA1F63F92352427A0089C967 /* Shortcuts.swift in Sources */,
+				EA1F63F92352427A0089C967 /* VOCR Shortcuts.swift in Sources */,
 				EADE59B5232EB09A00E2F65A /* AppDelegate.swift in Sources */,
 				EA2DA1A8232EB18800D31031 /* HotKeysController.swift in Sources */,
 				EA5C7AC82351B3F500D84042 /* OCR.swift in Sources */,
@@ -364,6 +367,7 @@
 				EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */,
 				EA6C26AC2354656D00665D4D /* Clasifier.swift in Sources */,
 				EA2DA1A9232EB18800D31031 /* HotKey.swift in Sources */,
+				EAF9C3C82354A66200D4D77C /* Settings.swift in Sources */,
 				EA1F642C2352503D0089C967 /* Player.swift in Sources */,
 				EAA12C4F234C89030036AF6A /* NavigationShortcuts.swift in Sources */,
 			);

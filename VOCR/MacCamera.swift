@@ -14,7 +14,8 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 	static let shared = MacCamera()
 	var captureSession:AVCaptureSession!
 	var cameraOutput:AVCapturePhotoOutput!
-
+	let save = false
+	
 	func isCameraAllowed() -> Bool {
 		let cameraPermissionStatus = AVCaptureDevice.authorizationStatus(for: .video)
 		switch cameraPermissionStatus {
@@ -81,11 +82,24 @@ return access
 			let dataProvider = CGDataProvider(data: dataImage as CFData)
 			if let cgImage = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent) {
 				NSSound(contentsOfFile: "/System/Library/Components/CoreAudio.component/Contents/SharedSupport/SystemSounds/system/Shutter.aif", byReference: true)?.play()
-				classify(cgImage:cgImage)
+				let fileManager = FileManager.default
+				let home = fileManager.homeDirectoryForCurrentUser
+				let file = home.appendingPathComponent("Desktop/camera.png")
+				let url = file.absoluteURL
+				if Settings.saveCameraImage {
+					writeCGImage(cgImage, to:url)
+				}
+					classify(cgImage:cgImage)
 			}
 			} else {
 			print("some error here")
 		}
 	}
 
+	@discardableResult func writeCGImage(_ image: CGImage, to destinationURL: URL) -> Bool {
+		guard let destination = CGImageDestinationCreateWithURL(destinationURL as CFURL, kUTTypePNG, 1, nil) else { return false }
+		CGImageDestinationAddImage(destination, image, nil)
+		return CGImageDestinationFinalize(destination)
+	}
+	
 }

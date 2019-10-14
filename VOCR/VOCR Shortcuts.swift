@@ -6,7 +6,7 @@
 //  Copyright © 2019 Chi Kim. All rights reserved.
 //
 
-class Shortcuts {
+struct Shortcuts {
 	
 	let window = HotKey(key:.w, modifiers:[.command,.shift, .control])
 	let camera = HotKey(key:.c, modifiers:[.command,.shift,.control])
@@ -32,21 +32,21 @@ class Shortcuts {
 		}
 
 		resetPosition.keyDownHandler = {
-			if Navigation.shared.positionReset {
-				Navigation.shared.positionReset = false
+			if Settings.positionReset {
+				Settings.positionReset = false
 				Accessibility.speak("Disable reset position.")
 			} else {
-				Navigation.shared.positionReset = true
+				Settings.positionReset = true
 				Accessibility.speak("Enable reset position.")
 			}
 		}
 
 		positionalAudio.keyDownHandler = {
-			if Navigation.shared.positionalAudio {
-				Navigation.shared.positionalAudio = false
+			if Settings.positionalAudio {
+				Settings.positionalAudio = false
 				Accessibility.speak("Disable positional audio.")
 			} else {
-				Navigation.shared.positionalAudio = true
+				Settings.positionalAudio = true
 				Accessibility.speak("Enable positional audio.")
 			}
 		}

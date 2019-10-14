@@ -9,11 +9,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	let shortcuts = Shortcuts()
 
 	func applicationDidFinishLaunching(_ notification: Notification) {
-		if !Accessibility.isTrusted(ask:true) {
+				if !Accessibility.isTrusted(ask:true) {
 			print("Accessibility not enabled.")
 			NSApplication.shared.terminate(self)
 		}
-		// askCameraPermission()
 
 		let menu = NSMenu()
 		menu.addItem(withTitle: "Show", action: #selector(AppDelegate.click(_:)), keyEquivalent: "")

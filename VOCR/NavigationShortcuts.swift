@@ -6,7 +6,7 @@
 //  Copyright © 2019 Chi Kim. All rights reserved.
 //
 
-class NavigationShortcuts {
+struct NavigationShortcuts {
 	
 	let right = HotKey(key:.rightArrow, modifiers:[.command,.control])
 	let left = HotKey(key:.leftArrow, modifiers:[.command,.control])

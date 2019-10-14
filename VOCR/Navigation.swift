@@ -20,11 +20,9 @@ class Navigation {
 	var l = -1
 	var w = -1
 	var c = -1
-	var positionReset = true
-	var positionalAudio = true
 
 	func startOCR(cgImage:CGImage) {
-		if positionReset {
+		if Settings.positionReset {
 			l = -1
 			w = -1
 			c = -1
@@ -60,7 +58,7 @@ class Navigation {
 
 	func convert2coordinates(_ box:CGRect) -> CGPoint {
 			var center = CGPoint(x:box.midX, y:box.midY)
-		if positionalAudio {
+		if Settings.positionalAudio {
 			let frequency = 100+1000*Double(center.y)
 			let pan = Double(center.x).normalize(from: 0...1, into: -1...1)
 			Player.shared.play(frequency, pan)
