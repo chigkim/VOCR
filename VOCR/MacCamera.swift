@@ -44,14 +44,11 @@ return access
 	}
 
 	func takePicture() {
-
-//		let pop = NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)
-//		for _ in 1...4 {
-//			pop?.play()
-//			sleep(1)
-//			pop?.stop()
-//		}
-		
+		for c in stride(from: 3, to: 1, by: -1) {
+			Accessibility.speak("\(c)")
+			sleep(1)
+		}
+			Accessibility.speak("1")
 		captureSession = AVCaptureSession()
 		captureSession.sessionPreset = AVCaptureSession.Preset.photo
 		cameraOutput = AVCapturePhotoOutput()
