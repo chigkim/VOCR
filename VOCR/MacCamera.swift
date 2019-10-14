@@ -9,42 +9,49 @@
 import AVFoundation
 import Cocoa
 
-class Camera:NSObject, AVCapturePhotoCaptureDelegate {
+class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 
-	var captureSession: AVCaptureSession!
-	var cameraOutput: AVCapturePhotoOutput!
+	static let shared = MacCamera()
+	var captureSession:AVCaptureSession!
+	var cameraOutput:AVCapturePhotoOutput!
 
-	static func askPermission() {
+	func isCameraAllowed() -> Bool {
 		let cameraPermissionStatus = AVCaptureDevice.authorizationStatus(for: .video)
 		switch cameraPermissionStatus {
 		case .authorized:
 			print("Already Authorized")
+			return true
 		case .denied:
 			print("denied")
+			return false
 		case .restricted:
 			print("restricted")
+			return false
 		default:
-			print("ok")
+			print("Ask permission")
+
+			var access = false
 			AVCaptureDevice.requestAccess(for: .video) { granted in
 				if granted == true {
 					print("User granted")
 				} else {
 					print("User denied")
 				}
+				access = granted
 			}
-
+return access
 		}
 	}
 
 	func takePicture() {
-		let pop = NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)
-		let tink = NSSound(contentsOfFile: "/System/Library/Sounds/Tink.aiff", byReference: true)
-		for _ in 1...4 {
-			pop?.play()
-			sleep(1)
-			pop?.stop()
-		}
-		tink?.play()
+
+//		let pop = NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)
+//		for _ in 1...4 {
+//			pop?.play()
+//			sleep(1)
+//			pop?.stop()
+//		}
+		
 		captureSession = AVCaptureSession()
 		captureSession.sessionPreset = AVCaptureSession.Preset.photo
 		cameraOutput = AVCapturePhotoOutput()
@@ -68,20 +75,20 @@ class Camera:NSObject, AVCapturePhotoCaptureDelegate {
 	}
 
 	func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+		print("photo captured")
 		if let error = error {
-			print("error occured : \(error.localizedDescription)")
+			debugPrint(error)
 		}
 
 		if let dataImage = photo.fileDataRepresentation() {
 			let dataProvider = CGDataProvider(data: dataImage as CFData)
 			if let cgImage = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent) {
 				NSSound(contentsOfFile: "/System/Library/Components/CoreAudio.component/Contents/SharedSupport/SystemSounds/system/Shutter.aif", byReference: true)?.play()
+				classify(cgImage:cgImage)
 			}
 			} else {
 			print("some error here")
 		}
 	}
-
-
 
 }

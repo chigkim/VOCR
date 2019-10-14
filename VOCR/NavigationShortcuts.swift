@@ -47,7 +47,7 @@ class NavigationShortcuts {
 		}
 		
 		exit.keyDownHandler = {
-			Accessibility.speak("Exit navigation.")
+			Accessibility.speak("Exit VOCR navigation.")
 			Navigation.shared.navigationShortcuts = nil
 		}
 		

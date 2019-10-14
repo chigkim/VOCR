@@ -21,10 +21,11 @@
 		EA5C7AC82351B3F500D84042 /* OCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7AC72351B3F500D84042 /* OCR.swift */; };
 		EA5C7ACA2351B96D00D84042 /* Take Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7AC92351B96D00D84042 /* Take Screenshot.swift */; };
 		EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACB2351BB6D00D84042 /* Navigation.swift */; };
-		EA5C7ACE2351C10100D84042 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACD2351C10100D84042 /* Camera.swift */; };
+		EA5C7ACE2351C10100D84042 /* MacCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACD2351C10100D84042 /* MacCamera.swift */; };
 		EA5C7AD02351C8DE00D84042 /* AXUIElement Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */; };
 		EA5C7AD42351D44B00D84042 /* RecognizeVOCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7AD32351D44B00D84042 /* RecognizeVOCursor.swift */; };
 		EA5C7AD92351D81100D84042 /* VOScreenshot.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EA5C7AD82351D81100D84042 /* VOScreenshot.scpt */; };
+		EA6C26AC2354656D00665D4D /* Clasifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6C26AB2354656D00665D4D /* Clasifier.swift */; };
 		EA8AD6412352B4A000D26871 /* Double Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8AD6402352B4A000D26871 /* Double Extension.swift */; };
 		EAA12C4F234C89030036AF6A /* NavigationShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */; };
 		EADE59B5232EB09A00E2F65A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE59B4232EB09A00E2F65A /* AppDelegate.swift */; };
@@ -91,10 +92,11 @@
 		EA5C7AC72351B3F500D84042 /* OCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCR.swift; sourceTree = "<group>"; };
 		EA5C7AC92351B96D00D84042 /* Take Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Take Screenshot.swift"; sourceTree = "<group>"; };
 		EA5C7ACB2351BB6D00D84042 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
-		EA5C7ACD2351C10100D84042 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		EA5C7ACD2351C10100D84042 /* MacCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacCamera.swift; sourceTree = "<group>"; };
 		EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AXUIElement Extension.swift"; sourceTree = "<group>"; };
 		EA5C7AD32351D44B00D84042 /* RecognizeVOCursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizeVOCursor.swift; sourceTree = "<group>"; };
 		EA5C7AD82351D81100D84042 /* VOScreenshot.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = VOScreenshot.scpt; sourceTree = "<group>"; };
+		EA6C26AB2354656D00665D4D /* Clasifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clasifier.swift; sourceTree = "<group>"; };
 		EA8AD6402352B4A000D26871 /* Double Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double Extension.swift"; sourceTree = "<group>"; };
 		EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationShortcuts.swift; sourceTree = "<group>"; };
 		EADE59B1232EB09A00E2F65A /* VOCR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VOCR.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -260,7 +262,8 @@
 				EA5C7AC92351B96D00D84042 /* Take Screenshot.swift */,
 				EA5C7ACB2351BB6D00D84042 /* Navigation.swift */,
 				EA5C7AD32351D44B00D84042 /* RecognizeVOCursor.swift */,
-				EA5C7ACD2351C10100D84042 /* Camera.swift */,
+				EA6C26AB2354656D00665D4D /* Clasifier.swift */,
+				EA5C7ACD2351C10100D84042 /* MacCamera.swift */,
 			);
 			path = VOCR;
 			sourceTree = "<group>";
@@ -343,7 +346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA5C7ACE2351C10100D84042 /* Camera.swift in Sources */,
+				EA5C7ACE2351C10100D84042 /* MacCamera.swift in Sources */,
 				EADE59B7232EB09A00E2F65A /* ViewController.swift in Sources */,
 				EA5C7ACA2351B96D00D84042 /* Take Screenshot.swift in Sources */,
 				EA8AD6412352B4A000D26871 /* Double Extension.swift in Sources */,
@@ -359,6 +362,7 @@
 				EA5C7AD42351D44B00D84042 /* RecognizeVOCursor.swift in Sources */,
 				EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */,
 				EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */,
+				EA6C26AC2354656D00665D4D /* Clasifier.swift in Sources */,
 				EA2DA1A9232EB18800D31031 /* HotKey.swift in Sources */,
 				EA1F642C2352503D0089C967 /* Player.swift in Sources */,
 				EAA12C4F234C89030036AF6A /* NavigationShortcuts.swift in Sources */,
@@ -510,7 +514,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -537,7 +541,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (

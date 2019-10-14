@@ -4,14 +4,12 @@
 VOCR is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY, expressed or implied, of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Please see the [GNU General Public License](http://www.gnu.org/licenses/) for more details.
 
 ## ***HIGHLY EXPERIMENTAL***
-
 This branch utilizes VisionKit on MacOS Catalina that take advantage of machine learning for OCR.
 
 This is a standalone app, and it does not rely on Keyboard Maestro, Imagemagick, and Tesseract that the previous VOCR utilized.
 
 ## Download
-
-Here is the direct link to download [VOCR v0.1.0-alpha.5.](https://github.com/chigkim/VOCR/releases/download/v0.1.0-alpha.5/VOCR.v0.1.0-alpha.5.zip)  
+Here is the direct link to download [VOCR v0.1.0-alpha.6.](https://github.com/chigkim/VOCR/releases/download/v0.1.0-alpha.6/VOCR.v0.1.0-alpha.6.zip)  
 
 ## Upgrade
 You can simply remove VOCR group from Keyboard Maestro and follow the instruction for setup below.
@@ -48,17 +46,21 @@ VOCR just looks for front most window of front most app, so don't try VOCR on a 
 
 If you want to verify if it works properly, search images on Google image using Safari and try recognize them.
 
-If everything goes well, VOCR will report the top 3 image categories in confidence order. If VOCR categorizes the image as a document, it will apply OCR. You can review the OCR result the same way as the section above, but this does not work with mouse movement.
+If everything goes well, VOCR will report the top 5 image categories in confidence order. If VOCR categorizes the image as a document, it will apply OCR. You can review the OCR result the same way as the section above, but this does not work with mouse movement.
+
+## Recognize picture from camera
+* Press command+shift+control+c
+* If running  this feature for the first time, it will display an alert to give VOCR access to your camera
 
 ## Settings
-
 Positional audio (command+shift+control+p): As mouse cursor moves you will hear hear audio feedback. Frequency changes responds to vertical move, and pan responds to horizontal move. This feature is useful to explore the interface and discover elements' locations.
 
 Disable/enable reset position (command+shift+control+r): When disabled, the cursor will not reset to the top left corner after every new scan. This feature is useful when you rescan the same window to find new change without losing previous cursor.
 
 ## Shortcuts
-* OCR screen: command+shift+control+o
+* OCR Frontost Window: command+shift+control+w
 * Recognize image under VoiceOver cursor: command+shift+control+v
+* Recognize picture from camera: command+shift+control+c
 * Toggle reset position at scan: command+shift+control+r
 * Toggle positional audio feedback: command+shift+control+p
 

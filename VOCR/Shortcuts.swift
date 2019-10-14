@@ -8,19 +8,29 @@
 
 class Shortcuts {
 	
-	let screen = HotKey(key:.o, modifiers:[.command,.shift, .control])
-	//	let picture = HotKey(key:.p, modifiers:[.command,.shift])
+	let window = HotKey(key:.w, modifiers:[.command,.shift, .control])
+	let camera = HotKey(key:.c, modifiers:[.command,.shift,.control])
 	let vo = HotKey(key:.v, modifiers:[.command,.shift, .control])
 	let resetPosition = HotKey(key:.r, modifiers:[.command,.shift, .control])
 	let positionalAudio = HotKey(key:.p, modifiers:[.command,.shift, .control])
 
 	init() {
-		screen.keyDownHandler = {
-			Navigation.shared.ocrScreen()
+		window.keyDownHandler = {
+			if let  cgImage = TakeScreensShots() {
+				Navigation.shared.startOCR(cgImage:cgImage)
+			}
 		}
+
+		camera.keyDownHandler = {
+			if MacCamera.shared.isCameraAllowed() {
+				MacCamera.shared.takePicture()
+			}
+			}
+
 		vo.keyDownHandler = {
 			recognizeVOCursor()
 		}
+
 		resetPosition.keyDownHandler = {
 			if Navigation.shared.positionReset {
 				Navigation.shared.positionReset = false
@@ -40,12 +50,6 @@ class Shortcuts {
 				Accessibility.speak("Enable positional audio.")
 			}
 		}
-
-
-		//		picture.keyDownHandler = {
-		//			Navigation.shared.takePicture()
-		//		}
-
 
 	}
 

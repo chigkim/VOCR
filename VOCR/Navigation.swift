@@ -11,6 +11,7 @@ import Vision
 import Cocoa
 
 class Navigation {
+
 	static let shared = Navigation()
 	var displayResults:[[VNRecognizedTextObservation]] = []
 	var navigationShortcuts:NavigationShortcuts?
@@ -37,16 +38,10 @@ class Navigation {
 			return
 		}
 		process(result:&result)
-		Accessibility.speak("OCR Finished! Press escape to exit navigation.")
+		Accessibility.speak("Finished!")
 		navigationShortcuts = NavigationShortcuts()
 	}
 
-	func ocrScreen() {
-		if let  cgImage = TakeScreensShots() {
-			startOCR(cgImage:cgImage)
-		}
-	}
-	
 	func process(result:inout[VNRecognizedTextObservation]) {
 		result = result.sorted(by: sort)
 		var line:[VNRecognizedTextObservation] = []
