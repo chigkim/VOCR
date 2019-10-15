@@ -15,20 +15,25 @@ class Player {
 	let panner:AKPanner
 	let eq:AKBandPassButterworthFilter
 		let env:AKAmplitudeEnvelope
-
+	let ramp = 0.1
+	
 	init() {
 		osc = AKPinkNoise(amplitude: 1.0)
+		osc.rampDuration = ramp
 		env = AKAmplitudeEnvelope(osc)
+		env.rampDuration = ramp
 		env.attackDuration = 0.05
-		env.decayDuration = 0.1
-		env.sustainLevel = 0.8
+		env.decayDuration = 0.05
+		env.sustainLevel = 0.5
 		env.releaseDuration = 0.05
 		
 		eq = AKBandPassButterworthFilter(env)
 		eq.bandwidth = 100
-let mixer = AKMixer(eq)
+		eq.rampDuration = ramp
+		let mixer = AKMixer(eq)
 		mixer.volume = 2.0
 		panner = AKPanner(mixer)
+		panner.rampDuration = ramp
 		AudioKit.output = panner
 		try! AudioKit.start()
 	}
@@ -37,10 +42,8 @@ let mixer = AKMixer(eq)
 		eq.centerFrequency = freq
 		panner.pan = pan
 		env.start()
-		usleep(200000)
+		usleep(100000)
 		env.stop()
-		
 		}
-
 }
 

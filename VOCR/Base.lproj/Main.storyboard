@@ -718,8 +718,8 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bI7-kE-P2d">
-                                <rect key="frame" x="28" y="68" width="145" height="16"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Developped by Chi Kim" id="3g9-wm-4YH">
+                                <rect key="frame" x="32" y="68" width="137" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Developed by Chi Kim" id="3g9-wm-4YH">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

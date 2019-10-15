@@ -9,7 +9,7 @@ This branch utilizes VisionKit on MacOS Catalina that take advantage of machine 
 This is a standalone app, and it does not rely on Keyboard Maestro, Imagemagick, and Tesseract that the previous VOCR utilized.
 
 ## Download
-Here is the direct link to download [VOCR v0.1.0-alpha.9.](https://github.com/chigkim/VOCR/releases/download/v0.1.0-alpha.9/VOCR.v0.1.0-alpha.9.zip)  
+Here is the direct link to download [VOCR v0.1.0-alpha.10.](https://github.com/chigkim/VOCR/releases/download/v0.1.0-alpha.10/VOCR.v0.1.0-alpha.10.zip)  
 
 ## Upgrade from Previous VOCR With Tesseract
 You can simply remove VOCR group from Keyboard Maestro and follow the instruction for setup below.
