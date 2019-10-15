@@ -9,13 +9,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	let shortcuts = Shortcuts()
 
 	func applicationDidFinishLaunching(_ notification: Notification) {
-				if !Accessibility.isTrusted(ask:true) {
-			print("Accessibility not enabled.")
-			NSApplication.shared.terminate(self)
-		}
 
 		let menu = NSMenu()
-		menu.addItem(withTitle: "Show", action: #selector(AppDelegate.click(_:)), keyEquivalent: "")
+		menu.addItem(withTitle: "About", action: #selector(AppDelegate.displayAboutWindow(_:)), keyEquivalent: "")
 		menu.addItem(withTitle: "Quit", action: #selector(AppDelegate.quit(_:)), keyEquivalent: "")
 
 		statusItem.menu = menu
@@ -30,10 +26,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 	}
 
+	@objc func displayAboutWindow(_ sender: Any?) {
+		let storyboardName = NSStoryboard.Name(stringLiteral: "Main")
+		let storyboard = NSStoryboard(name: storyboardName, bundle: nil)
+		let storyboardID = NSStoryboard.SceneIdentifier(stringLiteral: "aboutWindowStoryboardID")
+		if let aboutWindowController = storyboard.instantiateController(withIdentifier: storyboardID) as? NSWindowController {
+			NSApplication.shared.activate(ignoringOtherApps: true)
+			aboutWindowController.showWindow(nil)
+		}
+	}
+
 	@objc func click(_ sender: Any?) {
-		//windows[1].center()
-		NSApplication.shared.activate(ignoringOtherApps: true)
-		windows[1].makeKeyAndOrderFront(nil)
+print("Clicked")
 	}
 
 	@objc func quit(_ sender: AnyObject?) {

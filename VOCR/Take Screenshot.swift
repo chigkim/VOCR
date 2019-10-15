@@ -43,7 +43,6 @@ func TakeScreensShots() -> CGImage? {
 	Navigation.shared.cgSize = cgSize
 	Navigation.shared.cgPosition = cgPosition
 	print("\(cgPosition), \(cgSize)")
-	let screenShot:CGImage = CGDisplayCreateImage(activeDisplays[0], rect:CGRect(origin: cgPosition, size: cgSize))!
-	return screenShot
+	return CGDisplayCreateImage(activeDisplays[0], rect:CGRect(origin: cgPosition, size: cgSize))
 }
 

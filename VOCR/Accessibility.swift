@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Carbon
 
 class Accessibility {
 
@@ -25,7 +26,27 @@ class Accessibility {
 	}
 
 	static func speak(_ message:String) {
-		speech.startSpeaking(message)
+		// speech.startSpeaking(message)
+		let bundle = Bundle.main
+		let url = bundle.url(forResource: "say", withExtension: "scpt")
+		let parameters = NSAppleEventDescriptor.list()
+		parameters.insert(NSAppleEventDescriptor(string: message), at: 0)
+		let event = NSAppleEventDescriptor.appleEvent(withEventClass: AEEventClass(kASAppleScriptSuite), eventID: AEEventID(kASSubroutineEvent), targetDescriptor: nil, returnID: AEReturnID(kAutoGenerateReturnID), transactionID: AETransactionID(kAnyTransactionID))
+		event.setDescriptor(NSAppleEventDescriptor(string: "speak"), forKeyword: AEKeyword(keyASSubroutineName))
+		event.setDescriptor(parameters, forKeyword: AEKeyword(keyDirectObject))
+
+		var error:NSDictionary?
+		if let scriptObject = NSAppleScript(contentsOf: url!, error: &error) {
+			var outputError:NSDictionary?
+			if let output = scriptObject.executeAppleEvent(event, error: &outputError).stringValue {
+				print("Message:\(output)")
+			} else {
+				debugPrint("Output Error: \(outputError)")
+			}
+		} else {
+			debugPrint(error)
+		}
+
 	}
 
 }

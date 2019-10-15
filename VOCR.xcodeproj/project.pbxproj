@@ -25,9 +25,11 @@
 		EA5C7AD02351C8DE00D84042 /* AXUIElement Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */; };
 		EA5C7AD42351D44B00D84042 /* RecognizeVOCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7AD32351D44B00D84042 /* RecognizeVOCursor.swift */; };
 		EA5C7AD92351D81100D84042 /* VOScreenshot.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EA5C7AD82351D81100D84042 /* VOScreenshot.scpt */; };
+		EA688D452355BDC500F722C7 /* Bundle Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA688D442355BDC500F722C7 /* Bundle Extension.swift */; };
 		EA6C26AC2354656D00665D4D /* Clasifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6C26AB2354656D00665D4D /* Clasifier.swift */; };
 		EA8AD6412352B4A000D26871 /* Double Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8AD6402352B4A000D26871 /* Double Extension.swift */; };
 		EAA12C4F234C89030036AF6A /* NavigationShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */; };
+		EAD9CFD22355E11600E7F594 /* say.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EAD9CFD12355E11600E7F594 /* say.scpt */; };
 		EADE59B5232EB09A00E2F65A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE59B4232EB09A00E2F65A /* AppDelegate.swift */; };
 		EADE59B7232EB09A00E2F65A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE59B6232EB09A00E2F65A /* ViewController.swift */; };
 		EADE59B9232EB09A00E2F65A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EADE59B8232EB09A00E2F65A /* Assets.xcassets */; };
@@ -97,9 +99,11 @@
 		EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AXUIElement Extension.swift"; sourceTree = "<group>"; };
 		EA5C7AD32351D44B00D84042 /* RecognizeVOCursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizeVOCursor.swift; sourceTree = "<group>"; };
 		EA5C7AD82351D81100D84042 /* VOScreenshot.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = VOScreenshot.scpt; sourceTree = "<group>"; };
+		EA688D442355BDC500F722C7 /* Bundle Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle Extension.swift"; sourceTree = "<group>"; };
 		EA6C26AB2354656D00665D4D /* Clasifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clasifier.swift; sourceTree = "<group>"; };
 		EA8AD6402352B4A000D26871 /* Double Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double Extension.swift"; sourceTree = "<group>"; };
 		EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationShortcuts.swift; sourceTree = "<group>"; };
+		EAD9CFD12355E11600E7F594 /* say.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = say.scpt; sourceTree = "<group>"; };
 		EADE59B1232EB09A00E2F65A /* VOCR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VOCR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EADE59B4232EB09A00E2F65A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EADE59B6232EB09A00E2F65A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -220,6 +224,7 @@
 		EA5C7AD72351D81100D84042 /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
+				EAD9CFD12355E11600E7F594 /* say.scpt */,
 				EA5C7AD82351D81100D84042 /* VOScreenshot.scpt */,
 			);
 			path = Scripts;
@@ -248,6 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */,
+				EA688D442355BDC500F722C7 /* Bundle Extension.swift */,
 				EA1F642B2352503D0089C967 /* Player.swift */,
 				EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */,
 				EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */,
@@ -337,6 +343,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EADE59B9232EB09A00E2F65A /* Assets.xcassets in Resources */,
+				EAD9CFD22355E11600E7F594 /* say.scpt in Resources */,
 				EA5C7AD92351D81100D84042 /* VOScreenshot.scpt in Resources */,
 				EADE59BC232EB09A00E2F65A /* Main.storyboard in Resources */,
 			);
@@ -357,6 +364,7 @@
 				EA2DA1A7232EB18800D31031 /* Key.swift in Sources */,
 				EA1F63F92352427A0089C967 /* VOCR Shortcuts.swift in Sources */,
 				EADE59B5232EB09A00E2F65A /* AppDelegate.swift in Sources */,
+				EA688D452355BDC500F722C7 /* Bundle Extension.swift in Sources */,
 				EA2DA1A8232EB18800D31031 /* HotKeysController.swift in Sources */,
 				EA5C7AC82351B3F500D84042 /* OCR.swift in Sources */,
 				EA2DA1A6232EB18800D31031 /* KeyCombo.swift in Sources */,
@@ -518,7 +526,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -545,7 +553,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (

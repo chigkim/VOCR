@@ -27,7 +27,7 @@
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSAppleEventsUsageDescription</key>
-	<string>Take Screenshot With VoiceOver</string>
+	<string>Speak announcements and take Screenshot under VoiceOver cursor</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Capture a photo to OCR.</string>
 	<key>NSHumanReadableCopyright</key>

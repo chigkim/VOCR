@@ -11,9 +11,11 @@ import Cocoa
 
 class ViewController: NSViewController {
 
+	@IBOutlet var info: NSTextField!
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
+		info.stringValue = "\(Bundle.main.version)"
 		// Do any additional setup after loading the view.
 	}
 

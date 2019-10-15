@@ -683,11 +683,11 @@
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                <windowController storyboardIdentifier="aboutWindowStoryboardID" id="B8D-0N-5wS" sceneMemberID="viewController">
+                    <window key="window" title="About VOCR" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titleVisibility="hidden" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+                        <rect key="contentRect" x="196" y="240" width="200" height="100"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
@@ -706,9 +706,36 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="VOCR" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="100"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="scf-V2-cas">
+                                <rect key="frame" x="87" y="84" width="27" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Info" id="kqf-ZV-fse">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bI7-kE-P2d">
+                                <rect key="frame" x="28" y="68" width="145" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Developped by Chi Kim" id="3g9-wm-4YH">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="bI7-kE-P2d" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="W5Y-rz-cHp"/>
+                            <constraint firstItem="bI7-kE-P2d" firstAttribute="top" secondItem="scf-V2-cas" secondAttribute="bottom" id="nT9-Bo-auO"/>
+                            <constraint firstItem="scf-V2-cas" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="pOZ-KZ-nhN"/>
+                            <constraint firstItem="scf-V2-cas" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="ty1-h1-dai"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="info" destination="scf-V2-cas" id="ffq-Gd-8ag"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

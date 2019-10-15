@@ -14,7 +14,7 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 	static let shared = MacCamera()
 	var captureSession:AVCaptureSession!
 	var cameraOutput:AVCapturePhotoOutput!
-	let save = false
+	
 	
 	func isCameraAllowed() -> Bool {
 		let cameraPermissionStatus = AVCaptureDevice.authorizationStatus(for: .video)

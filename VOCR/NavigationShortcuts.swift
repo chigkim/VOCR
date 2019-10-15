@@ -12,6 +12,10 @@ struct NavigationShortcuts {
 	let left = HotKey(key:.leftArrow, modifiers:[.command,.control])
 	let up = HotKey(key:.upArrow, modifiers:[.command,.control])
 	let down = HotKey(key:.downArrow, modifiers:[.command,.control])
+	let top = HotKey(key:.pageUp, modifiers:[.command,.control])
+	let bottom = HotKey(key:.pageDown, modifiers:[.command,.control])
+	let beginning = HotKey(key:.home, modifiers:[.command,.control])
+	let end = HotKey(key:.end, modifiers:[.command,.control])
 	let nextCharacter = HotKey(key:.rightArrow, modifiers:[.command,.shift,.control])
 	let previousCharacter = HotKey(key:.leftArrow, modifiers:[.command,.shift,.control])
 	let location = HotKey(key:.l, modifiers:[.command,.control])
@@ -37,7 +41,23 @@ struct NavigationShortcuts {
 		down.keyDownHandler = {
 			Navigation.shared.down()
 		}
-		
+
+		top.keyDownHandler = {
+			Navigation.shared.top()
+		}
+
+		bottom.keyDownHandler = {
+			Navigation.shared.bottom()
+		}
+
+		beginning.keyDownHandler = {
+			Navigation.shared.beginning()
+		}
+
+		end.keyDownHandler = {
+			Navigation.shared.end()
+		}
+
 		nextCharacter.keyDownHandler = {
 			Navigation.shared.nextCharacter()
 		}

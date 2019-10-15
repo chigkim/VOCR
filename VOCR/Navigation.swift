@@ -161,6 +161,40 @@ class Navigation {
 		Accessibility.speak(line)
 	}
 
+	func top() {
+		if displayResults.count == 0 {
+			return
+		}
+		l = 1
+		w = 0
+		up()
+	}
+
+	func bottom() {
+		if displayResults.count == 0 {
+			return
+		}
+		l = displayResults.count-2
+		w = 0
+		down()
+	}
+
+	func beginning() {
+		if displayResults.count == 0 {
+			return
+		}
+		w = 1
+		left()
+	}
+	
+	func end() {
+		if displayResults.count == 0 {
+			return
+		}
+		w = displayResults[l].count-2
+		right()
+	}
+
 	func nextCharacter() {
 		if displayResults.count == 0 {
 			return
@@ -177,15 +211,20 @@ class Navigation {
 			let end = str.index(str.startIndex,offsetBy:c+1)
 			let range = start..<end
 			let character = str[range]
+			str = String(character)
 			var box:CGRect
 			try box = candidate.boundingBox(for: range)!.boundingBox
 			CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
+
+/*
 			str = String(character)
 			let u = str.unicodeScalars
 			let uName = u[u.startIndex].properties.name!
 			if !uName.contains("LETTER") {
 				str = uName
 			}
+*/
+
 			Accessibility.speak(str)
 		} catch {
 		}
@@ -208,16 +247,19 @@ class Navigation {
 			let end = str.index(str.startIndex,offsetBy:c+1)
 			let range = start..<end
 			let character = str[range]
+			str = String(character)
 			var box:CGRect
 			try box = candidate.boundingBox(for: range)!.boundingBox
 			CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
+
+			/*
 			str = String(character).description
 			let u = str.unicodeScalars
 			let uName = u[u.startIndex].properties.name!
 			if !uName.contains("LETTER") {
 				str = uName
 			}
-
+*/
 			Accessibility.speak(str)
 		} catch {
 		}
@@ -225,3 +267,4 @@ class Navigation {
 	}
 
 }
+

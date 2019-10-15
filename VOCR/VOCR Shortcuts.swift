@@ -16,6 +16,11 @@ struct Shortcuts {
 
 	init() {
 		window.keyDownHandler = {
+			if !Accessibility.isTrusted(ask:true) {
+				print("Accessibility not enabled.")
+				return
+			}
+
 			if let  cgImage = TakeScreensShots() {
 				Navigation.shared.startOCR(cgImage:cgImage)
 			}

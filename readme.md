@@ -9,7 +9,7 @@ This branch utilizes VisionKit on MacOS Catalina that take advantage of machine 
 This is a standalone app, and it does not rely on Keyboard Maestro, Imagemagick, and Tesseract that the previous VOCR utilized.
 
 ## Download
-Here is the direct link to download [VOCR v0.1.0-alpha.7.](https://github.com/chigkim/VOCR/releases/download/v0.1.0-alpha.7/VOCR.v0.1.0-alpha.7.zip)  
+Here is the direct link to download [VOCR v0.1.0-alpha.9.](https://github.com/chigkim/VOCR/releases/download/v0.1.0-alpha.9/VOCR.v0.1.0-alpha.9.zip)  
 
 ## Upgrade from Previous VOCR With Tesseract
 You can simply remove VOCR group from Keyboard Maestro and follow the instruction for setup below.
@@ -21,21 +21,19 @@ The following steps are optional if you want to remove Imagemagick and Tesseract
 
 ## Setup
 1. After uncompress, just move the app to your application folder and run it.
-2. You should get a notification asking you to grant accessibility permission. If VoiceOver doesn't focus on the window automatically, press vo+f1 twice to find system dialog, and you should be able to find it.
-3. After allowing accessibility permission, and run the app again.
-4. Make sure you can find the app on the menu extra .
-5. Make sure screen curtain is off by pressing vo+shift+f11.
-6. Go to system preference, and press command+shift+control+w, and you should get another notification asking you to allow VOCR to take screenshot of the frontmost window. If you don't get the alert, see if you can find it in the system dialog as you did in the previous step.
-7. If you can't find it from the system dialog, go to security and privacy, unlock, then go to choose screen recording under privacy tab, and you should be able to find VOCR app.
-8. When you check it to allow, it should tell you to quit.
-9. After restarting the app, and make sure you can find it on the menu extra again.
-10. As a test, go back to the system preference, and press command+shift+control+w, and you should hear a beep and a Voice prompt saying finished.
-11. At that point, you should be able to navigate the result with command+control+arrows, and your mouse should be also moving. Use command+control+shift+left/right to navigate between characters within the focused words.
+2. Make sure you can find VOCR running on the menu extra  by pressing vo+m twice.
+3. Make sure screen curtain is off by pressing vo+shift+f11.
+4. Press command+shift+control+w, and you should get a notification asking you to grant accessibility permission. If VoiceOver doesn't focus on the window automatically, press vo+f1 twice to find system dialog, and you should be able to find it.
+5. After allowing accessibility permission, press command+shift+control+w, and you should get another notification asking you to allow VOCR to take screenshot of the frontmost window. If you don't get the alert, see if you can find it in the system dialog as you did in the previous step.
+6. If you can't still find it from the system dialog, go to security and privacy, unlock the setting, then go to choose screen recording under privacy tab, and you should be able to find VOCR app.
+7. When you check it to allow, it should tell you to quit and restart.
+8. After restarting the app, and make sure you can find it on the menu extra again.
+9. As a test, go back to the system preference, and press command+shift+control+w, and you should hear a beep and a Voice prompt saying finished.
+10. At that point, you should be able to navigate the result with command+control+arrows, and your mouse should be also moving. Use command+control+shift+left/right to navigate between characters.
+11. When you navigating for the first time, another alert should appear to ask  you to give VOCR access to control VoiceOver for speaking announcements.
 12. Try to navigate to Siri preference Using VOCR cursor, and then press vo+f5. VoiceOver should say your mouse is also under Siri.
 13. Press vo+shift+apce to open Siri preference.
 14. Press escape to exit navigation mode and free up navigation shortcuts.
-
-VOCR just looks for front most window of front most app, so don't try VOCR on a system window. For example, desktop and menu bar app like Dropbox that opens its window in System.
 
 ## Using Image Recognition under VoiceOver Cursor
 1. Complete the setup above.
@@ -51,7 +49,9 @@ If everything goes well, VOCR will report the top 5 image categories in confiden
 ## Recognize picture from camera
 1. Press command+shift+control+c
 2. If running  this feature for the first time, it will display an alert to give VOCR access to your camera
-3. Press command+shift+control+c again, and you'll hear a count down.
+3. Give VOCR access to camera in system preference
+4. Press command+shift+control+c again, and you'll hear a count down.
+5. Shortly after hearing the camera shutter sound, you should hear the result.
 
 ## Settings
 Positional audio (command+shift+control+p): As mouse cursor moves you will hear hear audio feedback. Frequency changes responds to vertical move, and pan responds to horizontal move. This feature is useful to explore the interface and discover elements' locations.
@@ -70,11 +70,14 @@ The following shortcuts only works after a scan.
 * Move down/up: command+control+down/up arrow
 * Move left/right: command+control+left/right arrow
 * Previous/next character: command+shift+control+left/right arrow
+* Go to top/bottom: command+control+page up/down
+* Go to beginning/end horizontally: command+control+left/right arrow
 * Exit navigation: escape
 
 ## Troubleshooting
-* If you hear nothing found, most likely either you need to turn off VoiceOver screen curtain with vo+shift+f11, or fix accessibility and screen recording  permission in security and privacy preference.
+* If you hear "nothing found" or just hear the word "the", most likely either you need to turn off VoiceOver screen curtain with vo+shift+f11, or fix accessibility and screen recording  permission in security and privacy preference.
 * If you do not hear anything after recognize image under VoiceOVer, most likely you need to give   VOCR permissions to 1. send Apple Events, 2. control VoiceOver, and 3. access desktop folder. Usually relaunching VOCR and reissuing the command usually retrigger the alerts to reappear in the system dialogs.
+* If you hear just "outdoor" and or "sky", " after issuing camera, you would need to fix the camera access.
 
 Lastly, please enjoy and send me your feedback!
 
