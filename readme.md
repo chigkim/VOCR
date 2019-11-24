@@ -78,7 +78,7 @@ The following shortcuts only works after a scan.
 
 ## Troubleshooting
 * If you hear "nothing found" or just hear the word "the", most likely either you need to turn off VoiceOver screen curtain with vo+shift+f11, or fix accessibility and screen recording  permission in security and privacy preference.
-* If you do not hear anything after recognize image under VoiceOver, most likely you need to give   VOCR permissions to 1. send Apple Events, 2. control VoiceOver, and 3. access desktop folder. Usually relaunching VOCR and reissuing the command usually retrigger the alerts to reappear in the system dialogs.
+* If you do not hear anything after recognize image under VoiceOver cursor, most likely you need to give   VOCR permissions to 1. send Apple Events, 2. control VoiceOver, and 3. access desktop folder. Usually relaunching VOCR and reissuing the command usually retrigger the alerts to reappear in the system dialogs.
 * If you hear just "outdoor" and or "sky", " after issuing camera, you would need to fix the camera access.
 
 Lastly, please enjoy and send me your feedback!
