@@ -1,5 +1,5 @@
 # Welcome to VOCR
-If you're running Catalina, check out [new VOCR](https://github.com/chigkim/VOCR/tree/VK].
+If you're running Catalina, check out [new VOCR](https://github.com/chigkim/VOCR/tree/VK).
 
 **WARNING**: USE AT YOUR OWN RISK! This is in alpha cycle. Many things may not work and change frequently without notice.
 
