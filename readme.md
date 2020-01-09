@@ -8,8 +8,6 @@ This branch utilizes VisionKit on MacOS Catalina that take advantage of machine 
 
 This is a standalone app, and it does not rely on Keyboard Maestro, Imagemagick, and Tesseract that the previous VOCR utilized.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/maBtR_6KDFs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 ## Download
 Here is the direct link to download [VOCR v0.1.0-alpha.10.](https://github.com/chigkim/VOCR/releases/download/v0.1.0-alpha.10/VOCR.v0.1.0-alpha.10.zip)  
 
