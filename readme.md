@@ -1,6 +1,8 @@
 # Welcome to VOCR
 **WARNING**: USE AT YOUR OWN RISK! This is in alpha cycle. Many things may not work and change frequently without notice.
 
+If you're using earlier MacOS than Catalina 10.15, please use the older [VOCR with tesseract.](https://github.com/chigkim/VOCR/tree/tesseract)
+
 VOCR is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY, expressed or implied, of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Please see the [GNU General Public License](http://www.gnu.org/licenses/) for more details.
 
 ## ***HIGHLY EXPERIMENTAL***
@@ -10,8 +12,6 @@ This is a standalone app, and it does not rely on Keyboard Maestro, Imagemagick,
 
 ## Download
 Here is the direct link to download [VOCR v0.1.0-alpha.10.](https://github.com/chigkim/VOCR/releases/download/v0.1.0-alpha.10/VOCR.v0.1.0-alpha.10.zip)
-
-If you're using earlier MacOS than Catalina 10.15, please use the older [VOCR with tesseract.](https://github.com/chigkim/VOCR/tree/tesseract)
 
 ## Upgrade from Previous VOCR With Tesseract
 You can simply remove VOCR group from Keyboard Maestro and follow the instruction for setup below.
