@@ -26,7 +26,7 @@
 		EA5C7AD42351D44B00D84042 /* RecognizeVOCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7AD32351D44B00D84042 /* RecognizeVOCursor.swift */; };
 		EA5C7AD92351D81100D84042 /* VOScreenshot.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EA5C7AD82351D81100D84042 /* VOScreenshot.scpt */; };
 		EA688D452355BDC500F722C7 /* Bundle Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA688D442355BDC500F722C7 /* Bundle Extension.swift */; };
-		EA6C26AC2354656D00665D4D /* Clasifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6C26AB2354656D00665D4D /* Clasifier.swift */; };
+		EA6C26AC2354656D00665D4D /* Classifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6C26AB2354656D00665D4D /* Classifier.swift */; };
 		EA8AD6412352B4A000D26871 /* Double Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8AD6402352B4A000D26871 /* Double Extension.swift */; };
 		EAA12C4F234C89030036AF6A /* NavigationShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */; };
 		EAD9CFD22355E11600E7F594 /* say.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EAD9CFD12355E11600E7F594 /* say.scpt */; };
@@ -100,7 +100,7 @@
 		EA5C7AD32351D44B00D84042 /* RecognizeVOCursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizeVOCursor.swift; sourceTree = "<group>"; };
 		EA5C7AD82351D81100D84042 /* VOScreenshot.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = VOScreenshot.scpt; sourceTree = "<group>"; };
 		EA688D442355BDC500F722C7 /* Bundle Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle Extension.swift"; sourceTree = "<group>"; };
-		EA6C26AB2354656D00665D4D /* Clasifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clasifier.swift; sourceTree = "<group>"; };
+		EA6C26AB2354656D00665D4D /* Classifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Classifier.swift; sourceTree = "<group>"; };
 		EA8AD6402352B4A000D26871 /* Double Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double Extension.swift"; sourceTree = "<group>"; };
 		EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationShortcuts.swift; sourceTree = "<group>"; };
 		EAD9CFD12355E11600E7F594 /* say.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = say.scpt; sourceTree = "<group>"; };
@@ -271,7 +271,7 @@
 				EA5C7ACB2351BB6D00D84042 /* Navigation.swift */,
 				EAF9C3C72354A66200D4D77C /* Settings.swift */,
 				EA5C7AD32351D44B00D84042 /* RecognizeVOCursor.swift */,
-				EA6C26AB2354656D00665D4D /* Clasifier.swift */,
+				EA6C26AB2354656D00665D4D /* Classifier.swift */,
 				EA5C7ACD2351C10100D84042 /* MacCamera.swift */,
 			);
 			path = VOCR;
@@ -373,7 +373,7 @@
 				EA5C7AD42351D44B00D84042 /* RecognizeVOCursor.swift in Sources */,
 				EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */,
 				EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */,
-				EA6C26AC2354656D00665D4D /* Clasifier.swift in Sources */,
+				EA6C26AC2354656D00665D4D /* Classifier.swift in Sources */,
 				EA2DA1A9232EB18800D31031 /* HotKey.swift in Sources */,
 				EAF9C3C82354A66200D4D77C /* Settings.swift in Sources */,
 				EA1F642C2352503D0089C967 /* Player.swift in Sources */,
@@ -526,7 +526,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -553,7 +553,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (

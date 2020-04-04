@@ -10,7 +10,7 @@ import AVFoundation
 import Cocoa
 
 class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
-
+	
 	static let shared = MacCamera()
 	var captureSession:AVCaptureSession!
 	var cameraOutput:AVCapturePhotoOutput!
@@ -30,7 +30,7 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 			return false
 		default:
 			print("Ask permission")
-
+			
 			var access = false
 			AVCaptureDevice.requestAccess(for: .video) { granted in
 				if granted == true {
@@ -40,22 +40,22 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 				}
 				access = granted
 			}
-return access
+			return access
 		}
 	}
-
+	
 	func takePicture() {
 		for c in stride(from: 3, to: 1, by: -1) {
 			Accessibility.speak("\(c)")
 			sleep(1)
 		}
-			Accessibility.speak("1")
+		Accessibility.speak("1")
 		captureSession = AVCaptureSession()
 		captureSession.sessionPreset = AVCaptureSession.Preset.photo
 		cameraOutput = AVCapturePhotoOutput()
-
+		
 		if let device = AVCaptureDevice.default(for: .video),
-		   let input = try? AVCaptureDeviceInput(device: device) {
+			let input = try? AVCaptureDeviceInput(device: device) {
 			if (captureSession.canAddInput(input)) {
 				captureSession.addInput(input)
 				if (captureSession.canAddOutput(cameraOutput)) {
@@ -71,13 +71,14 @@ return access
 			print("some problem here")
 		}
 	}
-
+	
 	func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+		captureSession.stopRunning()
 		print("photo captured")
 		if let error = error {
 			debugPrint(error)
 		}
-
+		
 		if let dataImage = photo.fileDataRepresentation() {
 			let dataProvider = CGDataProvider(data: dataImage as CFData)
 			if let cgImage = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent) {
@@ -89,13 +90,13 @@ return access
 				if Settings.saveCameraImage {
 					writeCGImage(cgImage, to:url)
 				}
-					classify(cgImage:cgImage)
+				classify(cgImage:cgImage)
 			}
-			} else {
+		} else {
 			print("some error here")
 		}
 	}
-
+	
 	@discardableResult func writeCGImage(_ image: CGImage, to destinationURL: URL) -> Bool {
 		guard let destination = CGImageDestinationCreateWithURL(destinationURL as CFURL, kUTTypePNG, 1, nil) else { return false }
 		CGImageDestinationAddImage(destination, image, nil)
