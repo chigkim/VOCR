@@ -23,7 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		windows = NSApplication.shared.windows
 		NSApplication.shared.hide(self)
 		windows[1].close()
-
+		Settings.load()
 	}
 
 	@objc func displayAboutWindow(_ sender: Any?) {

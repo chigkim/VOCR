@@ -45,6 +45,7 @@ struct Shortcuts {
 				Settings.positionReset = true
 				Accessibility.speak("Enable reset position.")
 			}
+Settings.save()
 		}
 		
 		positionalAudio.keyDownHandler = {
@@ -55,6 +56,7 @@ struct Shortcuts {
 				Settings.positionalAudio = true
 				Accessibility.speak("Enable positional audio.")
 			}
+		Settings.save()
 		}
 	}
 	
