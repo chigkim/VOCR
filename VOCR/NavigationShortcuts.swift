@@ -6,6 +6,8 @@
 //  Copyright © 2019 Chi Kim. All rights reserved.
 //
 
+import Cocoa
+
 struct NavigationShortcuts {
 	
 	let right = HotKey(key:.rightArrow, modifiers:[.command,.control])
@@ -20,7 +22,8 @@ struct NavigationShortcuts {
 	let previousCharacter = HotKey(key:.leftArrow, modifiers:[.command,.shift,.control])
 	let location = HotKey(key:.l, modifiers:[.command,.control])
 	let exit = HotKey(key:.escape, modifiers:[])
-	
+	let save = HotKey(key:.s, modifiers:[.command,.shift, .control])
+
 	init() {
 		location.keyDownHandler = {
 			Navigation.shared.location()
@@ -71,6 +74,33 @@ struct NavigationShortcuts {
 			Navigation.shared.navigationShortcuts = nil
 		}
 		
+		save.keyDownHandler = {
+			let savePanel = NSSavePanel()
+			savePanel.allowedFileTypes = ["txt"]
+			savePanel.allowsOtherFileTypes = false
+			savePanel.begin { (result) in
+				if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
+					if let url = savePanel.url {
+						var text = ""
+						let displayResults = Navigation.shared.displayResults
+						for line in displayResults {
+							for word in line {
+								text += word.topCandidates(1)[0].string+" "
+							}
+							text = text.dropLast()+"\n"
+						}
+						
+						try! text.write(to: url, atomically: false, encoding: .utf8)
+					}
+					
+				}
+				let windows = NSApplication.shared.windows
+				NSApplication.shared.hide(nil)
+				windows[1].close()
+			}
+		}
+
 	}
-	
+
 }
+

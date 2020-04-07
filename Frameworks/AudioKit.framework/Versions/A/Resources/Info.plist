@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
-	<string>18E226</string>
+	<string>19E266</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.9.2</string>
+	<string>4.9.5</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleSupportedPlatforms</key>
@@ -29,19 +29,19 @@
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
-	<string>11B41</string>
+	<string>11E146</string>
 	<key>DTPlatformVersion</key>
 	<string>GM</string>
 	<key>DTSDKBuild</key>
-	<string>19A547</string>
+	<string>19E258</string>
 	<key>DTSDKName</key>
 	<string>macosx10.15</string>
 	<key>DTXcode</key>
-	<string>1120</string>
+	<string>1140</string>
 	<key>DTXcodeBuild</key>
-	<string>11B41</string>
+	<string>11E146</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.11</string>
+	<string>10.12</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2018 AudioKit. All rights reserved.</string>
 </dict>

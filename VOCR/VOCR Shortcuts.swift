@@ -6,7 +6,6 @@
 //  Copyright © 2019 Chi Kim. All rights reserved.
 //
 
-import Cocoa
 
 struct Shortcuts {
 	
@@ -15,7 +14,6 @@ struct Shortcuts {
 	let vo = HotKey(key:.v, modifiers:[.command,.shift, .control])
 	let resetPosition = HotKey(key:.r, modifiers:[.command,.shift, .control])
 	let positionalAudio = HotKey(key:.p, modifiers:[.command,.shift, .control])
-	let save = HotKey(key:.s, modifiers:[.command,.shift, .control])
 	
 	init() {
 		window.keyDownHandler = {
@@ -56,31 +54,6 @@ struct Shortcuts {
 			} else {
 				Settings.positionalAudio = true
 				Accessibility.speak("Enable positional audio.")
-			}
-		}
-		save.keyDownHandler = {
-			let savePanel = NSSavePanel()
-			savePanel.allowedFileTypes = ["txt"]
-			savePanel.allowsOtherFileTypes = false
-			savePanel.begin { (result) in
-				if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
-					if let url = savePanel.url {
-						var text = ""
-						let displayResults = Navigation.shared.displayResults
-						for line in displayResults {
-							for word in line {
-								text += word.topCandidates(1)[0].string+" "
-							}
-							text = text.dropLast()+"\n"
-						}
-						
-						try! text.write(to: url, atomically: false, encoding: .utf8)
-					}
-					
-				}
-				let windows = NSApplication.shared.windows
-				NSApplication.shared.hide(nil)
-				windows[1].close()
 			}
 		}
 	}
