@@ -68,7 +68,6 @@ Disable/enable reset position (command+shift+control+r): When disabled, the curs
 * Recognize picture from camera: command+shift+control+c
 * Toggle reset position after scan: command+shift+control+r
 * Toggle positional audio feedback: command+shift+control+p
-* Save OCR result to file: command+shift+control+s
 
 The following shortcuts only works after a scan.
 
@@ -78,6 +77,7 @@ The following shortcuts only works after a scan.
 * Go to top/bottom: command+control+page up/down
 * Go to beginning/end horizontally: command+control+left/right arrow
 * Exit navigation: escape
+* Save OCR result to file: command+shift+control+s
 
 ## Troubleshooting
 * If you hear "nothing found" or just hear the word "the", most likely either you need to turn off VoiceOver screen curtain with vo+shift+f11, or fix accessibility and screen recording  permission in security and privacy preference.
