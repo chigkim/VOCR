@@ -28,8 +28,6 @@
 	<true/>
 	<key>NSAppleEventsUsageDescription</key>
 	<string>Speak announcements and take Screenshot under VoiceOver cursor</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Capture a photo to OCR.</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2019 Chi Kim. All rights reserved.</string>
 	<key>NSMainStoryboardFile</key>

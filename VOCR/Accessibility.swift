@@ -13,8 +13,9 @@ class Accessibility {
 
 	static let speech:NSSpeechSynthesizer = NSSpeechSynthesizer()
 
+	
 	static func isTrusted(ask:Bool) -> Bool {
-	let prompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
+ 	let prompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
 	let options = [prompt: ask]
 	return AXIsProcessTrustedWithOptions(options as CFDictionary?)
 }
@@ -25,8 +26,14 @@ class Accessibility {
 		NSAccessibility.post(element:element, notification: NSAccessibility.Notification.announcementRequested, userInfo: announcement)
 	}
 
+	static func speakWithSynthesizer(_ message:String) {
+		DispatchQueue.global().async {
+		speech.startSpeaking(message)
+		}
+	}
+
 	static func speak(_ message:String) {
-		// speech.startSpeaking(message)
+
 		let bundle = Bundle.main
 		let url = bundle.url(forResource: "say", withExtension: "scpt")
 		let parameters = NSAppleEventDescriptor.list()

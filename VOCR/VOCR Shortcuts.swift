@@ -11,11 +11,9 @@ import Cocoa
 struct Shortcuts {
 	
 	let window = HotKey(key:.w, modifiers:[.command,.shift, .control])
-	let camera = HotKey(key:.c, modifiers:[.command,.shift,.control])
 	let vo = HotKey(key:.v, modifiers:[.command,.shift, .control])
 	let resetPosition = HotKey(key:.r, modifiers:[.command,.shift, .control])
 	let positionalAudio = HotKey(key:.p, modifiers:[.command,.shift, .control])
-	let source = HotKey(key:.i, modifiers:[.command,.shift, .control])
 	
 	init() {
 		window.keyDownHandler = {
@@ -26,12 +24,6 @@ struct Shortcuts {
 			
 			if let  cgImage = TakeScreensShots() {
 				Navigation.shared.startOCR(cgImage:cgImage)
-			}
-		}
-		
-		camera.keyDownHandler = {
-			if MacCamera.shared.isCameraAllowed() {
-				MacCamera.shared.takePicture()
 			}
 		}
 		
@@ -59,19 +51,6 @@ struct Shortcuts {
 				Accessibility.speak("Enable positional audio.")
 			}
 			Settings.save()
-		}
-		
-		source.keyDownHandler = {
-			let storyboardName = NSStoryboard.Name(stringLiteral: "Main")
-			let storyboard = NSStoryboard(name: storyboardName, bundle: nil)
-			let storyboardID = NSStoryboard.SceneIdentifier(stringLiteral: "importWindowStoryboardID")
-			if let windowController = storyboard.instantiateController(withIdentifier: storyboardID) as? NSWindowController {
-				if NSApplication.shared.windows.filter { $0.title.contains("Continuity") && $0.isVisible }.count > 0 {
-					return
-				}
-				NSApplication.shared.activate(ignoringOtherApps: true)
-				windowController.showWindow(nil)
-			}
 		}
 		
 	}

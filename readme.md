@@ -11,7 +11,7 @@ This branch utilizes VisionKit on MacOS Catalina that take advantage of machine 
 This is a standalone app, and it does not rely on Keyboard Maestro, Imagemagick, and Tesseract that the previous VOCR utilized.
 
 ## Download
-Here is the direct link to download [VOCR v1.0.0-alpha.2.](https://github.com/chigkim/VOCR/releases/download/v1.0.0-alpha.2/VOCR.v1.0.0-alpha.2.zip)
+Here is the direct link to download [VOCR v1.0.0-alpha.3.](https://github.com/chigkim/VOCR/releases/download/v1.0.0-alpha.3/VOCR.v1.0.0-alpha.3.zip)
 
 ## Upgrade from Previous VOCR With Tesseract
 You can simply remove VOCR group from Keyboard Maestro and follow the instruction for setup below.
@@ -50,13 +50,6 @@ If you want to verify if it works properly, search images on Google image using 
 
 If everything goes well, VOCR will report the top 5 image categories in confidence order. If VOCR categorizes the image as a document, it will apply OCR. You can review the OCR result the same way as the section above, but this does not work with mouse movement.
 
-## Recognize picture from camera
-* Press command+shift+control+c
-* If running  this feature for the first time, it will display an alert to give VOCR access to your camera
-* Give VOCR access to camera in system preference
-* Press command+shift+control+c again, and you'll hear a count down.
-* Shortly after hearing the camera shutter sound, you should hear the result.
-
 ## Settings
 Positional audio (command+shift+control+p): As mouse cursor moves you will hear hear audio feedback. Frequency changes responds to vertical move, and pan responds to horizontal move. This feature is useful to explore the interface and discover elements' locations.
 
@@ -65,8 +58,6 @@ Disable/enable reset position (command+shift+control+r): When disabled, the curs
 ## Shortcuts
 * OCR Frontmost Window: command+shift+control+w
 * Recognize image under VoiceOver cursor: command+shift+control+v
-* Recognize picture from camera: command+shift+control+c
-* Import Image: command+shift+control+i
 * Toggle reset position after scan: command+shift+control+r
 * Toggle positional audio feedback: command+shift+control+p
 
@@ -83,7 +74,6 @@ The following shortcuts only works after a scan.
 ## Troubleshooting
 * If you hear "nothing found" or just hear the word "the", most likely either you need to turn off VoiceOver screen curtain with vo+shift+f11, or fix accessibility and screen recording  permission in security and privacy preference.
 * If you do not hear anything after recognize image under VoiceOver cursor, most likely you need to give   VOCR permissions to 1. send Apple Events, 2. control VoiceOver, and 3. access desktop folder. Usually relaunching VOCR and reissuing the command usually retrigger the alerts to reappear in the system dialogs.
-* If you hear just "outdoor" and or "sky", " after issuing camera, you would need to fix the camera access.
 
 Lastly, please enjoy and send me your feedback!
 
