@@ -10,13 +10,14 @@ import Vision
 import AVFoundation
 import Cocoa
 
-func classify(cgImage:CGImage) {
+func classify(cgImage:CGImage) -> String {
+var message = ""
 	var categories: [String: VNConfidence] = [:]
 	let handler = VNImageRequestHandler(cgImage:cgImage, options: [:])
 	let request = VNClassifyImageRequest()
 	try? handler.perform([request])
 	guard let observations = request.results as? [VNClassificationObservation] else {
-		return
+		return message
 	}
 	categories = observations
 		.filter { $0.hasMinimumRecall(0.1, forPrecision: 0.9) }
@@ -28,16 +29,18 @@ func classify(cgImage:CGImage) {
 		if count>5 {
 			count = 5
 		}
-		var message = ""
+		
 		for c in 0..<count {
 			message += "\(classes[c].key), "
 		}
 		Accessibility.speak(message)
 		if message.contains("document") {
 			Navigation.shared.startOCR(cgImage:cgImage)
+			message += "\n"+Navigation.shared.text()
 		}
 	} else {
 		Accessibility.speak("Unknown")
 	}
+return message
 }
 

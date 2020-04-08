@@ -81,15 +81,8 @@ struct NavigationShortcuts {
 			savePanel.begin { (result) in
 				if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
 					if let url = savePanel.url {
-						var text = ""
-						let displayResults = Navigation.shared.displayResults
-						for line in displayResults {
-							for word in line {
-								text += word.topCandidates(1)[0].string+" "
-							}
-							text = text.dropLast()+"\n"
-						}
-						
+						var text = Navigation.shared.text()
+
 						try! text.write(to: url, atomically: false, encoding: .utf8)
 					}
 					

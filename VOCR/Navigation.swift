@@ -266,5 +266,16 @@ class Navigation {
 
 	}
 
+	func text() -> String {
+var text = ""
+		for line in displayResults {
+			for word in line {
+				text += word.topCandidates(1)[0].string+" "
+			}
+			text = text.dropLast()+"\n"
+		}
+return text
+	}
+
 }
 

@@ -6,6 +6,7 @@
 //  Copyright © 2019 Chi Kim. All rights reserved.
 //
 
+import Cocoa
 
 struct Shortcuts {
 	
@@ -14,6 +15,7 @@ struct Shortcuts {
 	let vo = HotKey(key:.v, modifiers:[.command,.shift, .control])
 	let resetPosition = HotKey(key:.r, modifiers:[.command,.shift, .control])
 	let positionalAudio = HotKey(key:.p, modifiers:[.command,.shift, .control])
+let continuity = HotKey(key:.i, modifiers:[.command,.shift, .control])
 	
 	init() {
 		window.keyDownHandler = {
@@ -58,6 +60,11 @@ Settings.save()
 			}
 		Settings.save()
 		}
+
+		continuity.keyDownHandler = {
+			(NSApp.delegate as! AppDelegate).continuity(nil)
+		}
+
 	}
 	
 }

@@ -9,7 +9,7 @@
 import Cocoa
 
 
-class ViewController: NSViewController {
+class AboutViewController: NSViewController {
 
 	@IBOutlet var info: NSTextField!
 	

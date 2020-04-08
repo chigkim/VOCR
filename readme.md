@@ -11,7 +11,7 @@ This branch utilizes VisionKit on MacOS Catalina that take advantage of machine 
 This is a standalone app, and it does not rely on Keyboard Maestro, Imagemagick, and Tesseract that the previous VOCR utilized.
 
 ## Download
-Here is the direct link to download [VOCR v0.1.0-alpha.13.](https://github.com/chigkim/VOCR/releases/download/v0.1.0-alpha.13/VOCR.v0.1.0-alpha.13.zip)
+Here is the direct link to download [VOCR v1.0.0-alpha.1.](https://github.com/chigkim/VOCR/releases/download/v1.0.0-alpha.1/VOCR.v1.0.0-alpha.1.zip)
 
 ## Upgrade from Previous VOCR With Tesseract
 You can simply remove VOCR group from Keyboard Maestro and follow the instruction for setup below.
@@ -66,6 +66,7 @@ Disable/enable reset position (command+shift+control+r): When disabled, the curs
 * OCR Frontmost Window: command+shift+control+w
 * Recognize image under VoiceOver cursor: command+shift+control+v
 * Recognize picture from camera: command+shift+control+c
+* Recognize Image from iPhone: command+shift+control+i
 * Toggle reset position after scan: command+shift+control+r
 * Toggle positional audio feedback: command+shift+control+p
 
