@@ -15,7 +15,7 @@ struct Shortcuts {
 	let vo = HotKey(key:.v, modifiers:[.command,.shift, .control])
 	let resetPosition = HotKey(key:.r, modifiers:[.command,.shift, .control])
 	let positionalAudio = HotKey(key:.p, modifiers:[.command,.shift, .control])
-let continuity = HotKey(key:.i, modifiers:[.command,.shift, .control])
+	let source = HotKey(key:.i, modifiers:[.command,.shift, .control])
 	
 	init() {
 		window.keyDownHandler = {
@@ -47,7 +47,7 @@ let continuity = HotKey(key:.i, modifiers:[.command,.shift, .control])
 				Settings.positionReset = true
 				Accessibility.speak("Enable reset position.")
 			}
-Settings.save()
+			Settings.save()
 		}
 		
 		positionalAudio.keyDownHandler = {
@@ -58,13 +58,22 @@ Settings.save()
 				Settings.positionalAudio = true
 				Accessibility.speak("Enable positional audio.")
 			}
-		Settings.save()
+			Settings.save()
 		}
-
-		continuity.keyDownHandler = {
-			(NSApp.delegate as! AppDelegate).continuity(nil)
+		
+		source.keyDownHandler = {
+			let storyboardName = NSStoryboard.Name(stringLiteral: "Main")
+			let storyboard = NSStoryboard(name: storyboardName, bundle: nil)
+			let storyboardID = NSStoryboard.SceneIdentifier(stringLiteral: "importWindowStoryboardID")
+			if let windowController = storyboard.instantiateController(withIdentifier: storyboardID) as? NSWindowController {
+				if NSApplication.shared.windows.filter { $0.title.contains("Continuity") && $0.isVisible }.count > 0 {
+					return
+				}
+				NSApplication.shared.activate(ignoringOtherApps: true)
+				windowController.showWindow(nil)
+			}
 		}
-
+		
 	}
 	
 }

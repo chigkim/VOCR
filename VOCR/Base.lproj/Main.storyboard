@@ -741,11 +741,11 @@
             </objects>
             <point key="canvasLocation" x="75" y="655"/>
         </scene>
-        <!--continuityWindow Controller-->
+        <!--ImportWindow isController-->
         <scene sceneID="u4h-y5-l4x">
             <objects>
-                <windowController storyboardIdentifier="continuityWindowStoryboardID" id="KeO-wv-ktK" userLabel="continuityWindow Controller" sceneMemberID="viewController">
-                    <window key="window" title="Continuity" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="5Pd-yp-sN3">
+                <windowController storyboardIdentifier="importWindowStoryboardID" id="KeO-wv-ktK" userLabel="ImportWindow isController" sceneMemberID="viewController">
+                    <window key="window" title="Import" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="5Pd-yp-sN3">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="425" y="461" width="1920" height="1080"/>
@@ -762,64 +762,86 @@
             </objects>
             <point key="canvasLocation" x="-295" y="996"/>
         </scene>
-        <!--continuityView Controller-->
+        <!--ImportView Controller-->
         <scene sceneID="Q7P-dy-ovY">
             <objects>
-                <viewController id="Zxf-RL-f8l" userLabel="continuityView Controller" customClass="ContinuityViewController" customModule="VOCR" sceneMemberID="viewController">
+                <viewController id="Zxf-RL-f8l" userLabel="ImportView Controller" customClass="ImportViewController" customModule="VOCR" sceneMemberID="viewController">
                     <view key="view" id="eM3-hz-8KU">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jmo-N5-RKo">
-                                <rect key="frame" x="0.0" y="0.0" width="960" height="1080"/>
-                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Aio-97-6PC">
-                                    <rect key="frame" x="0.0" y="0.0" width="960" height="1080"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <textView editable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="zI7-Aj-k4g">
-                                            <rect key="frame" x="0.0" y="0.0" width="960" height="1080"/>
+                            <stackView distribution="fillEqually" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="TU5-6m-RGo">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1607"/>
+                                <subviews>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OXb-zs-RgR">
+                                        <rect key="frame" x="0.0" y="0.0" width="960" height="1607"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="eoY-Gt-4WR"/>
+                                        <accessibility description="Source"/>
+                                    </imageView>
+                                    <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jmo-N5-RKo">
+                                        <rect key="frame" x="960" y="0.0" width="960" height="1607"/>
+                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Aio-97-6PC">
+                                            <rect key="frame" x="0.0" y="0.0" width="960" height="1607"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="960" height="1080"/>
-                                            <size key="maxSize" width="960" height="10000000"/>
-                                            <attributedString key="textStorage">
-                                                <fragment content="Right Click and Choose Source">
-                                                    <attributes>
-                                                        <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                        <font key="NSFont" metaFont="user"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                            <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                        </textView>
-                                    </subviews>
-                                </clipView>
-                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="aQF-KT-2Ih">
-                                    <rect key="frame" x="-100" y="-100" width="240" height="16"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="6KL-iB-d8h">
-                                    <rect key="frame" x="944" y="0.0" width="16" height="1080"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                            </scrollView>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OXb-zs-RgR">
-                                <rect key="frame" x="960" y="0.0" width="960" height="1080"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="eoY-Gt-4WR"/>
-                                <accessibility description="Container"/>
-                            </imageView>
+                                            <subviews>
+                                                <textView editable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="zI7-Aj-k4g">
+                                                    <rect key="frame" x="0.0" y="0.0" width="960" height="1607"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <size key="minSize" width="960" height="1607"/>
+                                                    <size key="maxSize" width="960" height="10000000"/>
+                                                    <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                </textView>
+                                            </subviews>
+                                        </clipView>
+                                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="aQF-KT-2Ih">
+                                            <rect key="frame" x="-100" y="-100" width="240" height="16"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="6KL-iB-d8h">
+                                            <rect key="frame" x="944" y="0.0" width="16" height="1607"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                    </scrollView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="jmo-N5-RKo" firstAttribute="leading" secondItem="TU5-6m-RGo" secondAttribute="centerX" id="Jnj-CF-Ttg"/>
+                                    <constraint firstItem="jmo-N5-RKo" firstAttribute="bottom" secondItem="TU5-6m-RGo" secondAttribute="bottom" id="Ru9-id-OoJ"/>
+                                    <constraint firstItem="jmo-N5-RKo" firstAttribute="top" secondItem="TU5-6m-RGo" secondAttribute="top" id="Wqe-F4-L1l"/>
+                                    <constraint firstItem="jmo-N5-RKo" firstAttribute="trailing" secondItem="TU5-6m-RGo" secondAttribute="trailing" id="c7h-NQ-g8w"/>
+                                    <constraint firstItem="OXb-zs-RgR" firstAttribute="bottom" secondItem="TU5-6m-RGo" secondAttribute="bottom" id="cHk-FM-SAU"/>
+                                    <constraint firstItem="OXb-zs-RgR" firstAttribute="trailing" secondItem="TU5-6m-RGo" secondAttribute="centerX" id="nfD-99-yCl"/>
+                                    <constraint firstItem="OXb-zs-RgR" firstAttribute="top" secondItem="TU5-6m-RGo" secondAttribute="top" id="ouA-2I-adC"/>
+                                    <constraint firstItem="OXb-zs-RgR" firstAttribute="leading" secondItem="TU5-6m-RGo" secondAttribute="leading" id="pNc-94-JA9"/>
+                                </constraints>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DPR-2p-GQ3">
+                                <rect key="frame" x="919" y="1600" width="83" height="32"/>
+                                <buttonCell key="cell" type="push" title="Source" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Uhl-5A-Gnw">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="chooseSource:" target="Zxf-RL-f8l" id="I0w-4a-b72"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="OXb-zs-RgR" firstAttribute="leading" secondItem="eM3-hz-8KU" secondAttribute="centerX" id="63O-6t-7Zq"/>
-                            <constraint firstItem="jmo-N5-RKo" firstAttribute="trailing" secondItem="eM3-hz-8KU" secondAttribute="centerX" id="Cz0-nT-U7b"/>
-                            <constraint firstItem="jmo-N5-RKo" firstAttribute="bottom" secondItem="eM3-hz-8KU" secondAttribute="bottom" id="KfS-yb-HZD"/>
-                            <constraint firstItem="OXb-zs-RgR" firstAttribute="bottom" secondItem="eM3-hz-8KU" secondAttribute="bottom" id="Ma2-19-5Rt"/>
-                            <constraint firstItem="OXb-zs-RgR" firstAttribute="trailing" secondItem="eM3-hz-8KU" secondAttribute="trailing" id="Mq4-qT-nkH"/>
-                            <constraint firstItem="jmo-N5-RKo" firstAttribute="top" secondItem="eM3-hz-8KU" secondAttribute="top" id="T4O-gW-SYN"/>
-                            <constraint firstItem="OXb-zs-RgR" firstAttribute="top" secondItem="eM3-hz-8KU" secondAttribute="top" id="WCd-U9-lgZ"/>
-                            <constraint firstItem="jmo-N5-RKo" firstAttribute="leading" secondItem="eM3-hz-8KU" secondAttribute="leading" id="gUD-qM-A6P"/>
+                            <constraint firstItem="DPR-2p-GQ3" firstAttribute="centerX" secondItem="eM3-hz-8KU" secondAttribute="centerX" id="KKQ-SZ-VmS"/>
+                            <constraint firstItem="TU5-6m-RGo" firstAttribute="trailing" secondItem="eM3-hz-8KU" secondAttribute="trailing" id="Y2Y-Yx-fh7"/>
+                            <constraint firstItem="TU5-6m-RGo" firstAttribute="top" secondItem="DPR-2p-GQ3" secondAttribute="bottom" id="hFJ-M7-UK8"/>
+                            <constraint firstItem="DPR-2p-GQ3" firstAttribute="top" secondItem="eM3-hz-8KU" secondAttribute="top" id="mn5-wf-gdK"/>
+                            <constraint firstItem="TU5-6m-RGo" firstAttribute="leading" secondItem="eM3-hz-8KU" secondAttribute="leading" id="tjU-di-TtZ"/>
+                            <constraint firstItem="TU5-6m-RGo" firstAttribute="bottom" secondItem="eM3-hz-8KU" secondAttribute="bottom" id="wsZ-KH-Khw"/>
                         </constraints>
                     </view>
                     <connections>

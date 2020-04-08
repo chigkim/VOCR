@@ -26,20 +26,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		Settings.load()
 	}
 	
-	
-	@objc func continuity(_ sender: Any?) {
-		let storyboardName = NSStoryboard.Name(stringLiteral: "Main")
-		let storyboard = NSStoryboard(name: storyboardName, bundle: nil)
-		let storyboardID = NSStoryboard.SceneIdentifier(stringLiteral: "continuityWindowStoryboardID")
-		if let windowController = storyboard.instantiateController(withIdentifier: storyboardID) as? NSWindowController {
-			if NSApplication.shared.windows.filter { $0.title.contains("Continuity") && $0.isVisible }.count > 0 {
-				return
-			}
-			NSApplication.shared.activate(ignoringOtherApps: true)
-			windowController.showWindow(nil)
-		}
-	}
-	
 	@objc func displayAboutWindow(_ sender: Any?) {
 		let storyboardName = NSStoryboard.Name(stringLiteral: "Main")
 		let storyboard = NSStoryboard(name: storyboardName, bundle: nil)
