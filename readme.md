@@ -1,4 +1,6 @@
 # Welcome to VOCR
+[![VOCR Demo on Youtube](https://img.youtube.com/vi/maBtR_6KDFs/0.jpg)](https://www.youtube.com/watch?v=maBtR_6KDFs)
+
 **WARNING**: USE AT YOUR OWN RISK! This is in alpha cycle. Many things may not work and change frequently without notice.
 
 If you're using earlier MacOS than Catalina 10.15, please use the older [VOCR with tesseract.](https://github.com/chigkim/VOCR/tree/tesseract)
@@ -76,4 +78,3 @@ The following shortcuts only works after a scan.
 * If you do not hear anything after recognize image under VoiceOver cursor, most likely you need to give   VOCR permissions to 1. send Apple Events, 2. control VoiceOver, and 3. access desktop folder. Usually relaunching VOCR and reissuing the command usually retrigger the alerts to reappear in the system dialogs.
 
 Lastly, please enjoy and send me your feedback!
-
