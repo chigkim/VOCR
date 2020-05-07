@@ -1,19 +1,16 @@
 # Welcome to VOCR
-[![VOCR Demo on Youtube](https://img.youtube.com/vi/maBtR_6KDFs/0.jpg)](https://www.youtube.com/watch?v=maBtR_6KDFs)
-
-**WARNING**: USE AT YOUR OWN RISK! This is in alpha cycle. Many things may not work and change frequently without notice.
-
-If you're using earlier MacOS than Catalina 10.15, please use the older [VOCR with tesseract.](https://github.com/chigkim/VOCR/tree/tesseract)
+**WARNING**: USE AT YOUR OWN RISK!
 
 VOCR is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY, expressed or implied, of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Please see the [GNU General Public License](http://www.gnu.org/licenses/) for more details.
 
-## ***HIGHLY EXPERIMENTAL***
 This branch utilizes VisionKit on MacOS Catalina that take advantage of machine learning for OCR.
 
 This is a standalone app, and it does not rely on Keyboard Maestro, Imagemagick, and Tesseract that the previous VOCR utilized.
 
+If you're using earlier MacOS than Catalina 10.15, please use the older [VOCR with tesseract.](https://github.com/chigkim/VOCR/tree/tesseract)
+
 ## Download
-Here is the direct link to download [VOCR v1.0.0-alpha.3.](https://github.com/chigkim/VOCR/releases/download/v1.0.0-alpha.3/VOCR.v1.0.0-alpha.3.zip)
+Here is the direct link to download [VOCR v1.0.0-beta.1.](https://github.com/chigkim/VOCR/releases/download/v1.0.0-beta.1/VOCR.v1.0.0-beta.1.zip)
 
 ## Upgrade from Previous VOCR With Tesseract
 You can simply remove VOCR group from Keyboard Maestro and follow the instruction for setup below.
@@ -53,7 +50,7 @@ If you want to verify if it works properly, search images on Google image using 
 If everything goes well, VOCR will report the top 5 image categories in confidence order. If VOCR categorizes the image as a document, it will apply OCR. You can review the OCR result the same way as the section above, but this does not work with mouse movement.
 
 ## Settings
-Positional audio (command+shift+control+p): As mouse cursor moves you will hear hear audio feedback. Frequency changes responds to vertical move, and pan responds to horizontal move. This feature is useful to explore the interface and discover elements' locations.
+Positional audio (command+shift+control+p): As mouse cursor moves you will hear hear audio feedback. Frequency changes responds to vertical move, and pan responds to horizontal move. This feature is useful to explore the interface and discover elements' locations. If you don't hear the audio feedback, choose sound output for VOCR from  menu extra.
 
 Disable/enable reset position (command+shift+control+r): When disabled, the cursor will not reset to the top left corner after every new scan. This feature is useful when you rescan the same window to find new change without losing previous cursor.
 
@@ -78,3 +75,4 @@ The following shortcuts only works after a scan.
 * If you do not hear anything after recognize image under VoiceOver cursor, most likely you need to give   VOCR permissions to 1. send Apple Events, 2. control VoiceOver, and 3. access desktop folder. Usually relaunching VOCR and reissuing the command usually retrigger the alerts to reappear in the system dialogs.
 
 Lastly, please enjoy and send me your feedback!
+

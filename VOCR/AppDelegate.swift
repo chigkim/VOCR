@@ -1,5 +1,5 @@
 import Cocoa
-
+import AudioKit
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -10,6 +10,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		let menu = NSMenu()
+		menu.addItem(withTitle: "Sound Output...", action: #selector(AppDelegate.chooseOutput(_:)), keyEquivalent: "")
 		menu.addItem(withTitle: "About", action: #selector(AppDelegate.displayAboutWindow(_:)), keyEquivalent: "")
 		menu.addItem(withTitle: "Quit", action: #selector(AppDelegate.quit(_:)), keyEquivalent: "")
 		
@@ -35,7 +36,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			aboutWindowController.showWindow(nil)
 		}
 	}
-	
+
+	@objc func chooseOutput(_ sender: Any?) {
+		let alert = NSAlert()
+		alert.alertStyle = .informational
+		alert.messageText = "Sound Output"
+		alert.informativeText = "Choose an Output for positional audio feedback."
+		if let devices = AudioKit.outputDevices {
+			for device in devices {
+				alert.addButton(withTitle: device.name)
+			}
+		}
+		let modalResult = alert.runModal()
+		let n = modalResult.rawValue-1000
+		if AudioKit.engine.isRunning {
+		try! AudioKit.stop()
+		}
+		try! AudioKit.setOutputDevice(AudioKit.outputDevices![n])
+		try! AudioKit.start()
+	}
+
 	@objc func click(_ sender: Any?) {
 		print("Clicked")
 	}
