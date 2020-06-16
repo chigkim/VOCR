@@ -35,7 +35,7 @@ The following steps are optional if you want to remove Imagemagick and Tesseract
 * At that point, you should be able to navigate the result with command+control+arrows. Refer to the shortcuts section below for more information.
 * When you navigating for the first time, another alert should appear to ask  you to give VOCR access to control VoiceOver for speaking announcements.
 * Navigate to Siri preference Using VOCR cursor, and then press vo+f5. VoiceOver should say your mouse is also under Siri.
-* Press vo+shift+apce to open Siri preference.
+* Press vo+shift+space to open Siri preference.
 * Press escape to exit navigation mode and free up navigation shortcuts.
 
 ## Using Image Recognition under VoiceOver Cursor
