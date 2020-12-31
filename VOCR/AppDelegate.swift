@@ -42,18 +42,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		alert.alertStyle = .informational
 		alert.messageText = "Sound Output"
 		alert.informativeText = "Choose an Output for positional audio feedback."
-		if let devices = AudioKit.outputDevices {
+		if let devices = AudioEngine.outputDevices {
 			for device in devices {
 				alert.addButton(withTitle: device.name)
 			}
 		}
 		let modalResult = alert.runModal()
 		let n = modalResult.rawValue-1000
-		if AudioKit.engine.isRunning {
-		try! AudioKit.stop()
-		}
-		try! AudioKit.setOutputDevice(AudioKit.outputDevices![n])
-		try! AudioKit.start()
+		Player.shared.engine.stop()
+		try! Player.shared.engine.setDevice(AudioEngine.outputDevices![n])
+		try! Player.shared.engine.start()
 	}
 
 	@objc func click(_ sender: Any?) {

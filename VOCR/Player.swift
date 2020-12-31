@@ -7,40 +7,44 @@
 //
 
 import AudioKit
+import AVFoundation
+
 class Player {
 
 	static let shared = Player()
 
-	let osc:AKPinkNoise
-	let panner:AKPanner
-	let eq:AKBandPassButterworthFilter
-		let env:AKAmplitudeEnvelope
-	let ramp = 0.1
-	
+	let osc:PinkNoise
+	let panner:Panner
+	let eq:BandPassButterworthFilter
+	let env:AmplitudeEnvelope
+	let ramp:Float = 0.1
+	let engine = AudioEngine()
+
 	init() {
-		osc = AKPinkNoise(amplitude: 1.0)
-		osc.rampDuration = ramp
-		env = AKAmplitudeEnvelope(osc)
-		env.rampDuration = ramp
+		osc = PinkNoise(amplitude: 1.0)
+
+		env = AmplitudeEnvelope(osc)
 		env.attackDuration = 0.05
 		env.decayDuration = 0.05
-		env.sustainLevel = 0.5
+		env.sustainLevel = 1.0
 		env.releaseDuration = 0.05
 		
-		eq = AKBandPassButterworthFilter(env)
+		eq = BandPassButterworthFilter(env)
 		eq.bandwidth = 100
-		eq.rampDuration = ramp
-		let mixer = AKMixer(eq)
-		mixer.volume = 2.0
-		panner = AKPanner(mixer)
-		panner.rampDuration = ramp
-		AudioKit.output = panner
-		try! AudioKit.start()
+
+		let mixer = Mixer(eq)
+		panner = Panner(mixer)
+
+		osc.start()
+		engine.output = panner
+		try! engine.start()
+		mixer.volume = 1.0
 	}
 
-	func play(_ freq:Double, _ pan:Double) {
-		eq.centerFrequency = freq
-		panner.pan = pan
+	func play(_ freq:Float, _ pan:Float) {
+		eq.$centerFrequency.ramp(to:freq, duration:ramp)
+		panner.$pan.ramp(to: pan, duration: ramp)
+
 		env.start()
 		usleep(100000)
 		env.stop()

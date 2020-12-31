@@ -59,8 +59,8 @@ class Navigation {
 	func convert2coordinates(_ box:CGRect) -> CGPoint {
 			var center = CGPoint(x:box.midX, y:box.midY)
 		if Settings.positionalAudio {
-			let frequency = 100+1000*Double(center.y)
-			let pan = Double(center.x).normalize(from: 0...1, into: -1...1)
+			let frequency = 100+1000*Float(center.y)
+			let pan = Float(Double(center.x).normalize(from: 0...1, into: -1...1))
 			Player.shared.play(frequency, pan)
 		}
 			center = VNImagePointForNormalizedPoint(center, Int(cgSize.width), Int(cgSize.height))

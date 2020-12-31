@@ -3,14 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		EA1F63F92352427A0089C967 /* VOCR Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */; };
 		EA1F642C2352503D0089C967 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F642B2352503D0089C967 /* Player.swift */; };
-		EA1F642D235282DB0089C967 /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA1F642723524C150089C967 /* AudioKit.framework */; };
-		EA1F642E235282DB0089C967 /* AudioKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EA1F642723524C150089C967 /* AudioKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EA2DA1A5232EB18800D31031 /* NSEventModifierFlags+HotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1A0232EB18800D31031 /* NSEventModifierFlags+HotKey.swift */; };
 		EA2DA1A6232EB18800D31031 /* KeyCombo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1A1232EB18800D31031 /* KeyCombo.swift */; };
 		EA2DA1A7232EB18800D31031 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1A2232EB18800D31031 /* Key.swift */; };
@@ -18,6 +16,7 @@
 		EA2DA1A9232EB18800D31031 /* HotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1A4232EB18800D31031 /* HotKey.swift */; };
 		EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1AB232EB1D600D31031 /* Accessibility.swift */; };
 		EA2DA1AF232EB22300D31031 /* NSRunningApplication Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */; };
+		EA5866A1256E931000391706 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = EA5866A0256E931000391706 /* AudioKit */; };
 		EA5C7AC82351B3F500D84042 /* OCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7AC72351B3F500D84042 /* OCR.swift */; };
 		EA5C7ACA2351B96D00D84042 /* Take Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7AC92351B96D00D84042 /* Take Screenshot.swift */; };
 		EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACB2351BB6D00D84042 /* Navigation.swift */; };
@@ -36,24 +35,8 @@
 		EAF9C3C82354A66200D4D77C /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF9C3C72354A66200D4D77C /* Settings.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		EA1F642F235282DB0089C967 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				EA1F642E235282DB0089C967 /* AudioKit.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VOCR Shortcuts.swift"; sourceTree = "<group>"; };
-		EA1F63FB2352496E0089C967 /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioKit.framework; path = ../../Downloads/AudioKitPlaygrounds/AudioKitPlaygrounds/AudioKit.framework; sourceTree = "<group>"; };
-		EA1F63FF235249C80089C967 /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioKit.framework; path = Frameworks/AudioKit.framework; sourceTree = "<group>"; };
 		EA1F640423524C150089C967 /* VOCR.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = VOCR.xcodeproj; sourceTree = "<group>"; };
 		EA1F640823524C150089C967 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EA1F640923524C150089C967 /* Take Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Take Screenshot.swift"; sourceTree = "<group>"; };
@@ -117,7 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA1F642D235282DB0089C967 /* AudioKit.framework in Frameworks */,
+				EA5866A1256E931000391706 /* AudioKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,8 +111,6 @@
 			isa = PBXGroup;
 			children = (
 				EA1F640323524C150089C967 /* vocr */,
-				EA1F63FF235249C80089C967 /* AudioKit.framework */,
-				EA1F63FB2352496E0089C967 /* AudioKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -284,13 +265,15 @@
 				EADE59AD232EB09A00E2F65A /* Sources */,
 				EADE59AE232EB09A00E2F65A /* Frameworks */,
 				EADE59AF232EB09A00E2F65A /* Resources */,
-				EA1F642F235282DB0089C967 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = VOCR;
+			packageProductDependencies = (
+				EA5866A0256E931000391706 /* AudioKit */,
+			);
 			productName = VOCR;
 			productReference = EADE59B1232EB09A00E2F65A /* VOCR.app */;
 			productType = "com.apple.product-type.application";
@@ -302,7 +285,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1110;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "Chi Kim";
 				TargetAttributes = {
 					EADE59B0232EB09A00E2F65A = {
@@ -319,6 +302,9 @@
 				Base,
 			);
 			mainGroup = EADE59A8232EB09A00E2F65A;
+			packageReferences = (
+				EA58669F256E931000391706 /* XCRemoteSwiftPackageReference "AudioKit" */,
+			);
 			productRefGroup = EADE59B2232EB09A00E2F65A /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -425,6 +411,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -486,6 +473,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -525,10 +513,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = VOCR/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -552,10 +537,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = VOCR/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -590,6 +572,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EA58669F256E931000391706 /* XCRemoteSwiftPackageReference "AudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/AudioKit";
+			requirement = {
+				branch = "v5-main";
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EA5866A0256E931000391706 /* AudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA58669F256E931000391706 /* XCRemoteSwiftPackageReference "AudioKit" */;
+			productName = AudioKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EADE59A9232EB09A00E2F65A /* Project object */;
 }
