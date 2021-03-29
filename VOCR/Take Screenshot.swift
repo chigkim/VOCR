@@ -29,6 +29,9 @@ func TakeScreensShots() -> CGImage? {
 	let appID = currentApp!.processIdentifier
 	let appElement = AXUIElementCreateApplication(appID)
 	let windows = currentApp?.windows()
+    if (windows!.isEmpty) {
+        return nil
+    }
 	let window = windows![0]
 	print("Window information")
 	print(window.value(of: "AXTitle"))
