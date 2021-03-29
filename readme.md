@@ -10,7 +10,7 @@ This is a standalone app, and it does not rely on Keyboard Maestro, Imagemagick,
 If you're using earlier MacOS than Catalina 10.15, please use the older [VOCR with tesseract.](https://github.com/chigkim/VOCR/tree/tesseract)
 
 ## Download
-Here is the direct link to download [VOCR v1.0.0-beta.1.](https://github.com/chigkim/VOCR/releases/download/v1.0.0-beta.1/VOCR.v1.0.0-beta.1.zip)
+Here is the direct link to download [VOCR v1.0.0-beta.2.](https://github.com/chigkim/VOCR/releases/download/v1.0.0-beta.2/VOCR.v1.0.0-beta.2.zip)
 
 ## Upgrade from Previous VOCR With Tesseract
 You can simply remove VOCR group from Keyboard Maestro and follow the instruction for setup below.
