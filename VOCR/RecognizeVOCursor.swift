@@ -12,7 +12,7 @@ import Cocoa
 func recognizeVOCursor() {
 	let bundle = Bundle.main
 	let script = bundle.url(forResource: "VOScreenshot", withExtension: "scpt")
-	debugPrint(script)
+	debugPrint(script!)
 	var error:NSDictionary?
 	if let scriptObject = NSAppleScript(contentsOf: script!, error: &error) {
 		var outputError:NSDictionary?
@@ -28,10 +28,10 @@ func recognizeVOCursor() {
 			let fileManager = FileManager.default
 			try? fileManager.removeItem(at: url)
 		} else {
-			debugPrint("Output Error: \(outputError)")
+			debugPrint("Output Error: \(String(describing: outputError))")
 		}
 	} else {
-		debugPrint(error)
+		debugPrint(String(describing: error))
 	}
 	
 }

@@ -21,7 +21,7 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
 	do {
 		try requestHandler.perform([textRecognitionRequest])
 	} catch _ {}
-	guard let results = textRecognitionRequest.results as? [VNRecognizedTextObservation] else {
+	guard let results = textRecognitionRequest.results else {
 		return []
 	}
 	return results

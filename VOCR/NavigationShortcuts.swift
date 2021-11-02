@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import HotKey
 
 struct NavigationShortcuts {
 	
@@ -81,7 +82,7 @@ struct NavigationShortcuts {
 			savePanel.begin { (result) in
 				if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
 					if let url = savePanel.url {
-						var text = Navigation.shared.text()
+						let text = Navigation.shared.text()
 
 						try! text.write(to: url, atomically: false, encoding: .utf8)
 					}

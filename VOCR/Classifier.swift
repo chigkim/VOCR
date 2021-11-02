@@ -16,7 +16,7 @@ var message = ""
 	let handler = VNImageRequestHandler(cgImage:cgImage, options: [:])
 	let request = VNClassifyImageRequest()
 	try? handler.perform([request])
-	guard let observations = request.results as? [VNClassificationObservation] else {
+	guard let observations = request.results else {
 		return message
 	}
 	categories = observations

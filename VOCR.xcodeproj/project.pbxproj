@@ -9,14 +9,8 @@
 /* Begin PBXBuildFile section */
 		EA1F63F92352427A0089C967 /* VOCR Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */; };
 		EA1F642C2352503D0089C967 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F642B2352503D0089C967 /* Player.swift */; };
-		EA2DA1A5232EB18800D31031 /* NSEventModifierFlags+HotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1A0232EB18800D31031 /* NSEventModifierFlags+HotKey.swift */; };
-		EA2DA1A6232EB18800D31031 /* KeyCombo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1A1232EB18800D31031 /* KeyCombo.swift */; };
-		EA2DA1A7232EB18800D31031 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1A2232EB18800D31031 /* Key.swift */; };
-		EA2DA1A8232EB18800D31031 /* HotKeysController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1A3232EB18800D31031 /* HotKeysController.swift */; };
-		EA2DA1A9232EB18800D31031 /* HotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1A4232EB18800D31031 /* HotKey.swift */; };
 		EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1AB232EB1D600D31031 /* Accessibility.swift */; };
 		EA2DA1AF232EB22300D31031 /* NSRunningApplication Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */; };
-		EA5866A1256E931000391706 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = EA5866A0256E931000391706 /* AudioKit */; };
 		EA5C7AC82351B3F500D84042 /* OCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7AC72351B3F500D84042 /* OCR.swift */; };
 		EA5C7ACA2351B96D00D84042 /* Take Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7AC92351B96D00D84042 /* Take Screenshot.swift */; };
 		EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACB2351BB6D00D84042 /* Navigation.swift */; };
@@ -27,6 +21,8 @@
 		EA6C26AC2354656D00665D4D /* Classifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6C26AB2354656D00665D4D /* Classifier.swift */; };
 		EA8AD6412352B4A000D26871 /* Double Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8AD6402352B4A000D26871 /* Double Extension.swift */; };
 		EAA12C4F234C89030036AF6A /* NavigationShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */; };
+		EAD9AAE62731075600473054 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = EAD9AAE52731075600473054 /* HotKey */; };
+		EAD9AAE927310A3900473054 /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = EAD9AAE827310A3900473054 /* SoundpipeAudioKit */; };
 		EAD9CFD22355E11600E7F594 /* say.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EAD9CFD12355E11600E7F594 /* say.scpt */; };
 		EADE59B5232EB09A00E2F65A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE59B4232EB09A00E2F65A /* AppDelegate.swift */; };
 		EADE59B7232EB09A00E2F65A /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADE59B6232EB09A00E2F65A /* AboutViewController.swift */; };
@@ -67,11 +63,6 @@
 		EA1F642523524C150089C967 /* HotKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKey.swift; sourceTree = "<group>"; };
 		EA1F642723524C150089C967 /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKit.framework; sourceTree = "<group>"; };
 		EA1F642B2352503D0089C967 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
-		EA2DA1A0232EB18800D31031 /* NSEventModifierFlags+HotKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSEventModifierFlags+HotKey.swift"; sourceTree = "<group>"; };
-		EA2DA1A1232EB18800D31031 /* KeyCombo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyCombo.swift; sourceTree = "<group>"; };
-		EA2DA1A2232EB18800D31031 /* Key.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
-		EA2DA1A3232EB18800D31031 /* HotKeysController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotKeysController.swift; sourceTree = "<group>"; };
-		EA2DA1A4232EB18800D31031 /* HotKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotKey.swift; sourceTree = "<group>"; };
 		EA2DA1AB232EB1D600D31031 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSRunningApplication Extension.swift"; sourceTree = "<group>"; };
 		EA5C7AC72351B3F500D84042 /* OCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCR.swift; sourceTree = "<group>"; };
@@ -100,7 +91,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA5866A1256E931000391706 /* AudioKit in Frameworks */,
+				EAD9AAE927310A3900473054 /* SoundpipeAudioKit in Frameworks */,
+				EAD9AAE62731075600473054 /* HotKey in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,18 +180,6 @@
 			path = Frameworks;
 			sourceTree = "<group>";
 		};
-		EA2DA19F232EB18800D31031 /* HotKey */ = {
-			isa = PBXGroup;
-			children = (
-				EA2DA1A0232EB18800D31031 /* NSEventModifierFlags+HotKey.swift */,
-				EA2DA1A1232EB18800D31031 /* KeyCombo.swift */,
-				EA2DA1A2232EB18800D31031 /* Key.swift */,
-				EA2DA1A3232EB18800D31031 /* HotKeysController.swift */,
-				EA2DA1A4232EB18800D31031 /* HotKey.swift */,
-			);
-			path = HotKey;
-			sourceTree = "<group>";
-		};
 		EA5C7AD72351D81100D84042 /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
@@ -213,7 +193,6 @@
 			isa = PBXGroup;
 			children = (
 				EA5C7AD72351D81100D84042 /* Scripts */,
-				EA2DA19F232EB18800D31031 /* HotKey */,
 				EADE59B3232EB09A00E2F65A /* VOCR */,
 				EADE59B2232EB09A00E2F65A /* Products */,
 				EA1F63FA2352496E0089C967 /* Frameworks */,
@@ -272,7 +251,8 @@
 			);
 			name = VOCR;
 			packageProductDependencies = (
-				EA5866A0256E931000391706 /* AudioKit */,
+				EAD9AAE52731075600473054 /* HotKey */,
+				EAD9AAE827310A3900473054 /* SoundpipeAudioKit */,
 			);
 			productName = VOCR;
 			productReference = EADE59B1232EB09A00E2F65A /* VOCR.app */;
@@ -303,7 +283,8 @@
 			);
 			mainGroup = EADE59A8232EB09A00E2F65A;
 			packageReferences = (
-				EA58669F256E931000391706 /* XCRemoteSwiftPackageReference "AudioKit" */,
+				EAD9AAE42731075600473054 /* XCRemoteSwiftPackageReference "HotKey" */,
+				EAD9AAE727310A3900473054 /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */,
 			);
 			productRefGroup = EADE59B2232EB09A00E2F65A /* Products */;
 			projectDirPath = "";
@@ -343,20 +324,15 @@
 				EA5C7ACA2351B96D00D84042 /* Take Screenshot.swift in Sources */,
 				EA8AD6412352B4A000D26871 /* Double Extension.swift in Sources */,
 				EA5C7AD02351C8DE00D84042 /* AXUIElement Extension.swift in Sources */,
-				EA2DA1A7232EB18800D31031 /* Key.swift in Sources */,
 				EA1F63F92352427A0089C967 /* VOCR Shortcuts.swift in Sources */,
 				EADE59B5232EB09A00E2F65A /* AppDelegate.swift in Sources */,
 				EA688D452355BDC500F722C7 /* Bundle Extension.swift in Sources */,
-				EA2DA1A8232EB18800D31031 /* HotKeysController.swift in Sources */,
 				EA5C7AC82351B3F500D84042 /* OCR.swift in Sources */,
-				EA2DA1A6232EB18800D31031 /* KeyCombo.swift in Sources */,
 				EA2DA1AF232EB22300D31031 /* NSRunningApplication Extension.swift in Sources */,
-				EA2DA1A5232EB18800D31031 /* NSEventModifierFlags+HotKey.swift in Sources */,
 				EA5C7AD42351D44B00D84042 /* RecognizeVOCursor.swift in Sources */,
 				EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */,
 				EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */,
 				EA6C26AC2354656D00665D4D /* Classifier.swift in Sources */,
-				EA2DA1A9232EB18800D31031 /* HotKey.swift in Sources */,
 				EAF9C3C82354A66200D4D77C /* Settings.swift in Sources */,
 				EA1F642C2352503D0089C967 /* Player.swift in Sources */,
 				EAA12C4F234C89030036AF6A /* NavigationShortcuts.swift in Sources */,
@@ -510,7 +486,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -519,7 +495,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "1.0.0-b1";
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chikim.VOCR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -534,7 +510,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -543,7 +519,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "1.0.0-b1";
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.chikim.VOCR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -574,21 +550,34 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		EA58669F256E931000391706 /* XCRemoteSwiftPackageReference "AudioKit" */ = {
+		EAD9AAE42731075600473054 /* XCRemoteSwiftPackageReference "HotKey" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AudioKit/AudioKit";
+			repositoryURL = "https://github.com/soffes/HotKey";
 			requirement = {
-				branch = "v5-main";
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.3;
+			};
+		};
+		EAD9AAE727310A3900473054 /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/SoundpipeAudioKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		EA5866A0256E931000391706 /* AudioKit */ = {
+		EAD9AAE52731075600473054 /* HotKey */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EA58669F256E931000391706 /* XCRemoteSwiftPackageReference "AudioKit" */;
-			productName = AudioKit;
+			package = EAD9AAE42731075600473054 /* XCRemoteSwiftPackageReference "HotKey" */;
+			productName = HotKey;
+		};
+		EAD9AAE827310A3900473054 /* SoundpipeAudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EAD9AAE727310A3900473054 /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */;
+			productName = SoundpipeAudioKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

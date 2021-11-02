@@ -48,10 +48,10 @@ class Accessibility {
 			if let output = scriptObject.executeAppleEvent(event, error: &outputError).stringValue {
 				print("Message:\(output)")
 			} else {
-				debugPrint("Output Error: \(outputError)")
+				debugPrint("Output Error: \(String(describing: outputError))")
 			}
 		} else {
-			debugPrint(error)
+			debugPrint(error!)
 		}
 
 	}

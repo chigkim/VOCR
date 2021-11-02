@@ -7,6 +7,7 @@
 //
 
 import AudioKit
+import SoundpipeAudioKit
 import AVFoundation
 
 class Player {
@@ -26,8 +27,9 @@ class Player {
 		env = AmplitudeEnvelope(osc)
 		env.attackDuration = 0.05
 		env.decayDuration = 0.05
-		env.sustainLevel = 1.0
+		env.sustainLevel = 0.8
 		env.releaseDuration = 0.05
+		env.start()
 		
 		eq = BandPassButterworthFilter(env)
 		eq.bandwidth = 100
@@ -44,10 +46,9 @@ class Player {
 	func play(_ freq:Float, _ pan:Float) {
 		eq.$centerFrequency.ramp(to:freq, duration:ramp)
 		panner.$pan.ramp(to: pan, duration: ramp)
-
-		env.start()
+		env.openGate()
 		usleep(100000)
-		env.stop()
+		env.closeGate()
 		}
 }
 

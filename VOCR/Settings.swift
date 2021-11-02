@@ -15,9 +15,9 @@ struct Settings {
 
 	static func load() {
 		let defaults = UserDefaults.standard
-		if let positionReset = defaults.object(forKey:"positionReset") {
+
 			Settings.positionReset = defaults.bool(forKey:"positionReset")
-		}
+
 		debugPrint("positionReset \(Settings.positionReset)")
 		Settings.positionalAudio = defaults.bool(forKey:"positionalAudio")
 		debugPrint("positionalAudio \(Settings.positionalAudio)")
