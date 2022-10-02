@@ -111,7 +111,9 @@ class Navigation {
 		c = -1
 		correctLimit()
 		print("\(l), \(w)")
+        if Settings.moveMouse {
 		CGDisplayMoveCursorToPoint(0, convert2coordinates(displayResults[l][w].boundingBox))
+        }
 		Accessibility.speak(displayResults[l][w].topCandidates(1)[0].string)
 	}
 	
@@ -123,7 +125,9 @@ class Navigation {
 		c = -1
 		correctLimit()
 		print("\(l), \(w)")
+        if Settings.moveMouse {
 		CGDisplayMoveCursorToPoint(0, convert2coordinates(displayResults[l][w].boundingBox))
+        }
 		Accessibility.speak(displayResults[l][w].topCandidates(1)[0].string)
 	}
 
@@ -136,7 +140,9 @@ class Navigation {
 		c = -1
 		correctLimit()
 		print("\(l), \(w)")
+        if Settings.moveMouse {
 		CGDisplayMoveCursorToPoint(0, convert2coordinates(displayResults[l][w].boundingBox))
+        }
 		var line = ""
 		for r in displayResults[l] {
 			line += " \(r.topCandidates(1)[0].string)"
@@ -153,7 +159,9 @@ class Navigation {
 		c = -1
 		correctLimit()
 		print("\(l), \(w)")
+        if Settings.moveMouse {
 		CGDisplayMoveCursorToPoint(0, convert2coordinates(displayResults[l][w].boundingBox))
+        }
 		var line = ""
 		for r in displayResults[l] {
 			line += " \(r.topCandidates(1)[0].string)"
