@@ -26,8 +26,8 @@ func TakeScreensShots() -> CGImage? {
 	}
 
 	let currentApp = NSWorkspace.shared.frontmostApplication
-	let appID = currentApp!.processIdentifier
-	let appElement = AXUIElementCreateApplication(appID)
+//	let appID = currentApp!.processIdentifier
+//	let appElement = AXUIElementCreateApplication(appID)
 	let windows = currentApp?.windows()
     if (windows!.isEmpty) {
         return nil
