@@ -55,19 +55,23 @@ class Navigation {
 		}
 		displayResults.append(line)
 	}
-
-	func convert2coordinates(_ box:CGRect) -> CGPoint {
-			var center = CGPoint(x:box.midX, y:box.midY)
+	
+	func convertPoint(_ point:CGPoint) -> CGPoint {
+			var p = VNImagePointForNormalizedPoint(point, Int(cgSize.width), Int(cgSize.height))
+			p.y = cgSize.height-p.y
+			p.x += cgPosition.x
+			p.y += cgPosition.y
+	return p
+	}
+	
+func convert2coordinates(_ box:CGRect) -> CGPoint {
+			let center = CGPoint(x:box.midX, y:box.midY)
 		if Settings.positionalAudio {
 			let frequency = 100+1000*Float(center.y)
 			let pan = Float(Double(center.x).normalize(from: 0...1, into: -1...1))
 			Player.shared.play(frequency, pan)
 		}
-			center = VNImagePointForNormalizedPoint(center, Int(cgSize.width), Int(cgSize.height))
-		center.y = cgSize.height-center.y
-		center.x += cgPosition.x
-		center.y += cgPosition.y
-		return center
+		return convertPoint(center)
 	}
 
 	func sort(_ a:VNRecognizedTextObservation, _ b:VNRecognizedTextObservation) -> Bool {
