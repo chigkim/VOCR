@@ -11,15 +11,12 @@
 		EA1F642C2352503D0089C967 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F642B2352503D0089C967 /* Player.swift */; };
 		EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1AB232EB1D600D31031 /* Accessibility.swift */; };
 		EA2DA1AF232EB22300D31031 /* NSRunningApplication Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */; };
-		EA5C7AC82351B3F500D84042 /* OCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7AC72351B3F500D84042 /* OCR.swift */; };
-		EA5C7ACA2351B96D00D84042 /* Take Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7AC92351B96D00D84042 /* Take Screenshot.swift */; };
 		EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACB2351BB6D00D84042 /* Navigation.swift */; };
 		EA5C7AD02351C8DE00D84042 /* AXUIElement Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */; };
-		EA5C7AD42351D44B00D84042 /* RecognizeVOCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7AD32351D44B00D84042 /* RecognizeVOCursor.swift */; };
 		EA5C7AD92351D81100D84042 /* VOScreenshot.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EA5C7AD82351D81100D84042 /* VOScreenshot.scpt */; };
 		EA688D452355BDC500F722C7 /* Bundle Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA688D442355BDC500F722C7 /* Bundle Extension.swift */; };
-		EA6C26AC2354656D00665D4D /* Classifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6C26AB2354656D00665D4D /* Classifier.swift */; };
 		EA8AD6412352B4A000D26871 /* Double Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8AD6402352B4A000D26871 /* Double Extension.swift */; };
+		EA9EB89E28EA5B0A00FE6210 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9EB89D28EA5B0A00FE6210 /* Utils.swift */; };
 		EAA12C4F234C89030036AF6A /* NavigationShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */; };
 		EAD9AAE62731075600473054 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = EAD9AAE52731075600473054 /* HotKey */; };
 		EAD9AAE927310A3900473054 /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = EAD9AAE827310A3900473054 /* SoundpipeAudioKit */; };
@@ -65,15 +62,12 @@
 		EA1F642B2352503D0089C967 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		EA2DA1AB232EB1D600D31031 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSRunningApplication Extension.swift"; sourceTree = "<group>"; };
-		EA5C7AC72351B3F500D84042 /* OCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCR.swift; sourceTree = "<group>"; };
-		EA5C7AC92351B96D00D84042 /* Take Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Take Screenshot.swift"; sourceTree = "<group>"; };
 		EA5C7ACB2351BB6D00D84042 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AXUIElement Extension.swift"; sourceTree = "<group>"; };
-		EA5C7AD32351D44B00D84042 /* RecognizeVOCursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizeVOCursor.swift; sourceTree = "<group>"; };
 		EA5C7AD82351D81100D84042 /* VOScreenshot.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = VOScreenshot.scpt; sourceTree = "<group>"; };
 		EA688D442355BDC500F722C7 /* Bundle Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle Extension.swift"; sourceTree = "<group>"; };
-		EA6C26AB2354656D00665D4D /* Classifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Classifier.swift; sourceTree = "<group>"; };
 		EA8AD6402352B4A000D26871 /* Double Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double Extension.swift"; sourceTree = "<group>"; };
+		EA9EB89D28EA5B0A00FE6210 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationShortcuts.swift; sourceTree = "<group>"; };
 		EAD9CFD12355E11600E7F594 /* say.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = say.scpt; sourceTree = "<group>"; };
 		EADE59B1232EB09A00E2F65A /* VOCR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VOCR.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -216,20 +210,17 @@
 				EADE59B8232EB09A00E2F65A /* Assets.xcassets */,
 				EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */,
 				EA688D442355BDC500F722C7 /* Bundle Extension.swift */,
-				EA6C26AB2354656D00665D4D /* Classifier.swift */,
 				EA8AD6402352B4A000D26871 /* Double Extension.swift */,
 				EADE59BD232EB09A00E2F65A /* Info.plist */,
 				EADE59BA232EB09A00E2F65A /* Main.storyboard */,
 				EA5C7ACB2351BB6D00D84042 /* Navigation.swift */,
 				EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */,
 				EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */,
-				EA5C7AC72351B3F500D84042 /* OCR.swift */,
 				EA1F642B2352503D0089C967 /* Player.swift */,
-				EA5C7AD32351D44B00D84042 /* RecognizeVOCursor.swift */,
 				EAF9C3C72354A66200D4D77C /* Settings.swift */,
-				EA5C7AC92351B96D00D84042 /* Take Screenshot.swift */,
 				EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */,
 				EADE59BE232EB09A00E2F65A /* VOCR.entitlements */,
+				EA9EB89D28EA5B0A00FE6210 /* Utils.swift */,
 			);
 			path = VOCR;
 			sourceTree = "<group>";
@@ -321,18 +312,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				EADE59B7232EB09A00E2F65A /* AboutViewController.swift in Sources */,
-				EA5C7ACA2351B96D00D84042 /* Take Screenshot.swift in Sources */,
 				EA8AD6412352B4A000D26871 /* Double Extension.swift in Sources */,
 				EA5C7AD02351C8DE00D84042 /* AXUIElement Extension.swift in Sources */,
 				EA1F63F92352427A0089C967 /* VOCR Shortcuts.swift in Sources */,
 				EADE59B5232EB09A00E2F65A /* AppDelegate.swift in Sources */,
 				EA688D452355BDC500F722C7 /* Bundle Extension.swift in Sources */,
-				EA5C7AC82351B3F500D84042 /* OCR.swift in Sources */,
 				EA2DA1AF232EB22300D31031 /* NSRunningApplication Extension.swift in Sources */,
-				EA5C7AD42351D44B00D84042 /* RecognizeVOCursor.swift in Sources */,
+				EA9EB89E28EA5B0A00FE6210 /* Utils.swift in Sources */,
 				EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */,
 				EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */,
-				EA6C26AC2354656D00665D4D /* Classifier.swift in Sources */,
 				EAF9C3C82354A66200D4D77C /* Settings.swift in Sources */,
 				EA1F642C2352503D0089C967 /* Player.swift in Sources */,
 				EAA12C4F234C89030036AF6A /* NavigationShortcuts.swift in Sources */,

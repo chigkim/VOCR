@@ -77,7 +77,7 @@ struct NavigationShortcuts {
 		
 		save.keyDownHandler = {
 			let savePanel = NSSavePanel()
-			savePanel.allowedFileTypes = ["txt"]
+			savePanel.allowedContentTypes = [.text]
 			savePanel.allowsOtherFileTypes = false
 			savePanel.begin { (result) in
 				if result.rawValue == NSApplication.ModalResponse.OK.rawValue {

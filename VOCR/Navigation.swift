@@ -45,7 +45,7 @@ class Navigation {
 		var line:[VNRecognizedTextObservation] = []
 		var y = result[0].boundingBox.midY
 		for r in result {
-			print("\(r.topCandidates(1)[0]): \(r.boundingBox)")
+			logger.debug("\(r.topCandidates(1)[0]): \(r.boundingBox.debugDescription)")
 			if abs(r.boundingBox.midY-y)>0.01 {
 				displayResults.append(line)
 				line = []
