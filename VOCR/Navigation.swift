@@ -45,7 +45,7 @@ class Navigation {
 		var line:[VNRecognizedTextObservation] = []
 		var y = result[0].boundingBox.midY
 		for r in result {
-			print("\(r.topCandidates(1)[0]): \(r.boundingBox)")
+			logger.debug("\(r.topCandidates(1)[0]): \(r.boundingBox.debugDescription)")
 			if abs(r.boundingBox.midY-y)>0.01 {
 				displayResults.append(line)
 				line = []
@@ -115,7 +115,9 @@ func convert2coordinates(_ box:CGRect) -> CGPoint {
 		c = -1
 		correctLimit()
 		print("\(l), \(w)")
+        if Settings.moveMouse {
 		CGDisplayMoveCursorToPoint(0, convert2coordinates(displayResults[l][w].boundingBox))
+        }
 		Accessibility.speak(displayResults[l][w].topCandidates(1)[0].string)
 	}
 	
@@ -127,7 +129,9 @@ func convert2coordinates(_ box:CGRect) -> CGPoint {
 		c = -1
 		correctLimit()
 		print("\(l), \(w)")
+        if Settings.moveMouse {
 		CGDisplayMoveCursorToPoint(0, convert2coordinates(displayResults[l][w].boundingBox))
+        }
 		Accessibility.speak(displayResults[l][w].topCandidates(1)[0].string)
 	}
 
@@ -140,7 +144,9 @@ func convert2coordinates(_ box:CGRect) -> CGPoint {
 		c = -1
 		correctLimit()
 		print("\(l), \(w)")
+        if Settings.moveMouse {
 		CGDisplayMoveCursorToPoint(0, convert2coordinates(displayResults[l][w].boundingBox))
+        }
 		var line = ""
 		for r in displayResults[l] {
 			line += " \(r.topCandidates(1)[0].string)"
@@ -157,7 +163,9 @@ func convert2coordinates(_ box:CGRect) -> CGPoint {
 		c = -1
 		correctLimit()
 		print("\(l), \(w)")
+        if Settings.moveMouse {
 		CGDisplayMoveCursorToPoint(0, convert2coordinates(displayResults[l][w].boundingBox))
+        }
 		var line = ""
 		for r in displayResults[l] {
 			line += " \(r.topCandidates(1)[0].string)"
