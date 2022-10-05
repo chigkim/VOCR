@@ -15,7 +15,7 @@ struct Shortcuts {
 	let vo = HotKey(key:.v, modifiers:[.command,.shift, .control])
 	let resetPosition = HotKey(key:.r, modifiers:[.command,.shift, .control])
 	let positionalAudio = HotKey(key:.p, modifiers:[.command,.shift, .control])
-    let moveMouse = HotKey(key:.m, modifiers:[.command, .shift, .control])
+	let moveMouse = HotKey(key:.m, modifiers:[.command, .shift, .control])
 	init() {
 		window.keyDownHandler = {
 			if !Accessibility.isTrusted(ask:true) {
@@ -53,20 +53,16 @@ struct Shortcuts {
 			}
 			Settings.save()
 		}
-        moveMouse.keyDownHandler = {
-            if Settings.moveMouse {
-                Settings.moveMouse = false
-                Accessibility.speak("Disabled mouse movement")
-            } else {
-                Settings.moveMouse = true
-                Accessibility.speak("Enabled mouse movement.")
-            }
-            Settings.save()
-        }
-        
-            }
-        }
-	
-	
-
+		moveMouse.keyDownHandler = {
+			if Settings.moveMouse {
+				Settings.moveMouse = false
+				Accessibility.speak("Disabled mouse movement")
+			} else {
+				Settings.moveMouse = true
+				Accessibility.speak("Enabled mouse movement.")
+			}
+		}
+		
+	}
+}
 

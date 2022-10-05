@@ -12,18 +12,14 @@ struct Settings {
 	
 	static var positionReset = true
 	static var positionalAudio = false
-    static var moveMouse = false
-    
+	static var moveMouse = true
+
 	static func load() {
 		let defaults = UserDefaults.standard
-
-			Settings.positionReset = defaults.bool(forKey:"positionReset")
-
+		Settings.positionReset = defaults.bool(forKey:"positionReset")
 		debugPrint("positionReset \(Settings.positionReset)")
 		Settings.positionalAudio = defaults.bool(forKey:"positionalAudio")
 		debugPrint("positionalAudio \(Settings.positionalAudio)")
-        Settings.moveMouse = defaults.bool(forKey: "moveMouse")
-        debugPrint("moveMouse \(Settings.moveMouse)")
 	}
 	
 	static func save() {

@@ -24,7 +24,7 @@ struct NavigationShortcuts {
 	let location = HotKey(key:.l, modifiers:[.command,.control])
 	let exit = HotKey(key:.escape, modifiers:[])
 	let save = HotKey(key:.s, modifiers:[.command,.shift, .control])
-
+	
 	init() {
 		location.keyDownHandler = {
 			Navigation.shared.location()
@@ -45,23 +45,23 @@ struct NavigationShortcuts {
 		down.keyDownHandler = {
 			Navigation.shared.down()
 		}
-
+		
 		top.keyDownHandler = {
 			Navigation.shared.top()
 		}
-
+		
 		bottom.keyDownHandler = {
 			Navigation.shared.bottom()
 		}
-
+		
 		beginning.keyDownHandler = {
 			Navigation.shared.beginning()
 		}
-
+		
 		end.keyDownHandler = {
 			Navigation.shared.end()
 		}
-
+		
 		nextCharacter.keyDownHandler = {
 			Navigation.shared.nextCharacter()
 		}
@@ -83,7 +83,7 @@ struct NavigationShortcuts {
 				if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
 					if let url = savePanel.url {
 						let text = Navigation.shared.text()
-
+						
 						try! text.write(to: url, atomically: false, encoding: .utf8)
 					}
 					
@@ -93,8 +93,8 @@ struct NavigationShortcuts {
 				windows[1].close()
 			}
 		}
-
+		
 	}
-
+	
 }
 
