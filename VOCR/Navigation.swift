@@ -36,7 +36,7 @@ class Navigation {
 			return
 		}
 		process(result:&result)
-		Accessibility.speak("Finished!")
+		// Accessibility.speak("Finished!")
 		navigationShortcuts = NavigationShortcuts()
 	}
 

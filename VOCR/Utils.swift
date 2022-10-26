@@ -14,6 +14,59 @@ import Cocoa
 
 let logger = Logger()
 
+func saveImage(_ cgimage: CGImage) throws {
+	let savePanel = NSSavePanel()
+	savePanel.allowedContentTypes = [.png]
+	savePanel.allowsOtherFileTypes = false
+	savePanel.begin { (result) in
+		let windows = NSApplication.shared.windows
+		NSApplication.shared.hide(nil)
+		windows[1].close()
+		if result == .OK {
+			if let url = savePanel.url {
+				let cicontext = CIContext()
+				let ciimage = CIImage(cgImage: cgimage)
+				try? cicontext.writePNGRepresentation(of: ciimage, to: url, format: .RGBA8, colorSpace: ciimage.colorSpace!)
+			}
+		}
+	}
+}
+
+func drawBoxes(_ cgImageInput : CGImage, boxes:[CGRect]) -> CGImage? {
+	var cgImageOutput : CGImage? = nil
+		if let dataProvider = cgImageInput.dataProvider {
+		if let data : CFData = dataProvider.data {
+			let length = CFDataGetLength(data)
+	
+			let bytes = UnsafeMutablePointer<UInt8>.allocate(capacity: length)
+			CFDataGetBytes(data, CFRange(location: 0, length: length), bytes)
+			if let ctx = CGContext(data: bytes, width: cgImageInput.width, height: cgImageInput.height, bitsPerComponent: cgImageInput.bitsPerComponent, bytesPerRow: cgImageInput.bytesPerRow, space: cgImageInput.colorSpace!, bitmapInfo: cgImageInput.bitmapInfo.rawValue) {
+				let red = CGColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
+				ctx.setFillColor(red)
+				ctx.setStrokeColor(red)
+				ctx.setLineWidth(10)
+				debugPrint("Drawing boxes:")
+				for box in boxes {
+					debugPrint(box)
+					ctx.stroke(box, width: 10.0)
+				}
+				cgImageOutput = (ctx.makeImage())
+				if cgImageOutput == nil {
+					print("Failed to make image from CGContext.")
+				}
+			} else {
+				print("Could not create context. Try different image parameters.")
+			}
+			bytes.deallocate()
+		} else {
+			print("Could not get dataProvider.data")
+		}
+	} else {
+		print ("Could not get cgImage.dataProvider")
+	}
+	return cgImageOutput
+}
+
 func TakeScreensShots() -> CGImage? {
 	var displayCount: UInt32 = 0
 	var result = CGGetActiveDisplayList(0, nil, &displayCount)
@@ -63,21 +116,29 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
 	textRecognitionRequest.usesCPUOnly = false
 	textRecognitionRequest.cancel()
 	let rectDetectRequest = VNDetectRectanglesRequest()
-	rectDetectRequest.maximumObservations = 16
-	rectDetectRequest.minimumConfidence = 0.6
-	rectDetectRequest.minimumAspectRatio = 0.3
+	rectDetectRequest.maximumObservations = 100
+	rectDetectRequest.minimumConfidence = 1.0
+	rectDetectRequest.minimumAspectRatio = 0.5
+	rectDetectRequest.minimumSize = 0.01
 	rectDetectRequest.cancel()
 	let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
 	do {
 		try requestHandler.perform([textRecognitionRequest, rectDetectRequest])
 	} catch _ {}
-	for r in rectDetectRequest.results! {
-		let tl = Navigation.shared.convertPoint(r.topLeft)
-		let tr = Navigation.shared.convertPoint(r.topRight)
-		let bl = Navigation.shared.convertPoint(r.bottomLeft)
-		let br = Navigation.shared.convertPoint(r.bottomRight)
-		let box = CGRect(x: tl.x, y: tl.y, width: br.x-bl.x, height: br.y-tr.y)
-		debugPrint("Box: \(box)")
+	let boxes = rectDetectRequest.results!.map { VNImageRectForNormalizedRect($0.boundingBox, cgImage.width, cgImage.height) }
+	if boxes.count > 0 {
+		Accessibility.speak("\(boxes.count) boxes")
+		let boxImage = drawBoxes(cgImage, boxes:boxes )!
+		try? saveImage(boxImage)
+		debugPrint("Boxes coordinates adjusted to window")
+		for r in rectDetectRequest.results! {
+			let tl = Navigation.shared.convertPoint(r.topLeft)
+			let tr = Navigation.shared.convertPoint(r.topRight)
+			let bl = Navigation.shared.convertPoint(r.bottomLeft)
+			let br = Navigation.shared.convertPoint(r.bottomRight)
+			let box = CGRect(x: tl.x, y: tl.y, width: br.x-bl.x, height: br.y-tr.y)
+			debugPrint("Box: \(box)")
+		}
 	}
 	guard let results = textRecognitionRequest.results else {
 		return []
