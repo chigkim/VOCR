@@ -79,10 +79,92 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
 		let box = CGRect(x: tl.x, y: tl.y, width: br.x-bl.x, height: br.y-tr.y)
 		debugPrint("Box: \(box)")
 	}
+    
+    let VNDetectRectanglesRequest = VNImageBasedRequest()
+    print("VND Detect Rectangles results")
+    let VNDresults = VNDetectRectanglesRequest.results
+    print(VNDresults ?? "no results")
+    
 	guard let results = textRecognitionRequest.results else {
 		return []
 	}
+    print("results")
+    print(results)
 	return results
+    
+//    let textRecognitionRequest = VNRecognizeTextRequest()
+//    textRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate
+//    textRecognitionRequest.minimumTextHeight = 0
+//    textRecognitionRequest.usesLanguageCorrection = true
+//    textRecognitionRequest.customWords = []
+//    textRecognitionRequest.usesCPUOnly = false
+//    textRecognitionRequest.cancel()
+//    
+//    
+//    
+////    let ciImageInput = CIImage(cgImage: cgImage)
+////    let requestHandler = VNImageRequestHandler(ciImage: ciImageInput)
+////    let documentDetectionRequest = VNDetectDocumentSegmentationRequest()
+////    do {
+////        try requestHandler.perform([documentDetectionRequest])
+////    } catch _ {}
+////
+//    
+////    let documentRequestHandler = VNImageRequestHandler(ciImage: ciImageInput)
+////
+////    var checkBoxImages: [VNRectangleObservation] = []
+////    var rectangles: [VNRectangleObservation] = []
+////
+////    let rectanglesDetection = VNDetectRectanglesRequest { request, error in
+////        rectangles = request.results as! [VNRectangleObservation]
+////        rectangles.sort{$0.boundingBox.origin.y > $1.boundingBox.origin.y}
+////
+////        for rectangle in rectangles {
+////            //            guard let checkBoxImage =
+////            checkBoxImages.append(rectangle)
+////        }
+////    }
+////
+////    do {
+////        try documentRequestHandler.perform([rectanglesDetection])
+////    } catch {
+////        print(error)
+////    }
+//    
+////    print("checkbox")
+////    print(checkBoxImages)
+//    
+//    let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+//    
+//    do {
+//        try requestHandler.perform([textRecognitionRequest])
+//    } catch _ {}
+//    
+////    do {
+////        try requestHandler.perform([rectanglesDetection])
+////    } catch _ {}
+//    
+//    
+//    for r in rectanglesDetectionRequest.results! {
+//        let tl = Navigation.shared.convertPoint(r.topLeft)
+//        let tr = Navigation.shared.convertPoint(r.topRight)
+//        let bl = Navigation.shared.convertPoint(r.bottomLeft)
+//        let br = Navigation.shared.convertPoint(r.bottomRight)
+//        let box = CGRect(x: tl.x, y: tl.y, width: br.x-bl.x, height: br.y-tr.y)
+//        debugPrint("Box: \(box)")
+////    }
+//    
+//    let VNDetectRectanglesRequest = VNImageBasedRequest()
+//    print("VND Detect Rectangles results")
+//    let VNDresults = VNDetectRectanglesRequest.results
+//    print(VNDresults ?? "no results")
+//    
+//    guard let results = textRecognitionRequest.results else {
+//        return []
+//    }
+//    print("results")
+//    print(results)
+//    return results
 }
 
 func classify(cgImage:CGImage) -> String {
