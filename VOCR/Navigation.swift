@@ -14,6 +14,7 @@ class Navigation {
 
 	static let shared = Navigation()
 	var displayResults:[[VNRecognizedTextObservation]] = []
+    var displayResultsBoxes: [CGRect] = []
 	var navigationShortcuts:NavigationShortcuts?
 	var cgPosition = CGPoint()
 	var cgSize = CGSize()
@@ -54,6 +55,21 @@ class Navigation {
 			line.append(r)
 		}
 		displayResults.append(line)
+        
+        for l in 0...displayResults.count-1 {
+            for w in 0...displayResults[l].count-1 {
+                displayResultsBoxes.append(displayResults[l][w].boundingBox)
+            }
+        }
+//        print("displayResults results")
+//        print(displayResults)
+//
+//        print("displayResults results")
+//        print(displayResults[0][0])
+//        print(displayResults[0][0].topCandidates(1)[0])
+//        print(displayResults[0][0].topCandidates(1)[0].string)
+//        print(displayResults[0][0].boundingBox)
+//        print(type(of: displayResults[0][0].boundingBox))
 	}
 	
 	func convertPoint(_ point:CGPoint) -> CGPoint {

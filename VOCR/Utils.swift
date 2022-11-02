@@ -115,117 +115,119 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
 	textRecognitionRequest.customWords = []
 	textRecognitionRequest.usesCPUOnly = false
 	textRecognitionRequest.cancel()
+    
 	let rectDetectRequest = VNDetectRectanglesRequest()
 	rectDetectRequest.maximumObservations = 100
-	rectDetectRequest.minimumConfidence = 1.0
-	rectDetectRequest.minimumAspectRatio = 0.5
+    rectDetectRequest.minimumConfidence = 0
+	rectDetectRequest.minimumAspectRatio = 0
 	rectDetectRequest.minimumSize = 0.01
 	rectDetectRequest.cancel()
+    
 	let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
 	do {
 		try requestHandler.perform([textRecognitionRequest, rectDetectRequest])
 	} catch _ {}
-	let boxes = rectDetectRequest.results!.map { VNImageRectForNormalizedRect($0.boundingBox, cgImage.width, cgImage.height) }
-	if boxes.count > 0 {
-		Accessibility.speak("\(boxes.count) boxes")
-		let boxImage = drawBoxes(cgImage, boxes:boxes )!
-		try? saveImage(boxImage)
-		debugPrint("Boxes coordinates adjusted to window")
-		for r in rectDetectRequest.results! {
-			let tl = Navigation.shared.convertPoint(r.topLeft)
-			let tr = Navigation.shared.convertPoint(r.topRight)
-			let bl = Navigation.shared.convertPoint(r.bottomLeft)
-			let br = Navigation.shared.convertPoint(r.bottomRight)
-			let box = CGRect(x: tl.x, y: tl.y, width: br.x-bl.x, height: br.y-tr.y)
-			debugPrint("Box: \(box)")
-		}
-	}
-    
-    let VNDetectRectanglesRequest = VNImageBasedRequest()
-    print("VND Detect Rectangles results")
-    let VNDresults = VNDetectRectanglesRequest.results
-    print(VNDresults ?? "no results")
+	
     
 	guard let results = textRecognitionRequest.results else {
 		return []
 	}
+    
+    //
+    var displayResults:[[VNRecognizedTextObservation]] = []
+    var displayResultsBoxes: [CGPoint] = []
+    var line:[VNRecognizedTextObservation] = []
+    var y = results[0].boundingBox.midY
+    for r in results {
+        logger.debug("\(r.topCandidates(1)[0]): \(r.boundingBox.debugDescription)")
+        if abs(r.boundingBox.midY-y)>0.01 {
+            displayResults.append(line)
+            line = []
+            y = r.boundingBox.midY
+        }
+        line.append(r)
+    }
+    displayResults.append(line)
+    
+    for l in 0...displayResults.count-1 {
+        for w in 0...displayResults[l].count-1 {
+            displayResultsBoxes.append(Navigation.shared.convert2coordinates(displayResults[l][w].boundingBox))
+        }
+    }
+    //
+    
+    let boxes = rectDetectRequest.results!.map { VNImageRectForNormalizedRect($0.boundingBox, cgImage.width, cgImage.height) }
+//    let texts = displayResultsBoxes.map { VNImagePointForNormalizedPoint($0, cgImage.width, cgImage.height) }
+    let texts = displayResultsBoxes
+
+    print("image results")
+    print(boxes)
+    
+    if boxes.count > 0 {
+
+//        print("scaled Boxes")
+//        print(scaledBoxes)
+        
+        var boxesNoText: [CGRect] = []
+        var boxesText: [CGRect] = []
+        var pointBoxes: [CGRect] = []
+        print("boxes Count", boxes.count)
+        for box in boxes {
+            var intersectsFlag: Bool = false
+            for point in texts {
+                if box.contains(point) {
+                    print("got here", box, point)
+                    intersectsFlag = true
+//                    print("intersection")
+                    break
+                } else {
+                    if (box.minX < point.x && (box.maxX > point.x)) {
+                        print("X matches for ", box, point)
+                    }
+                }
+            }
+            if !intersectsFlag {
+                boxesNoText.append(box)
+            } else {
+                boxesText.append(box)
+            }
+        }
+        print("Number Boxes:", texts.count)
+        for point in texts {
+            print("point: ", point)
+            pointBoxes.append(CGRect(x: point.x-0.1, y: point.y-0.1, width: 0.2, height: 0.2))
+        }
+        for box in boxes {
+            print("box: ", box)
+        }
+        print("boxesNoText Count", boxesNoText.count)
+        print("boxes: ", boxesText.count)
+//        print("total", cgImage.width, cgImage.height)
+        
+//        var scaledBoxes: [CGRect] = []
+//        debugPrint("Boxes coordinates adjusted to window")
+//        for r in boxesNoText {
+//            let tl = Navigation.shared.convertPoint(r.topLeft)
+//            let tr = Navigation.shared.convertPoint(r.topRight)
+//            let bl = Navigation.shared.convertPoint(r.bottomLeft)
+//            let br = Navigation.shared.convertPoint(r.bottomRight)
+//            let box = CGRect(x: tl.x, y: tl.y, width: br.x-bl.x, height: br.y-tr.y)
+//            scaledBoxes.append(box)
+//            debugPrint("Box: \(box)")
+//        }
+//
+        
+        Accessibility.speak("\(boxes.count) boxes")
+        Accessibility.speak("\(boxesNoText.count) boxesNoText")
+        let pointImage = drawBoxes(cgImage, boxes:pointBoxes)!
+        try? saveImage(pointImage)
+//        let boxImage = drawBoxes(cgImage, boxes:boxesText )!
+//        try? saveImage(boxImage)
+    }
+    
     print("results")
     print(results)
 	return results
-    
-//    let textRecognitionRequest = VNRecognizeTextRequest()
-//    textRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate
-//    textRecognitionRequest.minimumTextHeight = 0
-//    textRecognitionRequest.usesLanguageCorrection = true
-//    textRecognitionRequest.customWords = []
-//    textRecognitionRequest.usesCPUOnly = false
-//    textRecognitionRequest.cancel()
-//    
-//    
-//    
-////    let ciImageInput = CIImage(cgImage: cgImage)
-////    let requestHandler = VNImageRequestHandler(ciImage: ciImageInput)
-////    let documentDetectionRequest = VNDetectDocumentSegmentationRequest()
-////    do {
-////        try requestHandler.perform([documentDetectionRequest])
-////    } catch _ {}
-////
-//    
-////    let documentRequestHandler = VNImageRequestHandler(ciImage: ciImageInput)
-////
-////    var checkBoxImages: [VNRectangleObservation] = []
-////    var rectangles: [VNRectangleObservation] = []
-////
-////    let rectanglesDetection = VNDetectRectanglesRequest { request, error in
-////        rectangles = request.results as! [VNRectangleObservation]
-////        rectangles.sort{$0.boundingBox.origin.y > $1.boundingBox.origin.y}
-////
-////        for rectangle in rectangles {
-////            //            guard let checkBoxImage =
-////            checkBoxImages.append(rectangle)
-////        }
-////    }
-////
-////    do {
-////        try documentRequestHandler.perform([rectanglesDetection])
-////    } catch {
-////        print(error)
-////    }
-//    
-////    print("checkbox")
-////    print(checkBoxImages)
-//    
-//    let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
-//    
-//    do {
-//        try requestHandler.perform([textRecognitionRequest])
-//    } catch _ {}
-//    
-////    do {
-////        try requestHandler.perform([rectanglesDetection])
-////    } catch _ {}
-//    
-//    
-//    for r in rectanglesDetectionRequest.results! {
-//        let tl = Navigation.shared.convertPoint(r.topLeft)
-//        let tr = Navigation.shared.convertPoint(r.topRight)
-//        let bl = Navigation.shared.convertPoint(r.bottomLeft)
-//        let br = Navigation.shared.convertPoint(r.bottomRight)
-//        let box = CGRect(x: tl.x, y: tl.y, width: br.x-bl.x, height: br.y-tr.y)
-//        debugPrint("Box: \(box)")
-////    }
-//    
-//    let VNDetectRectanglesRequest = VNImageBasedRequest()
-//    print("VND Detect Rectangles results")
-//    let VNDresults = VNDetectRectanglesRequest.results
-//    print(VNDresults ?? "no results")
-//    
-//    guard let results = textRecognitionRequest.results else {
-//        return []
-//    }
-//    print("results")
-//    print(results)
-//    return results
 }
 
 func classify(cgImage:CGImage) -> String {
