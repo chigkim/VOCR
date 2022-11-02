@@ -14,30 +14,34 @@ import Cocoa
 
 let logger = Logger()
 
-func saveImage(_ cgimage: CGImage) throws {
-	let savePanel = NSSavePanel()
-	savePanel.allowedContentTypes = [.png]
-	savePanel.allowsOtherFileTypes = false
-	savePanel.begin { (result) in
+func chooseFolder() -> URL? {
+	var url:URL?
+	let openPanel = NSOpenPanel()
+	openPanel.title                   = "Choose a ffolder"
+	openPanel.canChooseDirectories = true
+	openPanel.canChooseFiles = false
+	openPanel.allowsMultipleSelection = false
+	if (openPanel.runModal() == .OK) {
 		let windows = NSApplication.shared.windows
 		NSApplication.shared.hide(nil)
 		windows[1].close()
-		if result == .OK {
-			if let url = savePanel.url {
-				let cicontext = CIContext()
-				let ciimage = CIImage(cgImage: cgimage)
-				try? cicontext.writePNGRepresentation(of: ciimage, to: url, format: .RGBA8, colorSpace: ciimage.colorSpace!)
-			}
-		}
+		url =  openPanel.url
 	}
+	return url
+}
+
+func saveImage(_ cgimage: CGImage, _ url:URL) throws {
+	let cicontext = CIContext()
+	let ciimage = CIImage(cgImage: cgimage)
+	try? cicontext.writePNGRepresentation(of: ciimage, to: url, format: .RGBA8, colorSpace: ciimage.colorSpace!)
 }
 
 func drawBoxes(_ cgImageInput : CGImage, boxes:[CGRect]) -> CGImage? {
 	var cgImageOutput : CGImage? = nil
-		if let dataProvider = cgImageInput.dataProvider {
+	if let dataProvider = cgImageInput.dataProvider {
 		if let data : CFData = dataProvider.data {
 			let length = CFDataGetLength(data)
-	
+			
 			let bytes = UnsafeMutablePointer<UInt8>.allocate(capacity: length)
 			CFDataGetBytes(data, CFRange(location: 0, length: length), bytes)
 			if let ctx = CGContext(data: bytes, width: cgImageInput.width, height: cgImageInput.height, bitsPerComponent: cgImageInput.bitsPerComponent, bytesPerRow: cgImageInput.bytesPerRow, space: cgImageInput.colorSpace!, bitmapInfo: cgImageInput.bitmapInfo.rawValue) {
@@ -117,116 +121,61 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
 	textRecognitionRequest.cancel()
     
 	let rectDetectRequest = VNDetectRectanglesRequest()
-	rectDetectRequest.maximumObservations = 100
-    rectDetectRequest.minimumConfidence = 0
-	rectDetectRequest.minimumAspectRatio = 0
-	rectDetectRequest.minimumSize = 0.01
+	rectDetectRequest.maximumObservations = 1000
+	rectDetectRequest.minimumConfidence = 0.0
+	rectDetectRequest.minimumAspectRatio = 0.0
+	rectDetectRequest.minimumSize = 0.0
 	rectDetectRequest.cancel()
     
 	let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
 	do {
 		try requestHandler.perform([textRecognitionRequest, rectDetectRequest])
 	} catch _ {}
-	
-    
+	let boxes = rectDetectRequest.results!.map { VNImageRectForNormalizedRect($0.boundingBox, cgImage.width, cgImage.height) }
+	if boxes.count > 0 {
+		Accessibility.speak("\(boxes.count) boxes")
+	}
 	guard let results = textRecognitionRequest.results else {
 		return []
 	}
-    
-    //
-    var displayResults:[[VNRecognizedTextObservation]] = []
-    var displayResultsBoxes: [CGPoint] = []
-    var line:[VNRecognizedTextObservation] = []
-    var y = results[0].boundingBox.midY
-    for r in results {
-        logger.debug("\(r.topCandidates(1)[0]): \(r.boundingBox.debugDescription)")
-        if abs(r.boundingBox.midY-y)>0.01 {
-            displayResults.append(line)
-            line = []
-            y = r.boundingBox.midY
-        }
-        line.append(r)
-    }
-    displayResults.append(line)
-    
-    for l in 0...displayResults.count-1 {
-        for w in 0...displayResults[l].count-1 {
-            displayResultsBoxes.append(Navigation.shared.convert2coordinates(displayResults[l][w].boundingBox))
-        }
-    }
-    //
-    
-    let boxes = rectDetectRequest.results!.map { VNImageRectForNormalizedRect($0.boundingBox, cgImage.width, cgImage.height) }
-//    let texts = displayResultsBoxes.map { VNImagePointForNormalizedPoint($0, cgImage.width, cgImage.height) }
-    let texts = displayResultsBoxes
-
-    print("image results")
-    print(boxes)
-    
-    if boxes.count > 0 {
-
-//        print("scaled Boxes")
-//        print(scaledBoxes)
-        
-        var boxesNoText: [CGRect] = []
-        var boxesText: [CGRect] = []
-        var pointBoxes: [CGRect] = []
-        print("boxes Count", boxes.count)
-        for box in boxes {
-            var intersectsFlag: Bool = false
-            for point in texts {
-                if box.contains(point) {
-                    print("got here", box, point)
-                    intersectsFlag = true
-//                    print("intersection")
-                    break
-                } else {
-                    if (box.minX < point.x && (box.maxX > point.x)) {
-                        print("X matches for ", box, point)
-                    }
-                }
-            }
-            if !intersectsFlag {
-                boxesNoText.append(box)
-            } else {
-                boxesText.append(box)
-            }
-        }
-        print("Number Boxes:", texts.count)
-        for point in texts {
-            print("point: ", point)
-            pointBoxes.append(CGRect(x: point.x-0.1, y: point.y-0.1, width: 0.2, height: 0.2))
-        }
-        for box in boxes {
-            print("box: ", box)
-        }
-        print("boxesNoText Count", boxesNoText.count)
-        print("boxes: ", boxesText.count)
-//        print("total", cgImage.width, cgImage.height)
-        
-//        var scaledBoxes: [CGRect] = []
-//        debugPrint("Boxes coordinates adjusted to window")
-//        for r in boxesNoText {
-//            let tl = Navigation.shared.convertPoint(r.topLeft)
-//            let tr = Navigation.shared.convertPoint(r.topRight)
-//            let bl = Navigation.shared.convertPoint(r.bottomLeft)
-//            let br = Navigation.shared.convertPoint(r.bottomRight)
-//            let box = CGRect(x: tl.x, y: tl.y, width: br.x-bl.x, height: br.y-tr.y)
-//            scaledBoxes.append(box)
-//            debugPrint("Box: \(box)")
-//        }
-//
-        
-        Accessibility.speak("\(boxes.count) boxes")
-        Accessibility.speak("\(boxesNoText.count) boxesNoText")
-        let pointImage = drawBoxes(cgImage, boxes:pointBoxes)!
-        try? saveImage(pointImage)
-//        let boxImage = drawBoxes(cgImage, boxes:boxesText )!
-//        try? saveImage(boxImage)
-    }
-    
-    print("results")
-    print(results)
+	let texts = results.map { VNImageRectForNormalizedRect($0.boundingBox, cgImage.width, cgImage.height) }
+	var boxesNoText: [CGRect] = []
+	var boxesText: [CGRect] = []
+	for box in boxes {
+		var intersectsFlag: Bool = false
+		for point in texts {
+			if box.contains(point) {
+				print("got here", box, point)
+				intersectsFlag = true
+				break
+			}
+		}
+		if !intersectsFlag {
+			boxesNoText.append(box)
+		} else {
+			boxesText.append(box)
+		}
+	}
+	print("Box Count:", boxes.count)
+	print("Text Count:", texts.count)
+	print("boxesNoText Count:", boxesNoText.count)
+	print("boxesText count:", boxesText.count)
+	var pointBoxes: [CGRect] = []
+	for point in texts {
+		// print("point: ", point)
+		pointBoxes.append(CGRect(x: point.minX-0.1, y: point.minY-0.1, width: 0.2, height: 0.2))
+	}
+	
+	if let url = chooseFolder() {
+		let boxImage = drawBoxes(cgImage, boxes:boxes )!
+		try? saveImage(boxImage, url.appendingPathComponent("Boxes.png"))
+		let boxesTextImage = drawBoxes(cgImage, boxes:boxesText )!
+		try? saveImage(boxesTextImage, url.appendingPathComponent("boxes with text.png"))
+		let boxesNoTextImage = drawBoxes(cgImage, boxes:boxesNoText)!
+		try? saveImage(boxesNoTextImage, url.appendingPathComponent("boxes with no  text.png"))
+		let pointBoxesImage = drawBoxes(cgImage, boxes:pointBoxes)!
+		try? saveImage(pointBoxesImage, url.appendingPathComponent("text points.png"))
+	}
 	return results
 }
 
