@@ -51,6 +51,13 @@
             ReferencedContainer = "container:VOCR.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "PYTHON_LIBRARY"
+            value = "/Library/Frameworks/Python.framework/Versions/3.9/Python"
+            isEnabled = "NO">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
