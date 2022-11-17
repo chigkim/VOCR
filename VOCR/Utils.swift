@@ -121,75 +121,26 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
 	textRecognitionRequest.usesCPUOnly = false
 	textRecognitionRequest.cancel()
     
-//	let rectDetectRequest = VNDetectRectanglesRequest()
-//	rectDetectRequest.maximumObservations = 1000
-//	rectDetectRequest.minimumConfidence = 0.0
-//	rectDetectRequest.minimumAspectRatio = 0.0
-//	rectDetectRequest.minimumSize = 0.0
-//	rectDetectRequest.cancel()
-    
 	let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
 	do {
-//		try requestHandler.perform([textRecognitionRequest, rectDetectRequest])
         try requestHandler.perform([textRecognitionRequest])
 	} catch _ {}
-//	let boxes = rectDetectRequest.results!.map { VNImageRectForNormalizedRect($0.boundingBox, cgImage.width, cgImage.height) }
-//	if boxes.count > 0 {
-//		Accessibility.speak("\(boxes.count) boxes")
-//	}
+    
 	guard let results = textRecognitionRequest.results else {
 		return []
 	}
-//	let texts = results.map { VNImageRectForNormalizedRect($0.boundingBox, cgImage.width, cgImage.height) }
-//	var boxesNoText: [CGRect] = []
-//	var boxesText: [CGRect] = []
-//	for box in boxes {
-//		var intersectsFlag: Bool = false
-//		for point in texts {
-//			if box.contains(point) {
-//				print("got here", box, point)
-//				intersectsFlag = true
-//				break
-//			}
-//		}
-//		if !intersectsFlag {
-//			boxesNoText.append(box)
-//		} else {
-//			boxesText.append(box)
-//		}
-//	}
-//	print("Box Count:", boxes.count)
-//	print("Text Count:", texts.count)
-//	print("boxesNoText Count:", boxesNoText.count)
-//	print("boxesText count:", boxesText.count)
-//	var pointBoxes: [CGRect] = []
-//	for point in texts {
-//		// print("point: ", point)
-//		pointBoxes.append(CGRect(x: point.minX-0.1, y: point.minY-0.1, width: 0.2, height: 0.2))
-//	}
-	
-//	if let url = chooseFolder() {
-//		let boxImage = drawBoxes(cgImage, boxes:boxes )!
-//		try? saveImage(boxImage, url.appendingPathComponent("Boxes.png"))
-//		let boxesTextImage = drawBoxes(cgImage, boxes:boxesText )!
-//		try? saveImage(boxesTextImage, url.appendingPathComponent("boxes with text.png"))
-//		let boxesNoTextImage = drawBoxes(cgImage, boxes:boxesNoText)!
-//		try? saveImage(boxesNoTextImage, url.appendingPathComponent("boxes with no  text.png"))
-//		let pointBoxesImage = drawBoxes(cgImage, boxes:pointBoxes)!
-//		try? saveImage(pointBoxesImage, url.appendingPathComponent("text points.png"))
-//	}
     
     PythonLibrary.useVersion(3)
     PythonLibrary.useLibrary(at: "/usr/local/bin/python3")
     
     let dirPath = (URL(fileURLWithPath: #file).deletingLastPathComponent()).path
     
-    callPython(dirPath: dirPath)
+    print("boxes", callPython(dirPath: dirPath))
     
 	return results
 }
 
-func callPython(dirPath: String) {
+func callPython(dirPath: String) -> [[Int]] {
     let sys = Python.import("sys")
     
     print("Python \(sys.version_info.major).\(sys.version_info.minor)")
@@ -198,10 +149,14 @@ func callPython(dirPath: String) {
     
     sys.path.append(dirPath)
     print("sys", sys.path)
-    let function = Python.import("test2")
-    print("function", function)
-    let message = function.hello("Carlton")
-    print(message)
+    let utils = Python.import("utils")
+    print("utils", utils)
+    let pythonBoxes = utils.get_rects_for_image("/Users/kennethchoi/Desktop/PPAT/VOCR/VOCR/kontakt-factory-selection.jpg")
+//    print(boxes)
+    
+    let boxes: [[Int]] = Array(pythonBoxes)!
+    
+    return boxes
 }
 
 func classify(cgImage:CGImage) -> String {

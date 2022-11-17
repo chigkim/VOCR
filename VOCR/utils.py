@@ -21,7 +21,7 @@ def _check_rectangle_overlap(rect1, rect2):
     x2, y2, w2, h2 = rect2
     return _overlap_in_dim(x1, x2, w1, w2, epsilon) and _overlap_in_dim(y1, y2, h1, h2, epsilon)
 
-def get_combined_rect(rect1, rect2):
+def _get_combined_rect(rect1, rect2):
     x1, y1, w1, h1 = rect1
     x2, y2, w2, h2 = rect2
     low_x = min(x1, x2)
@@ -82,7 +82,7 @@ def get_rects_for_image(abs_direct):
             updated_rectangles = []
             for rect in rectangles:
                 if _check_rectangle_overlap(current_expanding_rectangle, rect):
-                    current_expanding_rectangle = get_combined_rect(current_expanding_rectangle, rect)
+                    current_expanding_rectangle = _get_combined_rect(current_expanding_rectangle, rect)
                     intersection = True
                 else:
                     updated_rectangles.append(rect)
