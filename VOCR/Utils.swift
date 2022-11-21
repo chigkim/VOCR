@@ -33,7 +33,18 @@ func TakeScreensShots() -> CGImage? {
 	let currentApp = NSWorkspace.shared.frontmostApplication
 	//	let appID = currentApp!.processIdentifier
 	//	let appElement = AXUIElementCreateApplication(appID)
-	let windows = currentApp?.windows()
+	var windows = currentApp?.windows()
+	if (windows!.isEmpty) {
+		return nil
+	}
+	windows = windows!.filter {
+		var ref:CFTypeRef?
+		AXUIElementCopyAttributeValue($0, "AXMain" as CFString, &ref)
+		if let value = ref as? Int, value == 1 {
+			return true
+		}
+		return false
+	}
 	if (windows!.isEmpty) {
 		return nil
 	}
