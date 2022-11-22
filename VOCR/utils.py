@@ -134,6 +134,7 @@ def get_rects_for_image(img, width, height):
     while still_combining:
         combined_rectangles = []
         still_combining = False
+        combined_rectangles = []
         while len(rectangles) > 0:
             current_expanding_rectangle = rectangles.pop()
             intersection = True

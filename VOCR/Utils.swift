@@ -127,9 +127,7 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
 	} catch _ {}
     
 	let textResults = textRecognitionRequest.results ?? []
-    
-    PythonLibrary.useVersion(3)
-    PythonLibrary.useLibrary(at: "/usr/local/bin/python3")
+    print("textboxes", textResults)
     
     let dirPath = (URL(fileURLWithPath: #file).deletingLastPathComponent()).path
     let boxes = callPython(dirPath: dirPath, cgImage: cgImage)
@@ -183,6 +181,8 @@ func callPython(dirPath: String, cgImage: CGImage) -> [[Int]] {
     print("utils", utils)
 //    let pythonBoxes = utils.get_rects_for_image("/Users/kennethchoi/Desktop/PPAT/VOCR/VOCR/kontakt-factory-selection.jpg")
     let cgImageArray: (pixelValues: [UInt8]?, width: Int, height: Int) = pixelValues(fromCGImage: cgImage)
+    Navigation.shared.imgSize.width = CGFloat(cgImageArray.width)
+    Navigation.shared.imgSize.height = CGFloat(cgImageArray.height)
     let pythonBoxes = utils.get_rects_for_image(cgImageArray.pixelValues ?? [], cgImage.width, cgImage.height)
 //    print(boxes)
     
