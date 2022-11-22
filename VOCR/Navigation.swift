@@ -77,18 +77,15 @@ class Navigation {
 //        print(displayResults[0][0].boundingBox)
 //        print(type(of: displayResults[0][0].boundingBox))
 	}
+    
+    func scaleRectangle(_ box:CGRect) -> CGRect {
+        let normalizedBox = VNNormalizedRectForImageRect(box, Int(imgSize.width), Int(imgSize.height))
+        let newBox = VNImageRectForNormalizedRect(normalizedBox, Int(cgSize.width), Int(cgSize.height))
+        return newBox
+    }
 	
     func convertPoint(_ point:CGPoint, normalized:Bool) -> CGPoint {
         var p = point
-        if (normalized) {
-            p = VNImagePointForNormalizedPoint(point, Int(cgSize.width), Int(cgSize.height))
-        } else {
-            p = VNNormalizedPointForImagePoint(point, Int(imgSize.width), Int(imgSize.height))
-//            var normalized_point = CGPoint.init()
-//            normalized_point.x = CGFloat(p.x / imgSize.height)
-//            normalized_point.y = CGFloat(p.y / imgSize.width)
-            p = VNImagePointForNormalizedPoint(p, Int(cgSize.width), Int(cgSize.height))
-        }
         print("p", p, "cgSize", cgSize, "imgSize", imgSize, "cgPosition", cgPosition)
         p.y = cgSize.height-p.y
         p.x += cgPosition.x
