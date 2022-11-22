@@ -3,14 +3,14 @@ import numpy as np
 import scipy
 
 
-EPSILON = 5
-MAX_PERCENT_OF_IMAGE = 15
-HOUGH_CIRCLE_PARAMS = {"minDist":10, 
-                        "param1":50, 
-                        "param2":40, #smaller value-> more false circles
+EPSILON = 10
+HOUGH_CIRCLE_PARAMS = {"minDist":30, 
+                        "param1":40, 
+                        "param2":100, #smaller value-> more false circles
                         "minRadius":5,
-                        "maxRadius":30
+                        "maxRadius":40
 }
+MAX_PERCENT_OF_IMAGE = 15
 
 
 #TODO: Make a rectangle class
@@ -29,12 +29,14 @@ def _overlap_in_one_dim(start1, start2, length1, length2, first_time=True):
     Returns:
         bool: returns whether there is an overlap between these two lines (in one dimension)
     """
-    if start1 < start2 and start1 + length1 > start2:
+    if start1 <= start2 and start1 + length1 >= start2:
         return True
-    if start1 < start2 + length2 and start1 + length1 > start2 + length2:
+    if start1 <= start2 + length2 and start1 + length1 >= start2 + length2:
+        return True
+    if start1 <= start2 and start1 + length1 >= start2 + length2:
         return True
     diff = start2 - (start1 + length1)
-    if diff > 0 and diff < EPSILON:
+    if diff >= 0 and diff < EPSILON:
         return True
     if first_time:
         return _overlap_in_one_dim(start2, start1, length2, length1, False)
@@ -97,30 +99,10 @@ def prune_large_rectangles(rectangles, max_size):
     return small_rectangles
 
 def get_rects_for_image(img, width, height):
-    # img = cv2.imread(abs_direct)
-    # print('array', img)
-    print('array', np.array(img).shape)
-    print('width', width)
-    print('height', height)
-    print('product', width * height)
     img = np.uint8(img)
-    print('img', type(img))
     img = np.array(img).reshape((height, width, 4))
 
-    # img = np.array(img).reshape(width, height, 3)
-    # cv2.imshow("blank", np.zeros((100, 100, 3)))
-
-    # img = img[:, :, :3]
-    # print(img.shape)
-    # cv2.imshow("image", img)
-    # cv2.waitKey(0)
-    # cv2.display()
-
-    # rgb = cv2.cvtColor(img, cv2.COLOR_BGRA2RGB)
-    # gray = cv2.cvtColor(rgb, cv2.COLOR_RGB2GRAY)
     gray = cv2.cvtColor(img, cv2.COLOR_RGBA2GRAY)
-
-    print('gray', gray.shape)
 
     # setting threshold of gray image
     _, threshold = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
@@ -134,23 +116,23 @@ def get_rects_for_image(img, width, height):
         
     total_image_size = np.prod(gray.shape)
     
-    # docstring of HoughCircles: HoughCircles(image, method, dp, minDist[, circles[, param1[, param2[, minRadius[, maxRadius]]]]]) -> circles
-    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, HOUGH_CIRCLE_PARAMS["minDist"], HOUGH_CIRCLE_PARAMS["param1"], HOUGH_CIRCLE_PARAMS["param2"], HOUGH_CIRCLE_PARAMS["minRadius"], HOUGH_CIRCLE_PARAMS["maxRadius"])
-        
     # Prune out large rectangles
     rectangles = prune_large_rectangles(rectangles, MAX_PERCENT_OF_IMAGE*total_image_size/100)
     
-    # Add bounding boxes for circles
-    if circles is not None:
-        circles = np.uint16(np.around(circles))
-        for circle in circles[0,:]:
-            mid_x, mid_y, radius = circle
-            rectangles.append((mid_x - radius, mid_y - radius, 2*radius, 2*radius))
-        
+#     # docstring of HoughCircles: HoughCircles(image, method, dp, minDist[, circles[, param1[, param2[, minRadius[, maxRadius]]]]]) -> circles
+#     circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, HOUGH_CIRCLE_PARAMS["minDist"], HOUGH_CIRCLE_PARAMS["param1"], HOUGH_CIRCLE_PARAMS["param2"], HOUGH_CIRCLE_PARAMS["minRadius"], HOUGH_CIRCLE_PARAMS["maxRadius"])
+
+#     # Add bounding boxes for circles
+#     if circles is not None:
+#         circles = np.uint16(np.around(circles))
+#         for circle in circles[0,:]:
+#             mid_x, mid_y, radius = circle
+#             rectangles.append((mid_x - radius, mid_y - radius, 2*radius, 2*radius))
+                    
     # Combine overlapping (and near) rectangles
-    combined_rectangles = []
     still_combining = True
     while still_combining:
+        combined_rectangles = []
         still_combining = False
         while len(rectangles) > 0:
             current_expanding_rectangle = rectangles.pop()
@@ -170,8 +152,9 @@ def get_rects_for_image(img, width, height):
         rectangles = combined_rectangles
 
     # Prune out large rectangles again, but this time they must be 2 times as large
-    final_rectangles = prune_large_rectangles(combined_rectangles, MAX_PERCENT_OF_IMAGE*total_image_size*2/100)
+#     final_rectangles = prune_large_rectangles(combined_rectangles, MAX_PERCENT_OF_IMAGE*total_image_size*2/100)
     
+    final_rectangles = combined_rectangles
     # Assert that no rectangles overlap
     for rect1 in final_rectangles:
         for rect2 in final_rectangles:
