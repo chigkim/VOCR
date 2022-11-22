@@ -96,10 +96,31 @@ def prune_large_rectangles(rectangles, max_size):
         small_rectangles.append(rect1)
     return small_rectangles
 
-def get_rects_for_image(abs_direct):
-    img = cv2.imread(abs_direct)
+def get_rects_for_image(img, width, height):
+    # img = cv2.imread(abs_direct)
+    # print('array', img)
+    print('array', np.array(img).shape)
+    print('width', width)
+    print('height', height)
+    print('product', width * height)
+    img = np.uint8(img)
+    print('img', type(img))
+    img = np.array(img).reshape((height, width, 4))
 
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # img = np.array(img).reshape(width, height, 3)
+    # cv2.imshow("blank", np.zeros((100, 100, 3)))
+
+    # img = img[:, :, :3]
+    # print(img.shape)
+    # cv2.imshow("image", img)
+    # cv2.waitKey(0)
+    # cv2.display()
+
+    # rgb = cv2.cvtColor(img, cv2.COLOR_BGRA2RGB)
+    # gray = cv2.cvtColor(rgb, cv2.COLOR_RGB2GRAY)
+    gray = cv2.cvtColor(img, cv2.COLOR_RGBA2GRAY)
+
+    print('gray', gray.shape)
 
     # setting threshold of gray image
     _, threshold = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)

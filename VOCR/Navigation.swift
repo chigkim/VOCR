@@ -32,7 +32,7 @@ class Navigation {
 		navigationShortcuts = nil
 		NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
 		var result = performOCR(cgImage:cgImage)
-		if result.count == 0 {
+        if (result.count == 0) {
 			Accessibility.speak("Nothing found")
 			return
 		}
@@ -46,7 +46,12 @@ class Navigation {
 		var line:[VNRecognizedTextObservation] = []
 		var y = result[0].boundingBox.midY
 		for r in result {
-			logger.debug("\(r.topCandidates(1)[0]): \(r.boundingBox.debugDescription)")
+            if r.topCandidates(1) != [] {
+                logger.debug("\(r.topCandidates(1)[0]): \(r.boundingBox.debugDescription)")
+            } else {
+                logger.debug("rectangle: \(r.boundingBox.debugDescription)")
+            }
+			
 			if abs(r.boundingBox.midY-y)>0.01 {
 				displayResults.append(line)
 				line = []
@@ -134,7 +139,12 @@ func convert2coordinates(_ box:CGRect) -> CGPoint {
         if Settings.moveMouse {
 		CGDisplayMoveCursorToPoint(0, convert2coordinates(displayResults[l][w].boundingBox))
         }
-		Accessibility.speak(displayResults[l][w].topCandidates(1)[0].string)
+        let res = displayResults[l][w].topCandidates(1)
+        if (res != []) {
+            Accessibility.speak(res[0].string)
+        } else {
+            Accessibility.speak("Icon Detected")
+        }
 	}
 	
 	func left() {
@@ -148,7 +158,12 @@ func convert2coordinates(_ box:CGRect) -> CGPoint {
         if Settings.moveMouse {
 		CGDisplayMoveCursorToPoint(0, convert2coordinates(displayResults[l][w].boundingBox))
         }
-		Accessibility.speak(displayResults[l][w].topCandidates(1)[0].string)
+        let res = displayResults[l][w].topCandidates(1)
+        if (res != []) {
+            Accessibility.speak(res[0].string)
+        } else {
+            Accessibility.speak("Icon detected!")
+        }
 	}
 
 	func down() {
@@ -165,7 +180,13 @@ func convert2coordinates(_ box:CGRect) -> CGPoint {
         }
 		var line = ""
 		for r in displayResults[l] {
-			line += " \(r.topCandidates(1)[0].string)"
+            let res = r.topCandidates(1)
+            if (res != []) {
+                line += " \(res[0].string)"
+            } else {
+                line += " Icon Detected!"
+            }
+//			line += " \(r.topCandidates(1)[0].string)"
 		}
 		Accessibility.speak(line)
 	}
@@ -184,7 +205,13 @@ func convert2coordinates(_ box:CGRect) -> CGPoint {
         }
 		var line = ""
 		for r in displayResults[l] {
-			line += " \(r.topCandidates(1)[0].string)"
+            let res = r.topCandidates(1)
+            if (res != []) {
+                line += " \(res[0].string)"
+            } else {
+                line += " Icon Detected!"
+            }
+//			line += " \(r.topCandidates(1)[0].string)"
 		}
 		Accessibility.speak(line)
 	}
@@ -228,8 +255,14 @@ func convert2coordinates(_ box:CGRect) -> CGPoint {
 			return
 		}
 		correctLimit()
-		let candidate = displayResults[l][w].topCandidates(1)[0]
-		var str = candidate.string
+        var str = ""
+        let curr = displayResults[l][w]
+        let res = curr.topCandidates(1)
+        if (res != []) {
+            str = res[0].string
+        } else {
+            str = "Icon Detected!"
+        }
 		c += 1
 		if c >= str.count {
 			c = str.count-1
@@ -241,7 +274,11 @@ func convert2coordinates(_ box:CGRect) -> CGPoint {
 			let character = str[range]
 			str = String(character)
 			var box:CGRect
-			try box = candidate.boundingBox(for: range)!.boundingBox
+            if (res != []) {
+                try box = res[0].boundingBox(for: range)!.boundingBox
+            } else {
+                box = curr.boundingBox
+            }
 			CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
 
 /*
@@ -263,8 +300,14 @@ func convert2coordinates(_ box:CGRect) -> CGPoint {
 			return
 		}
 		correctLimit()
-		let candidate = displayResults[l][w].topCandidates(1)[0]
-		var str = candidate.string
+        var str = ""
+        let curr = displayResults[l][w]
+        let res = curr.topCandidates(1)
+        if (res != []) {
+            str = res[0].string
+        } else {
+            str = "Icon Detected!"
+        }
 		c -= 1
 		if c < 0 {
 			c = 0
@@ -277,7 +320,11 @@ func convert2coordinates(_ box:CGRect) -> CGPoint {
 			let character = str[range]
 			str = String(character)
 			var box:CGRect
-			try box = candidate.boundingBox(for: range)!.boundingBox
+            if (res != []) {
+                try box = res[0].boundingBox(for: range)!.boundingBox
+            } else {
+                box = curr.boundingBox
+            }
 			CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
 
 			/*
@@ -298,7 +345,12 @@ func convert2coordinates(_ box:CGRect) -> CGPoint {
 var text = ""
 		for line in displayResults {
 			for word in line {
-				text += word.topCandidates(1)[0].string+" "
+                let res = word.topCandidates(1)
+                if (res == []) {
+                    text += "Icon Detected!"
+                } else {
+                    text += res[0].string+" "
+                }
 			}
 			text = text.dropLast()+"\n"
 		}
