@@ -131,13 +131,30 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
     
     let dirPath = (URL(fileURLWithPath: #file).deletingLastPathComponent()).path
     let boxes = callPython(dirPath: dirPath, cgImage: cgImage)
+    
     print("boxes", boxes)
     
+    var rectBoxes: [CGRect] = []
     var rectResults: [VNRecognizedTextObservation] = []
     for box in boxes {
         let rect = CGRectMake(CGFloat(box[0]), CGFloat(box[1]), CGFloat(box[2]), CGFloat(box[3]))
-        let rectObservation = VNRecognizedTextObservation(boundingBox: rect)
+        let scaledRect = Navigation.shared.scaleRectangle(rect)
+        rectBoxes.append(scaledRect)
+        let rectObservation = VNRecognizedTextObservation(boundingBox: scaledRect)
         rectResults.append(rectObservation)
+    }
+//    rectBoxes.append(CGRectMake(0, 0, CGFloat(cgImage.width), CGFloat(cgImage.height)))
+    var pointBoxes: [CGRect] = []
+    let texts = textResults.map{VNImageRectForNormalizedRect($0.boundingBox, cgImage.width, cgImage.height)}
+    for point in texts {
+        pointBoxes.append(CGRect(x:point.minX-0.1, y:point.minY-0.1, width:0.2, height:0.2))
+    }
+    
+    if let url = chooseFolder() {
+        let boxImage = drawBoxes(cgImage, boxes:rectBoxes)!
+        try? saveImage(boxImage, url.appendingPathComponent("boxes2.png"))
+        let textImage = drawBoxes(cgImage, boxes:pointBoxes)!
+        try? saveImage(textImage, url.appendingPathComponent("text_points2.png"))
     }
     
 	return textResults + rectResults
