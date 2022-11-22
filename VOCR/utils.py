@@ -56,7 +56,7 @@ def _check_rectangle_overlap(rect1, rect2):
     x2, y2, w2, h2 = rect2
     return _overlap_in_one_dim(x1, x2, w1, w2) and _overlap_in_one_dim(y1, y2, h1, h2)
 
-def get_combined_rect(rect1, rect2):
+def _get_combined_rect(rect1, rect2):
     """
     Create and return a new rectangle that is a combination of the two rectangles
     The new rectangle covers any value either of the two other rectangles cover
@@ -139,7 +139,7 @@ def get_rects_for_image(abs_direct):
                 updated_rectangles = []
                 for rect in rectangles:
                     if _check_rectangle_overlap(current_expanding_rectangle, rect):
-                        current_expanding_rectangle = get_combined_rect(current_expanding_rectangle, rect)
+                        current_expanding_rectangle = _get_combined_rect(current_expanding_rectangle, rect)
                         intersection = True
                         still_combining = True
                     else:
