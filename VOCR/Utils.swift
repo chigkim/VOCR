@@ -138,12 +138,27 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
     var rectResults: [VNRecognizedTextObservation] = []
     for box in boxes {
         let rect = CGRectMake(CGFloat(box[0]), CGFloat(box[1]), CGFloat(box[2]), CGFloat(box[3]))
-        let scaledRect = Navigation.shared.scaleRectangle(rect)
-        let imageRect = Navigation.shared.convert2coordRect(rect)
-        rectBoxes.append(imageRect)
-        scaledRectBoxes.append(scaledRect)
-        let rectObservation = VNRecognizedTextObservation(boundingBox: scaledRect)
-        rectResults.append(rectObservation)
+        let scaledRect = Navigation.shared.convertRect2NormalizedImageCoords(rect)
+        var collidesWithText = false
+        for textBox in textResults {
+            if textBox.boundingBox.intersects(scaledRect) {
+                let intersection = textBox.boundingBox.intersection(scaledRect)
+                let intersectionArea = intersection.height*intersection.width
+                if intersectionArea > scaledRect.height*scaledRect.width*0.5 {
+                    collidesWithText = true
+                }
+            }
+        }
+        let imageRect = VNImageRectForNormalizedRect(scaledRect, cgImage.width, cgImage.height)
+        if !collidesWithText {
+            let rectObservation = VNRecognizedTextObservation(boundingBox: scaledRect)
+            rectResults.append(rectObservation)
+            rectBoxes.append(imageRect)
+        }
+        scaledRectBoxes.append(imageRect)
+
+
+
     }
     rectBoxes.append(CGRectMake(0, 0, CGFloat(cgImage.width), CGFloat(cgImage.height)))
     var pointBoxes: [CGRect] = []

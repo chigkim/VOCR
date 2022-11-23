@@ -78,24 +78,15 @@ class Navigation {
 //        print(type(of: displayResults[0][0].boundingBox))
 	}
     
-    func scaleRectangle(_ box:CGRect) -> CGRect {
-        let normalizedBox = VNNormalizedRectForImageRect(box, Int(imgSize.width), Int(imgSize.height))
-        print("Width: ", imgSize.width, ", Height: ", imgSize.height)
-
-//        let newBox = VNImageRectForNormalizedRect(normalizedBox, Int(cgSize.width), Int(cgSize.height))
-//        print("Original ", box, ", New: ", newBox)
-
-        return box
-    }
-    
-    func convert2coordRect(_ box:CGRect) -> CGRect {
+    func convertRect2NormalizedImageCoords(_ box:CGRect) -> CGRect {
         let newTopLeft = CGPoint(x: box.minX, y: imgSize.height-box.maxY)
         let newRect = CGRect(x: newTopLeft.x, y: newTopLeft.y, width: box.width, height: box.height)
-        return newRect
+        let normalizedBox = VNNormalizedRectForImageRect(newRect, Int(imgSize.width), Int(imgSize.height))
+        return normalizedBox
     }
 	
-    func convertPoint(_ point:CGPoint, normalized:Bool) -> CGPoint {
-        var p = point
+    func convertPoint(_ point:CGPoint) -> CGPoint {
+        var p = VNImagePointForNormalizedPoint(point, Int(cgSize.width), Int(cgSize.height))
         print("p", p, "cgSize", cgSize, "imgSize", imgSize, "cgPosition", cgPosition)
         p.y = cgSize.height-p.y
         p.x += cgPosition.x
@@ -103,14 +94,15 @@ class Navigation {
 	return p
 	}
 	
-    func convert2coordinates(_ box:CGRect, normalized:Bool) -> CGPoint {
+    func convert2coordinates(_ box:CGRect) -> CGPoint {
+        // Takes box which are normalized and with (0, 0) as bottom left and switches to mouse coordinates
         let center = CGPoint(x:box.midX, y:box.midY)
 		if Settings.positionalAudio {
 			let frequency = 100+1000*Float(center.y)
 			let pan = Float(Double(center.x).normalize(from: 0...1, into: -1...1))
 			Player.shared.play(frequency, pan)
 		}
-        return convertPoint(center, normalized: normalized)
+        return convertPoint(center)
 	}
 
 	func sort(_ a:VNRecognizedTextObservation, _ b:VNRecognizedTextObservation) -> Bool {
@@ -131,9 +123,9 @@ class Navigation {
         let res = rect.topCandidates(1)
         var point = CGPoint.init()
         if (res != []) {
-            point = convert2coordinates(rect.boundingBox, normalized: true)
+            point = convert2coordinates(rect.boundingBox)
         } else {
-            point = convert2coordinates(rect.boundingBox, normalized: false)
+            point = convert2coordinates(rect.boundingBox)
         }
         
 		var center = point
@@ -168,10 +160,10 @@ class Navigation {
         let res = rect.topCandidates(1)
         var point = CGPoint.init()
         if (res != []) {
-            point = convert2coordinates(rect.boundingBox, normalized: true)
+            point = convert2coordinates(rect.boundingBox)
             Accessibility.speak(res[0].string)
         } else {
-            point = convert2coordinates(rect.boundingBox, normalized: false)
+            point = convert2coordinates(rect.boundingBox)
             Accessibility.speak("Icon Detected")
         }
         
@@ -193,10 +185,10 @@ class Navigation {
         let res = rect.topCandidates(1)
         var point = CGPoint.init()
         if (res != []) {
-            point = convert2coordinates(rect.boundingBox, normalized: true)
+            point = convert2coordinates(rect.boundingBox)
             Accessibility.speak(res[0].string)
         } else {
-            point = convert2coordinates(rect.boundingBox, normalized: false)
+            point = convert2coordinates(rect.boundingBox)
             Accessibility.speak("Icon Detected")
         }
         
@@ -221,10 +213,10 @@ class Navigation {
 		for r in displayResults[l] {
             let res = r.topCandidates(1)
             if (res != []) {
-                point = convert2coordinates(rect.boundingBox, normalized: true)
+                point = convert2coordinates(rect.boundingBox)
                 line += " \(res[0].string)"
             } else {
-                point = convert2coordinates(rect.boundingBox, normalized: false)
+                point = convert2coordinates(rect.boundingBox)
                 line += " Icon Detected!"
             }
 //			line += " \(r.topCandidates(1)[0].string)"
@@ -253,10 +245,10 @@ class Navigation {
         for r in displayResults[l] {
             let res = r.topCandidates(1)
             if (res != []) {
-                point = convert2coordinates(rect.boundingBox, normalized: true)
+                point = convert2coordinates(rect.boundingBox)
                 line += " \(res[0].string)"
             } else {
-                point = convert2coordinates(rect.boundingBox, normalized: false)
+                point = convert2coordinates(rect.boundingBox)
                 line += " Icon Detected!"
             }
 //            line += " \(r.topCandidates(1)[0].string)"
@@ -329,10 +321,10 @@ class Navigation {
 			var box:CGRect
             if (res != []) {
                 try box = res[0].boundingBox(for: range)!.boundingBox
-                CGDisplayMoveCursorToPoint(0, convert2coordinates(box, normalized: true))
+                CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
             } else {
                 box = curr.boundingBox
-                CGDisplayMoveCursorToPoint(0, convert2coordinates(box, normalized: false))
+                CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
             }
 			
 
@@ -377,10 +369,10 @@ class Navigation {
 			var box:CGRect
             if (res != []) {
                 try box = res[0].boundingBox(for: range)!.boundingBox
-                CGDisplayMoveCursorToPoint(0, convert2coordinates(box, normalized: true))
+                CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
             } else {
                 box = curr.boundingBox
-                CGDisplayMoveCursorToPoint(0, convert2coordinates(box, normalized: false))
+                CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
             }
 
 			/*
