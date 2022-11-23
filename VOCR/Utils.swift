@@ -5,7 +5,6 @@
 //  Created by Chi Kim on 10/2/22.
 //  Copyright © 2022 Chi Kim. All rights reserved.
 //
-
 import Foundation
 import os
 import Vision
@@ -127,23 +126,26 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
 	} catch _ {}
     
 	let textResults = textRecognitionRequest.results ?? []
-    print("textboxes", textResults)
+//    print("textboxes", textResults)
     
     let dirPath = (URL(fileURLWithPath: #file).deletingLastPathComponent()).path
     let boxes = callPython(dirPath: dirPath, cgImage: cgImage)
     
-    print("boxes", boxes)
+//    print("boxes", boxes)
     
     var rectBoxes: [CGRect] = []
+    var scaledRectBoxes: [CGRect] = []
     var rectResults: [VNRecognizedTextObservation] = []
     for box in boxes {
         let rect = CGRectMake(CGFloat(box[0]), CGFloat(box[1]), CGFloat(box[2]), CGFloat(box[3]))
         let scaledRect = Navigation.shared.scaleRectangle(rect)
-        rectBoxes.append(scaledRect)
+        let imageRect = Navigation.shared.convert2coordRect(rect)
+        rectBoxes.append(imageRect)
+        scaledRectBoxes.append(scaledRect)
         let rectObservation = VNRecognizedTextObservation(boundingBox: scaledRect)
         rectResults.append(rectObservation)
     }
-//    rectBoxes.append(CGRectMake(0, 0, CGFloat(cgImage.width), CGFloat(cgImage.height)))
+    rectBoxes.append(CGRectMake(0, 0, CGFloat(cgImage.width), CGFloat(cgImage.height)))
     var pointBoxes: [CGRect] = []
     let texts = textResults.map{VNImageRectForNormalizedRect($0.boundingBox, cgImage.width, cgImage.height)}
     for point in texts {
@@ -153,9 +155,13 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
     if let url = chooseFolder() {
         let boxImage = drawBoxes(cgImage, boxes:rectBoxes)!
         try? saveImage(boxImage, url.appendingPathComponent("boxes2.png"))
+        let scaledBoxImage = drawBoxes(cgImage, boxes:scaledRectBoxes)!
+        try? saveImage(scaledBoxImage, url.appendingPathComponent("scaledBoxes2.png"))
         let textImage = drawBoxes(cgImage, boxes:pointBoxes)!
         try? saveImage(textImage, url.appendingPathComponent("text_points2.png"))
     }
+    print("Width of image: ", cgImage.width, ", Height of image: ", cgImage.height)
+
     
 	return textResults + rectResults
 }

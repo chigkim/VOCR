@@ -80,8 +80,18 @@ class Navigation {
     
     func scaleRectangle(_ box:CGRect) -> CGRect {
         let normalizedBox = VNNormalizedRectForImageRect(box, Int(imgSize.width), Int(imgSize.height))
-        let newBox = VNImageRectForNormalizedRect(normalizedBox, Int(cgSize.width), Int(cgSize.height))
-        return newBox
+        print("Width: ", imgSize.width, ", Height: ", imgSize.height)
+
+//        let newBox = VNImageRectForNormalizedRect(normalizedBox, Int(cgSize.width), Int(cgSize.height))
+//        print("Original ", box, ", New: ", newBox)
+
+        return box
+    }
+    
+    func convert2coordRect(_ box:CGRect) -> CGRect {
+        let newTopLeft = CGPoint(x: box.minX, y: imgSize.height-box.maxY)
+        let newRect = CGRect(x: newTopLeft.x, y: newTopLeft.y, width: box.width, height: box.height)
+        return newRect
     }
 	
     func convertPoint(_ point:CGPoint, normalized:Bool) -> CGPoint {
