@@ -139,7 +139,7 @@ def get_rects_for_image(img, width, height):
                     rect2 = rectangles[j]
                     if j in removed_idx:
                         continue
-                    if _check_rectangle_overlap(expanding_rect, rect2):
+                    if _check_rectangle_overlap(expanding_rect, rect2, min_dist_between):
                         expanding_rect = _get_combined_rect(expanding_rect, rect2)
                         still_combining = True  
                         removed_idx.add(j)
