@@ -30,19 +30,18 @@ def _overlap_in_one_dim(start1, start2, length1, length2, min_dist_between, firs
     Returns:
         bool: returns whether there is an overlap between these two lines (in one dimension)
     """
-    if start1 <= start2 and start1 + length1 >= start2:
-        return True
-    if start1 <= start2 + length2 and start1 + length1 >= start2 + length2:
-        return True
-    if start1 <= start2 and start1 + length1 >= start2 + length2:
-        return True
-    diff = start2 - (start1 + length1)
-    if diff >= 0 and diff < min_dist_between:
-        return True
-    if first_time:
-        return _overlap_in_one_dim(start2, start1, length2, length1, min_dist_between, False)
-    return False
-    
+    ret_value = False
+    second_start = (2, start2)
+    if start2 < start1:
+        second_start = (1, start1)
+    first_end = (1, start1 + length1)
+    if start2 + length2 < start1 + length1:
+        first_end = (2, start2 + length2)
+    if first_end[0] == second_start[0]:
+        ret_value = True
+    if second_start[1] - first_end[1] < 2*EPSILON-1:
+        ret_value = True
+    return ret_value
     
 def _check_rectangle_overlap(rect1, rect2, min_dist_between):
     """
@@ -125,42 +124,34 @@ def get_rects_for_image(img, width, height):
     # Prune out large rectangles
     rectangles = prune_large_rectangles(rectangles, 0, MAX_PERCENT_OF_IMAGE*total_image_size/100)
     
-#     # docstring of HoughCircles: HoughCircles(image, method, dp, minDist[, circles[, param1[, param2[, minRadius[, maxRadius]]]]]) -> circles
-#     circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, HOUGH_CIRCLE_PARAMS["minDist"], HOUGH_CIRCLE_PARAMS["param1"], HOUGH_CIRCLE_PARAMS["param2"], HOUGH_CIRCLE_PARAMS["minRadius"], HOUGH_CIRCLE_PARAMS["maxRadius"])
-
-#     # Add bounding boxes for circles
-#     if circles is not None:
-#         circles = np.uint16(np.around(circles))
-#         for circle in circles[0,:]:
-#             mid_x, mid_y, radius = circle
-#             rectangles.append((mid_x - radius, mid_y - radius, 2*radius, 2*radius))
-                    
-    # Combine overlapping (and near) rectangles
-    still_combining = True
-    while still_combining:
-        combined_rectangles = []
-        still_combining = False
-        combined_rectangles = []
-        while len(rectangles) > 0:
-            current_expanding_rectangle = rectangles.pop()
-            intersection = True
-            while intersection:
-                intersection = False
-                updated_rectangles = []
-                for rect in rectangles:
-                    if _check_rectangle_overlap(current_expanding_rectangle, rect, min_dist_between):
-                        current_expanding_rectangle = _get_combined_rect(current_expanding_rectangle, rect)
-                        intersection = True
-                        still_combining = True
-                    else:
-                        updated_rectangles.append(rect)
-                rectangles = updated_rectangles
-            combined_rectangles.append(list(current_expanding_rectangle))
-        rectangles = combined_rectangles
+    def combine_rectangles(rectangles):
+        still_combining = True
+        while still_combining:
+            combined_rectangles = []
+            still_combining = False
+            removed_idx = set()
+            for i, rect1 in enumerate(rectangles):
+                if i in removed_idx:
+                    continue
+                expanding_rect = rect1
+                for j in range(i+1, len(rectangles)):
+                    assert(j > i)
+                    rect2 = rectangles[j]
+                    if j in removed_idx:
+                        continue
+                    if _check_rectangle_overlap(expanding_rect, rect2):
+                        expanding_rect = _get_combined_rect(expanding_rect, rect2)
+                        still_combining = True  
+                        removed_idx.add(j)
+                combined_rectangles.append(expanding_rect)
+            rectangles = combined_rectangles
+        return rectangles
+    
+    combined_rectangles = combine_rectangles(rectangles)
 
     # Prune out large rectangles again, but this time they must be 2 times as large
     final_rectangles = prune_large_rectangles(combined_rectangles, min_dist_between, MAX_PERCENT_OF_IMAGE*total_image_size*2/100)
-    
+
     # Assert that no rectangles overlap
     for rect1 in final_rectangles:
         for rect2 in final_rectangles:
