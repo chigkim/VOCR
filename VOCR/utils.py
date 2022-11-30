@@ -13,9 +13,8 @@ HOUGH_CIRCLE_PARAMS = {"minDist":30,
 MIN_PERCENT_OF_IMAGE = 0.1
 MAX_PERCENT_OF_IMAGE = 15
 NO_CONFIDENCE = 0
+FULL_CONFIDENCE = 1
 
-
-#TODO: Make a rectangle class
 class Rectangle:
     def __init__(self, label, confidence, topx, topy, width, height) -> None:
         self._topx = topx
@@ -31,11 +30,10 @@ class Rectangle:
     def set_label(self, label) -> None:
         self._label = label
     
-    '''
-    Returns tuple of better label and corresponding confidence
-    '''
     def compare_labels(self, other) -> tuple[str | None, float]:
-        print(self.label, other.label)
+        """
+        Returns tuple of better label and corresponding confidence
+        """
         # TODO: confidence logic
         if self.confidence > other.confidence:
             return (self.label, self.confidence)
@@ -130,7 +128,16 @@ def prune_large_rectangles(rectangles, min_size, max_size):
         small_rectangles.append(rect1)
     return small_rectangles
 
-def get_rects_for_image(img, width, height):
+def get_rects_for_image(img, width, height, text_rects, text_labels):
+    print('rects', text_rects)
+    print('labels', text_labels)
+
+    # convert text boxes and labels to Rectangles
+    text_rectangles = []
+    for coords, label in zip(text_rects, text_labels):
+        text_rectangles.append(Rectangle(label, FULL_CONFIDENCE, *coords))
+
+    # scale image and convert to grayscale
     min_dist_between = EPSILON*(min(height, width)/100)
     img = np.uint8(img)
     img = np.array(img).reshape((height, width, 4))

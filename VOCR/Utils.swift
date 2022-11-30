@@ -129,7 +129,16 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
 //    print("textboxes", textResults)
     
     let dirPath = (URL(fileURLWithPath: #file).deletingLastPathComponent()).path
-    let boxes = callPython(dirPath: dirPath, cgImage: cgImage)
+    
+    var textRectsArray: [[Float]] = []
+    var textLabelsArray: [[String]] = []
+    for result in textResults {
+        let rect = result.boundingBox
+        textRectsArray.append([Float(rect.minX), Float(rect.minY), Float(rect.width), Float(rect.height)])
+        textLabelsArray.append([result.topCandidates(1)[0].string])
+    }
+    
+    let boxes = callPython(dirPath: dirPath, cgImage: cgImage, textRectsArray: textRectsArray, textLabelsArray: textLabelsArray)
     
 //    print("boxes", boxes)
     
@@ -206,7 +215,7 @@ func pixelValues(fromCGImage imageRef: CGImage?) -> (pixelValues: [UInt8]?, widt
     return (pixelValues, width, height)
 }
 
-func callPython(dirPath: String, cgImage: CGImage) -> [[Int]] {
+func callPython(dirPath: String, cgImage: CGImage, textRectsArray: [[Float]], textLabelsArray: [[String]]) -> [[Int]] {
     let sys = Python.import("sys")
     
     print("Python \(sys.version_info.major).\(sys.version_info.minor)")
@@ -221,7 +230,8 @@ func callPython(dirPath: String, cgImage: CGImage) -> [[Int]] {
     let cgImageArray: (pixelValues: [UInt8]?, width: Int, height: Int) = pixelValues(fromCGImage: cgImage)
     Navigation.shared.imgSize.width = CGFloat(cgImageArray.width)
     Navigation.shared.imgSize.height = CGFloat(cgImageArray.height)
-    let pythonBoxes = utils.get_rects_for_image(cgImageArray.pixelValues ?? [], cgImage.width, cgImage.height)
+    
+    let pythonBoxes = utils.get_rects_for_image(cgImageArray.pixelValues ?? [], cgImage.width, cgImage.height, textRectsArray, textLabelsArray)
 //    print(boxes)
     
     let boxes: [[Int]] = Array(pythonBoxes)!
