@@ -152,7 +152,6 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
         let imageRect = VNImageRectForNormalizedRect(scaledRect, cgImage.width, cgImage.height)
         if !collidesWithText {
             let rectObservation = VNRecognizedTextObservation(boundingBox: scaledRect)
-//            rectObservation.attributeKeys = ["Test"]
             rectResults.append(rectObservation)
             rectBoxes.append(imageRect)
         }

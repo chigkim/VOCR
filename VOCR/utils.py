@@ -12,9 +12,35 @@ HOUGH_CIRCLE_PARAMS = {"minDist":30,
 }
 MIN_PERCENT_OF_IMAGE = 0.1
 MAX_PERCENT_OF_IMAGE = 15
+NO_CONFIDENCE = 0
 
 
 #TODO: Make a rectangle class
+class Rectangle:
+    def __init__(self, label, confidence, topx, topy, width, height) -> None:
+        self._topx = topx
+        self._topy = topy
+        self._width = width
+        self._height = height
+        self.label = label
+        self.confidence = confidence
+    
+    def get_values(self) -> tuple[float, float, float, float]:
+        return (self._topx, self._topy, self._width, self._height)
+    
+    def set_label(self, label) -> None:
+        self._label = label
+    
+    '''
+    Returns tuple of better label and corresponding confidence
+    '''
+    def compare_labels(self, other) -> tuple[str | None, float]:
+        print(self.label, other.label)
+        # TODO: confidence logic
+        if self.confidence > other.confidence:
+            return (self.label, self.confidence)
+        else:
+            return (other.label, other.confidence)
 
 def _overlap_in_one_dim(start1, start2, length1, length2, min_dist_between, first_time=True):
     """
@@ -55,9 +81,10 @@ def _check_rectangle_overlap(rect1, rect2, min_dist_between):
     Returns:
         bool: Whether these rectangles overlap
     """
-    x1, y1, w1, h1 = rect1
-    x2, y2, w2, h2 = rect2
-    return _overlap_in_one_dim(x1, x2, w1, w2, min_dist_between) and _overlap_in_one_dim(y1, y2, h1, h2, min_dist_between)
+    x1, y1, w1, h1 = rect1.get_values()
+    x2, y2, w2, h2 = rect2.get_values()
+    return _overlap_in_one_dim(x1, x2, w1, w2, min_dist_between) \
+        and _overlap_in_one_dim(y1, y2, h1, h2, min_dist_between)
 
 def _get_combined_rect(rect1, rect2):
     """
@@ -71,13 +98,14 @@ def _get_combined_rect(rect1, rect2):
     Returns:
         tuple(x, y, w, h): new rectangle which is outer combination of parameter rectangles
     """
-    x1, y1, w1, h1 = rect1
-    x2, y2, w2, h2 = rect2
+    x1, y1, w1, h1 = rect1.get_values()
+    x2, y2, w2, h2 = rect2.get_values()
     low_x = min(x1, x2)
     high_x = max(x1+w1, x2+w2)
     low_y = min(y1, y2)
     high_y = max(y1+h1, y2+h2)
-    new_rect = (low_x, low_y, high_x - low_x, high_y - low_y)
+    new_label, new_confidence = rect1.compare_labels(rect2)
+    new_rect = Rectangle(new_label, new_confidence, low_x, low_y, high_x - low_x, high_y - low_y)
     return new_rect
 
 def prune_large_rectangles(rectangles, min_size, max_size):
@@ -94,7 +122,7 @@ def prune_large_rectangles(rectangles, min_size, max_size):
     """
     small_rectangles = []
     for rect1 in rectangles:
-        _, _, w1, h1 = rect1
+        _, _, w1, h1 = rect1.get_values()
         if w1*h1 >= max_size:
             continue
         if w1 <= min_size or h1 <= min_size:
@@ -116,8 +144,8 @@ def get_rects_for_image(img, width, height):
     (contours,_) = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     rectangles = []
     for contour in contours:
-        (x,y,w,h) = cv2.boundingRect(contour)
-        rectangles.append((x, y, w, h))
+        tup: tuple = cv2.boundingRect(contour)
+        rectangles.append(Rectangle(None, NO_CONFIDENCE, *tup)) # rectangle with no label and 0% confidence
         
     total_image_size = np.prod(gray.shape)
     
@@ -158,6 +186,7 @@ def get_rects_for_image(img, width, height):
             if rect1 != rect2:
                 assert (not _check_rectangle_overlap(rect1, rect2, min_dist_between)), "failed: " + str(rect1) + str(rect2)
 
-    final_rectangles.append((0, 0, width, height))
-    return final_rectangles
+    final_tuples = [rect.get_values() for rect in final_rectangles]
+    final_tuples.append((0, 0, width, height))
+    return final_tuples
 
