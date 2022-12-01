@@ -231,12 +231,12 @@ func callPython(dirPath: String, cgImage: CGImage, textRectsArray: [[Float]], te
     Navigation.shared.imgSize.width = CGFloat(cgImageArray.width)
     Navigation.shared.imgSize.height = CGFloat(cgImageArray.height)
     
-    let pythonBoxes = utils.get_rects_for_image(cgImageArray.pixelValues ?? [], cgImage.width, cgImage.height, textRectsArray, textLabelsArray)
+    let results = utils.get_rects_for_image(cgImageArray.pixelValues ?? [], cgImage.width, cgImage.height, textRectsArray, textLabelsArray)
 //    print(boxes)
-    
-    let boxes: [[Float]] = Array(pythonBoxes)!
-    
-    return boxes
+    let pythonBoxes: [[Float]] = Array(results[0])!
+//    let pythonLabels: [String] = Array(results[1])!
+        
+    return pythonBoxes
 }
 
 func classify(cgImage:CGImage) -> String {

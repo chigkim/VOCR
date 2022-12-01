@@ -1,7 +1,7 @@
 from typing import Tuple, Union
 import cv2
 import numpy as np
-from classifier import Classifer
+from classifier import Classifier
 
 EPSILON = 0.5
 HOUGH_CIRCLE_PARAMS = {"minDist":30, 
@@ -106,8 +106,8 @@ def _check_rectangle_overlap(rect1, rect2, min_dist_between):
         and _overlap_in_one_dim(y1, y2, h1, h2, min_dist_between)
 
 def _calc_rect_overlap_area(rect1, rect2):
-    x1, y1, w1, h1 = rect1
-    x2, y2, w2, h2, = rect2
+    x1, y1, w1, h1 = rect1.get_values()
+    x2, y2, w2, h2, = rect2.get_values()
     area_overlap = max(0, min(x1+w1, x2+w2) - max(x1, x2)) * max(0, min(y1+h1, y2+h2) - max(y1, y2))
     return area_overlap
 
@@ -147,6 +147,7 @@ def _prune_rectangles(rectangles, text_rects, min_size, max_size):
     Returns:
         List(Tuple(x, y, w, h)): list of rectangles not including the large or small ones
     """
+    print("Before pruning, there are {} rectangles".format(len(rectangles)))
     small_rectangles = []
     for rect1 in rectangles:
         _, _, w1, h1 = rect1.get_values()
@@ -161,6 +162,7 @@ def _prune_rectangles(rectangles, text_rects, min_size, max_size):
                 break
         if not overlaps_with_text:
             small_rectangles.append(rect1)
+    print("After pruning, there are {} rectangles".format(len(small_rectangles)))
     return small_rectangles
 
 def get_rects_for_image(img, width, height, text_rects, text_labels, validation=False):
@@ -176,7 +178,7 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
         text_rectangles.append(Rectangle(label, FULL_CONFIDENCE, *coords))
 
     # scale image and convert to grayscale
-    min_dist_between = EPSILON*(min(height, width)/100)
+    min_dist_between = EPSILON*(0.01)
     img = np.uint8(img)
     img = np.array(img).reshape((height, width, 4))
 
@@ -191,13 +193,13 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
     for contour in contours:
         tup: tuple = cv2.boundingRect(contour)
         rect = Rectangle("ICON DETECTED", NO_CONFIDENCE, *tup)
-        rect.normalize() # Switch to swift like measures
+        rect.normalize(width, height) # Switch to swift like measures
         rectangles.append(rect) # rectangle with no label and 0% confidence
         
     total_image_size = np.prod(gray.shape)
 
     # Prune out large rectangles
-    rectangles = _prune_rectangles(rectangles, text_rects, 0, MAX_PERCENT_OF_IMAGE*total_image_size/100)
+    rectangles = _prune_rectangles(rectangles, text_rectangles, 0, MAX_PERCENT_OF_IMAGE*total_image_size/100)
     
     def combine_rectangles(rectangles):
         still_combining = True
@@ -225,7 +227,7 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
     combined_rectangles = combine_rectangles(rectangles)
 
     # Prune out large rectangles again, but this time they must be 2 times as large
-    final_rectangles = _prune_rectangles(combined_rectangles, text_rects, min_dist_between, MAX_PERCENT_OF_IMAGE*total_image_size*2/100)
+    final_rectangles = _prune_rectangles(combined_rectangles, text_rectangles, min_dist_between, MAX_PERCENT_OF_IMAGE*total_image_size*2/100)
 
     # Assert that no rectangles overlap
     if validation:
@@ -238,5 +240,8 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
     final_labels = [rect.label for rect in final_rectangles] + [rect.label for rect in text_rectangles]
     final_dims.append((0, 0, width, height))
     final_labels.append("Outer Bounds Box")
+
+    print(final_dims)
+    print(final_labels)
     return final_dims, final_labels
 
