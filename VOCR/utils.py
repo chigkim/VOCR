@@ -16,7 +16,7 @@ MAX_PERCENT_OF_IMAGE = 15
 
 #TODO: Make a rectangle class
 
-def _overlap_in_one_dim(start1, start2, length1, length2, min_dist_between, first_time=True):
+def _overlap_in_one_dim(start1, start2, length1, length2, min_dist_between):
     """
     Checks if there is an overlap within this dimension
 
@@ -25,7 +25,7 @@ def _overlap_in_one_dim(start1, start2, length1, length2, min_dist_between, firs
         start2 (int): the starting value of the second second
         length1 (int): the length of the first line
         length2 (int): the length of the second line
-        first_time (bool, optional): Whether this is the first call to the function. Defaults to True.
+        min_dist_between (int): the minimum distance between two rectangles
 
     Returns:
         bool: returns whether there is an overlap between these two lines (in one dimension)
@@ -39,7 +39,7 @@ def _overlap_in_one_dim(start1, start2, length1, length2, min_dist_between, firs
         first_end = (2, start2 + length2)
     if first_end[0] == second_start[0]:
         ret_value = True
-    if second_start[1] - first_end[1] < 2*EPSILON-1:
+    if second_start[1] - first_end[1] < min_dist_between:
         ret_value = True
     return ret_value
     
@@ -80,9 +80,9 @@ def _get_combined_rect(rect1, rect2):
     new_rect = (low_x, low_y, high_x - low_x, high_y - low_y)
     return new_rect
 
-def prune_large_rectangles(rectangles, min_size, max_size):
+def _prune_rectangles(rectangles, min_size, max_size):
     """
-    Prune large rectangles
+    Prune rectangles outside of desired size
 
     Args:
         rectangles (List(Tuple(x, y, w, h))): list of rectangles
@@ -90,7 +90,7 @@ def prune_large_rectangles(rectangles, min_size, max_size):
         max_size (float): max area of the rectangle
 
     Returns:
-        List(Tuple(x, y, w, h)): list of rectangles not including the large ones
+        List(Tuple(x, y, w, h)): list of rectangles not including the large or small ones
     """
     small_rectangles = []
     for rect1 in rectangles:
@@ -122,7 +122,7 @@ def get_rects_for_image(img, width, height):
     total_image_size = np.prod(gray.shape)
     
     # Prune out large rectangles
-    rectangles = prune_large_rectangles(rectangles, 0, MAX_PERCENT_OF_IMAGE*total_image_size/100)
+    rectangles = _prune_rectangles(rectangles, 0, MAX_PERCENT_OF_IMAGE*total_image_size/100)
     
     def combine_rectangles(rectangles):
         still_combining = True
@@ -150,7 +150,7 @@ def get_rects_for_image(img, width, height):
     combined_rectangles = combine_rectangles(rectangles)
 
     # Prune out large rectangles again, but this time they must be 2 times as large
-    final_rectangles = prune_large_rectangles(combined_rectangles, min_dist_between, MAX_PERCENT_OF_IMAGE*total_image_size*2/100)
+    final_rectangles = _prune_rectangles(combined_rectangles, min_dist_between, MAX_PERCENT_OF_IMAGE*total_image_size*2/100)
 
     # Assert that no rectangles overlap
     for rect1 in final_rectangles:
