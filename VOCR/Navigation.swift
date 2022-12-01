@@ -117,29 +117,19 @@ class Navigation {
             return false
         }
     }
-    
+
     func location() {
         let rect = displayResults[l][w]
-//        let res = rect.topCandidates(1)
-        let (point, _) = getString(rect: rect)
-        
+		let point = convert2coordinates(rect.boundingBox)
         var center = point
         center.x -= cgPosition.x
         center.y -= cgPosition.y
         Accessibility.speak("\(Int(center.x)), \(Int(center.y))")
     }
     
-    func getString(rect: VNRecognizedTextObservation) -> (CGPoint, String) {
+    func getString(rect: VNRecognizedTextObservation) -> String {
         let res = rect.topCandidates(1)
-        let point = convert2coordinates(rect.boundingBox)
-        var text = ""
-        if (res != []) {
-            text = res[0].string
-        } else {
-            text = "Icon detected filler"
-        }
-        
-        return (point, text)
+        return res != [] ? res[0].string : "Icon"
     }
     
     func correctLimit() {
@@ -165,12 +155,12 @@ class Navigation {
         print("\(l), \(w)")
         
         let rect = displayResults[l][w]
-        let (point, text) = getString(rect: rect)
+		if Settings.moveMouse {
+			let point = convert2coordinates(rect.boundingBox)
+			CGDisplayMoveCursorToPoint(0, point)
+		}
+		let text = getString(rect: rect)
         Accessibility.speak(text)
-        
-        if Settings.moveMouse {
-            CGDisplayMoveCursorToPoint(0, point)
-        }
     }
 	
 	func left() {
@@ -181,14 +171,13 @@ class Navigation {
 		c = -1
 		correctLimit()
 		print("\(l), \(w)")
-        
         let rect = displayResults[l][w]
-        let (point, text) = getString(rect: rect)
+		if Settings.moveMouse {
+			let point = convert2coordinates(rect.boundingBox)
+			CGDisplayMoveCursorToPoint(0, point)
+		}
+		let text = getString(rect: rect)
         Accessibility.speak(text)
-        
-        if Settings.moveMouse {
-            CGDisplayMoveCursorToPoint(0, point)
-        }
 	}
 
 	func down() {
@@ -200,19 +189,18 @@ class Navigation {
 		c = -1
 		correctLimit()
 		print("\(l), \(w)")
-        
-        let rect = displayResults[l][w]
-        let (point, _) = getString(rect: rect)
+
+		if Settings.moveMouse {
+			let rect = displayResults[l][w]
+			let point = convert2coordinates(rect.boundingBox)
+			CGDisplayMoveCursorToPoint(0, point)
+		}
+
 		var line = ""
 		for r in displayResults[l] {
-            let (_, text) = getString(rect: r)
+            let text = getString(rect: r)
             line += " \(text)"
 		}
-        
-        if Settings.moveMouse {
-            CGDisplayMoveCursorToPoint(0, point)
-        }
-        
 		Accessibility.speak(line)
 	}
 
@@ -225,19 +213,18 @@ class Navigation {
 		c = -1
 		correctLimit()
 		print("\(l), \(w)")
-        
-        let rect = displayResults[l][w]
-        let (point, _) = getString(rect: rect)
+
+		if Settings.moveMouse {
+			let rect = displayResults[l][w]
+			let point = convert2coordinates(rect.boundingBox)
+			CGDisplayMoveCursorToPoint(0, point)
+		}
+
         var line = ""
         for r in displayResults[l] {
-            let (_, text) = getString(rect: r)
+            let text = getString(rect: r)
             line += " \(text)"
         }
-        
-        if Settings.moveMouse {
-            CGDisplayMoveCursorToPoint(0, point)
-        }
-        
 		Accessibility.speak(line)
 	}
 
@@ -282,7 +269,7 @@ class Navigation {
 		correctLimit()
         let curr = displayResults[l][w]
         let res = curr.topCandidates(1)
-        var (_, str) = getString(rect: curr)
+        var str = getString(rect: curr)
 		c += 1
 		if c >= str.count {
 			c = str.count-1
@@ -324,7 +311,7 @@ class Navigation {
 		correctLimit()
         let curr = displayResults[l][w]
         let res = curr.topCandidates(1)
-        var (_, str) = getString(rect: curr)
+        var str = getString(rect: curr)
 		c -= 1
 		if c < 0 {
 			c = 0
@@ -363,7 +350,7 @@ class Navigation {
         var text = ""
 		for line in displayResults {
 			for word in line {
-                let (_, str) = getString(rect: word)
+                let str = getString(rect: word)
                 text += str + " "
 			}
 			text = text.dropLast()+"\n"
