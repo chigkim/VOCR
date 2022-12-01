@@ -1,3 +1,4 @@
+from typing import Tuple, Union
 import cv2
 import numpy as np
 import scipy
@@ -24,13 +25,13 @@ class Rectangle:
         self.label = label
         self.confidence = confidence
     
-    def get_values(self) -> tuple[float, float, float, float]:
+    def get_values(self) -> Tuple[float, float, float, float]:
         return (self._topx, self._topy, self._width, self._height)
     
     def set_label(self, label) -> None:
         self._label = label
     
-    def compare_labels(self, other) -> tuple[str | None, float]:
+    def compare_labels(self, other) -> Tuple[Union[str, None], float]:
         """
         Returns tuple of better label and corresponding confidence
         """
