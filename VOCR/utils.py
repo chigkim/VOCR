@@ -13,6 +13,7 @@ HOUGH_CIRCLE_PARAMS = {"minDist":30,
 }
 MIN_PERCENT_OF_IMAGE = 0.1
 MAX_PERCENT_OF_IMAGE = 15
+MAX_TEXT_OVERLAP_AREA_PERCENT = 25
 NO_CONFIDENCE = 0
 FULL_CONFIDENCE = 1
 
@@ -27,6 +28,9 @@ class Rectangle:
     
     def get_values(self) -> Tuple[float, float, float, float]:
         return (self._topx, self._topy, self._width, self._height)
+
+    def get_swift_rectangle(self) -> Tuple[float, float, float, float, str]:
+        return (self._topx, self._topy, self._width, self._height, self.label)
     
     def set_label(self, label) -> None:
         self._label = label
@@ -85,6 +89,13 @@ def _check_rectangle_overlap(rect1, rect2, min_dist_between):
     return _overlap_in_one_dim(x1, x2, w1, w2, min_dist_between) \
         and _overlap_in_one_dim(y1, y2, h1, h2, min_dist_between)
 
+def _calc_rect_overlap_area(rect1, rect2):
+    x1, y1, w1, h1 = rect1
+    x2, y2, w2, h2, = rect2
+    area_overlap = max(0, min(x1+w1, x2+w2) - max(x1, x2)) * max(0, min(y1+h1, y2+h2) - max(y1, y2))
+    return area_overlap
+
+
 def _get_combined_rect(rect1, rect2):
     """
     Create and return a new rectangle that is a combination of the two rectangles
@@ -107,12 +118,13 @@ def _get_combined_rect(rect1, rect2):
     new_rect = Rectangle(new_label, new_confidence, low_x, low_y, high_x - low_x, high_y - low_y)
     return new_rect
 
-def _prune_rectangles(rectangles, min_size, max_size):
+def _prune_rectangles(rectangles, text_rects, min_size, max_size):
     """
     Prune rectangles outside of desired size
 
     Args:
         rectangles (List(Tuple(x, y, w, h))): list of rectangles
+        text_rects (List(Tuple(x, y, w, h))): list of rectangles
         min_size (float): min area of the rectangle
         max_size (float): max area of the rectangle
 
@@ -126,10 +138,16 @@ def _prune_rectangles(rectangles, min_size, max_size):
             continue
         if w1 <= min_size or h1 <= min_size:
             continue
-        small_rectangles.append(rect1)
+        overlaps_with_text = False
+        for text_rect in text_rects:
+            if _calc_rect_overlap_area(rect1, text_rect)/rect1.area() > MAX_TEXT_OVERLAP_AREA_PERCENT/100:
+                overlaps_with_text = True
+                break
+        if not overlaps_with_text:
+            small_rectangles.append(rect1)
     return small_rectangles
 
-def get_rects_for_image(img, width, height, text_rects, text_labels):
+def get_rects_for_image(img, width, height, text_rects, text_labels, validation=False):
     print('rects', text_rects)
     print('labels', text_labels)
 
@@ -153,12 +171,14 @@ def get_rects_for_image(img, width, height, text_rects, text_labels):
     rectangles = []
     for contour in contours:
         tup: tuple = cv2.boundingRect(contour)
-        rectangles.append(Rectangle(None, NO_CONFIDENCE, *tup)) # rectangle with no label and 0% confidence
+        rectangles.append(Rectangle("ICON DETECTED", NO_CONFIDENCE, *tup)) # rectangle with no label and 0% confidence
         
     total_image_size = np.prod(gray.shape)
+
+    # TODO: This is where we switch to Swift-like measures
     
     # Prune out large rectangles
-    rectangles = _prune_rectangles(rectangles, 0, MAX_PERCENT_OF_IMAGE*total_image_size/100)
+    rectangles = _prune_rectangles(rectangles, text_rects, 0, MAX_PERCENT_OF_IMAGE*total_image_size/100)
     
     def combine_rectangles(rectangles):
         still_combining = True
@@ -186,15 +206,16 @@ def get_rects_for_image(img, width, height, text_rects, text_labels):
     combined_rectangles = combine_rectangles(rectangles)
 
     # Prune out large rectangles again, but this time they must be 2 times as large
-    final_rectangles = _prune_rectangles(combined_rectangles, min_dist_between, MAX_PERCENT_OF_IMAGE*total_image_size*2/100)
+    final_rectangles = _prune_rectangles(combined_rectangles, text_rects, min_dist_between, MAX_PERCENT_OF_IMAGE*total_image_size*2/100)
 
     # Assert that no rectangles overlap
-    for rect1 in final_rectangles:
-        for rect2 in final_rectangles:
-            if rect1 != rect2:
-                assert (not _check_rectangle_overlap(rect1, rect2, min_dist_between)), "failed: " + str(rect1) + str(rect2)
+    if validation:
+        for rect1 in final_rectangles:
+            for rect2 in final_rectangles:
+                if rect1 != rect2:
+                    assert (not _check_rectangle_overlap(rect1, rect2, min_dist_between)), "failed: " + str(rect1) + str(rect2)
 
-    final_tuples = [rect.get_values() for rect in final_rectangles]
+    final_tuples = [rect.get_swift_rectangle() for rect in final_rectangles] + [rect.get_swift_rectangle() for rect in text_rectangles]
     final_tuples.append((0, 0, width, height))
     return final_tuples
 
