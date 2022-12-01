@@ -1,8 +1,7 @@
 from typing import Tuple, Union
 import cv2
 import numpy as np
-import scipy
-
+from classifier import Classifer
 
 EPSILON = 0.5
 HOUGH_CIRCLE_PARAMS = {"minDist":30, 
@@ -31,6 +30,9 @@ class Rectangle:
 
     def get_swift_rectangle(self) -> Tuple[float, float, float, float, str]:
         return (self._topx, self._topy, self._width, self._height, self.label)
+    
+    def area(self) -> float:
+        return self._width * self._height
     
     def set_label(self, label) -> None:
         self._label = label
