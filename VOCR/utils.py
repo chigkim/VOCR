@@ -40,6 +40,20 @@ class Rectangle:
             return (self.label, self.confidence)
         else:
             return (other.label, other.confidence)
+    
+    def normalize(self, img_width, img_height) -> None:
+        # let newTopLeft = CGPoint(x: box.minX, y: imgSize.height-box.maxY)
+        # let newRect = CGRect(x: newTopLeft.x, y: newTopLeft.y, width: box.width, height: box.height)
+        # let normalizedBox = VNNormalizedRectForImageRect(newRect, Int(imgSize.width), Int(imgSize.height))
+        # return normalizedBox
+        new_top_x = self._topx / int(img_width)
+        new_top_y = (img_height - self._topy - self._height) / int(img_height)
+        new_width = self._width / int(img_width)
+        new_height = self._height / int(img_height)
+        self._topx = new_top_x
+        self._topy = new_top_y
+        self._width = new_width
+        self._height = new_height
 
 def _overlap_in_one_dim(start1, start2, length1, length2, min_dist_between):
     """
@@ -130,12 +144,15 @@ def _prune_rectangles(rectangles, min_size, max_size):
     return small_rectangles
 
 def get_rects_for_image(img, width, height, text_rects, text_labels):
-    print('rects', text_rects)
-    print('labels', text_labels)
+    # print('rects', text_rects)
+    # print('labels', text_labels)
 
     # convert text boxes and labels to Rectangles
     text_rectangles = []
     for coords, label in zip(text_rects, text_labels):
+        # print(x, y, w, h)
+        # scaled_x, scaled_y, scaled_w, scaled_h = width*x, height*y, width*w, height*h
+        # print(scaled_x, scaled_y, scaled_w, scaled_h)
         text_rectangles.append(Rectangle(label, FULL_CONFIDENCE, *coords))
 
     # scale image and convert to grayscale
@@ -194,6 +211,17 @@ def get_rects_for_image(img, width, height, text_rects, text_labels):
             if rect1 != rect2:
                 assert (not _check_rectangle_overlap(rect1, rect2, min_dist_between)), "failed: " + str(rect1) + str(rect2)
 
+    # Convert contour rects to normalized rects
+    for rect in final_rectangles:
+        rect.normalize(width, height)
+
+    for rect in final_rectangles:
+        print('rect', rect.get_values())
+    
+    for rect in text_rectangles:
+        print('rect', rect.get_values())
+
+    # Prepare return
     final_tuples = [rect.get_values() for rect in final_rectangles]
     final_tuples.append((0, 0, width, height))
     return final_tuples

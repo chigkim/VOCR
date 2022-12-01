@@ -146,8 +146,8 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
     var scaledRectBoxes: [CGRect] = []
     var rectResults: [VNRecognizedTextObservation] = []
     for box in boxes {
-        let rect = CGRectMake(CGFloat(box[0]), CGFloat(box[1]), CGFloat(box[2]), CGFloat(box[3]))
-        let scaledRect = Navigation.shared.convertRect2NormalizedImageCoords(rect)
+        let scaledRect = CGRectMake(CGFloat(box[0]), CGFloat(box[1]), CGFloat(box[2]), CGFloat(box[3]))
+//        let scaledRect = Navigation.shared.convertRect2NormalizedImageCoords(rect)
         var collidesWithText = false
         for textBox in textResults {
             if textBox.boundingBox.intersects(scaledRect) {
@@ -215,7 +215,7 @@ func pixelValues(fromCGImage imageRef: CGImage?) -> (pixelValues: [UInt8]?, widt
     return (pixelValues, width, height)
 }
 
-func callPython(dirPath: String, cgImage: CGImage, textRectsArray: [[Float]], textLabelsArray: [[String]]) -> [[Int]] {
+func callPython(dirPath: String, cgImage: CGImage, textRectsArray: [[Float]], textLabelsArray: [[String]]) -> [[Float]] {
     let sys = Python.import("sys")
     
     print("Python \(sys.version_info.major).\(sys.version_info.minor)")
@@ -234,7 +234,7 @@ func callPython(dirPath: String, cgImage: CGImage, textRectsArray: [[Float]], te
     let pythonBoxes = utils.get_rects_for_image(cgImageArray.pixelValues ?? [], cgImage.width, cgImage.height, textRectsArray, textLabelsArray)
 //    print(boxes)
     
-    let boxes: [[Int]] = Array(pythonBoxes)!
+    let boxes: [[Float]] = Array(pythonBoxes)!
     
     return boxes
 }
