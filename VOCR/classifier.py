@@ -1,5 +1,5 @@
 from typing import Tuple, Union
-from utils import Rectangle
+from rectangle import Rectangle
 import numpy as np
 
 class Classifier:
