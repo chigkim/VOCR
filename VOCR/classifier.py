@@ -29,6 +29,9 @@ class Classifier:
         """
         num_rects = len(rects)
 
+
+        return []
+
     def classify_one(self, img, rect: Rectangle) -> Tuple[str, float]:
         """
         Classifies a single rectangle.
@@ -40,3 +43,5 @@ class Classifier:
         Returns:
             Tuple[str, float]: tuple of label and confidence
         """
+
+        return ("Test", 1)
