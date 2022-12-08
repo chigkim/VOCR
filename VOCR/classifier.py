@@ -9,7 +9,7 @@ label_map = {0: 'arrow', 1: 'button', 2: 'dropdown', 3: 'icon', 4: 'knob', 5: 'l
 
 class Classifier:
 
-	def __init__(self, img, width, height, model_loc):
+	def __init__(self, img, width, height, model_loc='./model 1 2 f0.804.h5'):
 		'''
 		:param img: a numpy array of the image (height, width, channels) to be classified.
 		For example, (224, 224, 3)
