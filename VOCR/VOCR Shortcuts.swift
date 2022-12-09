@@ -8,7 +8,9 @@
 
 import Cocoa
 import HotKey
-
+import Socket
+import AVFoundation
+import Foundation
 struct Shortcuts {
 	
 	let window = HotKey(key:.w, modifiers:[.command,.shift, .control])
@@ -16,6 +18,8 @@ struct Shortcuts {
 	let resetPosition = HotKey(key:.r, modifiers:[.command,.shift, .control])
 	let positionalAudio = HotKey(key:.p, modifiers:[.command,.shift, .control])
 	let moveMouse = HotKey(key:.m, modifiers:[.command, .shift, .control])
+	let socketTest = HotKey(key:.s, modifiers:[.command, .shift, .control])
+	
 	init() {
 		window.keyDownHandler = {
 			if !Accessibility.isTrusted(ask:true) {
@@ -60,6 +64,28 @@ struct Shortcuts {
 			} else {
 				Settings.moveMouse = true
 				Accessibility.speak("Enabled mouse movement.")
+			}
+		}
+		
+		socketTest.keyDownHandler = {
+			if let url = chooseFile() {
+				do {
+					let s = try Socket.create()
+					try s.connect(to: "localhost", port: 12345)
+					let cicontext = CIContext()
+					let ciimage = CIImage(cgImage: loadImage(url)!)
+					let imageData = cicontext.jpegRepresentation(of: ciimage, colorSpace: ciimage.colorSpace!)
+					var length = imageData!.count
+					var data = Data(bytes: &length, count: MemoryLayout.size(ofValue: length))
+					data.append(imageData!)
+					try s.write(from: data)
+					if var message = try s.readString() {
+						message += " Detected."
+						print(message)
+						Accessibility.speakWithSynthesizer(message)
+					}
+				} catch {
+				}
 			}
 		}
 		

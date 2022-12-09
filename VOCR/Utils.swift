@@ -30,11 +30,46 @@ func chooseFolder() -> URL? {
 	return url
 }
 
+func chooseFile() -> URL? {
+	var url:URL?
+	let openPanel = NSOpenPanel()
+	openPanel.title                   = "Choose an Image"
+	openPanel.canChooseDirectories = false
+	openPanel.canChooseFiles = true
+	openPanel.allowsMultipleSelection = false
+	openPanel.allowedContentTypes = [.png, .jpeg, .gif, .bmp]
+	if (openPanel.runModal() == .OK) {
+		let windows = NSApplication.shared.windows
+		NSApplication.shared.hide(nil)
+		windows[1].close()
+		url =  openPanel.url
+	}
+	return url
+}
+
+func loadImage(_ url:URL) -> CGImage? {
+	if let dataImage = try? Data(contentsOf:url) {
+		let dataProvider = CGDataProvider(data: dataImage as CFData)
+		if ["png", "PNG"].contains(url.pathExtension) {
+			if let cgImage = CGImage(pngDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent) {
+				return cgImage
+			}
+		}
+		if ["jpg", "jpeg", "JPG", "JPEG"].contains(url.pathExtension) {
+			if let cgImage = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent) {
+				return cgImage
+			}
+		}
+	}
+	return nil
+}
+
 func saveImage(_ cgimage: CGImage, _ url:URL) throws {
 	let cicontext = CIContext()
 	let ciimage = CIImage(cgImage: cgimage)
 	try? cicontext.writePNGRepresentation(of: ciimage, to: url, format: .RGBA8, colorSpace: ciimage.colorSpace!)
 }
+
 
 func drawBoxes(_ cgImageInput : CGImage, boxes:[CGRect]) -> CGImage? {
 	var cgImageOutput : CGImage? = nil
