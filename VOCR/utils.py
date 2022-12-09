@@ -201,7 +201,7 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
         rect.normalize(width, height)
 
     final_dims = [rect.get_values() for rect in final_rectangles] + [rect.get_values() for rect in text_rectangles]
-    final_labels = [rect.label for rect in final_rectangles] + [rect.label for rect in text_rectangles]
+    final_labels = [rect.label[0] for rect in final_rectangles] + [rect.label[0] for rect in text_rectangles]
     final_dims.append((0, 0, width, height))
     final_labels.append("Outer Bounds Box")
 
