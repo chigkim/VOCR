@@ -232,8 +232,11 @@ func callPython(dirPath: String, cgImage: CGImage, textRectsArray: [[Float]], te
     Navigation.shared.imgSize.height = CGFloat(cgImageArray.height)
     
     let results = utils.get_rects_for_image(cgImageArray.pixelValues ?? [], cgImage.width, cgImage.height, textRectsArray, textLabelsArray)
-//    print(boxes)
     let pythonBoxes: [[Float]] = Array(results[0])!
+    print(pythonBoxes)
+    print(results)
+
+
 //    let pythonLabels: [String] = Array(results[1])!
         
     return pythonBoxes

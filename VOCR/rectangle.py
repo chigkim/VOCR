@@ -44,3 +44,13 @@ class Rectangle:
         self._topy = new_top_y
         self._width = new_width
         self._height = new_height
+
+    def unnormalize(self, img_width, img_height) -> None:
+        new_height = int(self._height * img_height)
+        new_width = int(self._width * img_width)
+        new_topx = int(self._topx * img_width)
+        new_topy = int((1 - (self._topy + self._height)) * img_height)
+        self._height = new_height
+        self._width = new_width
+        self._topx = new_topx
+        self._topy = new_topy

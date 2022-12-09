@@ -132,10 +132,12 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
         # print(x, y, w, h)
         # scaled_x, scaled_y, scaled_w, scaled_h = width*x, height*y, width*w, height*h
         # print(scaled_x, scaled_y, scaled_w, scaled_h)
-        text_rectangles.append(Rectangle(label, FULL_CONFIDENCE, *coords))
+        text_rect = Rectangle(label, FULL_CONFIDENCE, *coords)
+        text_rect.unnormalize(width, height)
+        text_rectangles.append(text_rect)
 
     # scale image and convert to grayscale
-    min_dist_between = EPSILON*(0.01)
+    min_dist_between = 0 #EPSILON*(0.01)
     img = np.uint8(img)
     img = np.array(img).reshape((height, width, 4))
 
@@ -150,7 +152,6 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
     for contour in contours:
         tup: tuple = cv2.boundingRect(contour)
         rect = Rectangle("ICON DETECTED", NO_CONFIDENCE, *tup)
-        rect.normalize(width, height) # Switch to swift like measures
         rectangles.append(rect) # rectangle with no label and 0% confidence
         
     total_image_size = np.prod(gray.shape)
@@ -192,6 +193,12 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
             for rect2 in final_rectangles:
                 if rect1 != rect2:
                     assert (not _check_rectangle_overlap(rect1, rect2, min_dist_between)), "failed: " + str(rect1) + str(rect2)
+
+    for rect in final_rectangles:
+        rect.normalize(width, height)
+
+    for rect in text_rectangles:
+        rect.normalize(width, height)
 
     final_dims = [rect.get_values() for rect in final_rectangles] + [rect.get_values() for rect in text_rectangles]
     final_labels = [rect.label for rect in final_rectangles] + [rect.label for rect in text_rectangles]
