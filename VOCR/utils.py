@@ -127,6 +127,7 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
     # print('labels', text_labels)
 
     # convert text boxes and labels to Rectangles
+    cf = Classifier(img, width, height)
     text_rectangles = []
     for coords, label in zip(text_rects, text_labels):
         # print(x, y, w, h)
@@ -194,7 +195,11 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
                 if rect1 != rect2:
                     assert (not _check_rectangle_overlap(rect1, rect2, min_dist_between)), "failed: " + str(rect1) + str(rect2)
 
-    for rect in final_rectangles:
+    rect_tuples = [rect.values() for rec in final_rectangles]
+    labels = cf.classify_n(rect_tuples, (width, height), output_type='str')
+
+    for i, rect in enumerate(final_rectangles):
+        rect.set_label(labels[i])
         rect.normalize(width, height)
 
     for rect in text_rectangles:
