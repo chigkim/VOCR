@@ -180,7 +180,7 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
     
     var rectBoxes: [CGRect] = []
     for box in pythonBoxes {
-        let rect = CGRectMake(CGFloat(box[0]), CGFloat(box[1]), CGFloat(box[2]), CGFloat(box[3]))
+        let rect = CGRect(x:CGFloat(box[0]), y:CGFloat(box[1]), width:CGFloat(box[2]), height:CGFloat(box[3]))
     }
     
     if let url = chooseFolder() {
