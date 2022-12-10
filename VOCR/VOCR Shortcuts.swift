@@ -68,27 +68,8 @@ struct Shortcuts {
 		}
 		
 		socketTest.keyDownHandler = {
-			if let url = chooseFile() {
-				do {
-					let s = try Socket.create()
-					try s.connect(to: "localhost", port: 12345)
-					let cicontext = CIContext()
-					let ciimage = CIImage(cgImage: loadImage(url)!)
-					let imageData = cicontext.jpegRepresentation(of: ciimage, colorSpace: ciimage.colorSpace!)
-					var length = imageData!.count
-					var data = Data(bytes: &length, count: MemoryLayout.size(ofValue: length))
-					data.append(imageData!)
-					try s.write(from: data)
-					if var message = try s.readString() {
-						message += " Detected."
-						print(message)
-						Accessibility.speakWithSynthesizer(message)
-					}
-				} catch {
-				}
-			}
+			predict()
 		}
-		
 	}
+	
 }
-

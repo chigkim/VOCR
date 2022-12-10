@@ -5,6 +5,14 @@ from tensorflow.keras.applications.mobilenet import decode_predictions
 from tensorflow.image import resize
 from tensorflow.io import decode_jpeg
 from tensorflow  import expand_dims
+import signal
+import time
+import sys
+
+def signal_handler(sig, frame):
+	print("Signal:", sig)
+	s.close()
+	sys.exit(0)
 
 def guess(img):
 	img = decode_jpeg(img)
@@ -13,14 +21,16 @@ def guess(img):
 	pred = model(img).numpy()
 	return decode_predictions(pred, top=1)[0][0][1]
 
-
-model = MobileNetV3Small()
 s = socket.socket()
+signal.signal(signal.SIGTERM, signal_handler)
+signal.signal(signal.SIGABRT, signal_handler)
+signal.signal(signal.SIGINT, signal_handler)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 port = 12345
 s.bind(('', port))
 s.listen(1)
 print("Listening...")
+model = MobileNetV3Small()
 while True:
 	c, addr = s.accept()
 	data = c.recv(8)

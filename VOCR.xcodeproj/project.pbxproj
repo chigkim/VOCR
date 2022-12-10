@@ -28,6 +28,7 @@
 		EADE59B9232EB09A00E2F65A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EADE59B8232EB09A00E2F65A /* Assets.xcassets */; };
 		EADE59BC232EB09A00E2F65A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EADE59BA232EB09A00E2F65A /* Main.storyboard */; };
 		EAF9C3C82354A66200D4D77C /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF9C3C72354A66200D4D77C /* Settings.swift */; };
+		EAFEB1152944FCCE0009456F /* server in Resources */ = {isa = PBXBuildFile; fileRef = EAFEB1142944FCCE0009456F /* server */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		EADE59BD232EB09A00E2F65A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EADE59BE232EB09A00E2F65A /* VOCR.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VOCR.entitlements; sourceTree = "<group>"; };
 		EAF9C3C72354A66200D4D77C /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		EAFEB1142944FCCE0009456F /* server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = server; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +192,7 @@
 		EADE59A8232EB09A00E2F65A = {
 			isa = PBXGroup;
 			children = (
+				EAFEB1112944EE3A0009456F /* Bin */,
 				EA5C7AD72351D81100D84042 /* Scripts */,
 				EADE59B3232EB09A00E2F65A /* VOCR */,
 				EADE59B2232EB09A00E2F65A /* Products */,
@@ -227,6 +230,14 @@
 				EA9EB89D28EA5B0A00FE6210 /* Utils.swift */,
 			);
 			path = VOCR;
+			sourceTree = "<group>";
+		};
+		EAFEB1112944EE3A0009456F /* Bin */ = {
+			isa = PBXGroup;
+			children = (
+				EAFEB1142944FCCE0009456F /* server */,
+			);
+			path = Bin;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -305,6 +316,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAFEB1152944FCCE0009456F /* server in Resources */,
 				EADE59B9232EB09A00E2F65A /* Assets.xcassets in Resources */,
 				EAD9CFD22355E11600E7F594 /* say.scpt in Resources */,
 				EA5C7AD92351D81100D84042 /* VOScreenshot.scpt in Resources */,
