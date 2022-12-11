@@ -10,6 +10,7 @@ import sys
 
 def signal_handler(sig, frame):
 	print("Signal:", sig)
+	c.close()
 	s.close()
 	sys.exit(0)
 
@@ -19,6 +20,25 @@ def guess(img):
 	img = expand_dims(img, axis=0)
 	pred = model(img).numpy()
 	return decode_predictions(pred, top=1)[0][0][1]
+
+def recv():
+	data = c.recv(4)
+	buf = int.from_bytes(data, "little")
+	print("Receiving", buf)
+	data = c.recv(buf)
+	left = buf-len(data)
+	while left>0:
+		data += c.recv(left)
+		left = buf-len(data)
+	return data
+
+def send(data):
+	data = data.encode("UTF-8")
+	length = len(data)
+	print("Sending", length)
+	length = length.to_bytes(4, byteorder="little")
+	data = length+data
+	c.send(data)
 
 s = socket.socket()
 signal.signal(signal.SIGTERM, signal_handler)
@@ -30,13 +50,8 @@ s.bind(('localhost', port))
 s.listen(1)
 print("Listening...")
 model = MobileNetV3Small()
+c, addr = s.accept()
 while True:
-	c, addr = s.accept()
-	data = c.recv(4)
-	buf = int.from_bytes(data, "little")
-	img = c.recv(buf)
-	while len(img)<buf:
-		img += c.recv(buf-len(img))
-	data = guess(img)
-	c.send(data.encode("utf-8"))
-	c.close()
+	data = recv()
+	data = guess(data)
+	send(data)

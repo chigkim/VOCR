@@ -5,6 +5,7 @@
 //  Created by Chi Kim on 10/2/22.
 //  Copyright © 2022 Chi Kim. All rights reserved.
 //
+
 import Foundation
 import os
 import Vision
@@ -155,130 +156,130 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
 	textRecognitionRequest.customWords = []
 	textRecognitionRequest.usesCPUOnly = false
 	textRecognitionRequest.cancel()
-    
+	
 	let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
 	do {
-        try requestHandler.perform([textRecognitionRequest])
+		try requestHandler.perform([textRecognitionRequest])
 	} catch _ {}
-    
+	
 	let textResults = textRecognitionRequest.results ?? []
-//    print("textboxes", textResults)
-    
-    let dirPath = (URL(fileURLWithPath: #file).deletingLastPathComponent()).path
-    
-    var textRectsArray: [[Float]] = []
-    var textLabelsArray: [[String]] = []
-    for result in textResults {
-        let rect = result.boundingBox
-        textRectsArray.append([Float(rect.minX), Float(rect.minY), Float(rect.width), Float(rect.height)])
-        textLabelsArray.append([result.topCandidates(1)[0].string])
-    }
-    
-    let result = callPython(dirPath: dirPath, cgImage: cgImage, textRectsArray: textRectsArray, textLabelsArray: textLabelsArray)
-    let pythonBoxes = result.0
-    let pythonLabels = result.1
-    
-    var rectBoxes: [CGRect] = []
-    for box in pythonBoxes {
-        let rect = CGRect(x:CGFloat(box[0]), y:CGFloat(box[1]), width:CGFloat(box[2]), height:CGFloat(box[3]))
-    }
-    
-    if let url = chooseFolder() {
-        let boxImage = drawBoxes(cgImage, boxes:rectBoxes)!
-        try? saveImage(boxImage, url.appendingPathComponent("allboxes.png"))
-    }
-    
-//    var rectBoxes: [CGRect] = []
-//    var scaledRectBoxes: [CGRect] = []
-//    var rectResults: [VNRecognizedTextObservation] = []
-//    for box in boxes {
-//        let scaledRect = CGRectMake(CGFloat(box[0]), CGFloat(box[1]), CGFloat(box[2]), CGFloat(box[3]))
-////        let scaledRect = Navigation.shared.convertRect2NormalizedImageCoords(rect)
-//        var collidesWithText = false
-//        for textBox in textResults {
-//            if textBox.boundingBox.intersects(scaledRect) {
-//                let intersection = textBox.boundingBox.intersection(scaledRect)
-//                let intersectionArea = intersection.height*intersection.width
-//                if intersectionArea > scaledRect.height*scaledRect.width*0.5 {
-//                    collidesWithText = true
-//                }
-//            }
-//        }
-//        let imageRect = VNImageRectForNormalizedRect(scaledRect, cgImage.width, cgImage.height)
-//        if !collidesWithText {
-//            let rectObservation = VNRecognizedTextObservation(boundingBox: scaledRect)
-//            rectResults.append(rectObservation)
-//            rectBoxes.append(imageRect)
-//        }
-//        scaledRectBoxes.append(imageRect)
-//
-//    }
-//    rectBoxes.append(CGRectMake(0, 0, CGFloat(cgImage.width), CGFloat(cgImage.height)))
-//    var pointBoxes: [CGRect] = []
-//    let texts = textResults.map{VNImageRectForNormalizedRect($0.boundingBox, cgImage.width, cgImage.height)}
-//    for point in texts {
-//        pointBoxes.append(CGRect(x:point.minX-0.1, y:point.minY-0.1, width:0.2, height:0.2))
-//    }
-//
-//    if let url = chooseFolder() {
-//        let boxImage = drawBoxes(cgImage, boxes:rectBoxes)!
-//        try? saveImage(boxImage, url.appendingPathComponent("boxes2.png"))
-//        let scaledBoxImage = drawBoxes(cgImage, boxes:scaledRectBoxes)!
-//        try? saveImage(scaledBoxImage, url.appendingPathComponent("scaledBoxes2.png"))
-//        let textImage = drawBoxes(cgImage, boxes:pointBoxes)!
-//        try? saveImage(textImage, url.appendingPathComponent("text_points2.png"))
-//    }
-    print("Width of image: ", cgImage.width, ", Height of image: ", cgImage.height)
-
-    
+	//    print("textboxes", textResults)
+	
+	let dirPath = (URL(fileURLWithPath: #file).deletingLastPathComponent()).path
+	
+	var textRectsArray: [[Float]] = []
+	var textLabelsArray: [[String]] = []
+	for result in textResults {
+		let rect = result.boundingBox
+		textRectsArray.append([Float(rect.minX), Float(rect.minY), Float(rect.width), Float(rect.height)])
+		textLabelsArray.append([result.topCandidates(1)[0].string])
+	}
+	
+	let result = callPython(dirPath: dirPath, cgImage: cgImage, textRectsArray: textRectsArray, textLabelsArray: textLabelsArray)
+	let pythonBoxes = result.0
+	let pythonLabels = result.1
+	
+	var rectBoxes: [CGRect] = []
+	for box in pythonBoxes {
+		let rect = CGRect(x:CGFloat(box[0]), y:CGFloat(box[1]), width:CGFloat(box[2]), height:CGFloat(box[3]))
+	}
+	
+	if let url = chooseFolder() {
+		let boxImage = drawBoxes(cgImage, boxes:rectBoxes)!
+		try? saveImage(boxImage, url.appendingPathComponent("allboxes.png"))
+	}
+	
+	//    var rectBoxes: [CGRect] = []
+	//    var scaledRectBoxes: [CGRect] = []
+	//    var rectResults: [VNRecognizedTextObservation] = []
+	//    for box in boxes {
+	//        let scaledRect = CGRectMake(CGFloat(box[0]), CGFloat(box[1]), CGFloat(box[2]), CGFloat(box[3]))
+	////        let scaledRect = Navigation.shared.convertRect2NormalizedImageCoords(rect)
+	//        var collidesWithText = false
+	//        for textBox in textResults {
+	//            if textBox.boundingBox.intersects(scaledRect) {
+	//                let intersection = textBox.boundingBox.intersection(scaledRect)
+	//                let intersectionArea = intersection.height*intersection.width
+	//                if intersectionArea > scaledRect.height*scaledRect.width*0.5 {
+	//                    collidesWithText = true
+	//                }
+	//            }
+	//        }
+	//        let imageRect = VNImageRectForNormalizedRect(scaledRect, cgImage.width, cgImage.height)
+	//        if !collidesWithText {
+	//            let rectObservation = VNRecognizedTextObservation(boundingBox: scaledRect)
+	//            rectResults.append(rectObservation)
+	//            rectBoxes.append(imageRect)
+	//        }
+	//        scaledRectBoxes.append(imageRect)
+	//
+	//    }
+	//    rectBoxes.append(CGRectMake(0, 0, CGFloat(cgImage.width), CGFloat(cgImage.height)))
+	//    var pointBoxes: [CGRect] = []
+	//    let texts = textResults.map{VNImageRectForNormalizedRect($0.boundingBox, cgImage.width, cgImage.height)}
+	//    for point in texts {
+	//        pointBoxes.append(CGRect(x:point.minX-0.1, y:point.minY-0.1, width:0.2, height:0.2))
+	//    }
+	//
+	//    if let url = chooseFolder() {
+	//        let boxImage = drawBoxes(cgImage, boxes:rectBoxes)!
+	//        try? saveImage(boxImage, url.appendingPathComponent("boxes2.png"))
+	//        let scaledBoxImage = drawBoxes(cgImage, boxes:scaledRectBoxes)!
+	//        try? saveImage(scaledBoxImage, url.appendingPathComponent("scaledBoxes2.png"))
+	//        let textImage = drawBoxes(cgImage, boxes:pointBoxes)!
+	//        try? saveImage(textImage, url.appendingPathComponent("text_points2.png"))
+	//    }
+	print("Width of image: ", cgImage.width, ", Height of image: ", cgImage.height)
+	
+	
 	return textResults
 }
 
 func pixelValues(fromCGImage imageRef: CGImage?) -> (pixelValues: [UInt8]?, width: Int, height: Int)
 {
-    var width = 0
-    var height = 0
-    var pixelValues: [UInt8]?
-    if let imageRef = imageRef {
-        width = imageRef.width
-        height = imageRef.height
-        let bitsPerComponent = imageRef.bitsPerComponent
-        let bytesPerRow = imageRef.bytesPerRow
-        let totalBytes = height * bytesPerRow
-        let bitmapInfo = imageRef.bitmapInfo
-
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        var intensities = [UInt8](repeating: 0, count: totalBytes)
-
-        let contextRef = CGContext(data: &intensities, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)
-        contextRef?.draw(imageRef, in: CGRect(x: 0.0, y: 0.0, width: CGFloat(width), height: CGFloat(height)))
-
-        pixelValues = intensities
-    }
-
-    return (pixelValues, width, height)
+	var width = 0
+	var height = 0
+	var pixelValues: [UInt8]?
+	if let imageRef = imageRef {
+		width = imageRef.width
+		height = imageRef.height
+		let bitsPerComponent = imageRef.bitsPerComponent
+		let bytesPerRow = imageRef.bytesPerRow
+		let totalBytes = height * bytesPerRow
+		let bitmapInfo = imageRef.bitmapInfo
+		
+		let colorSpace = CGColorSpaceCreateDeviceRGB()
+		var intensities = [UInt8](repeating: 0, count: totalBytes)
+		
+		let contextRef = CGContext(data: &intensities, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)
+		contextRef?.draw(imageRef, in: CGRect(x: 0.0, y: 0.0, width: CGFloat(width), height: CGFloat(height)))
+		
+		pixelValues = intensities
+	}
+	
+	return (pixelValues, width, height)
 }
 
 func callPython(dirPath: String, cgImage: CGImage, textRectsArray: [[Float]], textLabelsArray: [[String]]) -> ([[Float]], [String]) {
-    let sys = Python.import("sys")
-    
-    print("Python \(sys.version_info.major).\(sys.version_info.minor)")
-    print("Python Version: \(sys.version)")
-    print("Python Encoding: \(sys.getdefaultencoding().upper())")
-    
-    sys.path.append(dirPath)
-    print("sys", sys.path)
-    let utils = Python.import("utils")
-    print("utils", utils)
-//    let pythonBoxes = utils.get_rects_for_image("/Users/kennethchoi/Desktop/PPAT/VOCR/VOCR/kontakt-factory-selection.jpg")
-    let cgImageArray: (pixelValues: [UInt8]?, width: Int, height: Int) = pixelValues(fromCGImage: cgImage)
-    Navigation.shared.imgSize.width = CGFloat(cgImageArray.width)
-    Navigation.shared.imgSize.height = CGFloat(cgImageArray.height)
-    
-    let results = utils.get_rects_for_image(cgImageArray.pixelValues ?? [], cgImage.width, cgImage.height, textRectsArray, textLabelsArray)
-    let pythonBoxes: [[Float]] = Array(results[0])!
-    let pythonLabels: [String] = Array(results[1])!
-    return (pythonBoxes, pythonLabels)
+	let sys = Python.import("sys")
+	
+	print("Python \(sys.version_info.major).\(sys.version_info.minor)")
+	print("Python Version: \(sys.version)")
+	print("Python Encoding: \(sys.getdefaultencoding().upper())")
+	
+	sys.path.append(dirPath)
+	print("sys", sys.path)
+	let utils = Python.import("utils")
+	print("utils", utils)
+	//    let pythonBoxes = utils.get_rects_for_image("/Users/kennethchoi/Desktop/PPAT/VOCR/VOCR/kontakt-factory-selection.jpg")
+	let cgImageArray: (pixelValues: [UInt8]?, width: Int, height: Int) = pixelValues(fromCGImage: cgImage)
+	Navigation.shared.imgSize.width = CGFloat(cgImageArray.width)
+	Navigation.shared.imgSize.height = CGFloat(cgImageArray.height)
+	
+	let results = utils.get_rects_for_image(cgImageArray.pixelValues ?? [], cgImage.width, cgImage.height, textRectsArray, textLabelsArray)
+	let pythonBoxes: [[Float]] = Array(results[0])!
+	let pythonLabels: [String] = Array(results[1])!
+	return (pythonBoxes, pythonLabels)
 }
 
 func classify(cgImage:CGImage) -> String {
@@ -344,23 +345,13 @@ func recognizeVOCursor() {
 
 func predict() {
 	if let url = chooseFile() {
-		do {
-			let s = try Socket.create()
-			try s.connect(to:"localhost", port:12345)
-			let cicontext = CIContext()
-			let ciimage = CIImage(cgImage: loadImage(url)!)
-			let imageData = cicontext.jpegRepresentation(of: ciimage, colorSpace: ciimage.colorSpace!)
-			var length = UInt32(imageData!.count)
-			var data = Data(bytes: &length, count: MemoryLayout.size(ofValue: length))
-			data.append(imageData!)
-			try s.write(from: data)
-			if var message = try s.readString() {
-				message += " Detected."
-				print(message)
-				Accessibility.speakWithSynthesizer(message)
-			}
-		} catch {
-			
+		let cicontext = CIContext()
+		let ciimage = CIImage(cgImage: loadImage(url)!)
+		let imageData = cicontext.jpegRepresentation(of: ciimage, colorSpace: ciimage.colorSpace!)
+		Client.shared.send(imageData!)
+		if let data = Client.shared.recv(), var message = String(data:data, encoding:.utf8) {
+			message += " Detected."
+			print(message)
 		}
 	}
 	
