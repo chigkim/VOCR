@@ -1,5 +1,4 @@
 import socket
-#from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications import MobileNetV3Small
 from tensorflow.keras.applications.mobilenet import decode_predictions
 from tensorflow.image import resize
@@ -27,14 +26,14 @@ signal.signal(signal.SIGABRT, signal_handler)
 signal.signal(signal.SIGINT, signal_handler)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 port = 12345
-s.bind(('', port))
+s.bind(('localhost', port))
 s.listen(1)
 print("Listening...")
 model = MobileNetV3Small()
 while True:
 	c, addr = s.accept()
-	data = c.recv(8)
-	buf = int.from_bytes(data, "little", signed=True)
+	data = c.recv(4)
+	buf = int.from_bytes(data, "little")
 	img = c.recv(buf)
 	while len(img)<buf:
 		img += c.recv(buf-len(img))
