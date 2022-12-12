@@ -9,6 +9,8 @@ import signal
 import time
 import sys
 import struct
+import json
+
 def signal_handler(sig, frame):
 	print("Signal:", sig)
 	c.close()
@@ -47,9 +49,13 @@ while True:
 	c, addr = s.accept()
 	img_bytes = recv()
 	img_np = decode_jpeg(img_bytes).numpy()
-	data = get_rects_for_image(img_np, *img_np.shape[:2], [], [])
-	# print("Got data ", data)
-	print("Length of data ", len(data))
-	encoded_data = struct.pack('<' + 'i' * (len(data) + 1), len(data)*4, *data)
-	c.send(encoded_data)
+	send("Got Image")
+	data = recv()
+	data = json.loads(data.decode("utf-8"))
+	texts = data["texts"]
+	boxes = data['boxes']
+	print(texts)
+	print(boxes)
+	data = get_rects_for_image(img_np, *img_np.shape[:2], boxes, texts)
+	send(json.dumps(data))
 	c.close()

@@ -11,9 +11,8 @@ import os
 import Vision
 import AVFoundation
 import Cocoa
-import PythonKit
 import Socket
-
+import SwiftyJSON
 let logger = Logger()
 
 func chooseFolder() -> URL? {
@@ -165,17 +164,19 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
 	let textResults = textRecognitionRequest.results ?? []
 	//    print("textboxes", textResults)
 	
-	let dirPath = (URL(fileURLWithPath: #file).deletingLastPathComponent()).path
+	
 	
 	var textRectsArray: [[Float]] = []
-	var textLabelsArray: [[String]] = []
+	var textLabelsArray: [String] = []
 	for result in textResults {
 		let rect = result.boundingBox
 		textRectsArray.append([Float(rect.minX), Float(rect.minY), Float(rect.width), Float(rect.height)])
-		textLabelsArray.append([result.topCandidates(1)[0].string])
+		textLabelsArray.append(result.topCandidates(1)[0].string)
 	}
 	
-	let result = callPython(dirPath: dirPath, cgImage: cgImage, textRectsArray: textRectsArray, textLabelsArray: textLabelsArray)
+	guard let result = predict(cgImage: cgImage, rects: textRectsArray, texts: textLabelsArray) else {
+		return []
+	}
 	let pythonBoxes = result.0
 	let pythonLabels = result.1
 	
@@ -260,28 +261,6 @@ func pixelValues(fromCGImage imageRef: CGImage?) -> (pixelValues: [UInt8]?, widt
 	return (pixelValues, width, height)
 }
 
-func callPython(dirPath: String, cgImage: CGImage, textRectsArray: [[Float]], textLabelsArray: [[String]]) -> ([[Float]], [String]) {
-	let sys = Python.import("sys")
-	
-	print("Python \(sys.version_info.major).\(sys.version_info.minor)")
-	print("Python Version: \(sys.version)")
-	print("Python Encoding: \(sys.getdefaultencoding().upper())")
-	
-	sys.path.append(dirPath)
-	print("sys", sys.path)
-	let utils = Python.import("utils")
-	print("utils", utils)
-	//    let pythonBoxes = utils.get_rects_for_image("/Users/kennethchoi/Desktop/PPAT/VOCR/VOCR/kontakt-factory-selection.jpg")
-	let cgImageArray: (pixelValues: [UInt8]?, width: Int, height: Int) = pixelValues(fromCGImage: cgImage)
-	Navigation.shared.imgSize.width = CGFloat(cgImageArray.width)
-	Navigation.shared.imgSize.height = CGFloat(cgImageArray.height)
-	
-	let results = utils.get_rects_for_image(cgImageArray.pixelValues ?? [], cgImage.width, cgImage.height, textRectsArray, textLabelsArray)
-	let pythonBoxes: [[Float]] = Array(results[0])!
-	let pythonLabels: [String] = Array(results[1])!
-	return (pythonBoxes, pythonLabels)
-}
-
 func classify(cgImage:CGImage) -> String {
 	var message = ""
 	var categories: [String: VNConfidence] = [:]
@@ -343,60 +322,72 @@ func recognizeVOCursor() {
 	
 }
 
-func predict() {
-    let labelIdToLabel = [0: "arrow",
-                      1: "button",
-                      2: "dropdown",
-                      3: "icon",
-                      4: "knob",
-                      5: "light",
-                      6: "meter",
-                      7: "multiple elements",
-                      8: "multiple knobs",
-                      9: "needle",
-                      10: "non-interactive",
-                      11: "radio button",
-                      12: "slider",
-                      13: "switch",
-                      14: "unknown"]
+func predict(cgImage:CGImage, rects:[[Float]], texts:[String]) -> ([[Float]], [String])? {
+	let labelIdToLabel = [0: "arrow",
+						  1: "button",
+						  2: "dropdown",
+						  3: "icon",
+						  4: "knob",
+						  5: "light",
+						  6: "meter",
+						  7: "multiple elements",
+						  8: "multiple knobs",
+						  9: "needle",
+						  10: "non-interactive",
+						  11: "radio button",
+						  12: "slider",
+						  13: "switch",
+						  14: "unknown"]
 	if let url = chooseFile() {
 		let cicontext = CIContext()
 		let ciimage = CIImage(cgImage: loadImage(url)!)
 		let imageData = cicontext.jpegRepresentation(of: ciimage, colorSpace: ciimage.colorSpace!)
 		if Client.connect() {
 			Client.send(imageData!)
-			if let data = Client.recv() {
-				print("data", data)
-				var rectValues: [UInt32] = []
-				var rectBoxes: [CGRect] = []
-				var scaledRectBoxes: [CGRect] = []
-				var labels: [String] = []
-				for i in 0...((data.count)/4 - 1) {
-					let miniData = data[i*4...((i+1)*4-1)]
-					let uint32 = UInt32(littleEndian: miniData.withUnsafeBytes { $0.load(as:UInt32.self)})
-					//                let uint32 = UInt32(bytes:data, fromByteIndex:ind, as:UInt32.self).littleEndian
-					rectValues.append(uint32)
-				}
-				
-				for i in 0...((rectValues.count)/5-1) {
-					let x = rectValues[i*5]
-					let y = rectValues[i*5 + 1]
-					let width = rectValues[i*5 + 2]
-					let height = rectValues[i*5 + 3]
-					let labelId = rectValues[i*5 + 4]
-					print(labelId)
-					assert(labelId >= 0 && labelId < 15)
-					let label = labelIdToLabel[Int(labelId)] ?? "Unknown"
-					let scaledRect = CGRect(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
-					scaledRectBoxes.append(scaledRect)
-					labels.append(label)
-					
-				}
-				print("Rectangles: ", scaledRectBoxes)
-				print("Labels: ", labels)
+			guard  let  data = Client.recv() else { return nil }
+			print(data)
+			if String(decoding: data, as: UTF8.self) != "Got Image" {
+				return nil
 			}
-			
-			
+			var j:JSON = [:]
+			j["boxes"] = JSON(rects)
+			j["texts"] = JSON(texts)
+			guard let jstr = j.rawString() else { return nil }
+			Client.send(Data(jstr.utf8))
+			guard  let  data = Client.recv() else { return nil }
+			j = JSON(data)
+			print("data", j.rawString()!)
+
+//			var rectValues: [UInt32] = []
+//			var rectBoxes: [CGRect] = []
+//			var scaledRectBoxes: [CGRect] = []
+//			var labels: [String] = []
+//			for i in 0...((data.count)/4 - 1) {
+//				let miniData = data[i*4...((i+1)*4-1)]
+//				let uint32 = UInt32(littleEndian: miniData.withUnsafeBytes { $0.load(as:UInt32.self)})
+//				//                let uint32 = UInt32(bytes:data, fromByteIndex:ind, as:UInt32.self).littleEndian
+//				rectValues.append(uint32)
+//			}
+//
+//			for i in 0...((rectValues.count)/5-1) {
+//				let x = rectValues[i*5]
+//				let y = rectValues[i*5 + 1]
+//				let width = rectValues[i*5 + 2]
+//				let height = rectValues[i*5 + 3]
+//				let labelId = rectValues[i*5 + 4]
+//				print(labelId)
+//				assert(labelId >= 0 && labelId < 15)
+//				let label = labelIdToLabel[Int(labelId)] ?? "Unknown"
+//				let scaledRect = CGRect(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
+//				scaledRectBoxes.append(scaledRect)
+//				labels.append(label)
+//
+//			}
+//			print("Rectangles: ", scaledRectBoxes)
+//			print("Labels: ", labels)
+//
+//
+//
 			
 			//    var rectBoxes: [CGRect] = []
 			//    var scaledRectBoxes: [CGRect] = []
@@ -440,5 +431,5 @@ func predict() {
 			//    }
 		}
 	}
-	
+	return (rects, texts)
 }

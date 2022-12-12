@@ -18,8 +18,7 @@ struct Shortcuts {
 	let resetPosition = HotKey(key:.r, modifiers:[.command,.shift, .control])
 	let positionalAudio = HotKey(key:.p, modifiers:[.command,.shift, .control])
 	let moveMouse = HotKey(key:.m, modifiers:[.command, .shift, .control])
-	let socketTest = HotKey(key:.s, modifiers:[.command, .shift, .control])
-	
+
 	init() {
 		window.keyDownHandler = {
 			if !Accessibility.isTrusted(ask:true) {
@@ -67,9 +66,6 @@ struct Shortcuts {
 			}
 		}
 		
-		socketTest.keyDownHandler = {
-			predict()
-		}
 	}
 	
 }
