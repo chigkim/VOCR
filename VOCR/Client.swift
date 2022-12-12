@@ -10,22 +10,23 @@ import Foundation
 import Socket
 
 class Client {
-	
-	static let shared = Client()
-	var s:Socket?
-	
-	init() {
+
+	static var s:Socket?
+
+	static func connect() -> Bool {
 		do {
 			print("Connecting...")
 			s = try Socket.create()
 			try s?.connect(to:"localhost", port:12345)
 			print("Connected.")
+			return true
 		} catch {
 			print("Error connecting.")
 		}
+	return false
 	}
 	
-	func send(_ data:Data) {
+	static func send(_ data:Data) {
 		do {
 			var length = UInt32(data.count)
 			var packet = Data(bytes: &length, count: MemoryLayout.size(ofValue: length))
@@ -36,14 +37,12 @@ class Client {
 		}
 	}
 
-	func recv() -> Data? {
+	static func recv() -> Data? {
 		do {
 			var p = UnsafeMutablePointer<CChar>.allocate(capacity: 4)
-            print("Beginning receiving")
 			try s?.read(into: p, bufSize: 4, truncate:true)
 			var packet = Data(bytes: p, count: 4)
 			p.deallocate()
-            print("Beginning receiving", p)
 			let buf:Int = packet.withUnsafeBytes {$0.pointee}
 			print("Receiving", buf)
 			p = UnsafeMutablePointer<CChar>.allocate(capacity: buf)

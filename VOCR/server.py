@@ -2,14 +2,13 @@ import socket
 from tensorflow.keras.applications import MobileNetV3Small
 from tensorflow.keras.applications.mobilenet import decode_predictions
 from tensorflow.image import resize
-from tensorflow.io import decode_jpeg
+from tensorflow.io import decode_jpeg, read_file
 from tensorflow  import expand_dims
 from utils import get_rects_for_image
 import signal
 import time
 import sys
 import struct
-
 def signal_handler(sig, frame):
 	print("Signal:", sig)
 	c.close()
@@ -24,11 +23,9 @@ def guess(img):
 	return decode_predictions(pred, top=1)[0][0][1]
 
 def recv():
-	print("Starting receiving in python")
 	data = c.recv(4)
-	print(f"Data: {data}, type: {type(data)}")
 	buf = int.from_bytes(data, "little")
-	print("Python is Receiving", buf)
+	print("Python: Receiving", buf)
 	data = c.recv(buf)
 	left = buf-len(data)
 	while left>0:
@@ -39,7 +36,7 @@ def recv():
 def send(data):
 	data = data.encode("UTF-8")
 	length = len(data)
-	print("Python is Sending", length)
+	print("Python: Sending", length)
 	length = length.to_bytes(4, byteorder="little")
 	data = length+data
 	c.send(data)
@@ -54,12 +51,10 @@ s.bind(('localhost', port))
 s.listen(1)
 print("Listening...")
 model = MobileNetV3Small()
-c, addr = s.accept()
 while True:
 	print("Starting the loop")
+	c, addr = s.accept()
 	img_bytes = recv()
-	# data = guess(img)
-	print("img_bytes have been received: ", len(img_bytes))
 	img_np = decode_jpeg(img_bytes).numpy()
 	data = get_rects_for_image(img_np, *img_np.shape[:2], [], [])
 	# print("Got data ", data)

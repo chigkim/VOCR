@@ -363,80 +363,82 @@ func predict() {
 		let cicontext = CIContext()
 		let ciimage = CIImage(cgImage: loadImage(url)!)
 		let imageData = cicontext.jpegRepresentation(of: ciimage, colorSpace: ciimage.colorSpace!)
-		Client.shared.send(imageData!)
-        if let data = Client.shared.recv() {
-            print("data", data)
-            var rectValues: [UInt32] = []
-            var rectBoxes: [CGRect] = []
-            var scaledRectBoxes: [CGRect] = []
-            var labels: [String] = []
-            for i in 0...((data.count)/4 - 1) {
-                let miniData = data[i*4...((i+1)*4-1)]
-                let uint32 = UInt32(littleEndian: miniData.withUnsafeBytes { $0.load(as:UInt32.self)})
-//                let uint32 = UInt32(bytes:data, fromByteIndex:ind, as:UInt32.self).littleEndian
-                rectValues.append(uint32)
-            }
-
-            for i in 0...((rectValues.count)/5-1) {
-                let x = rectValues[i*5]
-                let y = rectValues[i*5 + 1]
-                let width = rectValues[i*5 + 2]
-                let height = rectValues[i*5 + 3]
-                let labelId = rectValues[i*5 + 4]
-                print(labelId)
-                assert(labelId >= 0 && labelId < 15)
-                let label = labelIdToLabel[Int(labelId)] ?? "Unknown"
-                let scaledRect = CGRect(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
-                scaledRectBoxes.append(scaledRect)
-                labels.append(label)
-
-            }
-            print("Rectangles: ", scaledRectBoxes)
-            print("Labels: ", labels)
-        }
-
-            
-        
-        //    var rectBoxes: [CGRect] = []
-        //    var scaledRectBoxes: [CGRect] = []
-        //    var rectResults: [VNRecognizedTextObservation] = []
-        //    for box in boxes {
-        //        let scaledRect = CGRectMake(CGFloat(box[0]), CGFloat(box[1]), CGFloat(box[2]), CGFloat(box[3]))
-        ////        let scaledRect = Navigation.shared.convertRect2NormalizedImageCoords(rect)
-        //        var collidesWithText = false
-        //        for textBox in textResults {
-        //            if textBox.boundingBox.intersects(scaledRect) {
-        //                let intersection = textBox.boundingBox.intersection(scaledRect)
-        //                let intersectionArea = intersection.height*intersection.width
-        //                if intersectionArea > scaledRect.height*scaledRect.width*0.5 {
-        //                    collidesWithText = true
-        //                }
-        //            }
-        //        }
-        //        let imageRect = VNImageRectForNormalizedRect(scaledRect, cgImage.width, cgImage.height)
-        //        if !collidesWithText {
-        //            let rectObservation = VNRecognizedTextObservation(boundingBox: scaledRect)
-        //            rectResults.append(rectObservation)
-        //            rectBoxes.append(imageRect)
-        //        }
-        //        scaledRectBoxes.append(imageRect)
-        //
-        //    }
-        //    rectBoxes.append(CGRectMake(0, 0, CGFloat(cgImage.width), CGFloat(cgImage.height)))
-        //    var pointBoxes: [CGRect] = []
-        //    let texts = textResults.map{VNImageRectForNormalizedRect($0.boundingBox, cgImage.width, cgImage.height)}
-        //    for point in texts {
-        //        pointBoxes.append(CGRect(x:point.minX-0.1, y:point.minY-0.1, width:0.2, height:0.2))
-        //    }
-        //
-        //    if let url = chooseFolder() {
-        //        let boxImage = drawBoxes(cgImage, boxes:rectBoxes)!
-        //        try? saveImage(boxImage, url.appendingPathComponent("boxes2.png"))
-        //        let scaledBoxImage = drawBoxes(cgImage, boxes:scaledRectBoxes)!
-        //        try? saveImage(scaledBoxImage, url.appendingPathComponent("scaledBoxes2.png"))
-        //        let textImage = drawBoxes(cgImage, boxes:pointBoxes)!
-        //        try? saveImage(textImage, url.appendingPathComponent("text_points2.png"))
-        //    }
+		if Client.connect() {
+			Client.send(imageData!)
+			if let data = Client.recv() {
+				print("data", data)
+				var rectValues: [UInt32] = []
+				var rectBoxes: [CGRect] = []
+				var scaledRectBoxes: [CGRect] = []
+				var labels: [String] = []
+				for i in 0...((data.count)/4 - 1) {
+					let miniData = data[i*4...((i+1)*4-1)]
+					let uint32 = UInt32(littleEndian: miniData.withUnsafeBytes { $0.load(as:UInt32.self)})
+					//                let uint32 = UInt32(bytes:data, fromByteIndex:ind, as:UInt32.self).littleEndian
+					rectValues.append(uint32)
+				}
+				
+				for i in 0...((rectValues.count)/5-1) {
+					let x = rectValues[i*5]
+					let y = rectValues[i*5 + 1]
+					let width = rectValues[i*5 + 2]
+					let height = rectValues[i*5 + 3]
+					let labelId = rectValues[i*5 + 4]
+					print(labelId)
+					assert(labelId >= 0 && labelId < 15)
+					let label = labelIdToLabel[Int(labelId)] ?? "Unknown"
+					let scaledRect = CGRect(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
+					scaledRectBoxes.append(scaledRect)
+					labels.append(label)
+					
+				}
+				print("Rectangles: ", scaledRectBoxes)
+				print("Labels: ", labels)
+			}
+			
+			
+			
+			//    var rectBoxes: [CGRect] = []
+			//    var scaledRectBoxes: [CGRect] = []
+			//    var rectResults: [VNRecognizedTextObservation] = []
+			//    for box in boxes {
+			//        let scaledRect = CGRectMake(CGFloat(box[0]), CGFloat(box[1]), CGFloat(box[2]), CGFloat(box[3]))
+			////        let scaledRect = Navigation.shared.convertRect2NormalizedImageCoords(rect)
+			//        var collidesWithText = false
+			//        for textBox in textResults {
+			//            if textBox.boundingBox.intersects(scaledRect) {
+			//                let intersection = textBox.boundingBox.intersection(scaledRect)
+			//                let intersectionArea = intersection.height*intersection.width
+			//                if intersectionArea > scaledRect.height*scaledRect.width*0.5 {
+			//                    collidesWithText = true
+			//                }
+			//            }
+			//        }
+			//        let imageRect = VNImageRectForNormalizedRect(scaledRect, cgImage.width, cgImage.height)
+			//        if !collidesWithText {
+			//            let rectObservation = VNRecognizedTextObservation(boundingBox: scaledRect)
+			//            rectResults.append(rectObservation)
+			//            rectBoxes.append(imageRect)
+			//        }
+			//        scaledRectBoxes.append(imageRect)
+			//
+			//    }
+			//    rectBoxes.append(CGRectMake(0, 0, CGFloat(cgImage.width), CGFloat(cgImage.height)))
+			//    var pointBoxes: [CGRect] = []
+			//    let texts = textResults.map{VNImageRectForNormalizedRect($0.boundingBox, cgImage.width, cgImage.height)}
+			//    for point in texts {
+			//        pointBoxes.append(CGRect(x:point.minX-0.1, y:point.minY-0.1, width:0.2, height:0.2))
+			//    }
+			//
+			//    if let url = chooseFolder() {
+			//        let boxImage = drawBoxes(cgImage, boxes:rectBoxes)!
+			//        try? saveImage(boxImage, url.appendingPathComponent("boxes2.png"))
+			//        let scaledBoxImage = drawBoxes(cgImage, boxes:scaledRectBoxes)!
+			//        try? saveImage(scaledBoxImage, url.appendingPathComponent("scaledBoxes2.png"))
+			//        let textImage = drawBoxes(cgImage, boxes:pointBoxes)!
+			//        try? saveImage(textImage, url.appendingPathComponent("text_points2.png"))
+			//    }
+		}
 	}
 	
 }

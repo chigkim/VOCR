@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate	 {
 			let url = bundle.url(forResource: "server", withExtension: "")
 			self.task.executableURL = url!
 			do {
-				try self.task.run()
+//				try self.task.run()
 			} catch {
 				print("Can't run server.")
 			}
