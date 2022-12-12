@@ -345,7 +345,6 @@ func predict(cgImage:CGImage, rects:[[Float]], texts:[String]) -> ([[Float]], [S
 		if Client.connect() {
 			Client.send(imageData!)
 			guard  let  data = Client.recv() else { return nil }
-			print(data)
 			if String(decoding: data, as: UTF8.self) != "Got Image" {
 				return nil
 			}
@@ -356,8 +355,9 @@ func predict(cgImage:CGImage, rects:[[Float]], texts:[String]) -> ([[Float]], [S
 			Client.send(Data(jstr.utf8))
 			guard  let  data = Client.recv() else { return nil }
 			j = JSON(data)
-			print("data", j.rawString()!)
-
+			let res = j.arrayValue
+			print(res)
+			print("Results:", res.count)
 //			var rectValues: [UInt32] = []
 //			var rectBoxes: [CGRect] = []
 //			var scaledRectBoxes: [CGRect] = []
