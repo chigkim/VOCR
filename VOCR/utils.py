@@ -211,10 +211,11 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
     # final_labels = [rect.label[0] for rect in final_rectangles] + [rect.label[0] for rect in text_rectangles]
     # final_dims.append((0, 0, width, height))
     # final_labels.append("Outer Bounds Box")
+
     data = []
     for rect in final_rectangles:
-        data.extend([*rect.get_values(), rect.label])
-    data.extend([0, 0, width, height, 14])
+        data.append([*rect.get_values(), rect.label])
+    data.append([0, 0, width, height, 14])
 
     # print(final_dims)
     # print(final_labels)
