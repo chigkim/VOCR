@@ -12,7 +12,7 @@ class Rectangle:
     def get_values(self) -> Tuple[float, float, float, float]:
         return (self._topx, self._topy, self._width, self._height)
 
-    def get_swift_rectangle(self) -> Tuple[float, float, float, float, str]:
+    def get_swift_rectangle(self) -> Tuple[float, float, float, float, int]:
         return (self._topx, self._topy, self._width, self._height, self.label)
     
     def area(self) -> float:
@@ -21,7 +21,7 @@ class Rectangle:
     def set_label(self, label) -> None:
         self._label = label
     
-    def compare_labels(self, other) -> Tuple[Union[str, None], float]:
+    def compare_labels(self, other) -> Tuple[Union[int, None], float]:
         """
         Returns tuple of better label and corresponding confidence
         """

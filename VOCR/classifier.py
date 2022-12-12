@@ -3,9 +3,9 @@ from rectangle import Rectangle
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 import numpy as np
-label_map = {0: 'arrow', 1: 'button', 2: 'dropdown', 3: 'icon', 4: 'knob', 5: 'light', 6: 'meter',
- 7: 'multiple elements', 8: 'multiple knobs', 9: 'needle', 10: 'non-interactive',
- 11: 'radio button', 12: 'slider', 13: 'switch', 14: 'unknown'}
+# label_map = {0: 'arrow', 1: 'button', 2: 'dropdown', 3: 'icon', 4: 'knob', 5: 'light', 6: 'meter',
+#  7: 'multiple elements', 8: 'multiple knobs', 9: 'needle', 10: 'non-interactive',
+#  11: 'radio button', 12: 'slider', 13: 'switch', 14: 'unknown'}
 
 class Classifier:
 
@@ -39,10 +39,11 @@ class Classifier:
 			model_pred = self.model.predict(img_scaled[np.newaxis, :, :, :])
 			classification.append(np.argmax(model_pred))
 
-		if output_type == 'int':
-			return classification
-		else:
-			return [label_map[c] for c in classification]
+		return classification
+		# if output_type == 'int':
+		# 	return classification
+		# else:
+		# 	return [label_map[c] for c in classification]
 
 # class Classifier:
 #     def __init__(self, model, img_width, img_height) -> None:

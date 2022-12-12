@@ -152,7 +152,8 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
     rectangles = []
     for contour in contours:
         tup: tuple = cv2.boundingRect(contour)
-        rect = Rectangle("ICON DETECTED", NO_CONFIDENCE, *tup)
+        # rect = Rectangle("ICON DETECTED", NO_CONFIDENCE, *tup)
+        rect = Rectangle(14, NO_CONFIDENCE, *tup)
         rectangles.append(rect) # rectangle with no label and 0% confidence
         
     total_image_size = np.prod(gray.shape)
@@ -196,7 +197,7 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
                     assert (not _check_rectangle_overlap(rect1, rect2, min_dist_between)), "failed: " + str(rect1) + str(rect2)
 
     rect_tuples = [rect.values() for rec in final_rectangles]
-    labels = cf.classify_n(rect_tuples, (width, height), output_type='str')
+    labels = cf.classify_n(rect_tuples, (width, height))
 
     for i, rect in enumerate(final_rectangles):
         rect.set_label(labels[i])
@@ -207,10 +208,14 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
 
     final_dims = [rect.get_values() for rect in final_rectangles] + [rect.get_values() for rect in text_rectangles]
     final_labels = [rect.label[0] for rect in final_rectangles] + [rect.label[0] for rect in text_rectangles]
-    final_dims.append((0, 0, width, height))
-    final_labels.append("Outer Bounds Box")
+    # final_dims.append((0, 0, width, height))
+    # final_labels.append("Outer Bounds Box")
+    data = []
+    for rect in final_rectangles:
+        data.extend([rect.x, rect.y, rect.w, rect.h, rect.label])
+    data.extend([0, 0, width, height, 14])
 
-    print(final_dims)
-    print(final_labels)
-    return final_dims, final_labels
-
+    # print(final_dims)
+    # print(final_labels)
+    # return final_dims, final_labels
+    return data

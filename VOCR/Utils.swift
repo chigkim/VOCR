@@ -344,15 +344,89 @@ func recognizeVOCursor() {
 }
 
 func predict() {
+    let labelIdToLabel = [0: "arrow",
+                      1: "button",
+                      2: "dropdown",
+                      3: "icon",
+                      4: "knob",
+                      5: "light",
+                      6: "meter",
+                      7: "multiple elements",
+                      8: "multiple knobs",
+                      9: "needle",
+                      10: "non-interactive",
+                      11: "radio button",
+                      12: "slider",
+                      13: "switch",
+                      14: "unknown"]
 	if let url = chooseFile() {
 		let cicontext = CIContext()
 		let ciimage = CIImage(cgImage: loadImage(url)!)
 		let imageData = cicontext.jpegRepresentation(of: ciimage, colorSpace: ciimage.colorSpace!)
 		Client.shared.send(imageData!)
-		if let data = Client.shared.recv(), var message = String(data:data, encoding:.utf8) {
-			message += " Detected."
-			print(message)
-		}
+        if let data = Client.shared.recv() {
+            var rectBoxes: [CGRect] = []
+            var scaledRectBoxes: [CGRect] = []
+            var labels: [String] = []
+            for i in 1...(data.count)/5 {
+                var x = data[i*5]
+                var y = data[i*5 + 1]
+                var width = data[i*5 + 2]
+                var height = data[i*5 + 3]
+                let labelId = data[i*5 + 4]
+                assert(labelId >= 0 && labelId < 15)
+                var label = labelIdToLabel[Int(labelId)] ?? "Unknown"
+                let scaledRect = CGRect(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
+                scaledRectBoxes.append(scaledRect)
+                labels.append(label)
+
+            }
+            print("Rectangles: ", scaledRectBoxes)
+            print("Labels: ", labels)
+        }
+
+            
+        
+        //    var rectBoxes: [CGRect] = []
+        //    var scaledRectBoxes: [CGRect] = []
+        //    var rectResults: [VNRecognizedTextObservation] = []
+        //    for box in boxes {
+        //        let scaledRect = CGRectMake(CGFloat(box[0]), CGFloat(box[1]), CGFloat(box[2]), CGFloat(box[3]))
+        ////        let scaledRect = Navigation.shared.convertRect2NormalizedImageCoords(rect)
+        //        var collidesWithText = false
+        //        for textBox in textResults {
+        //            if textBox.boundingBox.intersects(scaledRect) {
+        //                let intersection = textBox.boundingBox.intersection(scaledRect)
+        //                let intersectionArea = intersection.height*intersection.width
+        //                if intersectionArea > scaledRect.height*scaledRect.width*0.5 {
+        //                    collidesWithText = true
+        //                }
+        //            }
+        //        }
+        //        let imageRect = VNImageRectForNormalizedRect(scaledRect, cgImage.width, cgImage.height)
+        //        if !collidesWithText {
+        //            let rectObservation = VNRecognizedTextObservation(boundingBox: scaledRect)
+        //            rectResults.append(rectObservation)
+        //            rectBoxes.append(imageRect)
+        //        }
+        //        scaledRectBoxes.append(imageRect)
+        //
+        //    }
+        //    rectBoxes.append(CGRectMake(0, 0, CGFloat(cgImage.width), CGFloat(cgImage.height)))
+        //    var pointBoxes: [CGRect] = []
+        //    let texts = textResults.map{VNImageRectForNormalizedRect($0.boundingBox, cgImage.width, cgImage.height)}
+        //    for point in texts {
+        //        pointBoxes.append(CGRect(x:point.minX-0.1, y:point.minY-0.1, width:0.2, height:0.2))
+        //    }
+        //
+        //    if let url = chooseFolder() {
+        //        let boxImage = drawBoxes(cgImage, boxes:rectBoxes)!
+        //        try? saveImage(boxImage, url.appendingPathComponent("boxes2.png"))
+        //        let scaledBoxImage = drawBoxes(cgImage, boxes:scaledRectBoxes)!
+        //        try? saveImage(scaledBoxImage, url.appendingPathComponent("scaledBoxes2.png"))
+        //        let textImage = drawBoxes(cgImage, boxes:pointBoxes)!
+        //        try? saveImage(textImage, url.appendingPathComponent("text_points2.png"))
+        //    }
 	}
 	
 }

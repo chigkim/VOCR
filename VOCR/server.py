@@ -4,9 +4,11 @@ from tensorflow.keras.applications.mobilenet import decode_predictions
 from tensorflow.image import resize
 from tensorflow.io import decode_jpeg
 from tensorflow  import expand_dims
+from utils import get_rects_for_image
 import signal
 import time
 import sys
+import struct
 
 def signal_handler(sig, frame):
 	print("Signal:", sig)
@@ -52,6 +54,15 @@ print("Listening...")
 model = MobileNetV3Small()
 c, addr = s.accept()
 while True:
-	data = recv()
-	data = guess(data)
+	c, addr = s.accept()
+	data = c.recv(4)
+	buf = int.from_bytes(data, "little")
+	img = c.recv(buf)
+	while len(img)<buf:
+		img += c.recv(buf-len(img))
+	# data = guess(img)
+	img_np = img.numpy()
+	data = get_rects_for_image(img_np, *img_np.shape, [], [])
+	# encoded_data = struct.pack('i' + 'c' * len(data), len(data), *data)
 	send(data)
+	c.close()
