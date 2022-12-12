@@ -15,13 +15,6 @@ def signal_handler(sig, frame):
 	s.close()
 	sys.exit(0)
 
-def guess(img):
-	img = decode_jpeg(img)
-	img = resize(img, (224, 224))
-	img = expand_dims(img, axis=0)
-	pred = model(img).numpy()
-	return decode_predictions(pred, top=1)[0][0][1]
-
 def recv():
 	data = c.recv(4)
 	buf = int.from_bytes(data, "little")
@@ -49,10 +42,8 @@ s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 port = 12345
 s.bind(('localhost', port))
 s.listen(1)
-print("Listening...")
-model = MobileNetV3Small()
 while True:
-	print("Starting the loop")
+	print("Waiting for a new connection...")
 	c, addr = s.accept()
 	img_bytes = recv()
 	img_np = decode_jpeg(img_bytes).numpy()
@@ -61,5 +52,4 @@ while True:
 	print("Length of data ", len(data))
 	encoded_data = struct.pack('<' + 'i' * (len(data) + 1), len(data)*4, *data)
 	c.send(encoded_data)
-	# send(data)
 	c.close()
