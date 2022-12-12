@@ -356,9 +356,20 @@ func predict(cgImage:CGImage, rects:[[Float]], texts:[String]) -> ([[Float]], [S
 			guard  let  data = Client.recv() else { return nil }
 			j = JSON(data)
 			let res = j.arrayValue
-			print(res)
 			print("Results:", res.count)
-//			var rectValues: [UInt32] = []
+			var boxes:[[Float]] = []
+			var labels:[String] = []
+			for r in res {
+				let box = r.arrayValue.map { $0.floatValue }
+				let label = String(Int(box[0]))
+				boxes.append(Array(box[1...4]))
+//				let label = labelIdToLabel[Int(box[3])]
+				labels.append(label)
+			}
+			print("Boxes:", boxes)
+			print("Labels:", labels)
+
+			//			var rectValues: [UInt32] = []
 //			var rectBoxes: [CGRect] = []
 //			var scaledRectBoxes: [CGRect] = []
 //			var labels: [String] = []
