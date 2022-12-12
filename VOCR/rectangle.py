@@ -8,6 +8,9 @@ class Rectangle:
         self._height = height
         self.label = label
         self.confidence = confidence
+
+    def __str__(self) -> str:
+        return f"Rectangle({self._topx}, {self._topy}, {self._width}, {self._height}, {self.label}, {self.confidence})"
     
     def get_values(self) -> Tuple[float, float, float, float]:
         return (self._topx, self._topy, self._width, self._height)

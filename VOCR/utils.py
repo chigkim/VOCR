@@ -4,7 +4,7 @@ import numpy as np
 from rectangle import Rectangle
 from classifier import Classifier
 
-EPSILON = 5
+EPSILON = 1
 HOUGH_CIRCLE_PARAMS = {"minDist":30, 
                         "param1":40, 
                         "param2":100, #smaller value-> more false circles

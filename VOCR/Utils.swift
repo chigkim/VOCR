@@ -361,9 +361,9 @@ func predict(cgImage:CGImage, rects:[[Float]], texts:[String]) -> ([[Float]], [S
 			var labels:[String] = []
 			for r in res {
 				let box = r.arrayValue.map { $0.floatValue }
-				let label = String(Int(box[0]))
-				boxes.append(Array(box[1...4]))
-//				let label = labelIdToLabel[Int(box[3])]
+#				let label = String(Int(box[4]))
+				boxes.append(Array(box[0...3]))
+				let label = labelIdToLabel[Int(box[4])]
 				labels.append(label)
 			}
 			print("Boxes:", boxes)
