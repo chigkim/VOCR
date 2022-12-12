@@ -196,15 +196,15 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
                 if rect1 != rect2:
                     assert (not _check_rectangle_overlap(rect1, rect2, min_dist_between)), "failed: " + str(rect1) + str(rect2)
 
-    rect_tuples = [rect.values() for rec in final_rectangles]
+    rect_tuples = [rect.values() for rect in final_rectangles]
     labels = cf.classify_n(rect_tuples, (width, height))
 
     for i, rect in enumerate(final_rectangles):
         rect.set_label(labels[i])
-        rect.normalize(width, height)
+        # rect.normalize(width, height)
 
-    for rect in text_rectangles:
-        rect.normalize(width, height)
+    # for rect in text_rectangles:
+    #     rect.normalize(width, height)
 
     final_dims = [rect.get_values() for rect in final_rectangles] + [rect.get_values() for rect in text_rectangles]
     final_labels = [rect.label[0] for rect in final_rectangles] + [rect.label[0] for rect in text_rectangles]
