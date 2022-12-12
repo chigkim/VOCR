@@ -24,9 +24,11 @@ def guess(img):
 	return decode_predictions(pred, top=1)[0][0][1]
 
 def recv():
+	print("Starting receiving in python")
 	data = c.recv(4)
+	print(f"Data: {data}, type: {type(data)}")
 	buf = int.from_bytes(data, "little")
-	print("Receiving", buf)
+	print("Python is Receiving", buf)
 	data = c.recv(buf)
 	left = buf-len(data)
 	while left>0:
@@ -37,7 +39,7 @@ def recv():
 def send(data):
 	data = data.encode("UTF-8")
 	length = len(data)
-	print("Sending", length)
+	print("Python is Sending", length)
 	length = length.to_bytes(4, byteorder="little")
 	data = length+data
 	c.send(data)
@@ -54,16 +56,15 @@ print("Listening...")
 model = MobileNetV3Small()
 c, addr = s.accept()
 while True:
-	c, addr = s.accept()
-	data = c.recv(4)
-	buf = int.from_bytes(data, "little")
-	img = c.recv(buf)
-	while len(img)<buf:
-		img += c.recv(buf-len(img))
+	print("Starting the loop")
+	img_bytes = recv()
 	# data = guess(img)
-	img_np = img.numpy()
-	data = get_rects_for_image(img_np, *img_np.shape, [], [])
-	encoded_data = struct.pack('i' + 'c' * len(data), len(data), *data)
-	c.send(data)
+	print("img_bytes have been received: ", len(img_bytes))
+	img_np = decode_jpeg(img_bytes).numpy()
+	data = get_rects_for_image(img_np, *img_np.shape[:2], [], [])
+	# print("Got data ", data)
+	print("Length of data ", len(data))
+	encoded_data = struct.pack('<' + 'i' * (len(data) + 1), len(data)*4, *data)
+	c.send(encoded_data)
 	# send(data)
 	c.close()

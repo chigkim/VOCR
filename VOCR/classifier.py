@@ -2,6 +2,7 @@ from typing import Tuple, Union
 from rectangle import Rectangle
 import tensorflow as tf
 from tensorflow.keras.models import load_model
+import os 
 import numpy as np
 # label_map = {0: 'arrow', 1: 'button', 2: 'dropdown', 3: 'icon', 4: 'knob', 5: 'light', 6: 'meter',
 #  7: 'multiple elements', 8: 'multiple knobs', 9: 'needle', 10: 'non-interactive',
@@ -9,7 +10,7 @@ import numpy as np
 
 class Classifier:
 
-	def __init__(self, img, width, height, model_loc='./model 1 2 f0.804.h5'):
+	def __init__(self, img, width, height, model_loc='/VOCR/model.h5'):
 		'''
 		:param img: a numpy array of the image (height, width, channels) to be classified.
 		For example, (224, 224, 3)
@@ -20,7 +21,8 @@ class Classifier:
 		self.img = img
 		self.w = width
 		self.h = height
-		self.model = load_model(model_loc)
+		print(os.getcwd())
+		self.model = load_model(os.getcwd() + model_loc)
 
 	def classify_n(self, box_value, img_size=(224,224), output_type='int'):
 		'''

@@ -365,17 +365,27 @@ func predict() {
 		let imageData = cicontext.jpegRepresentation(of: ciimage, colorSpace: ciimage.colorSpace!)
 		Client.shared.send(imageData!)
         if let data = Client.shared.recv() {
+            print("data", data)
+            var rectValues: [UInt32] = []
             var rectBoxes: [CGRect] = []
             var scaledRectBoxes: [CGRect] = []
             var labels: [String] = []
-            for i in 1...(data.count)/5 {
-                var x = data[i*5]
-                var y = data[i*5 + 1]
-                var width = data[i*5 + 2]
-                var height = data[i*5 + 3]
-                let labelId = data[i*5 + 4]
+            for i in 0...((data.count)/4 - 1) {
+                let miniData = data[i*4...((i+1)*4-1)]
+                let uint32 = UInt32(littleEndian: miniData.withUnsafeBytes { $0.load(as:UInt32.self)})
+//                let uint32 = UInt32(bytes:data, fromByteIndex:ind, as:UInt32.self).littleEndian
+                rectValues.append(uint32)
+            }
+
+            for i in 0...((rectValues.count)/5-1) {
+                let x = rectValues[i*5]
+                let y = rectValues[i*5 + 1]
+                let width = rectValues[i*5 + 2]
+                let height = rectValues[i*5 + 3]
+                let labelId = rectValues[i*5 + 4]
+                print(labelId)
                 assert(labelId >= 0 && labelId < 15)
-                var label = labelIdToLabel[Int(labelId)] ?? "Unknown"
+                let label = labelIdToLabel[Int(labelId)] ?? "Unknown"
                 let scaledRect = CGRect(x: CGFloat(x), y: CGFloat(y), width: CGFloat(width), height: CGFloat(height))
                 scaledRectBoxes.append(scaledRect)
                 labels.append(label)

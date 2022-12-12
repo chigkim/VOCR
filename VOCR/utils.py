@@ -4,7 +4,7 @@ import numpy as np
 from rectangle import Rectangle
 from classifier import Classifier
 
-EPSILON = 0.5
+EPSILON = 5
 HOUGH_CIRCLE_PARAMS = {"minDist":30, 
                         "param1":40, 
                         "param2":100, #smaller value-> more false circles
@@ -120,6 +120,7 @@ def _prune_rectangles(rectangles, text_rects, min_size, max_size):
         if not overlaps_with_text:
             small_rectangles.append(rect1)
     print("After pruning, there are {} rectangles".format(len(small_rectangles)))
+    print(small_rectangles)
     return small_rectangles
 
 def get_rects_for_image(img, width, height, text_rects, text_labels, validation=False):
@@ -138,9 +139,9 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
         text_rectangles.append(text_rect)
 
     # scale image and convert to grayscale
-    min_dist_between = 0 #EPSILON*(0.01)
+    min_dist_between = EPSILON
     img = np.uint8(img)
-    img = np.array(img).reshape((height, width, 4))
+    img = np.array(img).reshape((height, width, 3))
 
     gray = cv2.cvtColor(img, cv2.COLOR_RGBA2GRAY)
 
@@ -196,8 +197,8 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
                 if rect1 != rect2:
                     assert (not _check_rectangle_overlap(rect1, rect2, min_dist_between)), "failed: " + str(rect1) + str(rect2)
 
-    rect_tuples = [rect.values() for rect in final_rectangles]
-    labels = cf.classify_n(rect_tuples, (width, height))
+    rect_tuples = [rect.get_values() for rect in final_rectangles]
+    labels = cf.classify_n(rect_tuples)
 
     for i, rect in enumerate(final_rectangles):
         rect.set_label(labels[i])
@@ -206,13 +207,13 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
     # for rect in text_rectangles:
     #     rect.normalize(width, height)
 
-    final_dims = [rect.get_values() for rect in final_rectangles] + [rect.get_values() for rect in text_rectangles]
-    final_labels = [rect.label[0] for rect in final_rectangles] + [rect.label[0] for rect in text_rectangles]
+    # final_dims = [rect.get_values() for rect in final_rectangles] + [rect.get_values() for rect in text_rectangles]
+    # final_labels = [rect.label[0] for rect in final_rectangles] + [rect.label[0] for rect in text_rectangles]
     # final_dims.append((0, 0, width, height))
     # final_labels.append("Outer Bounds Box")
     data = []
     for rect in final_rectangles:
-        data.extend([rect.x, rect.y, rect.w, rect.h, rect.label])
+        data.extend([*rect.get_values(), rect.label])
     data.extend([0, 0, width, height, 14])
 
     # print(final_dims)
