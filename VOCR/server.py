@@ -56,6 +56,6 @@ while True:
 	boxes = data['boxes']
 	print(texts)
 	print(boxes)
-	data = get_rects_for_image(img_np, *img_np.shape[:2], boxes, texts)
+	data = get_rects_for_image(img_np, img_np.shape[1], img_np.shape[0], boxes, texts)
 	send(json.dumps(data))
 	c.close()

@@ -79,6 +79,7 @@ class Navigation {
     }
     
     func convertRect2NormalizedImageCoords(_ box:CGRect) -> CGRect {
+        print("imgSize width and height", imgSize.width, imgSize.height)
         let newTopLeft = CGPoint(x: box.minX, y: imgSize.height-box.maxY)
         let newRect = CGRect(x: newTopLeft.x, y: newTopLeft.y, width: box.width, height: box.height)
         let normalizedBox = VNNormalizedRectForImageRect(newRect, Int(imgSize.width), Int(imgSize.height))

@@ -4,7 +4,7 @@ import numpy as np
 from rectangle import Rectangle
 from classifier import Classifier
 
-EPSILON = 1
+EPSILON = 2
 HOUGH_CIRCLE_PARAMS = {"minDist":30, 
                         "param1":40, 
                         "param2":100, #smaller value-> more false circles
@@ -141,6 +141,7 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
     # scale image and convert to grayscale
     min_dist_between = EPSILON
     img = np.uint8(img)
+    assert(np.prod(img.shape) == np.prod((height, width, 3)))
     img = np.array(img).reshape((height, width, 3))
 
     gray = cv2.cvtColor(img, cv2.COLOR_RGBA2GRAY)
@@ -178,6 +179,8 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
                     if j in removed_idx:
                         continue
                     if _check_rectangle_overlap(expanding_rect, rect2, min_dist_between):
+                        print("expanding_rect", expanding_rect)
+                        print("rect2", rect2)
                         expanding_rect = _get_combined_rect(expanding_rect, rect2)
                         still_combining = True  
                         removed_idx.add(j)
@@ -198,7 +201,11 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
                     assert (not _check_rectangle_overlap(rect1, rect2, min_dist_between)), "failed: " + str(rect1) + str(rect2)
 
     rect_tuples = [rect.get_values() for rect in final_rectangles]
-    labels = cf.classify_n(rect_tuples)
+    print("rect_tuples", rect_tuples)
+    print("img width", width)
+    print("img height", height)
+    # labels = cf.classify_n(rect_tuples)
+    labels = ["unknown" for tup in rect_tuples]
 
     for i, rect in enumerate(final_rectangles):
         rect.set_label(labels[i])
