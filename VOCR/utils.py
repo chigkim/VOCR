@@ -206,7 +206,7 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
 
     data = []
     for rect in final_rectangles:
-        if rect.confidence >= 0.5:
+        if rect.confidence >= 0.25:
             data.append([*rect.get_values(), int(rect.label)])
     data.append([0, 0, width, height, 14])
 
