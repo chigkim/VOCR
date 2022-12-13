@@ -147,7 +147,7 @@ func TakeScreensShots() -> CGImage? {
     return CGDisplayCreateImage(activeDisplays[0], rect:CGRect(origin: cgPosition, size: cgSize))
 }
 
-func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
+func performOCR(cgImage:CGImage) -> [DetectedRectangle] {
     let textRecognitionRequest = VNRecognizeTextRequest()
     textRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate
     textRecognitionRequest.minimumTextHeight = 0
@@ -248,24 +248,31 @@ func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
     print("Width of image: ", cgImage.width, ", Height of image: ", cgImage.height)
     
     // rectBoxes is contour results, textResults is textRecognitionRequest results
-    var allRects: [CGPoint] = []
+    var allRects: [CGRect] = []
     var allLabels: [String] = []
     
     for i in 0..<rectBoxes.count {
-        allRects.append(Navigation.shared.convert2coordinates(rectBoxes[i]))
+//        allRects.append(Navigation.shared.convert2coordinates(rectBoxes[i]))
+        allRects.append(rectBoxes[i])
         allLabels.append(rectLabels[i])
     }
     
     for textResult in textResults {
-        allRects.append(Navigation.shared.convert2coordinates(textResult.boundingBox))
+//        allRects.append(Navigation.shared.convert2coordinates(textResult.boundingBox))
+        allRects.append(textResult.boundingBox)
         allLabels.append(textResult.topCandidates(1)[0].string)
     }
     
     print("Got rects to return. Boxes: ", allRects)
     print("Got labels to return. Labels: ", allLabels)
     
-    return (allRects, allLabels)
-//    return textResults
+    var allResults: [DetectedRectangle] = []
+    
+    for i in 0..<allRects.count {
+        allResults.append(DetectedRectangle(string: allLabels[i], boundingBox: allRects[i]))
+    }
+    
+    return allResults
     
 }
 
@@ -398,6 +405,7 @@ func predict(cgImage:CGImage, rects:[[Float]], texts:[String]) -> ([[Float]], [S
         for r in res {
             let box = r.arrayValue.map { $0.floatValue }
             boxes.append(Array(box[0...3]))
+            print("label", box[4])
             let label = labelIdToLabel[Int(box[4])]!
             labels.append(label)
         }

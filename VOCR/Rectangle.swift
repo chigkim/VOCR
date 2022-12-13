@@ -8,6 +8,11 @@
 
 import Foundation
 
-class Rectangle {
-    
+class DetectedRectangle {
+    var string: String
+    var boundingBox: CGRect
+    init(string: String, boundingBox: CGRect) {
+        self.string = string
+        self.boundingBox = boundingBox
+    }
 }

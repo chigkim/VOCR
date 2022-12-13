@@ -13,7 +13,7 @@ import Cocoa
 class Navigation {
     
     static let shared = Navigation()
-    var displayResults:[[VNRecognizedTextObservation]] = []
+    var displayResults:[[DetectedRectangle]] = []
 //    var displayResultsBoxes: [CGRect] = []
     var navigationShortcuts:NavigationShortcuts?
     var cgPosition = CGPoint()
@@ -42,16 +42,12 @@ class Navigation {
         navigationShortcuts = NavigationShortcuts()
     }
     
-    func process(result:inout[VNRecognizedTextObservation]) {
+    func process(result:inout[DetectedRectangle]) {
         result = result.sorted(by: sort)
-        var line:[VNRecognizedTextObservation] = []
+        var line:[DetectedRectangle] = []
         var y = result[0].boundingBox.midY
         for r in result {
-            if r.topCandidates(1) != [] {
-                logger.debug("\(r.topCandidates(1)[0]): \(r.boundingBox.debugDescription)")
-            } else {
-                logger.debug("rectangle: \(r.boundingBox.debugDescription)")
-            }
+            logger.debug("rectangle: \(r.boundingBox.debugDescription)")
             
             if abs(r.boundingBox.midY-y)>0.01 {
                 displayResults.append(line)
@@ -106,7 +102,19 @@ class Navigation {
         return convertPoint(center)
     }
     
-    func sort(_ a:VNRecognizedTextObservation, _ b:VNRecognizedTextObservation) -> Bool {
+//    func sort(_ a:VNRecognizedTextObservation, _ b:VNRecognizedTextObservation) -> Bool {
+//        if a.boundingBox.midY-b.boundingBox.midY>0.01 {
+//            return true
+//        } else if b.boundingBox.midY-a.boundingBox.midY>0.01 {
+//            return false
+//        }
+//        if a.boundingBox.midX<b.boundingBox.midX {
+//            return true
+//        } else {
+//            return false
+//        }
+//    }
+    func sort(_ a:DetectedRectangle, _ b:DetectedRectangle) -> Bool {
         if a.boundingBox.midY-b.boundingBox.midY>0.01 {
             return true
         } else if b.boundingBox.midY-a.boundingBox.midY>0.01 {
@@ -160,7 +168,7 @@ class Navigation {
 			let point = convert2coordinates(rect.boundingBox)
 			CGDisplayMoveCursorToPoint(0, point)
 		}
-		let text = getString(rect: rect)
+        let text = rect.string
         Accessibility.speak(text)
     }
 	
@@ -177,7 +185,7 @@ class Navigation {
 			let point = convert2coordinates(rect.boundingBox)
 			CGDisplayMoveCursorToPoint(0, point)
 		}
-		let text = getString(rect: rect)
+		let text = rect.string
         Accessibility.speak(text)
 	}
 
@@ -199,7 +207,7 @@ class Navigation {
 
 		var line = ""
 		for r in displayResults[l] {
-            let text = getString(rect: r)
+            let text = r.string
             line += " \(text)"
 		}
 		Accessibility.speak(line)
@@ -223,7 +231,7 @@ class Navigation {
 
         var line = ""
         for r in displayResults[l] {
-            let text = getString(rect: r)
+            let text = r.string
             line += " \(text)"
         }
 		Accessibility.speak(line)
@@ -269,8 +277,8 @@ class Navigation {
 		}
 		correctLimit()
         let curr = displayResults[l][w]
-        let res = curr.topCandidates(1)
-        var str = getString(rect: curr)
+//        let res = curr.topCandidates(1)
+        var str = curr.string
 		c += 1
 		if c >= str.count {
 			c = str.count-1
@@ -281,14 +289,15 @@ class Navigation {
 			let range = start..<end
 			let character = str[range]
 			str = String(character)
-			var box:CGRect
-            if (res != []) {
-                try box = res[0].boundingBox(for: range)!.boundingBox
-                CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
-            } else {
-                box = curr.boundingBox
-                CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
-            }
+			var box = curr.boundingBox
+            CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
+//            if (res != []) {
+//                try box = res[0].boundingBox(for: range)!.boundingBox
+//                CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
+//            } else {
+//                box = curr.boundingBox
+//                CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
+//            }
 			
 
 /*
@@ -311,8 +320,8 @@ class Navigation {
 		}
 		correctLimit()
         let curr = displayResults[l][w]
-        let res = curr.topCandidates(1)
-        var str = getString(rect: curr)
+//        let res = curr.topCandidates(1)
+        var str = curr.string
 		c -= 1
 		if c < 0 {
 			c = 0
@@ -324,14 +333,15 @@ class Navigation {
 			let range = start..<end
 			let character = str[range]
 			str = String(character)
-			var box:CGRect
-            if (res != []) {
-                try box = res[0].boundingBox(for: range)!.boundingBox
-                CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
-            } else {
-                box = curr.boundingBox
-                CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
-            }
+            var box = curr.boundingBox
+            CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
+//            if (res != []) {
+//                try box = res[0].boundingBox(for: range)!.boundingBox
+//                CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
+//            } else {
+//                box = curr.boundingBox
+//                CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
+//            }
 
 			/*
 			str = String(character).description
@@ -351,7 +361,7 @@ class Navigation {
         var text = ""
 		for line in displayResults {
 			for word in line {
-                let str = getString(rect: word)
+                let str = word.string
                 text += str + " "
 			}
 			text = text.dropLast()+"\n"
