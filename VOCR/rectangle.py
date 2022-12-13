@@ -22,7 +22,7 @@ class Rectangle:
         return self._width * self._height
     
     def set_label(self, label) -> None:
-        self._label = label
+        self.label = label
     
     def compare_labels(self, other) -> Tuple[Union[int, None], float]:
         """
