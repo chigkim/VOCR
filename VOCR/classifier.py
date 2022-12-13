@@ -39,55 +39,7 @@ class Classifier:
 			img_section = self.img[topy:topy + b_height, topx:topx + b_width, :]
 			img_scaled = tf.image.resize(img_section, img_size)
 			model_pred = self.model.predict(img_scaled[np.newaxis, :, :, :])
-			classification.append(np.argmax(model_pred))
+			classification.append((np.argmax(model_pred), np.max(model_pred)))
 
 		print("Classification ", classification)
 		return classification
-		# if output_type == 'int':
-		# 	return classification
-		# else:
-		# 	return [label_map[c] for c in classification]
-
-# class Classifier:
-#     def __init__(self, model, img_width, img_height) -> None:
-#         """
-#         Initializes the classifier with a model and image dimensions.
-#
-#         Args:
-#             model (___): classifier model
-#             img_width (int): width of image
-#             img_height (int): height of image
-#         """
-#         self.model = model
-#         self.img_width = img_width
-#         self.img_height = img_height
-#
-#     def classify_n(self, img, rects: list[Rectangle]) -> list[Tuple[str, float]]:
-#         """
-#         Classifies more than one rectangle in image.
-#
-#         Args:
-#             img (np.ndarray): image
-#             rects (list[Rectangle]): list of rectangles to classify
-#
-#         Returns:
-#             list[Tuple[str, float]]: list of tuples of label and confidence
-#         """
-#         num_rects = len(rects)
-#
-#
-#         return []
-#
-#     def classify_one(self, img, rect: Rectangle) -> Tuple[str, float]:
-#         """
-#         Classifies a single rectangle.
-#
-#         Args:
-#             img (np.ndarray): image
-#             rect (Rectangle): rectangle to classify
-#
-#         Returns:
-#             Tuple[str, float]: tuple of label and confidence
-#         """
-#
-#         return ("Test", 1)

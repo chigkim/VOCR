@@ -23,6 +23,9 @@ class Rectangle:
     
     def set_label(self, label) -> None:
         self.label = label
+
+    def set_confidence(self, confidence) -> None:
+        self.confidence = confidence
     
     def compare_labels(self, other) -> Tuple[Union[int, None], float]:
         """

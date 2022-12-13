@@ -14,7 +14,6 @@ class Navigation {
     
     static let shared = Navigation()
     var displayResults:[[DetectedRectangle]] = []
-//    var displayResultsBoxes: [CGRect] = []
     var navigationShortcuts:NavigationShortcuts?
     var cgPosition = CGPoint()
     var cgSize = CGSize()
@@ -38,7 +37,7 @@ class Navigation {
             return
         }
         process(result:&result)
-        // Accessibility.speak("Finished!")
+        Accessibility.speak("Finished!")
         navigationShortcuts = NavigationShortcuts()
     }
     
@@ -58,24 +57,10 @@ class Navigation {
         }
         displayResults.append(line)
         
-//        for l in 0...displayResults.count-1 {
-//            for w in 0...displayResults[l].count-1 {
-//                displayResultsBoxes.append(displayResults[l][w].boundingBox)
-//            }
-//        }
-        //        print("displayResults results")
-        //        print(displayResults)
-        //
-        //        print("displayResults results")
-        //        print(displayResults[0][0])
-        //        print(displayResults[0][0].topCandidates(1)[0])
-        //        print(displayResults[0][0].topCandidates(1)[0].string)
-        //        print(displayResults[0][0].boundingBox)
-        //        print(type(of: displayResults[0][0].boundingBox))
     }
     
     func convertRect2NormalizedImageCoords(_ box:CGRect) -> CGRect {
-        print("imgSize width and height", imgSize.width, imgSize.height)
+//        print("imgSize width and height", imgSize.width, imgSize.height)
         let newTopLeft = CGPoint(x: box.minX, y: imgSize.height-box.maxY)
         let newRect = CGRect(x: newTopLeft.x, y: newTopLeft.y, width: box.width, height: box.height)
         let normalizedBox = VNNormalizedRectForImageRect(newRect, Int(imgSize.width), Int(imgSize.height))
@@ -84,7 +69,7 @@ class Navigation {
     
     func convertPoint(_ point:CGPoint) -> CGPoint {
         var p = VNImagePointForNormalizedPoint(point, Int(cgSize.width), Int(cgSize.height))
-        print("p", p, "cgSize", cgSize, "imgSize", imgSize, "cgPosition", cgPosition)
+//        print("p", p, "cgSize", cgSize, "imgSize", imgSize, "cgPosition", cgPosition)
         p.y = cgSize.height-p.y
         p.x += cgPosition.x
         p.y += cgPosition.y
@@ -102,6 +87,7 @@ class Navigation {
         return convertPoint(center)
     }
     
+// Old sort:
 //    func sort(_ a:VNRecognizedTextObservation, _ b:VNRecognizedTextObservation) -> Bool {
 //        if a.boundingBox.midY-b.boundingBox.midY>0.01 {
 //            return true
@@ -114,6 +100,7 @@ class Navigation {
 //            return false
 //        }
 //    }
+    
     func sort(_ a:DetectedRectangle, _ b:DetectedRectangle) -> Bool {
         if a.boundingBox.midY-b.boundingBox.midY>0.01 {
             return true
@@ -134,11 +121,6 @@ class Navigation {
         center.x -= cgPosition.x
         center.y -= cgPosition.y
         Accessibility.speak("\(Int(center.x)), \(Int(center.y))")
-    }
-    
-    func getString(rect: VNRecognizedTextObservation) -> String {
-        let res = rect.topCandidates(1)
-        return res != [] ? res[0].string : "Icon"
     }
     
     func correctLimit() {
@@ -283,35 +265,24 @@ class Navigation {
 		if c >= str.count {
 			c = str.count-1
 		}
-		do {
-			let start = str.index(str.startIndex,offsetBy:c)
-			let end = str.index(str.startIndex,offsetBy:c+1)
-			let range = start..<end
-			let character = str[range]
-			str = String(character)
-			var box = curr.boundingBox
-            CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
-//            if (res != []) {
-//                try box = res[0].boundingBox(for: range)!.boundingBox
-//                CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
-//            } else {
-//                box = curr.boundingBox
-//                CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
-//            }
-			
+        let start = str.index(str.startIndex,offsetBy:c)
+        let end = str.index(str.startIndex,offsetBy:c+1)
+        let range = start..<end
+        let character = str[range]
+        str = String(character)
+        let box = curr.boundingBox
+        CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
 
 /*
-			str = String(character)
-			let u = str.unicodeScalars
-			let uName = u[u.startIndex].properties.name!
-			if !uName.contains("LETTER") {
-				str = uName
-			}
+        str = String(character)
+        let u = str.unicodeScalars
+        let uName = u[u.startIndex].properties.name!
+        if !uName.contains("LETTER") {
+            str = uName
+        }
 */
 
-			Accessibility.speak(str)
-		} catch {
-		}
+        Accessibility.speak(str)
 	}
 
 	func previousCharacter() {
@@ -320,40 +291,29 @@ class Navigation {
 		}
 		correctLimit()
         let curr = displayResults[l][w]
-//        let res = curr.topCandidates(1)
         var str = curr.string
 		c -= 1
 		if c < 0 {
 			c = 0
 		}
 		
-		do {
-			let start = str.index(str.startIndex,offsetBy:c)
-			let end = str.index(str.startIndex,offsetBy:c+1)
-			let range = start..<end
-			let character = str[range]
-			str = String(character)
-            var box = curr.boundingBox
-            CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
-//            if (res != []) {
-//                try box = res[0].boundingBox(for: range)!.boundingBox
-//                CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
-//            } else {
-//                box = curr.boundingBox
-//                CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
-//            }
+        let start = str.index(str.startIndex,offsetBy:c)
+        let end = str.index(str.startIndex,offsetBy:c+1)
+        let range = start..<end
+        let character = str[range]
+        str = String(character)
+        let box = curr.boundingBox
+        CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
 
-			/*
-			str = String(character).description
-			let u = str.unicodeScalars
-			let uName = u[u.startIndex].properties.name!
-			if !uName.contains("LETTER") {
-				str = uName
-			}
-*/
-			Accessibility.speak(str)
-		} catch {
-		}
+        /*
+        str = String(character).description
+        let u = str.unicodeScalars
+        let uName = u[u.startIndex].properties.name!
+        if !uName.contains("LETTER") {
+            str = uName
+        }
+        */
+        Accessibility.speak(str)
 
 	}
 

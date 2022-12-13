@@ -15,6 +15,22 @@ import Socket
 import SwiftyJSON
 let logger = Logger()
 
+let labelIdToLabel = [0: "arrow",
+                      1: "button",
+                      2: "dropdown",
+                      3: "icon",
+                      4: "knob",
+                      5: "light",
+                      6: "meter",
+                      7: "multiple elements",
+                      8: "multiple knobs",
+                      9: "needle",
+                      10: "non-interactive",
+                      11: "radio button",
+                      12: "slider",
+                      13: "switch",
+                      14: "unknown"]
+
 func chooseFolder() -> URL? {
     var url:URL?
     let openPanel = NSOpenPanel()
@@ -85,9 +101,9 @@ func drawBoxes(_ cgImageInput : CGImage, boxes:[CGRect]) -> CGImage? {
                 ctx.setFillColor(red)
                 ctx.setStrokeColor(red)
                 ctx.setLineWidth(10)
-                debugPrint("Drawing boxes:")
+//                debugPrint("Drawing boxes:")
                 for box in boxes {
-                    debugPrint(box)
+//                    debugPrint(box)
                     ctx.stroke(box, width: 10.0)
                 }
                 cgImageOutput = (ctx.makeImage())
@@ -143,7 +159,7 @@ func TakeScreensShots() -> CGImage? {
     AXValueGetValue(size as! AXValue, AXValueType.cgSize, &cgSize)
     Navigation.shared.cgSize = cgSize
     Navigation.shared.cgPosition = cgPosition
-    print("\(cgPosition), \(cgSize)")
+//    print("\(cgPosition), \(cgSize)")
     return CGDisplayCreateImage(activeDisplays[0], rect:CGRect(origin: cgPosition, size: cgSize))
 }
 
@@ -181,19 +197,8 @@ func performOCR(cgImage:CGImage) -> [DetectedRectangle] {
     let pythonBoxes = pythonResult?.0 ?? []
     let pythonLabels = pythonResult?.1 ?? []
     
-    print("Got python results. Boxes: ", pythonBoxes)
-    print("Got python results. Labels: ", pythonLabels)
-    
-//    var rectBoxes: [CGRect] = []
-//    for box in pythonBoxes {
-//        let rect = CGRect(x:CGFloat(box[0]), y:CGFloat(box[1]), width:CGFloat(box[2]), height:CGFloat(box[3]))
-//        rectBoxes.append(rect)
-//    }
-    
-//    if let url = chooseFolder() {
-//        let boxImage = drawBoxes(cgImage, boxes:rectBoxes)!
-//        try? saveImage(boxImage, url.appendingPathComponent("allboxes.png"))
-//    }
+//    print("Got python results. Boxes: ", pythonBoxes)
+//    print("Got python results. Labels: ", pythonLabels)
     
     var rectBoxes: [CGRect] = []
     var scaledRectBoxes: [CGRect] = []
@@ -204,7 +209,7 @@ func performOCR(cgImage:CGImage) -> [DetectedRectangle] {
         let label = pythonLabels[i]
         let rect = CGRectMake(CGFloat(box[0]), CGFloat(box[1]), CGFloat(box[2]), CGFloat(box[3]))
         let scaledRect = Navigation.shared.convertRect2NormalizedImageCoords(rect)
-        print("Scaled rect: ", scaledRect)
+
         var collidesWithText = false
         for textBox in textResults {
             if textBox.boundingBox.intersects(scaledRect) {
@@ -234,8 +239,8 @@ func performOCR(cgImage:CGImage) -> [DetectedRectangle] {
         pointBoxes.append(CGRect(x:point.minX-0.1, y:point.minY-0.1, width:0.2, height:0.2))
     }
     
-    print("Got pruned rects. Boxes: ", rectBoxes)
-    print("Got pruned labels. Labels: ", rectLabels)
+//    print("Got pruned rects. Boxes: ", rectBoxes)
+//    print("Got pruned labels. Labels: ", rectLabels)
 
     if let url = chooseFolder() {
         let boxImage = drawBoxes(cgImage, boxes:rectBoxes)!
@@ -245,14 +250,13 @@ func performOCR(cgImage:CGImage) -> [DetectedRectangle] {
         let textImage = drawBoxes(cgImage, boxes:pointBoxes)!
         try? saveImage(textImage, url.appendingPathComponent("text_points2.png"))
     }
-    print("Width of image: ", cgImage.width, ", Height of image: ", cgImage.height)
+//    print("Width of image: ", cgImage.width, ", Height of image: ", cgImage.height)
     
     // rectBoxes is contour results, textResults is textRecognitionRequest results
     var allRects: [CGRect] = []
     var allLabels: [String] = []
     
     for i in 0..<rectBoxes.count {
-//        allRects.append(Navigation.shared.convert2coordinates(rectBoxes[i]))
         allRects.append(rectBoxes[i])
         allLabels.append(rectLabels[i])
     }
@@ -263,7 +267,7 @@ func performOCR(cgImage:CGImage) -> [DetectedRectangle] {
         allLabels.append(textResult.topCandidates(1)[0].string)
     }
     
-    print("Got rects to return. Boxes: ", allRects)
+    print("Got rects to return. Rects: ", allRects)
     print("Got labels to return. Labels: ", allLabels)
     
     var allResults: [DetectedRectangle] = []
@@ -363,22 +367,6 @@ func recognizeVOCursor() {
 }
 
 func predict(cgImage:CGImage, rects:[[Float]], texts:[String]) -> ([[Float]], [String])? {
-    let labelIdToLabel = [0: "arrow",
-                          1: "button",
-                          2: "dropdown",
-                          3: "icon",
-                          4: "knob",
-                          5: "light",
-                          6: "meter",
-                          7: "multiple elements",
-                          8: "multiple knobs",
-                          9: "needle",
-                          10: "non-interactive",
-                          11: "radio button",
-                          12: "slider",
-                          13: "switch",
-                          14: "unknown"]
-    
     let cicontext = CIContext()
     let ciimage = CIImage(cgImage: cgImage)
     let imageData = cicontext.jpegRepresentation(of: ciimage, colorSpace: ciimage.colorSpace!)
@@ -404,13 +392,28 @@ func predict(cgImage:CGImage, rects:[[Float]], texts:[String]) -> ([[Float]], [S
         
         for r in res {
             let box = r.arrayValue.map { $0.floatValue }
-            boxes.append(Array(box[0...3]))
-            print("label", box[4])
-            let label = labelIdToLabel[Int(box[4])]!
-            labels.append(label)
+            
+            let intLabel = Int(box[4]);
+
+            let boxWidth = box[2]
+            let boxHeight = box[3]
+//            let area = box[2] * box[3]
+            var keepBox = true
+            switch intLabel {
+            case 4:
+                keepBox = (boxWidth > 20 && boxHeight > 20) ? true : false
+            default:
+                keepBox = (boxWidth > 4 && boxHeight > 4) ? true : false
+            }
+            
+            if keepBox {
+                boxes.append(Array(box[0...3]))
+                let label = labelIdToLabel[intLabel]!
+                labels.append(label)
+            }
         }
-        print("Boxes:", boxes)
-        print("Labels:", labels)
+        print("Python returned following boxes: ", boxes)
+        print("Python returned following labels: ", labels)
     }
     return (boxes, labels)
 }

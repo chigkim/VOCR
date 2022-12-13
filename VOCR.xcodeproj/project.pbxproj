@@ -230,12 +230,12 @@
 				EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */,
 				EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */,
 				EA1F642B2352503D0089C967 /* Player.swift */,
+				8576FA9929483BA70042E748 /* Rectangle.swift */,
 				EAF9C3C72354A66200D4D77C /* Settings.swift */,
+				8576FA972947FA200042E748 /* Utils.swift */,
 				EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */,
 				EADE59BE232EB09A00E2F65A /* VOCR.entitlements */,
 				EAFAFF8B2945A197003FA535 /* Client.swift */,
-				8576FA972947FA200042E748 /* Utils.swift */,
-				8576FA9929483BA70042E748 /* Rectangle.swift */,
 			);
 			path = VOCR;
 			sourceTree = "<group>";
