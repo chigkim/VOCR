@@ -4,7 +4,7 @@ import numpy as np
 from rectangle import Rectangle
 from classifier import Classifier
 
-EPSILON = 2
+EPSILON = 5
 HOUGH_CIRCLE_PARAMS = {"minDist":30, 
                         "param1":40, 
                         "param2":100, #smaller value-> more false circles
@@ -204,8 +204,8 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
     print("rect_tuples", rect_tuples)
     print("img width", width)
     print("img height", height)
-    # labels = cf.classify_n(rect_tuples)
-    labels = ["unknown" for tup in rect_tuples]
+    labels = cf.classify_n(rect_tuples)
+    # labels = ["unknown" for tup in rect_tuples]
 
     for i, rect in enumerate(final_rectangles):
         rect.set_label(labels[i])

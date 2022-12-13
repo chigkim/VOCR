@@ -41,6 +41,7 @@ class Classifier:
 			model_pred = self.model.predict(img_scaled[np.newaxis, :, :, :])
 			classification.append(np.argmax(model_pred))
 
+		print("Classification ", classification)
 		return classification
 		# if output_type == 'int':
 		# 	return classification
