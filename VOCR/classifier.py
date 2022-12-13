@@ -36,7 +36,7 @@ class Classifier:
 		'''
 		classification = []
 		for topx, topy, b_width, b_height in box_value:
-			img_section = self.img[topx:topx+b_height, topy:topy+b_width, :]
+			img_section = self.img[topy:topy + b_height, topx:topx + b_width, :]
 			img_scaled = tf.image.resize(img_section, img_size)
 			model_pred = self.model.predict(img_scaled[np.newaxis, :, :, :])
 			classification.append(np.argmax(model_pred))
