@@ -46,7 +46,6 @@ xcuserdata/
 *.xccheckout
 
 ## compatibility with Xcode 3 and earlier (ignoring not required starting Xcode 4)
-build/
 DerivedData/
 *.moved-aside
 *.pbxuser
@@ -116,5 +115,11 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+# Builds:
+Bin/
+build/
+.venv/
+dist/
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,macos

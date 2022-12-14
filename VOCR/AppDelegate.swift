@@ -1,14 +1,25 @@
 import Cocoa
 import AudioKit
+import PythonKit
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate	 {
 	
 	let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 	var windows:[NSWindow] = []
 	let shortcuts = Shortcuts()
-	
+	let task = Process()
 	func applicationDidFinishLaunching(_ notification: Notification) {
+		DispatchQueue.global().async {
+			let bundle = Bundle.main
+			let url = bundle.url(forResource: "server", withExtension: "")
+			self.task.executableURL = url!
+			do {
+//				try self.task.run()
+			} catch {
+				print("Can't run server.")
+			}
+		}
 		let menu = NSMenu()
 		menu.addItem(withTitle: "Sound Output...", action: #selector(AppDelegate.chooseOutput(_:)), keyEquivalent: "")
 		menu.addItem(withTitle: "About", action: #selector(AppDelegate.displayAboutWindow(_:)), keyEquivalent: "")
@@ -25,8 +36,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		NSApplication.shared.hide(self)
 		windows[1].close()
 		Settings.load()
+        
+        PythonLibrary.useVersion(3)
+        PythonLibrary.useLibrary(at: "/usr/local/bin/python3")
 	}
 	
+	func applicationWillTerminate(_ notification: Notification) {
+		print("Terminating server...")
+		task.terminate()
+		task.interrupt()
+	}
+
 	@objc func displayAboutWindow(_ sender: Any?) {
 		let storyboardName = NSStoryboard.Name(stringLiteral: "Main")
 		let storyboard = NSStoryboard(name: storyboardName, bundle: nil)

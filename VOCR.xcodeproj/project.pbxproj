@@ -7,16 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6960E2152925F0AD00A3F64E /* PythonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6960E2142925F0AD00A3F64E /* PythonKit */; };
+		8576FA982947FA200042E748 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576FA972947FA200042E748 /* Utils.swift */; };
+		8576FA9A29483BA70042E748 /* Rectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576FA9929483BA70042E748 /* Rectangle.swift */; };
 		EA1F63F92352427A0089C967 /* VOCR Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */; };
 		EA1F642C2352503D0089C967 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F642B2352503D0089C967 /* Player.swift */; };
 		EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1AB232EB1D600D31031 /* Accessibility.swift */; };
 		EA2DA1AF232EB22300D31031 /* NSRunningApplication Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */; };
+		EA4C09CC2943D98900CC37B5 /* Socket in Frameworks */ = {isa = PBXBuildFile; productRef = EA4C09CB2943D98900CC37B5 /* Socket */; };
 		EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACB2351BB6D00D84042 /* Navigation.swift */; };
 		EA5C7AD02351C8DE00D84042 /* AXUIElement Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */; };
 		EA5C7AD92351D81100D84042 /* VOScreenshot.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EA5C7AD82351D81100D84042 /* VOScreenshot.scpt */; };
+		EA66004B2946D68B00FE49A1 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = EA66004A2946D68B00FE49A1 /* SwiftyJSON */; };
 		EA688D452355BDC500F722C7 /* Bundle Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA688D442355BDC500F722C7 /* Bundle Extension.swift */; };
 		EA8AD6412352B4A000D26871 /* Double Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8AD6402352B4A000D26871 /* Double Extension.swift */; };
-		EA9EB89E28EA5B0A00FE6210 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9EB89D28EA5B0A00FE6210 /* Utils.swift */; };
 		EAA12C4F234C89030036AF6A /* NavigationShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */; };
 		EAD9AAE62731075600473054 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = EAD9AAE52731075600473054 /* HotKey */; };
 		EAD9AAE927310A3900473054 /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = EAD9AAE827310A3900473054 /* SoundpipeAudioKit */; };
@@ -26,9 +30,13 @@
 		EADE59B9232EB09A00E2F65A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EADE59B8232EB09A00E2F65A /* Assets.xcassets */; };
 		EADE59BC232EB09A00E2F65A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EADE59BA232EB09A00E2F65A /* Main.storyboard */; };
 		EAF9C3C82354A66200D4D77C /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF9C3C72354A66200D4D77C /* Settings.swift */; };
+		EAFAFF8C2945A197003FA535 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFAFF8B2945A197003FA535 /* Client.swift */; };
+		EAFEB1152944FCCE0009456F /* server in Resources */ = {isa = PBXBuildFile; fileRef = EAFEB1142944FCCE0009456F /* server */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8576FA972947FA200042E748 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		8576FA9929483BA70042E748 /* Rectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rectangle.swift; sourceTree = "<group>"; };
 		EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VOCR Shortcuts.swift"; sourceTree = "<group>"; };
 		EA1F640423524C150089C967 /* VOCR.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = VOCR.xcodeproj; sourceTree = "<group>"; };
 		EA1F640823524C150089C967 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -67,7 +75,6 @@
 		EA5C7AD82351D81100D84042 /* VOScreenshot.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = VOScreenshot.scpt; sourceTree = "<group>"; };
 		EA688D442355BDC500F722C7 /* Bundle Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle Extension.swift"; sourceTree = "<group>"; };
 		EA8AD6402352B4A000D26871 /* Double Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double Extension.swift"; sourceTree = "<group>"; };
-		EA9EB89D28EA5B0A00FE6210 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationShortcuts.swift; sourceTree = "<group>"; };
 		EAD9CFD12355E11600E7F594 /* say.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = say.scpt; sourceTree = "<group>"; };
 		EADE59B1232EB09A00E2F65A /* VOCR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VOCR.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,6 +85,8 @@
 		EADE59BD232EB09A00E2F65A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EADE59BE232EB09A00E2F65A /* VOCR.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VOCR.entitlements; sourceTree = "<group>"; };
 		EAF9C3C72354A66200D4D77C /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		EAFAFF8B2945A197003FA535 /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
+		EAFEB1142944FCCE0009456F /* server */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = server; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +96,9 @@
 			files = (
 				EAD9AAE927310A3900473054 /* SoundpipeAudioKit in Frameworks */,
 				EAD9AAE62731075600473054 /* HotKey in Frameworks */,
+				6960E2152925F0AD00A3F64E /* PythonKit in Frameworks */,
+				EA66004B2946D68B00FE49A1 /* SwiftyJSON in Frameworks */,
+				EA4C09CC2943D98900CC37B5 /* Socket in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,6 +198,7 @@
 		EADE59A8232EB09A00E2F65A = {
 			isa = PBXGroup;
 			children = (
+				EAFEB1112944EE3A0009456F /* Bin */,
 				EA5C7AD72351D81100D84042 /* Scripts */,
 				EADE59B3232EB09A00E2F65A /* VOCR */,
 				EADE59B2232EB09A00E2F65A /* Products */,
@@ -217,12 +230,22 @@
 				EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */,
 				EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */,
 				EA1F642B2352503D0089C967 /* Player.swift */,
+				8576FA9929483BA70042E748 /* Rectangle.swift */,
 				EAF9C3C72354A66200D4D77C /* Settings.swift */,
+				8576FA972947FA200042E748 /* Utils.swift */,
 				EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */,
 				EADE59BE232EB09A00E2F65A /* VOCR.entitlements */,
-				EA9EB89D28EA5B0A00FE6210 /* Utils.swift */,
+				EAFAFF8B2945A197003FA535 /* Client.swift */,
 			);
 			path = VOCR;
+			sourceTree = "<group>";
+		};
+		EAFEB1112944EE3A0009456F /* Bin */ = {
+			isa = PBXGroup;
+			children = (
+				EAFEB1142944FCCE0009456F /* server */,
+			);
+			path = Bin;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,6 +267,9 @@
 			packageProductDependencies = (
 				EAD9AAE52731075600473054 /* HotKey */,
 				EAD9AAE827310A3900473054 /* SoundpipeAudioKit */,
+				6960E2142925F0AD00A3F64E /* PythonKit */,
+				EA4C09CB2943D98900CC37B5 /* Socket */,
+				EA66004A2946D68B00FE49A1 /* SwiftyJSON */,
 			);
 			productName = VOCR;
 			productReference = EADE59B1232EB09A00E2F65A /* VOCR.app */;
@@ -276,6 +302,9 @@
 			packageReferences = (
 				EAD9AAE42731075600473054 /* XCRemoteSwiftPackageReference "HotKey" */,
 				EAD9AAE727310A3900473054 /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */,
+				6960E2132925F0AD00A3F64E /* XCRemoteSwiftPackageReference "PythonKit" */,
+				EA4C09CA2943D98900CC37B5 /* XCRemoteSwiftPackageReference "BlueSocket" */,
+				EA6600492946D68B00FE49A1 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 			);
 			productRefGroup = EADE59B2232EB09A00E2F65A /* Products */;
 			projectDirPath = "";
@@ -297,6 +326,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAFEB1152944FCCE0009456F /* server in Resources */,
 				EADE59B9232EB09A00E2F65A /* Assets.xcassets in Resources */,
 				EAD9CFD22355E11600E7F594 /* say.scpt in Resources */,
 				EA5C7AD92351D81100D84042 /* VOScreenshot.scpt in Resources */,
@@ -311,14 +341,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8576FA9A29483BA70042E748 /* Rectangle.swift in Sources */,
 				EADE59B7232EB09A00E2F65A /* AboutViewController.swift in Sources */,
 				EA8AD6412352B4A000D26871 /* Double Extension.swift in Sources */,
 				EA5C7AD02351C8DE00D84042 /* AXUIElement Extension.swift in Sources */,
 				EA1F63F92352427A0089C967 /* VOCR Shortcuts.swift in Sources */,
 				EADE59B5232EB09A00E2F65A /* AppDelegate.swift in Sources */,
 				EA688D452355BDC500F722C7 /* Bundle Extension.swift in Sources */,
+				8576FA982947FA200042E748 /* Utils.swift in Sources */,
 				EA2DA1AF232EB22300D31031 /* NSRunningApplication Extension.swift in Sources */,
-				EA9EB89E28EA5B0A00FE6210 /* Utils.swift in Sources */,
+				EAFAFF8C2945A197003FA535 /* Client.swift in Sources */,
 				EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */,
 				EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */,
 				EAF9C3C82354A66200D4D77C /* Settings.swift in Sources */,
@@ -542,6 +574,30 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6960E2132925F0AD00A3F64E /* XCRemoteSwiftPackageReference "PythonKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pvieito/PythonKit.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		EA4C09CA2943D98900CC37B5 /* XCRemoteSwiftPackageReference "BlueSocket" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kitura/BlueSocket";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		EA6600492946D68B00FE49A1 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		EAD9AAE42731075600473054 /* XCRemoteSwiftPackageReference "HotKey" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/soffes/HotKey";
@@ -561,6 +617,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6960E2142925F0AD00A3F64E /* PythonKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6960E2132925F0AD00A3F64E /* XCRemoteSwiftPackageReference "PythonKit" */;
+			productName = PythonKit;
+		};
+		EA4C09CB2943D98900CC37B5 /* Socket */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA4C09CA2943D98900CC37B5 /* XCRemoteSwiftPackageReference "BlueSocket" */;
+			productName = Socket;
+		};
+		EA66004A2946D68B00FE49A1 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA6600492946D68B00FE49A1 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
 		EAD9AAE52731075600473054 /* HotKey */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = EAD9AAE42731075600473054 /* XCRemoteSwiftPackageReference "HotKey" */;

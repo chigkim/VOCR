@@ -8,7 +8,9 @@
 
 import Cocoa
 import HotKey
-
+import Socket
+import AVFoundation
+import Foundation
 struct Shortcuts {
 	
 	let window = HotKey(key:.w, modifiers:[.command,.shift, .control])
@@ -16,6 +18,7 @@ struct Shortcuts {
 	let resetPosition = HotKey(key:.r, modifiers:[.command,.shift, .control])
 	let positionalAudio = HotKey(key:.p, modifiers:[.command,.shift, .control])
 	let moveMouse = HotKey(key:.m, modifiers:[.command, .shift, .control])
+
 	init() {
 		window.keyDownHandler = {
 			if !Accessibility.isTrusted(ask:true) {
@@ -64,5 +67,5 @@ struct Shortcuts {
 		}
 		
 	}
+	
 }
-
