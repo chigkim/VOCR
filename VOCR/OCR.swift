@@ -1,6 +1,6 @@
 //
 //  OCR.swift
-	//  VOCR
+//  VOCR
 //
 //  Created by Chi Kim on 10/12/19.
 //  Copyright © 2019 Chi Kim. All rights reserved.

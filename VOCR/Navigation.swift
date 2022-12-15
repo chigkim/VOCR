@@ -46,7 +46,7 @@ class Navigation {
 		var line:[DetectedRectangle] = []
 		var y = result[0].boundingBox.midY
 		for r in result {
-			logger.debug("rectangle: \(r.boundingBox.debugDescription)")
+//			logger.debug("rectangle: \(r.boundingBox.debugDescription)")
 			
 			if abs(r.boundingBox.midY-y)>0.01 {
 				displayResults.append(line)

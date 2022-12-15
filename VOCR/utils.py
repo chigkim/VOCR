@@ -2,7 +2,7 @@ from typing import Tuple, Union
 import cv2
 import numpy as np
 from rectangle import Rectangle
-from classifier import Classifier
+from classifier import classify
 
 EPSILON = 2
 HOUGH_CIRCLE_PARAMS = {"minDist":30, 
@@ -122,12 +122,13 @@ def _prune_rectangles(rectangles, text_rects, min_size, max_size):
     print("After pruning, there are {} rectangles".format(len(small_rectangles)))
     return small_rectangles
 
-def get_rects_for_image(img, width, height, text_rects, text_labels, validation=False):
-    # print('rects', text_rects)
+def get_rects_for_image(img, text_rects, text_labels, model, validation=False):
+    height = img.shape[0]
+    width = img.shape[1]
+# print('rects', text_rects)
     # print('labels', text_labels)
 
     # convert text boxes and labels to Rectangles
-    cf = Classifier(img, width, height)
     text_rectangles = []
     for coords, label in zip(text_rects, text_labels):
         # print(x, y, w, h)
@@ -198,7 +199,7 @@ def get_rects_for_image(img, width, height, text_rects, text_labels, validation=
                     assert (not _check_rectangle_overlap(rect1, rect2, min_dist_between)), "failed: " + str(rect1) + str(rect2)
 
     rect_tuples = [rect.get_values() for rect in final_rectangles]
-    labels = cf.classify_n(rect_tuples)
+    labels = classify(img, rect_tuples, model)
 
     for i, rect in enumerate(final_rectangles):
         rect.set_label(labels[i][0])
