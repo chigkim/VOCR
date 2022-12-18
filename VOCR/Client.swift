@@ -10,9 +10,9 @@ import Foundation
 import Socket
 
 class Client {
-
+	
 	static var s:Socket?
-
+	
 	static func connect() -> Bool {
 		do {
 			print("Connecting...")
@@ -23,7 +23,7 @@ class Client {
 		} catch {
 			print("Error connecting.")
 		}
-	return false
+		return false
 	}
 	
 	static func send(_ data:Data) {
@@ -32,11 +32,11 @@ class Client {
 			var packet = Data(bytes: &length, count: MemoryLayout.size(ofValue: length))
 			packet.append(data)
 			try s?.write(from: packet)
-            print("Sending", length)
+			print("Sending", length)
 		} catch {
 		}
 	}
-
+	
 	static func recv() -> Data? {
 		do {
 			var p = UnsafeMutablePointer<CChar>.allocate(capacity: 4)
@@ -55,6 +55,6 @@ class Client {
 			return nil
 		}
 	}
-
+	
 }
 

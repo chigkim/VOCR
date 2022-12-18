@@ -41,29 +41,29 @@ extension AXUIElement {
 			return ["Error Unknown"]
 		}
 	}
-
-
-
 	
-
+	
+	
+	
+	
 	func value(of:String) -> String{
 		var cfValue:CFTypeRef?
 		let error = AXUIElementCopyAttributeValue(self, of as CFString, &cfValue)
 		if error == .success {
 			/*
-			let axValue = cfValue as! AXValue
-			let type = AXValueGetType(axValue)
-			var atrPtr:UnsafeMutableRawPointer?
-			AXValueGetValue(axValue, type, &atrPtr)
-			if let attribute = atrPtr as? String {
-			}
-			
-			let attribute = ""
-			var attributePtr = UnsafeMutableRawPointer(Unmanaged<AnyObject>.passUnretained(attribute as AnyObject).toOpaque())
-			AXValueGetValue(axValue, type, &attributePtr)
-			if let              value = Unmanaged<AnyObject>.fromOpaque(attributePtr).takeUnretainedValue() as? String {
-			}
-			*/
+			 let axValue = cfValue as! AXValue
+			 let type = AXValueGetType(axValue)
+			 var atrPtr:UnsafeMutableRawPointer?
+			 AXValueGetValue(axValue, type, &atrPtr)
+			 if let attribute = atrPtr as? String {
+			 }
+			 
+			 let attribute = ""
+			 var attributePtr = UnsafeMutableRawPointer(Unmanaged<AnyObject>.passUnretained(attribute as AnyObject).toOpaque())
+			 AXValueGetValue(axValue, type, &attributePtr)
+			 if let              value = Unmanaged<AnyObject>.fromOpaque(attributePtr).takeUnretainedValue() as? String {
+			 }
+			 */
 			
 			guard let axValue = cfValue as? String else {
 				return String( reflecting:cfValue).trimmingCharacters(in: .whitespacesAndNewlines)

@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate	 {
 			let url = bundle.url(forResource: "server", withExtension: "")
 			self.task.executableURL = url!
 			do {
-//				try self.task.run()
+				//				try self.task.run()
 			} catch {
 				print("Can't run server.")
 			}
@@ -36,9 +36,9 @@ class AppDelegate: NSObject, NSApplicationDelegate	 {
 		NSApplication.shared.hide(self)
 		windows[1].close()
 		Settings.load()
-        
-        PythonLibrary.useVersion(3)
-        PythonLibrary.useLibrary(at: "/usr/local/bin/python3")
+		
+		PythonLibrary.useVersion(3)
+		PythonLibrary.useLibrary(at: "/usr/local/bin/python3")
 	}
 	
 	func applicationWillTerminate(_ notification: Notification) {
@@ -46,7 +46,7 @@ class AppDelegate: NSObject, NSApplicationDelegate	 {
 		task.terminate()
 		task.interrupt()
 	}
-
+	
 	@objc func displayAboutWindow(_ sender: Any?) {
 		let storyboardName = NSStoryboard.Name(stringLiteral: "Main")
 		let storyboard = NSStoryboard(name: storyboardName, bundle: nil)
@@ -56,24 +56,24 @@ class AppDelegate: NSObject, NSApplicationDelegate	 {
 			aboutWindowController.showWindow(nil)
 		}
 	}
-
+	
 	@objc func chooseOutput(_ sender: Any?) {
 		let alert = NSAlert()
 		alert.alertStyle = .informational
 		alert.messageText = "Sound Output"
 		alert.informativeText = "Choose an Output for positional audio feedback."
 		let devices = AudioEngine.outputDevices
-			for device in devices {
-				alert.addButton(withTitle: device.name)
-			}
-
+		for device in devices {
+			alert.addButton(withTitle: device.name)
+		}
+		
 		let modalResult = alert.runModal()
 		let n = modalResult.rawValue-1000
 		Player.shared.engine.stop()
 		try! Player.shared.engine.setDevice(AudioEngine.outputDevices[n])
 		try! Player.shared.engine.start()
 	}
-
+	
 	@objc func click(_ sender: Any?) {
 		print("Clicked")
 	}

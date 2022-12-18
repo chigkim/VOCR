@@ -13,7 +13,7 @@ struct Settings {
 	static var positionReset = true
 	static var positionalAudio = false
 	static var moveMouse = true
-
+	
 	static func load() {
 		let defaults = UserDefaults.standard
 		Settings.positionReset = defaults.bool(forKey:"positionReset")

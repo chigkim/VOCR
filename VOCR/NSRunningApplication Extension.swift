@@ -13,9 +13,9 @@ extension NSRunningApplication {
 		let appRef = AXUIElementCreateApplication(self.processIdentifier)
 		var windowList:CFTypeRef?
 		AXUIElementCopyAttributeValue(appRef, "AXWindows" as CFString, &windowList)
-        if windowList != nil {
-		return windowList as! [AXUIElement]
-        } else {
-            return []}
+		if windowList != nil {
+			return windowList as! [AXUIElement]
+		} else {
+			return []}
 	}
 }

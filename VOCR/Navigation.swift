@@ -15,8 +15,8 @@ class Navigation {
 	static let shared = Navigation()
 	var displayResults:[[DetectedRectangle]] = []
 	var navigationShortcuts:NavigationShortcuts?
-	var cgPosition = CGPoint()
-	var cgSize = CGSize()
+	var windowPosition = CGPoint()
+	var windowSize = CGSize()
 	var imgSize = CGSize()
 	var l = -1
 	var w = -1
@@ -46,7 +46,7 @@ class Navigation {
 		var line:[DetectedRectangle] = []
 		var y = result[0].boundingBox.midY
 		for r in result {
-//			logger.debug("rectangle: \(r.boundingBox.debugDescription)")
+			//			logger.debug("rectangle: \(r.boundingBox.debugDescription)")
 			
 			if abs(r.boundingBox.midY-y)>0.01 {
 				displayResults.append(line)
@@ -68,11 +68,11 @@ class Navigation {
 	}
 	
 	func convertPoint(_ point:CGPoint) -> CGPoint {
-		var p = VNImagePointForNormalizedPoint(point, Int(cgSize.width), Int(cgSize.height))
+		var p = VNImagePointForNormalizedPoint(point, Int(windowSize.width), Int(windowSize.height))
 		//        print("p", p, "cgSize", cgSize, "imgSize", imgSize, "cgPosition", cgPosition)
-		p.y = cgSize.height-p.y
-		p.x += cgPosition.x
-		p.y += cgPosition.y
+		p.y = windowSize.height-p.y
+		p.x += windowPosition.x
+		p.y += windowPosition.y
 		return p
 	}
 	
@@ -116,10 +116,10 @@ class Navigation {
 	
 	func location() {
 		let rect = displayResults[l][w]
-		let point = convert2coordinates(rect.boundingBox)
-		var center = point
-		center.x -= cgPosition.x
-		center.y -= cgPosition.y
+		print(rect.boundingBox)
+		var center = convert2coordinates(rect.boundingBox)
+		center.x -= windowPosition.x
+		center.y -= windowPosition.y
 		Accessibility.speak("\(Int(center.x)), \(Int(center.y))")
 	}
 	

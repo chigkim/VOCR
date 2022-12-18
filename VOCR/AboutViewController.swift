@@ -10,7 +10,7 @@ import Cocoa
 
 
 class AboutViewController: NSViewController {
-
+	
 	@IBOutlet var info: NSTextField!
 	
 	override func viewDidLoad() {
@@ -18,13 +18,13 @@ class AboutViewController: NSViewController {
 		info.stringValue = "\(Bundle.main.version)"
 		// Do any additional setup after loading the view.
 	}
-
+	
 	override var representedObject: Any? {
 		didSet {
-		// Update the view, if already loaded.
+			// Update the view, if already loaded.
 		}
 	}
-
-
+	
+	
 }
 
