@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6960E2152925F0AD00A3F64E /* PythonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6960E2142925F0AD00A3F64E /* PythonKit */; };
 		8576FA982947FA200042E748 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576FA972947FA200042E748 /* Utils.swift */; };
 		8576FA9A29483BA70042E748 /* Rectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576FA9929483BA70042E748 /* Rectangle.swift */; };
 		EA1F63F92352427A0089C967 /* VOCR Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */; };
@@ -96,7 +95,6 @@
 			files = (
 				EAD9AAE927310A3900473054 /* SoundpipeAudioKit in Frameworks */,
 				EAD9AAE62731075600473054 /* HotKey in Frameworks */,
-				6960E2152925F0AD00A3F64E /* PythonKit in Frameworks */,
 				EA66004B2946D68B00FE49A1 /* SwiftyJSON in Frameworks */,
 				EA4C09CC2943D98900CC37B5 /* Socket in Frameworks */,
 			);
@@ -267,7 +265,6 @@
 			packageProductDependencies = (
 				EAD9AAE52731075600473054 /* HotKey */,
 				EAD9AAE827310A3900473054 /* SoundpipeAudioKit */,
-				6960E2142925F0AD00A3F64E /* PythonKit */,
 				EA4C09CB2943D98900CC37B5 /* Socket */,
 				EA66004A2946D68B00FE49A1 /* SwiftyJSON */,
 			);
@@ -302,7 +299,6 @@
 			packageReferences = (
 				EAD9AAE42731075600473054 /* XCRemoteSwiftPackageReference "HotKey" */,
 				EAD9AAE727310A3900473054 /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */,
-				6960E2132925F0AD00A3F64E /* XCRemoteSwiftPackageReference "PythonKit" */,
 				EA4C09CA2943D98900CC37B5 /* XCRemoteSwiftPackageReference "BlueSocket" */,
 				EA6600492946D68B00FE49A1 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 			);
@@ -574,14 +570,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		6960E2132925F0AD00A3F64E /* XCRemoteSwiftPackageReference "PythonKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pvieito/PythonKit.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		EA4C09CA2943D98900CC37B5 /* XCRemoteSwiftPackageReference "BlueSocket" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Kitura/BlueSocket";
@@ -617,11 +605,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6960E2142925F0AD00A3F64E /* PythonKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6960E2132925F0AD00A3F64E /* XCRemoteSwiftPackageReference "PythonKit" */;
-			productName = PythonKit;
-		};
 		EA4C09CB2943D98900CC37B5 /* Socket */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = EA4C09CA2943D98900CC37B5 /* XCRemoteSwiftPackageReference "BlueSocket" */;

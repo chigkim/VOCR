@@ -1,6 +1,5 @@
 import Cocoa
 import AudioKit
-import PythonKit
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate	 {
@@ -36,9 +35,6 @@ class AppDelegate: NSObject, NSApplicationDelegate	 {
 		NSApplication.shared.hide(self)
 		windows[1].close()
 		Settings.load()
-		
-		PythonLibrary.useVersion(3)
-		PythonLibrary.useLibrary(at: "/usr/local/bin/python3")
 	}
 	
 	func applicationWillTerminate(_ notification: Notification) {
