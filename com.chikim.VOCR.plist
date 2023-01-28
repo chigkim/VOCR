@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>New item</key>
+	<string>Media.xcassets</string>
+	<key>KeepAlive</key>
+	<false/>
+	<key>SuccessfulExit</key>
+	<false/>
+	<key>Label</key>
+	<string>com.chikim.VOCR</string>
+	<key>LimitLoadToSessionType</key>
+	<string>Aqua</string>
+	<key>Program</key>
+	<string>/Applications/VOCR.app/Contents/MacOS/VOCR</string>
+	<key>RunAtLoad</key>
+	<true/>
+</dict>
+</plist>
