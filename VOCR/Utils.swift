@@ -14,6 +14,53 @@ import Cocoa
 
 let logger = Logger()
 
+func setWindow(_ n:Int) {
+	Navigation.shared.windowName = "Unknown Window"
+	Navigation.shared.appName = "Unknown App"
+	var cgPosition = CGPoint()
+	var cgSize = CGSize()
+	Navigation.shared.cgSize = cgSize
+	Navigation.shared.cgPosition = cgPosition
+	let currentApp = NSWorkspace.shared.frontmostApplication
+	Navigation.shared.appName = currentApp!.localizedName!
+	let windows = currentApp?.windows()
+	if (windows!.isEmpty) {
+		return
+	}
+	var window = windows![0]
+	if (n == -1) {
+		let alert = NSAlert()
+		alert.alertStyle = .informational
+		alert.messageText = "Target Window"
+		alert.informativeText = "Choose an window to scan."
+			for window in windows! {
+				alert.addButton(withTitle: window.value(of: "AXTitle"))
+			}
+		let modalResult = alert.runModal()
+		NSApplication.shared.hide(NSApplication.shared)
+		let r = modalResult.rawValue-1000
+		window = windows![r]
+	}
+
+	print("Window information")
+	Navigation.shared.windowName = window.value(of: "AXTitle")
+	var position:CFTypeRef?
+	var size:CFTypeRef?
+	AXUIElementCopyAttributeValue(window, "AXPosition" as CFString, &position)
+	AXUIElementCopyAttributeValue(window, "AXSize" as CFString, &size)
+
+	if position != nil && size != nil {
+		AXValueGetValue(position as! AXValue, AXValueType.cgPoint, &cgPosition)
+		AXValueGetValue(size as! AXValue, AXValueType.cgSize, &cgSize)
+		print("\(cgPosition), \(cgSize)")
+	} else {
+		print("Failed to get position or size")
+	}
+	Navigation.shared.cgSize = cgSize
+	Navigation.shared.cgPosition = cgPosition
+
+	}
+
 func TakeScreensShots() -> CGImage? {
 	var displayCount: UInt32 = 0
 	var result = CGGetActiveDisplayList(0, nil, &displayCount)
@@ -29,43 +76,8 @@ func TakeScreensShots() -> CGImage? {
 		print("error: \(result)")
 		return nil
 	}
-	
-	let currentApp = NSWorkspace.shared.frontmostApplication
-	//	let appID = currentApp!.processIdentifier
-	//	let appElement = AXUIElementCreateApplication(appID)
-	let windows = currentApp?.windows()
-	if (windows!.isEmpty) {
-		return nil
-	}
-	/*
-	 // Find main window
-	windows = windows!.filter {
-		var ref:CFTypeRef?
-		AXUIElementCopyAttributeValue($0, "AXMain" as CFString, &ref)
-		if let value = ref as? Int, value == 1 {
-			return true
-		}
-		return false
-	}
-	if (windows!.isEmpty) {
-		return nil
-	}
-	*/
-	let window = windows![0]
-	print("Window information")
-	print(window.value(of: "AXTitle"))
-	var position:CFTypeRef?
-	var size:CFTypeRef?
-	var cgPosition = CGPoint()
-	var cgSize = CGSize()
-	AXUIElementCopyAttributeValue(window, "AXPosition" as CFString, &position)
-	AXUIElementCopyAttributeValue(window, "AXSize" as CFString, &size)
-	AXValueGetValue(position as! AXValue, AXValueType.cgPoint, &cgPosition)
-	AXValueGetValue(size as! AXValue, AXValueType.cgSize, &cgSize)
-	Navigation.shared.cgSize = cgSize
-	Navigation.shared.cgPosition = cgPosition
-	print("\(cgPosition), \(cgSize)")
-	return CGDisplayCreateImage(activeDisplays[0], rect:CGRect(origin: cgPosition, size: cgSize))
+
+	return CGDisplayCreateImage(activeDisplays[0], rect:CGRect(origin: Navigation.shared.cgPosition, size: Navigation.shared.cgSize))
 }
 
 func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {

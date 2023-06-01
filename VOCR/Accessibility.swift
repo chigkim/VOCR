@@ -27,13 +27,14 @@ class Accessibility {
 	}
 
 	static func speakWithSynthesizer(_ message:String) {
+		debugPrint("Speak with synthesizer: \(message)")
 		DispatchQueue.global().async {
 		speech.startSpeaking(message)
 		}
 	}
 
 	static func speak(_ message:String) {
-
+		debugPrint("Speak: \(message)")
 		let bundle = Bundle.main
 		let url = bundle.url(forResource: "say", withExtension: "scpt")
 		let parameters = NSAppleEventDescriptor.list()

@@ -16,18 +16,42 @@ struct Shortcuts {
 	let resetPosition = HotKey(key:.r, modifiers:[.command,.shift, .control])
 	let positionalAudio = HotKey(key:.p, modifiers:[.command,.shift, .control])
 	let moveMouse = HotKey(key:.m, modifiers:[.command, .shift, .control])
+	let targetWindow = HotKey(key:.t, modifiers:[.command, .shift, .control])
 	init() {
 		window.keyDownHandler = {
 			if !Accessibility.isTrusted(ask:true) {
 				print("Accessibility not enabled.")
 				return
 			}
-			
-			if let  cgImage = TakeScreensShots() {
-				Navigation.shared.startOCR(cgImage:cgImage)
+			setWindow(0)
+			if Navigation.shared.cgSize != CGSize() {
+				if let  cgImage = TakeScreensShots() {
+					Navigation.shared.startOCR(cgImage:cgImage)
+				} else {
+					Accessibility.speakWithSynthesizer("Faild to take a screenshot of \(Navigation.shared.appName), \(Navigation.shared.windowName)")
+				}
+			} else {
+				Accessibility.speakWithSynthesizer("Faild to access \(Navigation.shared.appName), \(Navigation.shared.windowName)")
 			}
 		}
-		
+
+		targetWindow.keyDownHandler = {
+			if !Accessibility.isTrusted(ask:true) {
+				print("Accessibility not enabled.")
+				return
+			}
+			setWindow(-1)
+			if Navigation.shared.cgSize != CGSize() {
+				if let  cgImage = TakeScreensShots() {
+					Navigation.shared.startOCR(cgImage:cgImage)
+				} else {
+					Accessibility.speakWithSynthesizer("Faild to take a screenshot of \(Navigation.shared.appName), \(Navigation.shared.windowName)")
+				}
+			} else {
+				Accessibility.speakWithSynthesizer("Faild to access \(Navigation.shared.appName), \(Navigation.shared.windowName)")
+			}
+		}
+
 		vo.keyDownHandler = {
 			recognizeVOCursor()
 		}

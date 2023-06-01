@@ -17,6 +17,8 @@ class Navigation {
 	var navigationShortcuts:NavigationShortcuts?
 	var cgPosition = CGPoint()
 	var cgSize = CGSize()
+	var windowName = "Unknown Window"
+	var appName = "Unknown App"
 	var l = -1
 	var w = -1
 	var c = -1
@@ -36,7 +38,7 @@ class Navigation {
 			return
 		}
 		process(result:&result)
-		Accessibility.speak("Finished!")
+		Accessibility.speak("Finished scanning \(appName), \(windowName)")
 		navigationShortcuts = NavigationShortcuts()
 	}
 
