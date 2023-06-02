@@ -11,8 +11,32 @@ import os
 import Vision
 import AVFoundation
 import Cocoa
+import AXSwift
 
 let logger = Logger()
+
+func report(_ element:UIElement?) {
+	print("\(element!.label!)")
+	for atr in try! element!.attributesAsStrings() {
+		print(atr)
+		do {
+			if let value:AnyObject = try element!.attribute(atr) {
+				var valueStr = ""
+				if atr == "AXChildren", let children = value as? [AXUIElement] {
+					for child in children {
+						valueStr += "\(UIElement(child).label!)"
+					}
+				} else {
+					valueStr = "\(value)"
+				}
+				let text = "\(atr): \(valueStr)"
+				print(text)
+			}
+		} catch let error {
+			print(error)
+		}
+	}
+}
 
 func setWindow(_ n:Int) {
 	Navigation.shared.windowName = "Unknown Window"
@@ -23,7 +47,20 @@ func setWindow(_ n:Int) {
 	Navigation.shared.cgPosition = cgPosition
 	let currentApp = NSWorkspace.shared.frontmostApplication
 	Navigation.shared.appName = currentApp!.localizedName!
-	let windows = currentApp?.windows()
+	var windows = currentApp?.windows()
+
+	/*
+	 // filter main window.
+	windows = windows!.filter {
+		var ref:CFTypeRef?
+		AXUIElementCopyAttributeValue($0, "AXMain" as CFString, &ref)
+		if let value = ref as? Int, value == 1 {
+			return true
+		}
+		return false
+	}
+	*/
+
 	if (windows!.isEmpty) {
 		return
 	}
@@ -43,6 +80,7 @@ func setWindow(_ n:Int) {
 	}
 
 	print("Window information")
+// report(UIElement(window))
 	Navigation.shared.windowName = window.value(of: "AXTitle")
 	var position:CFTypeRef?
 	var size:CFTypeRef?
