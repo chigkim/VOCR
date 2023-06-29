@@ -1,4 +1,4 @@
-//
++//
 //  Utils.swift
 //  VOCR
 //
@@ -65,13 +65,19 @@ func setWindow(_ n:Int) {
 		return
 	}
 	var window = windows![0]
+
 	if (n == -1) {
 		let alert = NSAlert()
 		alert.alertStyle = .informational
 		alert.messageText = "Target Window"
 		alert.informativeText = "Choose an window to scan."
-			for window in windows! {
-				alert.addButton(withTitle: window.value(of: "AXTitle"))
+		for window in windows! {
+			var title = window.value(of: "AXTitle")
+			if (title == "") {
+				title = "Untitled"
+			}
+			title += String(window.hashValue)
+				alert.addButton(withTitle: title)
 			}
 		let modalResult = alert.runModal()
 		NSApplication.shared.hide(NSApplication.shared)
