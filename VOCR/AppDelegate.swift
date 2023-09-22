@@ -3,10 +3,47 @@ import AudioKit
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
+
+	private var eventMonitor: Any?
 	
 	let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 	var windows:[NSWindow] = []
 	let shortcuts = Shortcuts()
+	
+	
+	func applicationWillFinishLaunching(_ notification: Notification) {
+		self.eventMonitor = NSEvent.addGlobalMonitorForEvents(
+			matching: [NSEvent.EventTypeMask.leftMouseDown],
+			handler: { (event: NSEvent) in
+				switch event.type {
+				case .leftMouseDown:
+					print("Left mouse click detected.")
+					if Navigation.shared.navigationShortcuts != nil {
+						Thread.sleep(forTimeInterval: 0.5)
+						initOCR()
+					}
+				case .rightMouseDown:
+					print("Right mouse click detected.")
+					if Navigation.shared.navigationShortcuts != nil {
+						Thread.sleep(forTimeInterval: 0.5)
+						initOCR()
+					}
+
+					
+				default:
+					break
+				}
+			  })
+			}
+
+func applicationWillTerminate(_ notification: Notification) {
+	if let eventMonitor = self.eventMonitor {
+		NSEvent.removeMonitor(eventMonitor)
+			}
+}
+
+
+	
 	
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		let fileManager = FileManager.default
