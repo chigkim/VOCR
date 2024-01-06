@@ -11,6 +11,8 @@
 		EA1F642C2352503D0089C967 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F642B2352503D0089C967 /* Player.swift */; };
 		EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1AB232EB1D600D31031 /* Accessibility.swift */; };
 		EA2DA1AF232EB22300D31031 /* NSRunningApplication Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */; };
+		EA3F43712B476759005453C2 /* gpt.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3F43702B476759005453C2 /* gpt.swift */; };
+		EA3F43732B4857F9005453C2 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3F43722B4857F9005453C2 /* Observation.swift */; };
 		EA42F44F2A2A04440010BC39 /* AXSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EA42F44E2A2A04440010BC39 /* AXSwift */; };
 		EA42F4512A2A05410010BC39 /* UIElement Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42F4502A2A05410010BC39 /* UIElement Extension.swift */; };
 		EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACB2351BB6D00D84042 /* Navigation.swift */; };
@@ -65,6 +67,8 @@
 		EA1F642B2352503D0089C967 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		EA2DA1AB232EB1D600D31031 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSRunningApplication Extension.swift"; sourceTree = "<group>"; };
+		EA3F43702B476759005453C2 /* gpt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = gpt.swift; sourceTree = "<group>"; };
+		EA3F43722B4857F9005453C2 /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
 		EA42F4502A2A05410010BC39 /* UIElement Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIElement Extension.swift"; sourceTree = "<group>"; };
 		EA5C7ACB2351BB6D00D84042 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AXUIElement Extension.swift"; sourceTree = "<group>"; };
@@ -211,6 +215,7 @@
 		EADE59B3232EB09A00E2F65A /* VOCR */ = {
 			isa = PBXGroup;
 			children = (
+				EA3F43702B476759005453C2 /* gpt.swift */,
 				EA42F4502A2A05410010BC39 /* UIElement Extension.swift */,
 				EADE59B6232EB09A00E2F65A /* AboutViewController.swift */,
 				EA2DA1AB232EB1D600D31031 /* Accessibility.swift */,
@@ -229,6 +234,7 @@
 				EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */,
 				EADE59BE232EB09A00E2F65A /* VOCR.entitlements */,
 				EA9EB89D28EA5B0A00FE6210 /* Utils.swift */,
+				EA3F43722B4857F9005453C2 /* Observation.swift */,
 			);
 			path = VOCR;
 			sourceTree = "<group>";
@@ -328,7 +334,9 @@
 				EA1F63F92352427A0089C967 /* VOCR Shortcuts.swift in Sources */,
 				EADE59B5232EB09A00E2F65A /* AppDelegate.swift in Sources */,
 				EA688D452355BDC500F722C7 /* Bundle Extension.swift in Sources */,
+				EA3F43712B476759005453C2 /* gpt.swift in Sources */,
 				EA2DA1AF232EB22300D31031 /* NSRunningApplication Extension.swift in Sources */,
+				EA3F43732B4857F9005453C2 /* Observation.swift in Sources */,
 				EA9EB89E28EA5B0A00FE6210 /* Utils.swift in Sources */,
 				EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */,
 				EA42F4512A2A05410010BC39 /* UIElement Extension.swift in Sources */,

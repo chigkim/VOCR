@@ -47,7 +47,7 @@ func setWindow(_ n:Int) {
 	Navigation.shared.cgPosition = cgPosition
 	let currentApp = NSWorkspace.shared.frontmostApplication
 	Navigation.shared.appName = currentApp!.localizedName!
-	var windows = currentApp?.windows()
+	let windows = currentApp?.windows()
 
 	/*
 	 // filter main window.

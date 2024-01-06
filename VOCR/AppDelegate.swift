@@ -31,8 +31,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			menuItem.state = .on
 		}
 		menu.addItem(menuItem)
-
 		menu.addItem(withTitle: "Sound Output...", action: #selector(AppDelegate.chooseOutput(_:)), keyEquivalent: "")
+		menu.addItem(withTitle: "OpenAI API Key...", action: #selector(AppDelegate.presentApiKeyInputDialog(_:)), keyEquivalent: "")
 		menu.addItem(withTitle: "About", action: #selector(AppDelegate.displayAboutWindow(_:)), keyEquivalent: "")
 		menu.addItem(withTitle: "Quit", action: #selector(AppDelegate.quit(_:)), keyEquivalent: "")
 		
@@ -48,6 +48,34 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		windows[1].close()
 		Settings.load()
 	}
+
+	@objc func presentApiKeyInputDialog(_ sender: AnyObject?) {
+	 let alert = NSAlert()
+	 alert.messageText = "Enter API Key"
+	 alert.informativeText = "Type your API key below:"
+	 alert.addButton(withTitle: "OK")
+	 alert.addButton(withTitle: "Cancel")
+
+	 // Create the input text field and set properties
+	 let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+	 inputTextField.placeholderString = "API Key"
+		inputTextField.stringValue = Settings.GPTAPIKEY
+
+	 // Add the text field to the alert
+	 alert.accessoryView = inputTextField
+
+	 // Present the alert
+	 let response = alert.runModal()
+
+	 // Handle the user's response
+	 if response == .alertFirstButtonReturn { // OK button
+		 let apiKey = inputTextField.stringValue
+		 // Use the API Key as needed
+		 print("User's API Key: \(apiKey)")
+		 Settings.GPTAPIKEY = apiKey
+		 Settings.save()
+	 }
+ }
 
 	@objc func toggleLaunch(_ sender: AnyObject?) {
 		let fileManager = FileManager.default

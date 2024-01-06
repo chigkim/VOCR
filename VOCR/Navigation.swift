@@ -13,7 +13,7 @@ import Cocoa
 class Navigation {
 
 	static let shared = Navigation()
-	var displayResults:[[VNRecognizedTextObservation]] = []
+	var displayResults:[[Observation]] = []
 	var navigationShortcuts:NavigationShortcuts?
 	var cgPosition = CGPoint()
 	var cgSize = CGSize()
@@ -23,6 +23,29 @@ class Navigation {
 	var w = -1
 	var c = -1
 
+	func askGPT(cgImage:CGImage, prompt:String) {
+		if Settings.positionReset {
+			l = -1
+			w = -1
+			c = -1
+		}
+		displayResults = []
+		navigationShortcuts = nil
+		NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
+		GPT.describe(cgImage, prompt) { description in
+			print("Received description: \(description)")
+			if let elements = GPT.decode(message:description) {
+				let result:[Observation] = elements.map {Observation($0)}
+				self.process(result)
+				self.navigationShortcuts = NavigationShortcuts()
+				Accessibility.speak("Finished scanning \(self.appName), \(self.windowName)")
+			} else {
+				Accessibility.speak("Nothing found")
+				return
+			}
+		}
+	}
+	
 	func startOCR(cgImage:CGImage) {
 		if Settings.positionReset {
 			l = -1
@@ -32,22 +55,23 @@ class Navigation {
 		displayResults = []
 		navigationShortcuts = nil
 		NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
-		var result = performOCR(cgImage:cgImage)
-		if result.count == 0 {
+		let ocrResult = performOCR(cgImage:cgImage)
+		if ocrResult.count == 0 {
 			Accessibility.speak("Nothing found")
 			return
 		}
-		process(result:&result)
+		let result = ocrResult.map {Observation($0)}
+		process(result)
 		Accessibility.speak("Finished scanning \(appName), \(windowName)")
 		navigationShortcuts = NavigationShortcuts()
 	}
 
-	func process(result:inout[VNRecognizedTextObservation]) {
-		result = result.sorted(by: sort)
-		var line:[VNRecognizedTextObservation] = []
-		var y = result[0].boundingBox.midY
-		for r in result {
-			logger.debug("\(r.topCandidates(1)[0]): \(r.boundingBox.debugDescription)")
+	func process(_ results:[Observation]) {
+		let sorted = results.sorted(by: sort)
+		var line:[Observation] = []
+		var y = sorted[0].boundingBox.midY
+		for r in sorted {
+			logger.debug("\(r.value): \(r.boundingBox.debugDescription)")
 			if abs(r.boundingBox.midY-y)>0.01 {
 				displayResults.append(line)
 				line = []
@@ -58,21 +82,23 @@ class Navigation {
 		displayResults.append(line)
 	}
 
-	func convert2coordinates(_ box:CGRect) -> CGPoint {
-			var center = CGPoint(x:box.midX, y:box.midY)
+	func convert2coordinates(_ rect:CGRect) -> CGPoint {
+		let box = CGRect(x:rect.minX, y:1-rect.maxY, width:rect.width, height:rect.height)
+		var center = CGPoint(x:box.midX, y:box.midY)
+		debugPrint(center)
 		if Settings.positionalAudio {
-			let frequency = 100+1000*Float(center.y)
+			let frequency = 100+1000*(1-Float(center.y))
 			let pan = Float(Double(center.x).normalize(from: 0...1, into: -1...1))
 			Player.shared.play(frequency, pan)
 		}
-			center = VNImagePointForNormalizedPoint(center, Int(cgSize.width), Int(cgSize.height))
-		center.y = cgSize.height-center.y
+		center = VNImagePointForNormalizedPoint(center, Int(cgSize.width), Int(cgSize.height))
+		debugPrint(center)
 		center.x += cgPosition.x
 		center.y += cgPosition.y
 		return center
 	}
 
-	func sort(_ a:VNRecognizedTextObservation, _ b:VNRecognizedTextObservation) -> Bool {
+	func sort(_ a:Observation, _ b:Observation) -> Bool {
 		if a.boundingBox.midY-b.boundingBox.midY>0.01 {
 			return true
 		} else if b.boundingBox.midY-a.boundingBox.midY>0.01 {
@@ -116,7 +142,7 @@ class Navigation {
         if Settings.moveMouse {
 		CGDisplayMoveCursorToPoint(0, convert2coordinates(displayResults[l][w].boundingBox))
         }
-		Accessibility.speak(displayResults[l][w].topCandidates(1)[0].string)
+		Accessibility.speak(displayResults[l][w].value)
 	}
 	
 	func left() {
@@ -130,7 +156,7 @@ class Navigation {
         if Settings.moveMouse {
 		CGDisplayMoveCursorToPoint(0, convert2coordinates(displayResults[l][w].boundingBox))
         }
-		Accessibility.speak(displayResults[l][w].topCandidates(1)[0].string)
+		Accessibility.speak(displayResults[l][w].value)
 	}
 
 	func down() {
@@ -147,7 +173,7 @@ class Navigation {
         }
 		var line = ""
 		for r in displayResults[l] {
-			line += " \(r.topCandidates(1)[0].string)"
+			line += " \(r.value)"
 		}
 		Accessibility.speak(line)
 	}
@@ -166,7 +192,7 @@ class Navigation {
         }
 		var line = ""
 		for r in displayResults[l] {
-			line += " \(r.topCandidates(1)[0].string)"
+			line += " \(r.value)"
 		}
 		Accessibility.speak(line)
 	}
@@ -210,77 +236,81 @@ class Navigation {
 			return
 		}
 		correctLimit()
-		let candidate = displayResults[l][w].topCandidates(1)[0]
-		var str = candidate.string
-		c += 1
-		if c >= str.count {
-			c = str.count-1
-		}
-		do {
-			let start = str.index(str.startIndex,offsetBy:c)
-			let end = str.index(str.startIndex,offsetBy:c+1)
-			let range = start..<end
-			let character = str[range]
-			str = String(character)
-			var box:CGRect
-			try box = candidate.boundingBox(for: range)!.boundingBox
-			CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
-
-/*
-			str = String(character)
-			let u = str.unicodeScalars
-			let uName = u[u.startIndex].properties.name!
-			if !uName.contains("LETTER") {
-				str = uName
+		if let obs = displayResults[l][w].vnObservation {
+			let candidate = obs.topCandidates(1)[0]
+			var str = candidate.string
+			c += 1
+			if c >= str.count {
+				c = str.count-1
 			}
-*/
-
-			Accessibility.speak(str)
-		} catch {
+			do {
+				let start = str.index(str.startIndex,offsetBy:c)
+				let end = str.index(str.startIndex,offsetBy:c+1)
+				let range = start..<end
+				let character = str[range]
+				str = String(character)
+				var box:CGRect
+				try box = candidate.boundingBox(for: range)!.boundingBox
+				CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
+				
+				/*
+				 str = String(character)
+				 let u = str.unicodeScalars
+				 let uName = u[u.startIndex].properties.name!
+				 if !uName.contains("LETTER") {
+				 str = uName
+				 }
+				 */
+				
+				Accessibility.speak(str)
+			} catch {
+			}
 		}
-	}
+		}
 
 	func previousCharacter() {
 		if displayResults.count == 0 {
 			return
 		}
 		correctLimit()
-		let candidate = displayResults[l][w].topCandidates(1)[0]
-		var str = candidate.string
-		c -= 1
-		if c < 0 {
-			c = 0
-		}
-		
-		do {
-			let start = str.index(str.startIndex,offsetBy:c)
-			let end = str.index(str.startIndex,offsetBy:c+1)
-			let range = start..<end
-			let character = str[range]
-			str = String(character)
-			var box:CGRect
-			try box = candidate.boundingBox(for: range)!.boundingBox
-			CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
-
-			/*
-			str = String(character).description
-			let u = str.unicodeScalars
-			let uName = u[u.startIndex].properties.name!
-			if !uName.contains("LETTER") {
-				str = uName
+		if let obs = displayResults[l][w].vnObservation {
+			let candidate = obs.topCandidates(1)[0]
+			var str = candidate.string
+			c -= 1
+			if c < 0 {
+				c = 0
 			}
-*/
-			Accessibility.speak(str)
-		} catch {
+			
+			do {
+				let start = str.index(str.startIndex,offsetBy:c)
+				let end = str.index(str.startIndex,offsetBy:c+1)
+				let range = start..<end
+				let character = str[range]
+				str = String(character)
+				var box:CGRect
+				try box = candidate.boundingBox(for: range)!.boundingBox
+				
+				CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
+				
+				/*
+				 str = String(character).description
+				 let u = str.unicodeScalars
+				 let uName = u[u.startIndex].properties.name!
+				 if !uName.contains("LETTER") {
+				 str = uName
+				 }
+				 */
+				Accessibility.speak(str)
+			} catch {
+			}
 		}
-
 	}
 
 	func text() -> String {
 var text = ""
 		for line in displayResults {
 			for word in line {
-				text += word.topCandidates(1)[0].string+" "
+				text += word.value+" "
 			}
 			text = text.dropLast()+"\n"
 		}

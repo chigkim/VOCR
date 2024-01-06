@@ -8,12 +8,13 @@
 
 import Cocoa
 
-struct Settings {
+enum Settings {
 	
 	static var positionReset = true
 	static var positionalAudio = false
 	static var moveMouse = true
 	static var launchOnBoot = true
+	static var GPTAPIKEY = ""
 
 	static func load() {
 		let defaults = UserDefaults.standard
@@ -22,6 +23,9 @@ struct Settings {
 		Settings.positionalAudio = defaults.bool(forKey:"positionalAudio")
 		debugPrint("positionalAudio \(Settings.positionalAudio)")
 		Settings.launchOnBoot = defaults.bool(forKey:"launchOnBoot")
+		if let apikey = defaults.string(forKey: "GPTAPIKEY") {
+			Settings.GPTAPIKEY = apikey
+		}
 	}
 	
 	static func save() {
@@ -29,6 +33,7 @@ struct Settings {
 		defaults.set(Settings.positionReset, forKey:"positionReset")
 		defaults.set(Settings.positionalAudio, forKey:"positionalAudio")
 		defaults.set(Settings.launchOnBoot, forKey:"launchOnBoot")
+		defaults.set(Settings.GPTAPIKEY, forKey:"GPTAPIKEY")
 	}
 	
 }
