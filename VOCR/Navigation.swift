@@ -11,7 +11,7 @@ import Vision
 import Cocoa
 
 class Navigation {
-
+	
 	static let shared = Navigation()
 	var displayResults:[[Observation]] = []
 	var navigationShortcuts:NavigationShortcuts?
@@ -22,7 +22,7 @@ class Navigation {
 	var l = -1
 	var w = -1
 	var c = -1
-
+	
 	func askGPT(cgImage:CGImage, prompt:String) {
 		if Settings.positionReset {
 			l = -1
@@ -39,6 +39,14 @@ class Navigation {
 				self.process(result)
 				self.navigationShortcuts = NavigationShortcuts()
 				Accessibility.speak("Finished scanning \(self.appName), \(self.windowName)")
+				let boxes = result.map {VNImageRectForNormalizedRect($0.boundingBox, Int(cgImage.width), Int(cgImage.height)) }
+				DispatchQueue.main.async {
+					if let url = chooseFolder() {
+						let boxImage = drawBoxes(cgImage, boxes:boxes )!
+						try? saveImage(boxImage, url.appendingPathComponent("Boxes.png"))
+					}
+				}
+				
 			} else {
 				Accessibility.speak("Nothing found")
 				return
@@ -65,7 +73,7 @@ class Navigation {
 		Accessibility.speak("Finished scanning \(appName), \(windowName)")
 		navigationShortcuts = NavigationShortcuts()
 	}
-
+	
 	func process(_ results:[Observation]) {
 		let sorted = results.sorted(by: sort)
 		var line:[Observation] = []
@@ -81,7 +89,7 @@ class Navigation {
 		}
 		displayResults.append(line)
 	}
-
+	
 	func convert2coordinates(_ rect:CGRect) -> CGPoint {
 		let box = CGRect(x:rect.minX, y:1-rect.maxY, width:rect.width, height:rect.height)
 		var center = CGPoint(x:box.midX, y:box.midY)
@@ -97,27 +105,27 @@ class Navigation {
 		center.y += cgPosition.y
 		return center
 	}
-
+	
 	func sort(_ a:Observation, _ b:Observation) -> Bool {
 		if a.boundingBox.midY-b.boundingBox.midY>0.01 {
 			return true
 		} else if b.boundingBox.midY-a.boundingBox.midY>0.01 {
 			return false
 		}
-		 if a.boundingBox.midX<b.boundingBox.midX {
-			 return true
+		if a.boundingBox.midX<b.boundingBox.midX {
+			return true
 		} else {
 			return false
 		}
 	}
-
+	
 	func location() {
 		var center = convert2coordinates(displayResults[l][w].boundingBox)
 		center.x -= cgPosition.x
 		center.y -= cgPosition.y
 		Accessibility.speak("\(Int(center.x)), \(Int(center.y))")
 	}
-
+	
 	func correctLimit() {
 		if l < 0 {
 			l = 0
@@ -130,7 +138,7 @@ class Navigation {
 			w = displayResults[l].count-1
 		}
 	}
-
+	
 	func right() {
 		if displayResults.count == 0 {
 			return
@@ -139,9 +147,10 @@ class Navigation {
 		c = -1
 		correctLimit()
 		print("\(l), \(w)")
-        if Settings.moveMouse {
-		CGDisplayMoveCursorToPoint(0, convert2coordinates(displayResults[l][w].boundingBox))
-        }
+		if Settings.moveMouse {
+			CGWarpMouseCursorPosition(convert2coordinates(displayResults[l][w].boundingBox))
+
+		}
 		Accessibility.speak(displayResults[l][w].value)
 	}
 	
@@ -153,50 +162,50 @@ class Navigation {
 		c = -1
 		correctLimit()
 		print("\(l), \(w)")
-        if Settings.moveMouse {
-		CGDisplayMoveCursorToPoint(0, convert2coordinates(displayResults[l][w].boundingBox))
-        }
+		if Settings.moveMouse {
+			CGWarpMouseCursorPosition(convert2coordinates(displayResults[l][w].boundingBox))
+		}
 		Accessibility.speak(displayResults[l][w].value)
 	}
-
+	
 	func down() {
 		if displayResults.count == 0 {
 			return
 		}
 		l += 1
-			w = 0
+		w = 0
 		c = -1
 		correctLimit()
 		print("\(l), \(w)")
-        if Settings.moveMouse {
-		CGDisplayMoveCursorToPoint(0, convert2coordinates(displayResults[l][w].boundingBox))
-        }
+		if Settings.moveMouse {
+			CGWarpMouseCursorPosition(convert2coordinates(displayResults[l][w].boundingBox))
+		}
 		var line = ""
 		for r in displayResults[l] {
 			line += " \(r.value)"
 		}
 		Accessibility.speak(line)
 	}
-
+	
 	func up() {
 		if displayResults.count == 0 {
 			return
 		}
 		l -= 1
-			w = 0
+		w = 0
 		c = -1
 		correctLimit()
 		print("\(l), \(w)")
-        if Settings.moveMouse {
-		CGDisplayMoveCursorToPoint(0, convert2coordinates(displayResults[l][w].boundingBox))
-        }
+		if Settings.moveMouse {
+			CGWarpMouseCursorPosition(convert2coordinates(displayResults[l][w].boundingBox))
+		}
 		var line = ""
 		for r in displayResults[l] {
 			line += " \(r.value)"
 		}
 		Accessibility.speak(line)
 	}
-
+	
 	func top() {
 		if displayResults.count == 0 {
 			return
@@ -205,7 +214,7 @@ class Navigation {
 		w = 0
 		up()
 	}
-
+	
 	func bottom() {
 		if displayResults.count == 0 {
 			return
@@ -214,7 +223,7 @@ class Navigation {
 		w = 0
 		down()
 	}
-
+	
 	func beginning() {
 		if displayResults.count == 0 {
 			return
@@ -230,7 +239,7 @@ class Navigation {
 		w = displayResults[l].count-2
 		right()
 	}
-
+	
 	func nextCharacter() {
 		if displayResults.count == 0 {
 			return
@@ -251,7 +260,7 @@ class Navigation {
 				str = String(character)
 				var box:CGRect
 				try box = candidate.boundingBox(for: range)!.boundingBox
-				CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
+				CGWarpMouseCursorPosition(convert2coordinates(box))
 				
 				/*
 				 str = String(character)
@@ -266,8 +275,8 @@ class Navigation {
 			} catch {
 			}
 		}
-		}
-
+	}
+	
 	func previousCharacter() {
 		if displayResults.count == 0 {
 			return
@@ -290,7 +299,7 @@ class Navigation {
 				var box:CGRect
 				try box = candidate.boundingBox(for: range)!.boundingBox
 				
-				CGDisplayMoveCursorToPoint(0, convert2coordinates(box))
+				CGWarpMouseCursorPosition(convert2coordinates(box))
 				
 				/*
 				 str = String(character).description
@@ -305,17 +314,17 @@ class Navigation {
 			}
 		}
 	}
-
+	
 	func text() -> String {
-var text = ""
+		var text = ""
 		for line in displayResults {
 			for word in line {
 				text += word.value+" "
 			}
 			text = text.dropLast()+"\n"
 		}
-return text
+		return text
 	}
-
+	
 }
 

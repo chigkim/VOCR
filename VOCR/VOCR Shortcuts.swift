@@ -24,6 +24,7 @@ struct Shortcuts {
 			setWindow(0)
 			if Navigation.shared.cgSize != CGSize() {
 				if let  cgImage = TakeScreensShots() {
+					debugPrint(Navigation.shared.cgSize.width, Navigation.shared.cgSize.height)
 					let prompt = "Can you describe the user interface in the following JSON format?\n[{'label': 'label', 'short string', 'uid': id_int, 'description': 'description string', 'content': 'string of some examples of contents in the area', 'boundingBox': [top_left_x_pixel, top_left_y_pixel, width_pixel, height_pixel]]\nThe image has dimensions of \(cgImage.width) and \(cgImage.height) height, so scale the pixel coordinates accordingly."
 					print(prompt)
 					Navigation.shared.askGPT(cgImage: cgImage, prompt: prompt)

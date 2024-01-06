@@ -14,6 +14,7 @@ import Cocoa
 import AXSwift
 
 let logger = Logger()
+
 func chooseFolder() -> URL? {
 	var url:URL?
 	let openPanel = NSOpenPanel()
@@ -104,24 +105,24 @@ func setWindow(_ n:Int) {
 	let currentApp = NSWorkspace.shared.frontmostApplication
 	Navigation.shared.appName = currentApp!.localizedName!
 	let windows = currentApp?.windows()
-
+	
 	/*
 	 // filter main window.
-	windows = windows!.filter {
-		var ref:CFTypeRef?
-		AXUIElementCopyAttributeValue($0, "AXMain" as CFString, &ref)
-		if let value = ref as? Int, value == 1 {
-			return true
-		}
-		return false
-	}
-	*/
-
+	 windows = windows!.filter {
+	 var ref:CFTypeRef?
+	 AXUIElementCopyAttributeValue($0, "AXMain" as CFString, &ref)
+	 if let value = ref as? Int, value == 1 {
+	 return true
+	 }
+	 return false
+	 }
+	 */
+	
 	if (windows!.isEmpty) {
 		return
 	}
 	var window = windows![0]
-
+	
 	if (n == -1) {
 		let alert = NSAlert()
 		alert.alertStyle = .informational
@@ -133,22 +134,22 @@ func setWindow(_ n:Int) {
 				title = "Untitled"
 			}
 			title += String(window.hashValue)
-				alert.addButton(withTitle: title)
-			}
+			alert.addButton(withTitle: title)
+		}
 		let modalResult = alert.runModal()
 		NSApplication.shared.hide(NSApplication.shared)
 		let r = modalResult.rawValue-1000
 		window = windows![r]
 	}
-
+	
 	print("Window information")
-// report(UIElement(window))
+	// report(UIElement(window))
 	Navigation.shared.windowName = window.value(of: "AXTitle")
 	var position:CFTypeRef?
 	var size:CFTypeRef?
 	AXUIElementCopyAttributeValue(window, "AXPosition" as CFString, &position)
 	AXUIElementCopyAttributeValue(window, "AXSize" as CFString, &size)
-
+	
 	if position != nil && size != nil {
 		AXValueGetValue(position as! AXValue, AXValueType.cgPoint, &cgPosition)
 		AXValueGetValue(size as! AXValue, AXValueType.cgSize, &cgSize)
@@ -158,8 +159,23 @@ func setWindow(_ n:Int) {
 	}
 	Navigation.shared.cgSize = cgSize
 	Navigation.shared.cgPosition = cgPosition
+	
+}
 
-	}
+func resizeCGImage(_ cgImage: CGImage, toWidth width: Int, toHeight height: Int) -> CGImage? {
+	let context = CGContext(data: nil,
+							width: width,
+							height: height,
+							bitsPerComponent: cgImage.bitsPerComponent,
+							bytesPerRow: 0, // letting Core Graphics determine the row bytes
+							space: cgImage.colorSpace ?? CGColorSpaceCreateDeviceRGB(),
+							bitmapInfo: cgImage.bitmapInfo.rawValue)
+	
+	context?.interpolationQuality = .high
+	context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
+	
+	return context?.makeImage()
+}
 
 func TakeScreensShots() -> CGImage? {
 	var displayCount: UInt32 = 0
@@ -176,8 +192,11 @@ func TakeScreensShots() -> CGImage? {
 		print("error: \(result)")
 		return nil
 	}
-
-	return CGDisplayCreateImage(activeDisplays[0], rect:CGRect(origin: Navigation.shared.cgPosition, size: Navigation.shared.cgSize))
+	var cgImage = CGDisplayCreateImage(activeDisplays[0], rect:CGRect(origin: Navigation.shared.cgPosition, size: Navigation.shared.cgSize))
+	debugPrint(cgImage?.width, cgImage?.height)
+	cgImage = resizeCGImage(cgImage!, toWidth: Int(Navigation.shared.cgSize.width), toHeight:Int(Navigation.shared.cgSize.height))
+	debugPrint(cgImage?.width, cgImage?.height)
+	return cgImage
 }
 
 func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
