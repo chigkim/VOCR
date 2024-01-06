@@ -14,6 +14,62 @@ import Cocoa
 import AXSwift
 
 let logger = Logger()
+func chooseFolder() -> URL? {
+	var url:URL?
+	let openPanel = NSOpenPanel()
+	openPanel.title                   = "Choose a ffolder"
+	openPanel.canChooseDirectories = true
+	openPanel.canChooseFiles = false
+	openPanel.allowsMultipleSelection = false
+	if (openPanel.runModal() == .OK) {
+		let windows = NSApplication.shared.windows
+		NSApplication.shared.hide(nil)
+		windows[1].close()
+		url =  openPanel.url
+	}
+	return url
+}
+
+func drawBoxes(_ cgImageInput : CGImage, boxes:[CGRect]) -> CGImage? {
+	var cgImageOutput : CGImage? = nil
+	if let dataProvider = cgImageInput.dataProvider {
+		if let data : CFData = dataProvider.data {
+			let length = CFDataGetLength(data)
+			
+			let bytes = UnsafeMutablePointer<UInt8>.allocate(capacity: length)
+			CFDataGetBytes(data, CFRange(location: 0, length: length), bytes)
+			if let ctx = CGContext(data: bytes, width: cgImageInput.width, height: cgImageInput.height, bitsPerComponent: cgImageInput.bitsPerComponent, bytesPerRow: cgImageInput.bytesPerRow, space: cgImageInput.colorSpace!, bitmapInfo: cgImageInput.bitmapInfo.rawValue) {
+				let red = CGColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
+				ctx.setFillColor(red)
+				ctx.setStrokeColor(red)
+				ctx.setLineWidth(10)
+				debugPrint("Drawing boxes:")
+				for box in boxes {
+					debugPrint(box)
+					ctx.stroke(box, width: 10.0)
+				}
+				cgImageOutput = (ctx.makeImage())
+				if cgImageOutput == nil {
+					print("Failed to make image from CGContext.")
+				}
+			} else {
+				print("Could not create context. Try different image parameters.")
+			}
+			bytes.deallocate()
+		} else {
+			print("Could not get dataProvider.data")
+		}
+	} else {
+		print ("Could not get cgImage.dataProvider")
+	}
+	return cgImageOutput
+}
+
+func saveImage(_ cgimage: CGImage, _ url:URL) throws {
+	let cicontext = CIContext()
+	let ciimage = CIImage(cgImage: cgimage)
+	try? cicontext.writePNGRepresentation(of: ciimage, to: url, format: .RGBA8, colorSpace: ciimage.colorSpace!)
+}
 
 func report(_ element:UIElement?) {
 	print("\(element!.label!)")
