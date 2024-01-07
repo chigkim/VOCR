@@ -39,7 +39,7 @@ class Navigation {
 	var w = -1
 	var c = -1
 	
-	func askGPT(cgImage:CGImage) {
+	func exploreWithGPT(cgImage:CGImage) {
 		self.cgImage = cgImage
 		if Settings.positionReset {
 			l = -1

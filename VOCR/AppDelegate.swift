@@ -215,24 +215,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		if let image = NSImage(contentsOf: fileURL) {
 			var rect = CGRect(origin: .zero, size: image.size)
 			if let cgImage = image.cgImage(forProposedRect: &rect, context: nil, hints: nil) {
-				let alert = NSAlert()
-				alert.messageText = "Ask GPT-4V"
-				alert.informativeText = "Type your question for GPT  below:"
-				alert.addButton(withTitle: "Ask")
-				alert.addButton(withTitle: "Cancel")
-				let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
-				inputTextField.placeholderString = "Question"
-				inputTextField.stringValue = "Describe the image."
-				alert.accessoryView = inputTextField
-				let response = alert.runModal()
-				if response == .alertFirstButtonReturn { // OK button
-					let prompt = inputTextField.stringValue
-					let system = "You are a helpful assistant."
-					GPT.describe(image:cgImage, system:system, prompt:prompt) { description in
-						Accessibility.speak(description)
-						copyToClipboard(description)
-					}
-				}
+				GPT.askGpt(image:cgImage)
 				return true  // Indicate success
 			} else {
 				return false

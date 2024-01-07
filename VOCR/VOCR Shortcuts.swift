@@ -22,7 +22,7 @@ struct Shortcuts {
 			if Navigation.shared.cgSize != CGSize() {
 				if let  cgImage = TakeScreensShots() {
 					debugPrint(Navigation.shared.cgSize.width, Navigation.shared.cgSize.height)
-					Navigation.shared.askGPT(cgImage: cgImage)
+					Navigation.shared.exploreWithGPT(cgImage: cgImage)
 				} else {
 					Accessibility.speakWithSynthesizer("Faild to take a screenshot of \(Navigation.shared.appName), \(Navigation.shared.windowName)")
 				}

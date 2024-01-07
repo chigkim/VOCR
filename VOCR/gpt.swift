@@ -14,7 +14,28 @@ enum GPT {
 		let choices: [Choice]
 	}
 	
-	
+	static func askGpt(image:CGImage) {
+		let alert = NSAlert()
+		alert.messageText = "Ask GPT-4V"
+		alert.informativeText = "Type your question for GPT  below:"
+		alert.addButton(withTitle: "Ask")
+		alert.addButton(withTitle: "Cancel")
+		let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+		inputTextField.placeholderString = "Question"
+		inputTextField.stringValue = "Describe the image."
+		alert.accessoryView = inputTextField
+		let response = alert.runModal()
+		if response == .alertFirstButtonReturn { // OK button
+			let prompt = inputTextField.stringValue
+			let system = "You are a helpful assistant."
+			GPT.describe(image:image, system:system, prompt:prompt) { description in
+				Accessibility.speak(description)
+				copyToClipboard(description)
+			}
+		}
+	}
+
+
 	static func describe(image: CGImage, system:String, prompt: String, completion: @escaping (String) -> Void) {
 		if Settings.GPTAPIKEY == "" {
 			if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
