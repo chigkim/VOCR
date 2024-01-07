@@ -1,75 +1,6 @@
 import Foundation
 import Cocoa
 
-let testJson = """
-[
-  {
-	"label": "Menu Toolbar",
-	"short_string": "Toolbar",
-	"uid": 1,
-	"description": "Toolbar containing various menu and tool icons for software functions",
-	"content": "New project, Save, Open project, Undo, Redo, Metronome, Settings",
-	"boundingBox": [0, 0, 2048, 40]
-  },
-  {
-	"label": "Track Area",
-	"short_string": "Tracks",
-	"uid": 2,
-	"description": "Area where tracks are displayed and edited",
-	"content": "Multiple tracks with timestamps and edit controls",
-	"boundingBox": [220, 40, 1700, 800]
-  },
-  {
-	"label": "Transport Controls",
-	"short_string": "Transport",
-	"uid": 3,
-	"description": "Controls for playback and recording",
-	"content": "Play, Stop, Record, Repeat",
-	"boundingBox": [10, 850, 200, 40]
-  },
-  {
-	"label": "Master Track",
-	"short_string": "Master",
-	"uid": 4,
-	"description": "Master track controls for the entire project",
-	"content": "Volume fader, Mute, Solo, Pan, FX, Routing",
-	"boundingBox": [10, 890, 200, 320]
-  },
-  {
-	"label": "Transport Bar",
-	"short_string": "TransportInfo",
-	"uid": 5,
-	"description": "Displays the current position, tempo, and playback status",
-	"content": "Current position, Project sample rate, Beats per minute, Playback status",
-	"boundingBox": [220, 840, 1700, 60]
-  },
-  {
-	"label": "Vertical Scrollbar",
-	"short_string": "VScroll",
-	"uid": 6,
-	"description": "Vertical scrollbar for navigating through tracks",
-	"content": "Scrollbar with up and down arrows",
-	"boundingBox": [1920, 40, 40, 860]
-  },
-  {
-	"label": "Mixer Area",
-	"short_string": "Mixer",
-	"uid": 7,
-	"description": "Mixer section for adjusting the balance of all tracks",
-	"content": "Controls for volume, pan, inserts, sends for each track",
-	"boundingBox": [10, 1210, 2030, 326]
-  },
-  {
-	"label": "Licensing Information",
-	"short_string": "LicenseInfo",
-	"uid": 8,
-	"description": "Displays the software registration status to a user",
-	"content": "Software version and user registration note",
-	"boundingBox": [650, 0, 750, 40]
-  }
-]
-"""
-
 struct GPTObservation: Decodable {
 	let label: String
 	let uid: Int
@@ -136,11 +67,10 @@ enum GPT {
 	}
 	
 	static func describe(_ image: CGImage, _ prompt: String, completion: @escaping (String) -> Void) {
-//		completion(testJson)
-//		return
 		let bitmapRep = NSBitmapImageRep(cgImage: image)
 		guard let imageData = bitmapRep.representation(using: .jpeg, properties: [:]) else {
 			fatalError("Could not convert image to JPEG.")
+			return
 			return
 		}
 		

@@ -35,16 +35,13 @@ class Navigation {
 		GPT.describe(cgImage, prompt) { description in
 			print("Received description: \(description)")
 			if let elements = GPT.decode(message:description) {
-				let result:[Observation] = elements.map {Observation($0)}
+				let result = elements.map {Observation($0)}
 				self.process(result)
 				self.navigationShortcuts = NavigationShortcuts()
 				Accessibility.speak("Finished scanning \(self.appName), \(self.windowName)")
-				let boxes = result.map {VNImageRectForNormalizedRect($0.boundingBox, Int(cgImage.width), Int(cgImage.height)) }
 				DispatchQueue.main.async {
-					if let url = chooseFolder() {
-						let boxImage = drawBoxes(cgImage, boxes:boxes )!
-						try? saveImage(boxImage, url.appendingPathComponent("Boxes.png"))
-					}
+					let boxImage = drawBoxes(cgImage, boxes:result, color:NSColor.red)!
+					// try? saveImage(boxImage)
 				}
 				
 			} else {
@@ -63,12 +60,11 @@ class Navigation {
 		displayResults = []
 		navigationShortcuts = nil
 		NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
-		let ocrResult = performOCR(cgImage:cgImage)
-		if ocrResult.count == 0 {
+		let result = performOCR(cgImage:cgImage)
+		if result.count == 0 {
 			Accessibility.speak("Nothing found")
 			return
 		}
-		let result = ocrResult.map {Observation($0)}
 		process(result)
 		Accessibility.speak("Finished scanning \(appName), \(windowName)")
 		navigationShortcuts = NavigationShortcuts()

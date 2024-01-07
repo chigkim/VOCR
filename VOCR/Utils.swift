@@ -15,23 +15,27 @@ import AXSwift
 
 let logger = Logger()
 
-func chooseFolder() -> URL? {
-	var url:URL?
-	let openPanel = NSOpenPanel()
-	openPanel.title                   = "Choose a ffolder"
-	openPanel.canChooseDirectories = true
-	openPanel.canChooseFiles = false
-	openPanel.allowsMultipleSelection = false
-	if (openPanel.runModal() == .OK) {
+func saveImage(_ cgImage: CGImage) throws {
+	let savePanel = NSSavePanel()
+	savePanel.title = "Save Your File"
+	savePanel.message = "Choose a destination and save your file."
+	savePanel.allowedContentTypes = [.png]
+	savePanel.nameFieldStringValue = Navigation.shared.appName+".png"
+	savePanel.begin { response in
+		if response == .OK {
+			if let selectedURL = savePanel.url {
+				let cicontext = CIContext()
+				let ciimage = CIImage(cgImage: cgImage)
+				try? cicontext.writePNGRepresentation(of: ciimage, to: selectedURL, format: .RGBA8, colorSpace: ciimage.colorSpace!)
+			}
+		}
 		let windows = NSApplication.shared.windows
 		NSApplication.shared.hide(nil)
 		windows[1].close()
-		url =  openPanel.url
 	}
-	return url
 }
 
-func drawBoxes(_ cgImageInput : CGImage, boxes:[CGRect]) -> CGImage? {
+func drawBoxes(_ cgImageInput : CGImage, boxes:[Observation], color:NSColor) -> CGImage? {
 	var cgImageOutput : CGImage? = nil
 	if let dataProvider = cgImageInput.dataProvider {
 		if let data : CFData = dataProvider.data {
@@ -40,12 +44,12 @@ func drawBoxes(_ cgImageInput : CGImage, boxes:[CGRect]) -> CGImage? {
 			let bytes = UnsafeMutablePointer<UInt8>.allocate(capacity: length)
 			CFDataGetBytes(data, CFRange(location: 0, length: length), bytes)
 			if let ctx = CGContext(data: bytes, width: cgImageInput.width, height: cgImageInput.height, bitsPerComponent: cgImageInput.bitsPerComponent, bytesPerRow: cgImageInput.bytesPerRow, space: cgImageInput.colorSpace!, bitmapInfo: cgImageInput.bitmapInfo.rawValue) {
-				let red = CGColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
-				ctx.setFillColor(red)
-				ctx.setStrokeColor(red)
+				ctx.setFillColor(color.cgColor)
+				ctx.setStrokeColor(color.cgColor)
 				ctx.setLineWidth(10)
 				debugPrint("Drawing boxes:")
-				for box in boxes {
+				let rects = boxes.map { VNImageRectForNormalizedRect($0.boundingBox, cgImageInput.width, cgImageInput.height) }
+				for box in rects {
 					debugPrint(box)
 					ctx.stroke(box, width: 10.0)
 				}
@@ -64,12 +68,6 @@ func drawBoxes(_ cgImageInput : CGImage, boxes:[CGRect]) -> CGImage? {
 		print ("Could not get cgImage.dataProvider")
 	}
 	return cgImageOutput
-}
-
-func saveImage(_ cgimage: CGImage, _ url:URL) throws {
-	let cicontext = CIContext()
-	let ciimage = CIImage(cgImage: cgimage)
-	try? cicontext.writePNGRepresentation(of: ciimage, to: url, format: .RGBA8, colorSpace: ciimage.colorSpace!)
 }
 
 func report(_ element:UIElement?) {
@@ -192,29 +190,80 @@ func TakeScreensShots() -> CGImage? {
 		print("error: \(result)")
 		return nil
 	}
-	var cgImage = CGDisplayCreateImage(activeDisplays[0], rect:CGRect(origin: Navigation.shared.cgPosition, size: Navigation.shared.cgSize))
-	debugPrint(cgImage?.width, cgImage?.height)
-	cgImage = resizeCGImage(cgImage!, toWidth: Int(Navigation.shared.cgSize.width), toHeight:Int(Navigation.shared.cgSize.height))
-	debugPrint(cgImage?.width, cgImage?.height)
-	return cgImage
+	if let cgImage = CGDisplayCreateImage(activeDisplays[0], rect:CGRect(origin: Navigation.shared.cgPosition, size: Navigation.shared.cgSize)) {
+		debugPrint("Original:", cgImage.width, cgImage.height)
+		if let resizedImage = resizeCGImage(cgImage, toWidth: Int(Navigation.shared.cgSize.width), toHeight:Int(Navigation.shared.cgSize.height)) {
+			debugPrint("Resized:", resizedImage.width, resizedImage.height)
+			return resizedImage
+		}
+	}
+return nil
 }
 
-func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation] {
+func performOCR(cgImage:CGImage) -> [Observation] {
 	let textRecognitionRequest = VNRecognizeTextRequest()
 	textRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate
 	textRecognitionRequest.minimumTextHeight = 0
 	textRecognitionRequest.usesLanguageCorrection = true
 	textRecognitionRequest.customWords = []
 	textRecognitionRequest.usesCPUOnly = false
-	let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
 	textRecognitionRequest.cancel()
+	let rectDetectRequest = VNDetectRectanglesRequest()
+	rectDetectRequest.maximumObservations = 1000
+	rectDetectRequest.minimumConfidence = 0.0
+	rectDetectRequest.minimumAspectRatio = 0.0
+	rectDetectRequest.minimumSize = 0.0
+	rectDetectRequest.cancel()
+
+	let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
 	do {
-		try requestHandler.perform([textRecognitionRequest])
+		try requestHandler.perform([textRecognitionRequest, rectDetectRequest])
 	} catch _ {}
-	guard let results = textRecognitionRequest.results else {
+	guard let texts = textRecognitionRequest.results else {
 		return []
 	}
-	return results
+	var result = texts.map {Observation($0)}
+
+	guard let boxes = rectDetectRequest.results else {
+		return []
+	}
+
+	var boxesNoText:[Observation] = []
+	var boxesText:[Observation] = []
+	for box in boxes {
+		var intersectsFlag: Bool = false
+		for text in texts {
+			if box.boundingBox.intersects(text.boundingBox) {
+				let obs = Observation(box, value:"Text: "+text.topCandidates(1)[0].string)
+				boxesText.append(obs)
+				intersectsFlag = true
+				break
+			}
+		}
+		if !intersectsFlag {
+			let obs = Observation(box, value:"Object")
+			boxesNoText.append(obs)
+			result.append(obs)
+		}
+	}
+
+	print("Box Count:", boxes.count)
+	print("Text Count:", texts.count)
+	print("boxesNoText Count:", boxesNoText.count)
+	print("boxesText count:", boxesText.count)
+/*
+	var pointBoxes: [CGRect] = []
+	for point in texts {
+		// print("point: ", point)
+		pointBoxes.append(CGRect(x: point.boundingBox.minX-0.1, y: point.boundingBox.minY-0.1, width: 0.2, height: 0.2))
+	}
+*/
+
+	var boxImage = drawBoxes(cgImage, boxes:boxesText, color:NSColor.green)!
+	boxImage = drawBoxes(boxImage, boxes:boxesNoText, color:NSColor.blue)!
+	// try? saveImage(boxImage)
+
+	return result
 }
 
 func classify(cgImage:CGImage) -> String {

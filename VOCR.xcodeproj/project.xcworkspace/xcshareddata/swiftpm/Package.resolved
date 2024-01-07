@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/AudioKit/AudioKit",
       "state" : {
-        "revision" : "c30a151fea40696ad0a45c60c2bba29112bb4279",
-        "version" : "5.6.1"
+        "revision" : "82cab9d4c168b5b03b67e2ff099819f589b530f7",
+        "version" : "5.6.2"
       }
     },
     {
@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/soffes/HotKey",
       "state" : {
-        "revision" : "c13662730cb5bc28de4a799854bbb018a90649bf",
-        "version" : "0.1.3"
+        "revision" : "31234dfbb4330b90ee10d89fbacb77316781cc06",
+        "version" : "0.2.0"
       }
     },
     {

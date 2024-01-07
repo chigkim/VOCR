@@ -38,6 +38,11 @@ struct Observation {
 		debugPrint(value, boundingBox)
 	}
 
+	init(_ obs:VNRectangleObservation, value:String) {
+		self.boundingBox = obs.boundingBox
+		self.value = value
+	}
+	
 }
 
 
