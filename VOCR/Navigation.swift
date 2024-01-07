@@ -145,7 +145,6 @@ class Navigation {
 		print("\(l), \(w)")
 		if Settings.moveMouse {
 			CGWarpMouseCursorPosition(convert2coordinates(displayResults[l][w].boundingBox))
-
 		}
 		Accessibility.speak(displayResults[l][w].value)
 	}

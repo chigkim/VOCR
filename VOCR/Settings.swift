@@ -9,11 +9,12 @@
 import Cocoa
 
 enum Settings {
-	
+
 	static var positionReset = true
 	static var positionalAudio = false
 	static var moveMouse = true
 	static var launchOnBoot = true
+	static var autoScan = false
 	static var GPTAPIKEY = ""
 
 	static func load() {
@@ -23,6 +24,8 @@ enum Settings {
 		Settings.positionalAudio = defaults.bool(forKey:"positionalAudio")
 		debugPrint("positionalAudio \(Settings.positionalAudio)")
 		Settings.launchOnBoot = defaults.bool(forKey:"launchOnBoot")
+		Settings.autoScan = defaults.bool(forKey:"autoScan")
+		debugPrint("autoScan \(Settings.autoScan)")
 		if let apikey = defaults.string(forKey: "GPTAPIKEY") {
 			Settings.GPTAPIKEY = apikey
 		}
@@ -33,6 +36,7 @@ enum Settings {
 		defaults.set(Settings.positionReset, forKey:"positionReset")
 		defaults.set(Settings.positionalAudio, forKey:"positionalAudio")
 		defaults.set(Settings.launchOnBoot, forKey:"launchOnBoot")
+		defaults.set(Settings.autoScan, forKey:"autoScan")
 		defaults.set(Settings.GPTAPIKEY, forKey:"GPTAPIKEY")
 	}
 	

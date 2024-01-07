@@ -4,9 +4,47 @@ import AudioKit
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 	
+	private var eventMonitor: Any?
+	
 	let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 	var windows:[NSWindow] = []
 	let shortcuts = Shortcuts()
+	
+	
+	func installMouseMonitor() {
+		self.eventMonitor = NSEvent.addGlobalMonitorForEvents(
+			matching: [NSEvent.EventTypeMask.leftMouseDown],
+			handler: { (event: NSEvent) in
+				switch event.type {
+				case .leftMouseDown:
+					print("Left mouse click detected.")
+					if Navigation.shared.navigationShortcuts != nil {
+						Thread.sleep(forTimeInterval: 0.5)
+						initOCR()
+					}
+				case .rightMouseDown:
+					print("Right mouse click detected.")
+					if Navigation.shared.navigationShortcuts != nil {
+						Thread.sleep(forTimeInterval: 0.5)
+						initOCR()
+					}
+					
+					
+				default:
+					break
+				}
+			})
+	}
+
+	func removeMouseMonitor() {
+		if let eventMonitor = self.eventMonitor {
+			NSEvent.removeMonitor(eventMonitor)
+		}
+	}
+
+	func applicationWillTerminate(_ notification: Notification) {
+		removeMouseMonitor()
+	}
 	
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		let fileManager = FileManager.default
@@ -25,18 +63,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			Settings.save()
 		}
 		Settings.load()
+
 		let menu = NSMenu()
+
+		let autoScanMenuItem = NSMenuItem(title: "Auto Scan", action: #selector(toggleAutoScan(_:)), keyEquivalent: "")
+		autoScanMenuItem.state = (Settings.autoScan) ? .on : .off
+		menu.addItem(autoScanMenuItem)
+		if Settings.autoScan {
+			installMouseMonitor()
+		}
 		let positionResetMenuItem = NSMenuItem(title: "Reset Position on Scan", action: #selector(togglepositionReset(_:)), keyEquivalent: "")
 		positionResetMenuItem.state = (Settings.positionReset) ? .on : .off
-				menu.addItem(positionResetMenuItem)
+		menu.addItem(positionResetMenuItem)
+
 		let positionalAudioMenuItem = NSMenuItem(title: "Positional Audio", action: #selector(togglePositionalAudio(_:)), keyEquivalent: "")
 		positionalAudioMenuItem.state = (Settings.positionalAudio) ? .on : .off
 		menu.addItem(positionalAudioMenuItem)
-
+		
 		let moveMouseMenuItem = NSMenuItem(title: "Move Mouse", action: #selector(toggleMoveMouse(_:)), keyEquivalent: "")
 		moveMouseMenuItem.state = (Settings.moveMouse) ? .on : .off
 		menu.addItem(moveMouseMenuItem)
-
+		
 		let menuItem = NSMenuItem(title: "Launch on Login", action: #selector(toggleLaunch(_:)), keyEquivalent: "")
 		if fileManager.fileExists(atPath: launchFile.path) {
 			menuItem.state = .on
@@ -57,46 +104,57 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		windows = NSApplication.shared.windows
 		NSApplication.shared.hide(self)
 		windows[1].close()
-
+		
 	}
 
+	@objc func toggleAutoScan(_ sender: NSMenuItem) {
+		sender.state = (sender.state == .off) ? .on : .off
+		Settings.autoScan = (sender.state == .on) ? true : false
+		Settings.save()
+		if Settings.autoScan {
+			installMouseMonitor()
+		} else {
+			removeMouseMonitor()
+		}
+	}
+	
 	@objc func togglepositionReset(_ sender: NSMenuItem) {
 		sender.state = (sender.state == .off) ? .on : .off
 		Settings.positionReset = (sender.state == .on) ? true : false
-Settings.save()
+		Settings.save()
 	}
-
+	
 	@objc func togglePositionalAudio(_ sender: NSMenuItem) {
 		sender.state = (sender.state == .off) ? .on : .off
 		Settings.positionalAudio = (sender.state == .on)
 		Settings.save()
 	}
-
-
+	
+	
 	@objc func toggleMoveMouse(_ sender: NSMenuItem) {
 		sender.state = (sender.state == .off) ? .on : .off
 		Settings.moveMouse = (sender.state == .on)
 		Settings.save()
 	}
-
+	
 	@objc func presentApiKeyInputDialog(_ sender: AnyObject?) {
-	 let alert = NSAlert()
-	 alert.messageText = "OpenAI API Key"
-	 alert.informativeText = "Type your OpenAI API key below:"
-	 alert.addButton(withTitle: "Save")
-	 alert.addButton(withTitle: "Cancel")
-	 let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
-	 inputTextField.placeholderString = "API Key"
+		let alert = NSAlert()
+		alert.messageText = "OpenAI API Key"
+		alert.informativeText = "Type your OpenAI API key below:"
+		alert.addButton(withTitle: "Save")
+		alert.addButton(withTitle: "Cancel")
+		let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+		inputTextField.placeholderString = "API Key"
 		inputTextField.stringValue = Settings.GPTAPIKEY
-	 alert.accessoryView = inputTextField
-	 let response = alert.runModal()
-	 if response == .alertFirstButtonReturn { // OK button
-		 let apiKey = inputTextField.stringValue
-		 Settings.GPTAPIKEY = apiKey
-		 Settings.save()
-	 }
- }
-
+		alert.accessoryView = inputTextField
+		let response = alert.runModal()
+		if response == .alertFirstButtonReturn { // OK button
+			let apiKey = inputTextField.stringValue
+			Settings.GPTAPIKEY = apiKey
+			Settings.save()
+		}
+	}
+	
 	@objc func toggleLaunch(_ sender: NSMenuItem) {
 		let fileManager = FileManager.default
 		let home = fileManager.homeDirectoryForCurrentUser
@@ -118,7 +176,7 @@ Settings.save()
 			sender.state = .off
 		}
 	}
-
+	
 	@objc func displayAboutWindow(_ sender: Any?) {
 		let storyboardName = NSStoryboard.Name(stringLiteral: "Main")
 		let storyboard = NSStoryboard(name: storyboardName, bundle: nil)
@@ -128,24 +186,24 @@ Settings.save()
 			aboutWindowController.showWindow(nil)
 		}
 	}
-
+	
 	@objc func chooseOutput(_ sender: Any?) {
 		let alert = NSAlert()
 		alert.alertStyle = .informational
 		alert.messageText = "Sound Output"
 		alert.informativeText = "Choose an Output for positional audio feedback."
 		let devices = AudioEngine.outputDevices
-			for device in devices {
-				alert.addButton(withTitle: device.name)
-			}
-
+		for device in devices {
+			alert.addButton(withTitle: device.name)
+		}
+		
 		let modalResult = alert.runModal()
 		let n = modalResult.rawValue-1000
 		Player.shared.engine.stop()
 		try! Player.shared.engine.setDevice(AudioEngine.outputDevices[n])
 		try! Player.shared.engine.start()
 	}
-
+	
 	@objc func click(_ sender: Any?) {
 		print("Clicked")
 	}

@@ -200,6 +200,18 @@ func TakeScreensShots() -> CGImage? {
 return nil
 }
 
+func initOCR() {
+	if Navigation.shared.cgSize != CGSize() {
+		if let  cgImage = TakeScreensShots() {
+			Navigation.shared.startOCR(cgImage:cgImage)
+		} else {
+			Accessibility.speakWithSynthesizer("Faild to take a screenshot of \(Navigation.shared.appName), \(Navigation.shared.windowName)")
+		}
+	} else {
+		Accessibility.speakWithSynthesizer("Faild to access \(Navigation.shared.appName), \(Navigation.shared.windowName)")
+	}
+}
+
 func performOCR(cgImage:CGImage) -> [Observation] {
 	let textRecognitionRequest = VNRecognizeTextRequest()
 	textRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate

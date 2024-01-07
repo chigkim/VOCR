@@ -46,15 +46,7 @@ struct Shortcuts {
 				return
 			}
 			setWindow(0)
-			if Navigation.shared.cgSize != CGSize() {
-				if let  cgImage = TakeScreensShots() {
-					Navigation.shared.startOCR(cgImage:cgImage)
-				} else {
-					Accessibility.speakWithSynthesizer("Faild to take a screenshot of \(Navigation.shared.appName), \(Navigation.shared.windowName)")
-				}
-			} else {
-				Accessibility.speakWithSynthesizer("Faild to access \(Navigation.shared.appName), \(Navigation.shared.windowName)")
-			}
+			initOCR()
 		}
 		
 		targetWindow.keyDownHandler = {
@@ -63,15 +55,7 @@ struct Shortcuts {
 				return
 			}
 			setWindow(-1)
-			if Navigation.shared.cgSize != CGSize() {
-				if let  cgImage = TakeScreensShots() {
-					Navigation.shared.startOCR(cgImage:cgImage)
-				} else {
-					Accessibility.speakWithSynthesizer("Faild to take a screenshot of \(Navigation.shared.appName), \(Navigation.shared.windowName)")
-				}
-			} else {
-				Accessibility.speakWithSynthesizer("Faild to access \(Navigation.shared.appName), \(Navigation.shared.windowName)")
-			}
+			initOCR()
 		}
 		
 		vo.keyDownHandler = {
