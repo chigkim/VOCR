@@ -132,6 +132,7 @@ enum GPT {
 			
 			
 		}
+		Accessibility.speak("Getting response from ChatGPT... Please wait...")
 		task.resume()
 	}
 }

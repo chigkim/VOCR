@@ -18,7 +18,7 @@ struct Observation {
 
 	init(_ obs:GPTObservation) {
 		self.gptObservation = obs
-		self.value = obs.label+"\n"+obs.content
+		self.value = obs.label+"\n"+obs.content+"\n"+obs.description
 		let x = CGFloat(obs.boundingBox[0])
 		let y = CGFloat(obs.boundingBox[1])
 		let width = CGFloat(obs.boundingBox[2])
