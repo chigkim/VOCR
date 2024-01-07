@@ -14,6 +14,33 @@ import Cocoa
 import AXSwift
 
 let logger = Logger()
+import Cocoa
+
+func copyToClipboard(_ string: String) {
+	let pasteboard = NSPasteboard.general
+	pasteboard.clearContents()
+	pasteboard.setString(string, forType: .string)
+}
+
+func extractString(text: String, startDelimiter: String, endDelimiter: String) -> String? {
+	guard let startRange = text.range(of: startDelimiter) else {
+		return nil // No start delimiter found
+	}
+	
+	// Define the search start for the next delimiter to be right after the first delimiter
+	let searchStartIndex = startRange.upperBound
+	
+	// Find the range of the next delimiter after the first delimiter
+	guard let endRange = text.range(of: endDelimiter, range: searchStartIndex..<text.endIndex) else {
+		return nil // No end delimiter found
+	}
+	
+	// Extract the substring between the delimiters
+	let startIndex = startRange.upperBound
+	let endIndex = endRange.lowerBound
+	return String(text[startIndex..<endIndex])
+}
+
 
 func saveImage(_ cgImage: CGImage) throws {
 	let savePanel = NSSavePanel()
@@ -253,7 +280,7 @@ func performOCR(cgImage:CGImage) -> [Observation] {
 			}
 		}
 		if !intersectsFlag {
-			let obs = Observation(box, value:"Object")
+			let obs = Observation(box, value:"OBJECT")
 			boxesNoText.append(obs)
 			result.append(obs)
 		}
@@ -302,11 +329,13 @@ func classify(cgImage:CGImage) -> String {
 			message += "\(classes[c].key), "
 		}
 		Accessibility.speak(message)
-		if message.contains("document") {
-			Navigation.shared.startOCR(cgImage:cgImage)
-			message += "\n"+Navigation.shared.text()
-		}
-	} else {
+		/*
+		 if message.contains("document") {
+		 Navigation.shared.startOCR(cgImage:cgImage)
+		 message += "\n"+Navigation.shared.text()
+		 }
+		 */
+	}else {
 		Accessibility.speak("Unknown")
 	}
 	return message

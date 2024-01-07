@@ -1,24 +1,6 @@
 import Foundation
 import Cocoa
 
-struct GPTObservation: Decodable {
-	let label: String
-	let uid: Int
-	let description: String
-	let content: String
-	let boundingBox: [Int]
-	
-	// Coding keys to match the JSON property names
-	enum CodingKeys: String, CodingKey {
-		case label
-		case uid
-		case description
-		case content
-		case boundingBox
-	}
-}
-
-
 enum GPT {
 
 	struct Response: Decodable {
@@ -33,41 +15,16 @@ enum GPT {
 	}
 	
 	
-	static func decode(message:String) -> [GPTObservation]? {
-		let jsonData = message.data(using: .utf8)!
-		do {
-			let elements = try JSONDecoder().decode([GPTObservation].self, from: jsonData)
-			for element in elements {
-				print("Label: \(element.label), UID: \(element.uid), Bounding Box: \(element.boundingBox)")
+	static func describe(image: CGImage, system:String, prompt: String, completion: @escaping (String) -> Void) {
+		if Settings.GPTAPIKEY == "" {
+			if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
+				appDelegate.presentApiKeyInputDialog(nil)
 			}
-			return elements
-		} catch {
-			print("Error decoding JSON: \(error)")
 		}
-		return nil
-	}
-
-	static func extractString(text: String, startDelimiter: String, endDelimiter: String) -> String? {
-		guard let startRange = text.range(of: startDelimiter) else {
-			return nil // No start delimiter found
+		if Settings.GPTAPIKEY == "" {
+			return
 		}
-		
-		// Define the search start for the next delimiter to be right after the first delimiter
-		let searchStartIndex = startRange.upperBound
-		
-		// Find the range of the next delimiter after the first delimiter
-		guard let endRange = text.range(of: endDelimiter, range: searchStartIndex..<text.endIndex) else {
-			return nil // No end delimiter found
-		}
-		
-		// Extract the substring between the delimiters
-		let startIndex = startRange.upperBound
-		let endIndex = endRange.lowerBound
-		return String(text[startIndex..<endIndex])
-	}
-	
-	static func describe(_ image: CGImage, _ prompt: String, completion: @escaping (String) -> Void) {
-		let bitmapRep = NSBitmapImageRep(cgImage: image)
+			let bitmapRep = NSBitmapImageRep(cgImage: image)
 		guard let imageData = bitmapRep.representation(using: .jpeg, properties: [:]) else {
 			fatalError("Could not convert image to JPEG.")
 			return
@@ -81,7 +38,7 @@ enum GPT {
 			"messages": [
 				[
 					"role": "system",
-					"content": "You are a helpful assistant. Your response should be in JSON format."
+					"content": system
 				],
 				[
 					"role": "user",
@@ -121,9 +78,9 @@ enum GPT {
 			do {
 				let response = try JSONDecoder().decode(Response.self, from: data)
 				if let firstChoice = response.choices.first {
-					if let messageContent = extractString(text: firstChoice.message.content, startDelimiter: "```json\n", endDelimiter: "\n```") {
-						completion(messageContent)
-					}
+					let description = firstChoice.message.content
+					print("GPT-4V: \(description)")
+					completion(description)
 				}
 			} catch {
 				print("Error decoding JSON: \(error)")
@@ -132,7 +89,7 @@ enum GPT {
 			
 			
 		}
-		Accessibility.speak("Getting response from ChatGPT... Please wait...")
+		Accessibility.speakWithSynthesizer("Getting response from ChatGPT... Please wait...")
 		task.resume()
 	}
 }

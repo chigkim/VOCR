@@ -5,46 +5,9 @@ import AudioKit
 class AppDelegate: NSObject, NSApplicationDelegate {
 	
 	private var eventMonitor: Any?
-	
 	let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 	var windows:[NSWindow] = []
 	let shortcuts = Shortcuts()
-	
-	
-	func installMouseMonitor() {
-		self.eventMonitor = NSEvent.addGlobalMonitorForEvents(
-			matching: [NSEvent.EventTypeMask.leftMouseDown],
-			handler: { (event: NSEvent) in
-				switch event.type {
-				case .leftMouseDown:
-					print("Left mouse click detected.")
-					if Navigation.shared.navigationShortcuts != nil {
-						Thread.sleep(forTimeInterval: 0.5)
-						initOCR()
-					}
-				case .rightMouseDown:
-					print("Right mouse click detected.")
-					if Navigation.shared.navigationShortcuts != nil {
-						Thread.sleep(forTimeInterval: 0.5)
-						initOCR()
-					}
-					
-					
-				default:
-					break
-				}
-			})
-	}
-
-	func removeMouseMonitor() {
-		if let eventMonitor = self.eventMonitor {
-			NSEvent.removeMonitor(eventMonitor)
-		}
-	}
-
-	func applicationWillTerminate(_ notification: Notification) {
-		removeMouseMonitor()
-	}
 	
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		let fileManager = FileManager.default
@@ -63,9 +26,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			Settings.save()
 		}
 		Settings.load()
-
+		
 		let menu = NSMenu()
-
+		
 		let autoScanMenuItem = NSMenuItem(title: "Auto Scan", action: #selector(toggleAutoScan(_:)), keyEquivalent: "")
 		autoScanMenuItem.state = (Settings.autoScan) ? .on : .off
 		menu.addItem(autoScanMenuItem)
@@ -75,7 +38,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		let positionResetMenuItem = NSMenuItem(title: "Reset Position on Scan", action: #selector(togglepositionReset(_:)), keyEquivalent: "")
 		positionResetMenuItem.state = (Settings.positionReset) ? .on : .off
 		menu.addItem(positionResetMenuItem)
-
+		
 		let positionalAudioMenuItem = NSMenuItem(title: "Positional Audio", action: #selector(togglePositionalAudio(_:)), keyEquivalent: "")
 		positionalAudioMenuItem.state = (Settings.positionalAudio) ? .on : .off
 		menu.addItem(positionalAudioMenuItem)
@@ -106,7 +69,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		windows[1].close()
 		
 	}
-
+	
 	@objc func toggleAutoScan(_ sender: NSMenuItem) {
 		sender.state = (sender.state == .off) ? .on : .off
 		Settings.autoScan = (sender.state == .on) ? true : false
@@ -210,6 +173,72 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	
 	@objc func quit(_ sender: AnyObject?) {
 		NSApplication.shared.terminate(self)
+	}
+	
+	func installMouseMonitor() {
+		self.eventMonitor = NSEvent.addGlobalMonitorForEvents(
+			matching: [NSEvent.EventTypeMask.leftMouseDown],
+			handler: { (event: NSEvent) in
+				switch event.type {
+				case .leftMouseDown:
+					print("Left mouse click detected.")
+					if Navigation.shared.navigationShortcuts != nil {
+						Thread.sleep(forTimeInterval: 0.5)
+						initOCR()
+					}
+				case .rightMouseDown:
+					print("Right mouse click detected.")
+					if Navigation.shared.navigationShortcuts != nil {
+						Thread.sleep(forTimeInterval: 0.5)
+						initOCR()
+					}
+					
+					
+				default:
+					break
+				}
+			})
+	}
+	
+	func removeMouseMonitor() {
+		if let eventMonitor = self.eventMonitor {
+			NSEvent.removeMonitor(eventMonitor)
+		}
+	}
+	
+	func applicationWillTerminate(_ notification: Notification) {
+		removeMouseMonitor()
+	}
+	
+	func application(_ sender: NSApplication, openFile filename: String) -> Bool {
+		let fileURL = URL(fileURLWithPath: filename)
+		if let image = NSImage(contentsOf: fileURL) {
+			var rect = CGRect(origin: .zero, size: image.size)
+			if let cgImage = image.cgImage(forProposedRect: &rect, context: nil, hints: nil) {
+				let alert = NSAlert()
+				alert.messageText = "Ask GPT-4V"
+				alert.informativeText = "Type your question for GPT  below:"
+				alert.addButton(withTitle: "Ask")
+				alert.addButton(withTitle: "Cancel")
+				let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+				inputTextField.placeholderString = "Question"
+				inputTextField.stringValue = "Describe the image."
+				alert.accessoryView = inputTextField
+				let response = alert.runModal()
+				if response == .alertFirstButtonReturn { // OK button
+					let prompt = inputTextField.stringValue
+					let system = "You are a helpful assistant."
+					GPT.describe(image:cgImage, system:system, prompt:prompt) { description in
+						Accessibility.speak(description)
+						copyToClipboard(description)
+					}
+				}
+				return true  // Indicate success
+			} else {
+				return false
+			}
+		}
+		return false
 	}
 	
 }

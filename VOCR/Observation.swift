@@ -8,6 +8,23 @@
 
 import Foundation
 import Vision
+struct GPTObservation: Decodable {
+	let label: String
+	let uid: Int
+	let description: String
+	let content: String
+	let boundingBox: [Int]
+	
+	// Coding keys to match the JSON property names
+	enum CodingKeys: String, CodingKey {
+		case label
+		case uid
+		case description
+		case content
+		case boundingBox
+	}
+}
+
 
 struct Observation {
 

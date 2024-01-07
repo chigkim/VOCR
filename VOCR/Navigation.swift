@@ -11,19 +11,36 @@ import Vision
 import Cocoa
 
 class Navigation {
-	
+
+		func decode(message:String) -> [GPTObservation]? {
+			let jsonData = message.data(using: .utf8)!
+			do {
+				let elements = try JSONDecoder().decode([GPTObservation].self, from: jsonData)
+				for element in elements {
+					print("Label: \(element.label), UID: \(element.uid), Bounding Box: \(element.boundingBox)")
+				}
+				return elements
+			} catch {
+				print("Error decoding JSON: \(error)")
+			}
+			return nil
+		}
+
+
 	static let shared = Navigation()
 	var displayResults:[[Observation]] = []
 	var navigationShortcuts:NavigationShortcuts?
 	var cgPosition = CGPoint()
 	var cgSize = CGSize()
+	var cgImage:CGImage?
 	var windowName = "Unknown Window"
 	var appName = "Unknown App"
 	var l = -1
 	var w = -1
 	var c = -1
 	
-	func askGPT(cgImage:CGImage, prompt:String) {
+	func askGPT(cgImage:CGImage) {
+		self.cgImage = cgImage
 		if Settings.positionReset {
 			l = -1
 			w = -1
@@ -32,15 +49,16 @@ class Navigation {
 		displayResults = []
 		navigationShortcuts = nil
 		NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
-		GPT.describe(cgImage, prompt) { description in
-			print("Received description: \(description)")
-			if let elements = GPT.decode(message:description) {
+		let system = "You are a helpful assistant. Your response should be in JSON format."
+		let prompt = "Can you describe the user interface in the following JSON format?\n[{'label': 'label', 'short string', 'uid': id_int, 'description': 'description string', 'content': 'string of some examples of contents in the area', 'boundingBox': [top_left_x_pixel, top_left_y_pixel, width_pixel, height_pixel]]\nThe image has dimensions of \(cgImage.width) and \(cgImage.height) height, so scale the pixel coordinates accordingly. Only display json strings, nothing else in the beginning or at the end."
+		GPT.describe(image:cgImage, system:system, prompt:prompt) { description in
+			if let elements = self.decode(message:extractString(text:description, startDelimiter: "```json\n", endDelimiter: "\n```")!) {
 				let result = elements.map {Observation($0)}
 				self.process(result)
 				self.navigationShortcuts = NavigationShortcuts()
 				Accessibility.speak("Finished scanning \(self.appName), \(self.windowName)")
 				DispatchQueue.main.async {
-					let boxImage = drawBoxes(cgImage, boxes:result, color:NSColor.red)!
+					// let boxImage = drawBoxes(cgImage, boxes:result, color:NSColor.red)!
 					// try? saveImage(boxImage)
 				}
 				
@@ -52,6 +70,7 @@ class Navigation {
 	}
 	
 	func startOCR(cgImage:CGImage) {
+		self.cgImage = cgImage
 		if Settings.positionReset {
 			l = -1
 			w = -1
@@ -134,7 +153,15 @@ class Navigation {
 			w = displayResults[l].count-1
 		}
 	}
-	
+
+	func identifyObject() {
+		if displayResults[l][w].value == "OBJECT" {
+			if let image =  cgImage, let croppedImage = image.cropping(to: VNImageRectForNormalizedRect(displayResults[l][w].boundingBox, image.width, image.height)) {
+				classify(cgImage:croppedImage)
+			}
+		}
+	}
+
 	func right() {
 		if displayResults.count == 0 {
 			return
@@ -147,8 +174,9 @@ class Navigation {
 			CGWarpMouseCursorPosition(convert2coordinates(displayResults[l][w].boundingBox))
 		}
 		Accessibility.speak(displayResults[l][w].value)
+		// identifyObject()
 	}
-	
+
 	func left() {
 		if displayResults.count == 0 {
 			return
@@ -161,6 +189,7 @@ class Navigation {
 			CGWarpMouseCursorPosition(convert2coordinates(displayResults[l][w].boundingBox))
 		}
 		Accessibility.speak(displayResults[l][w].value)
+		// identifyObject()
 	}
 	
 	func down() {
