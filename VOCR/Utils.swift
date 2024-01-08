@@ -342,7 +342,11 @@ func recognizeVOCursor() {
 			if let dataImage = try? Data(contentsOf:url) {
 				let dataProvider = CGDataProvider(data: dataImage as CFData)
 				if let cgImage = CGImage(pngDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent) {
-					GPT.askGpt(image:cgImage)
+					if Settings.mode == "GPT" {
+						GPT.askGpt(image:cgImage)
+					} else {
+						classify(cgImage:cgImage)
+					}
 				}
 			}
 			let fileManager = FileManager.default
