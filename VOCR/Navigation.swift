@@ -26,7 +26,6 @@ class Navigation {
 			return nil
 		}
 
-
 	static let shared = Navigation()
 	var displayResults:[[Observation]] = []
 	var navigationShortcuts:NavigationShortcuts?
@@ -38,7 +37,70 @@ class Navigation {
 	var l = -1
 	var w = -1
 	var c = -1
-	
+
+	func setWindow(_ n:Int) {
+		windowName = "Unknown Window"
+		appName = "Unknown App"
+cgPosition = CGPoint()
+		cgSize = CGSize()
+		let currentApp = NSWorkspace.shared.frontmostApplication
+		appName = currentApp!.localizedName!
+		let windows = currentApp?.windows()
+		
+		/*
+		 // filter main window.
+		 windows = windows!.filter {
+		 var ref:CFTypeRef?
+		 AXUIElementCopyAttributeValue($0, "AXMain" as CFString, &ref)
+		 if let value = ref as? Int, value == 1 {
+		 return true
+		 }
+		 return false
+		 }
+		 */
+		
+		if (windows!.isEmpty) {
+			return
+		}
+		var window = windows![0]
+		
+		if (n == -1) {
+			let alert = NSAlert()
+			alert.alertStyle = .informational
+			alert.messageText = "Target Window"
+			alert.informativeText = "Choose an window to scan."
+			for window in windows! {
+				var title = window.value(of: "AXTitle")
+				if (title == "") {
+					title = "Untitled"
+				}
+				title += String(window.hashValue)
+				alert.addButton(withTitle: title)
+			}
+			let modalResult = alert.runModal()
+			NSApplication.shared.hide(NSApplication.shared)
+			let r = modalResult.rawValue-1000
+			window = windows![r]
+		}
+		
+		print("Window information")
+		// report(UIElement(window))
+		windowName = window.value(of: "AXTitle")
+		var position:CFTypeRef?
+		var size:CFTypeRef?
+		AXUIElementCopyAttributeValue(window, "AXPosition" as CFString, &position)
+		AXUIElementCopyAttributeValue(window, "AXSize" as CFString, &size)
+		
+		if position != nil && size != nil {
+			AXValueGetValue(position as! AXValue, AXValueType.cgPoint, &cgPosition)
+			AXValueGetValue(size as! AXValue, AXValueType.cgSize, &cgSize)
+			print("\(cgPosition), \(cgSize)")
+		} else {
+			print("Failed to get position or size")
+		}
+		
+	}
+
 	func exploreWithGPT(cgImage:CGImage) {
 		self.cgImage = cgImage
 		if Settings.positionReset {
@@ -52,7 +114,8 @@ class Navigation {
 		let system = "You are a helpful assistant. Your response should be in JSON format."
 		let prompt = "Can you describe the user interface in the following JSON format?\n[{'label': 'label', 'short string', 'uid': id_int, 'description': 'description string', 'content': 'string of some examples of contents in the area', 'boundingBox': [top_left_x_pixel, top_left_y_pixel, width_pixel, height_pixel]]\nThe image has dimensions of \(cgImage.width) and \(cgImage.height) height, so scale the pixel coordinates accordingly. Only display json strings, nothing else in the beginning or at the end."
 		GPT.describe(image:cgImage, system:system, prompt:prompt) { description in
-			if let elements = self.decode(message:extractString(text:description, startDelimiter: "```json\n", endDelimiter: "\n```")!) {
+			guard let json = extractString(text:description, startDelimiter: "```json\n", endDelimiter: "\n```") else { return }
+			if let elements = self.decode(message:json) {
 				let result = elements.map {Observation($0)}
 				self.process(result)
 				self.navigationShortcuts = NavigationShortcuts()
@@ -64,7 +127,6 @@ class Navigation {
 				
 			} else {
 				Accessibility.speak("Nothing found")
-				return
 			}
 		}
 	}
