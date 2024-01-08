@@ -35,35 +35,6 @@
 
 /* Begin PBXFileReference section */
 		EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VOCR Shortcuts.swift"; sourceTree = "<group>"; };
-		EA1F640423524C150089C967 /* VOCR.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = VOCR.xcodeproj; sourceTree = "<group>"; };
-		EA1F640823524C150089C967 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		EA1F640923524C150089C967 /* Take Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Take Screenshot.swift"; sourceTree = "<group>"; };
-		EA1F640A23524C150089C967 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
-		EA1F640B23524C150089C967 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		EA1F640C23524C150089C967 /* Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
-		EA1F640E23524C150089C967 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		EA1F640F23524C150089C967 /* AXUIElement Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AXUIElement Extension.swift"; sourceTree = "<group>"; };
-		EA1F641023524C150089C967 /* OCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCR.swift; sourceTree = "<group>"; };
-		EA1F641123524C150089C967 /* NSRunningApplication Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRunningApplication Extension.swift"; sourceTree = "<group>"; };
-		EA1F641223524C150089C967 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EA1F641323524C150089C967 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
-		EA1F641423524C150089C967 /* Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
-		EA1F641523524C150089C967 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EA1F641623524C150089C967 /* RecognizeVOCursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognizeVOCursor.swift; sourceTree = "<group>"; };
-		EA1F641723524C150089C967 /* NavigationShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationShortcuts.swift; sourceTree = "<group>"; };
-		EA1F641823524C150089C967 /* VOCR.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VOCR.entitlements; sourceTree = "<group>"; };
-		EA1F641923524C150089C967 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		EA1F641A23524C150089C967 /* readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
-		EA1F641B23524C150089C967 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		EA1F641D23524C150089C967 /* VOScreenshot.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = VOScreenshot.scpt; sourceTree = "<group>"; };
-		EA1F641E23524C150089C967 /* VOCursor.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = VOCursor.scpt; sourceTree = "<group>"; };
-		EA1F642023524C150089C967 /* NSEventModifierFlags+HotKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSEventModifierFlags+HotKey.swift"; sourceTree = "<group>"; };
-		EA1F642123524C150089C967 /* KeyCombo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCombo.swift; sourceTree = "<group>"; };
-		EA1F642223524C150089C967 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
-		EA1F642323524C150089C967 /* HotKeysController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeysController.swift; sourceTree = "<group>"; };
-		EA1F642423524C150089C967 /* KeyCombo+System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyCombo+System.swift"; sourceTree = "<group>"; };
-		EA1F642523524C150089C967 /* HotKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKey.swift; sourceTree = "<group>"; };
-		EA1F642723524C150089C967 /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AudioKit.framework; sourceTree = "<group>"; };
 		EA1F642B2352503D0089C967 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		EA2DA1AB232EB1D600D31031 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSRunningApplication Extension.swift"; sourceTree = "<group>"; };
@@ -106,82 +77,8 @@
 		EA1F63FA2352496E0089C967 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				EA1F640323524C150089C967 /* vocr */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		EA1F640323524C150089C967 /* vocr */ = {
-			isa = PBXGroup;
-			children = (
-				EA1F640423524C150089C967 /* VOCR.xcodeproj */,
-				EA1F640723524C150089C967 /* VOCR */,
-				EA1F641923524C150089C967 /* LICENSE */,
-				EA1F641A23524C150089C967 /* readme.md */,
-				EA1F641B23524C150089C967 /* .gitignore */,
-				EA1F641C23524C150089C967 /* Scripts */,
-				EA1F641F23524C150089C967 /* HotKey */,
-				EA1F642623524C150089C967 /* Frameworks */,
-			);
-			name = vocr;
-			sourceTree = "<group>";
-		};
-		EA1F640523524C150089C967 /* Products */ = {
-			isa = PBXGroup;
-			name = Products;
-			sourceTree = "<group>";
-		};
-		EA1F640723524C150089C967 /* VOCR */ = {
-			isa = PBXGroup;
-			children = (
-				EA1F640823524C150089C967 /* ViewController.swift */,
-				EA1F640923524C150089C967 /* Take Screenshot.swift */,
-				EA1F640A23524C150089C967 /* Navigation.swift */,
-				EA1F640B23524C150089C967 /* Assets.xcassets */,
-				EA1F640C23524C150089C967 /* Accessibility.swift */,
-				EA1F640D23524C150089C967 /* Main.storyboard */,
-				EA1F640F23524C150089C967 /* AXUIElement Extension.swift */,
-				EA1F641023524C150089C967 /* OCR.swift */,
-				EA1F641123524C150089C967 /* NSRunningApplication Extension.swift */,
-				EA1F641223524C150089C967 /* AppDelegate.swift */,
-				EA1F641323524C150089C967 /* Camera.swift */,
-				EA1F641423524C150089C967 /* Shortcuts.swift */,
-				EA1F641523524C150089C967 /* Info.plist */,
-				EA1F641623524C150089C967 /* RecognizeVOCursor.swift */,
-				EA1F641723524C150089C967 /* NavigationShortcuts.swift */,
-				EA1F641823524C150089C967 /* VOCR.entitlements */,
-			);
-			path = VOCR;
-			sourceTree = "<group>";
-		};
-		EA1F641C23524C150089C967 /* Scripts */ = {
-			isa = PBXGroup;
-			children = (
-				EA1F641D23524C150089C967 /* VOScreenshot.scpt */,
-				EA1F641E23524C150089C967 /* VOCursor.scpt */,
-			);
-			path = Scripts;
-			sourceTree = "<group>";
-		};
-		EA1F641F23524C150089C967 /* HotKey */ = {
-			isa = PBXGroup;
-			children = (
-				EA1F642023524C150089C967 /* NSEventModifierFlags+HotKey.swift */,
-				EA1F642123524C150089C967 /* KeyCombo.swift */,
-				EA1F642223524C150089C967 /* Key.swift */,
-				EA1F642323524C150089C967 /* HotKeysController.swift */,
-				EA1F642423524C150089C967 /* KeyCombo+System.swift */,
-				EA1F642523524C150089C967 /* HotKey.swift */,
-			);
-			path = HotKey;
-			sourceTree = "<group>";
-		};
-		EA1F642623524C150089C967 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				EA1F642723524C150089C967 /* AudioKit.framework */,
-			);
-			path = Frameworks;
 			sourceTree = "<group>";
 		};
 		EA5C7AD72351D81100D84042 /* Scripts */ = {
@@ -295,12 +192,6 @@
 			);
 			productRefGroup = EADE59B2232EB09A00E2F65A /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = EA1F640523524C150089C967 /* Products */;
-					ProjectRef = EA1F640423524C150089C967 /* VOCR.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				EADE59B0232EB09A00E2F65A /* VOCR */,
@@ -350,14 +241,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		EA1F640D23524C150089C967 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EA1F640E23524C150089C967 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		EADE59BA232EB09A00E2F65A /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

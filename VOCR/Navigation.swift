@@ -69,6 +69,31 @@ class Navigation {
 		}
 	}
 	
+	func initOCR() {
+		if !Accessibility.isTrusted(ask:true) {
+			print("Accessibility not enabled.")
+			return
+		}
+		if Settings.targetWindow {
+			setWindow(-1)
+		} else {
+			setWindow(0)
+		}
+		if cgSize != CGSize() {
+			if let  cgImage = TakeScreensShots() {
+				if Settings.mode == "OCR" {
+					startOCR(cgImage:cgImage)
+				} else {
+					exploreWithGPT(cgImage: cgImage)
+				}
+			} else {
+				Accessibility.speakWithSynthesizer("Faild to take a screenshot of \(appName), \(windowName)")
+			}
+		} else {
+			Accessibility.speakWithSynthesizer("Faild to access \(appName), \(windowName)")
+		}
+	}
+
 	func startOCR(cgImage:CGImage) {
 		self.cgImage = cgImage
 		if Settings.positionReset {

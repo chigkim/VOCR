@@ -38,9 +38,7 @@ enum GPT {
 
 	static func describe(image: CGImage, system:String, prompt: String, completion: @escaping (String) -> Void) {
 		if Settings.GPTAPIKEY == "" {
-			if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
-				appDelegate.presentApiKeyInputDialog(nil)
-			}
+				Settings.displayApiKeyDialog()
 		}
 		if Settings.GPTAPIKEY == "" {
 			return
@@ -48,8 +46,6 @@ enum GPT {
 			let bitmapRep = NSBitmapImageRep(cgImage: image)
 		guard let imageData = bitmapRep.representation(using: .jpeg, properties: [:]) else {
 			fatalError("Could not convert image to JPEG.")
-			return
-			return
 		}
 		
 		let base64_image = imageData.base64EncodedString(options: [])
