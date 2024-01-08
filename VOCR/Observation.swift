@@ -41,18 +41,18 @@ struct Observation {
 		let width = CGFloat(obs.boundingBox[2])
 		let height = CGFloat(obs.boundingBox[3])
 		var rect = CGRect(x:x, y:y, width:width, height:height)
-		debugPrint(value, rect, rect)
+		// debugPrint(value, rect, rect)
 		rect = VNNormalizedRectForImageRect(rect, Int(Navigation.shared.cgSize.width), Int(Navigation.shared.cgSize.height))
 		rect = CGRect(x:rect.minX, y:1-rect.maxY, width:rect.width, height:rect.height)
 		self.boundingBox = rect
-		debugPrint(boundingBox)
+		// debugPrint(boundingBox)
 	}
 
 	init(_ obs:VNRecognizedTextObservation) {
 		self.vnObservation = obs
 		self.value = obs.topCandidates(1)[0].string
 		self.boundingBox = obs.boundingBox
-		debugPrint(value, boundingBox)
+		// debugPrint(value, boundingBox)
 	}
 
 	init(_ obs:VNRectangleObservation, value:String) {

@@ -181,7 +181,7 @@ cgPosition = CGPoint()
 		var line:[Observation] = []
 		var y = sorted[0].boundingBox.midY
 		for r in sorted {
-			logger.debug("\(r.value): \(r.boundingBox.debugDescription)")
+			// logger.debug("\(r.value): \(r.boundingBox.debugDescription)")
 			if abs(r.boundingBox.midY-y)>0.01 {
 				displayResults.append(line)
 				line = []

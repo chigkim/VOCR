@@ -157,7 +157,7 @@ func TakeScreensShots() -> CGImage? {
 			return resizedImage
 		}
 	}
-return nil
+	return nil
 }
 
 func performOCR(cgImage:CGImage) -> [Observation] {
@@ -174,7 +174,7 @@ func performOCR(cgImage:CGImage) -> [Observation] {
 	rectDetectRequest.minimumAspectRatio = 0.0
 	rectDetectRequest.minimumSize = 0.0
 	rectDetectRequest.cancel()
-
+	
 	let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
 	do {
 		try requestHandler.perform([textRecognitionRequest, rectDetectRequest])
@@ -183,11 +183,11 @@ func performOCR(cgImage:CGImage) -> [Observation] {
 		return []
 	}
 	var result = texts.map {Observation($0)}
-
+	
 	guard let boxes = rectDetectRequest.results else {
 		return []
 	}
-
+	
 	var boxesNoText:[Observation] = []
 	var boxesText:[Observation] = []
 	for box in boxes {
@@ -206,23 +206,23 @@ func performOCR(cgImage:CGImage) -> [Observation] {
 			result.append(obs)
 		}
 	}
-
+	
 	print("Box Count:", boxes.count)
 	print("Text Count:", texts.count)
 	print("boxesNoText Count:", boxesNoText.count)
 	print("boxesText count:", boxesText.count)
-/*
-	var pointBoxes: [CGRect] = []
-	for point in texts {
-		// print("point: ", point)
-		pointBoxes.append(CGRect(x: point.boundingBox.minX-0.1, y: point.boundingBox.minY-0.1, width: 0.2, height: 0.2))
-	}
-*/
-
+	/*
+	 var pointBoxes: [CGRect] = []
+	 for point in texts {
+	 // print("point: ", point)
+	 pointBoxes.append(CGRect(x: point.boundingBox.minX-0.1, y: point.boundingBox.minY-0.1, width: 0.2, height: 0.2))
+	 }
+	 */
+	
 	// var boxImage = drawBoxes(cgImage, boxes:boxesText, color:NSColor.green)!
 	// boxImage = drawBoxes(boxImage, boxes:boxesNoText, color:NSColor.blue)!
 	// try? saveImage(boxImage)
-
+	
 	return result
 }
 
@@ -250,45 +250,69 @@ func classify(cgImage:CGImage) -> String {
 			message += "\(classes[c].key), "
 		}
 		Accessibility.speak(message)
-
-		 if message.contains("document") {
-		 Navigation.shared.startOCR(cgImage:cgImage)
-		 message += "\n"+Navigation.shared.text()
-		 }
+		
+		if message.contains("document") {
+			Navigation.shared.startOCR(cgImage:cgImage)
+			message += "\n"+Navigation.shared.text()
+		}
 	}else {
 		Accessibility.speak("Unknown")
 	}
 	return message
 }
 
-func recognizeVOCursor() {
+func runAppleScript(file:String) -> String? {
 	let bundle = Bundle.main
-	let script = bundle.url(forResource: "VOScreenshot", withExtension: "scpt")
+	let script = bundle.url(forResource: file, withExtension: "scpt")
 	debugPrint(script!)
 	var error:NSDictionary?
 	if let scriptObject = NSAppleScript(contentsOf: script!, error: &error) {
 		var outputError:NSDictionary?
 		if let output = scriptObject.executeAndReturnError(&outputError).stringValue {
-			print("Output: \(output)")
-			let url = URL(fileURLWithPath: output)
-			if let dataImage = try? Data(contentsOf:url) {
-				let dataProvider = CGDataProvider(data: dataImage as CFData)
-				if let cgImage = CGImage(pngDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent) {
-					if Settings.mode == "GPT" {
-						GPT.askGpt(image:cgImage)
-					} else {
-						classify(cgImage:cgImage)
-					}
+			debugPrint(output)
+			return output
+		} else {
+			debugPrint(outputError)
+		}
+	}
+	return nil
+}
+
+func recognizeVOCursor() {
+	if let output = runAppleScript(file: "VOCursor") {
+		let strings = output.split(separator: ",")
+		let cgFloats = strings.compactMap { CGFloat(Double($0) ?? 0) }
+		Navigation.shared.cgPosition = CGPoint(x: cgFloats[0], y: cgFloats[1])
+		Navigation.shared.cgSize = CGSize(width:(cgFloats[2]-cgFloats[0]), height: (cgFloats[3]-cgFloats[1]))
+		Navigation.shared.appName = "VOCursor"
+		Navigation.shared.windowName = ""
+		if let cgImage = TakeScreensShots() {
+			if Settings.mode == "GPT" {
+				GPT.askGpt(image:cgImage)
+			} else {
+				Navigation.shared.startOCR(cgImage: cgImage)
+				// classify(cgImage:cgImage)
+			}
+		}
+	}
+}
+
+func voCursorScreenshot() {
+	if let output = runAppleScript(file: "VOScreenshot") {
+		print("Output: \(output)")
+		let url = URL(fileURLWithPath: output)
+		if let dataImage = try? Data(contentsOf:url) {
+			let dataProvider = CGDataProvider(data: dataImage as CFData)
+			if let cgImage = CGImage(pngDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent) {
+				if Settings.mode == "GPT" {
+					GPT.askGpt(image:cgImage)
+				} else {
+					classify(cgImage:cgImage)
 				}
 			}
-			let fileManager = FileManager.default
-			try? fileManager.removeItem(at: url)
-		} else {
-			debugPrint("Output Error: \(String(describing: outputError))")
 		}
-	} else {
-		debugPrint(String(describing: error))
+		let fileManager = FileManager.default
+		try? fileManager.removeItem(at: url)
 	}
-	
 }
 

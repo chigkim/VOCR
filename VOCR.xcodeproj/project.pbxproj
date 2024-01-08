@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA1AC96A2B4C51FA00D3543F /* VOCursor.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EA1AC9692B4C51FA00D3543F /* VOCursor.scpt */; };
 		EA1F63F92352427A0089C967 /* VOCR Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */; };
 		EA1F642C2352503D0089C967 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F642B2352503D0089C967 /* Player.swift */; };
 		EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1AB232EB1D600D31031 /* Accessibility.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EA1AC9692B4C51FA00D3543F /* VOCursor.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = VOCursor.scpt; sourceTree = "<group>"; };
 		EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VOCR Shortcuts.swift"; sourceTree = "<group>"; };
 		EA1F642B2352503D0089C967 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		EA2DA1AB232EB1D600D31031 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 		EA5C7AD72351D81100D84042 /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
+				EA1AC9692B4C51FA00D3543F /* VOCursor.scpt */,
 				EAD9CFD12355E11600E7F594 /* say.scpt */,
 				EA5C7AD82351D81100D84042 /* VOScreenshot.scpt */,
 			);
@@ -206,6 +209,7 @@
 			files = (
 				EADE59B9232EB09A00E2F65A /* Assets.xcassets in Resources */,
 				EAD9CFD22355E11600E7F594 /* say.scpt in Resources */,
+				EA1AC96A2B4C51FA00D3543F /* VOCursor.scpt in Resources */,
 				EA5C7AD92351D81100D84042 /* VOScreenshot.scpt in Resources */,
 				EADE59BC232EB09A00E2F65A /* Main.storyboard in Resources */,
 				EAAD42AE298596FB00BE5D98 /* com.chikim.VOCR.plist in Resources */,
