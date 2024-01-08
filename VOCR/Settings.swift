@@ -75,6 +75,11 @@ enum Settings {
 		let settingsMenuItem = NSMenuItem(title: "Settings", action: nil, keyEquivalent: "")
 		settingsMenuItem.submenu = settingsMenu
 		menu.addItem(settingsMenuItem)
+
+		let saveMenuItem = NSMenuItem(title: "Save OCR Result...", action: #selector(target.saveResult(_:)), keyEquivalent: "")
+		saveMenuItem.target = target
+		menu.addItem(saveMenuItem)
+
 		let aboutMenuItem = NSMenuItem(title: "About...", action: #selector(target.displayAboutWindow(_:)), keyEquivalent: "")
 		aboutMenuItem.target = target
 		menu.addItem(aboutMenuItem)
@@ -242,7 +247,23 @@ class MenuHandler: NSObject {
 		try! Player.shared.engine.start()
 	}
 	
-	
+	@objc func saveResult(_ sender: NSMenuItem) {
+		let savePanel = NSSavePanel()
+		savePanel.allowedContentTypes = [.text]
+		savePanel.allowsOtherFileTypes = false
+		savePanel.begin { (result) in
+			if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
+				if let url = savePanel.url {
+					let text = Navigation.shared.text()
+					try! text.write(to: url, atomically: false, encoding: .utf8)
+				}
+			}
+			let windows = NSApplication.shared.windows
+			NSApplication.shared.hide(nil)
+			windows[1].close()
+		}
+	}
+
 	@objc func selectMode(_ sender: NSMenuItem) {
 		guard let menu = sender.menu else { return }
 		for item in menu.items {

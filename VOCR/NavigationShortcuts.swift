@@ -23,8 +23,7 @@ struct NavigationShortcuts {
 	let previousCharacter = HotKey(key:.leftArrow, modifiers:[.command,.shift,.control])
 	let location = HotKey(key:.l, modifiers:[.command,.control])
 	let exit = HotKey(key:.escape, modifiers:[])
-	let save = HotKey(key:.s, modifiers:[.command,.shift, .control])
-	
+
 	init() {
 		location.keyDownHandler = {
 			Navigation.shared.location()
@@ -73,25 +72,6 @@ struct NavigationShortcuts {
 		exit.keyDownHandler = {
 			Accessibility.speak("Exit VOCR navigation.")
 			Navigation.shared.navigationShortcuts = nil
-		}
-		
-		save.keyDownHandler = {
-			let savePanel = NSSavePanel()
-			savePanel.allowedContentTypes = [.text]
-			savePanel.allowsOtherFileTypes = false
-			savePanel.begin { (result) in
-				if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
-					if let url = savePanel.url {
-						let text = Navigation.shared.text()
-						
-						try! text.write(to: url, atomically: false, encoding: .utf8)
-					}
-					
-				}
-				let windows = NSApplication.shared.windows
-				NSApplication.shared.hide(nil)
-				windows[1].close()
-			}
 		}
 		
 	}

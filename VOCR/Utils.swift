@@ -286,8 +286,8 @@ func performOCR(cgImage:CGImage) -> [Observation] {
 	}
 */
 
-	var boxImage = drawBoxes(cgImage, boxes:boxesText, color:NSColor.green)!
-	boxImage = drawBoxes(boxImage, boxes:boxesNoText, color:NSColor.blue)!
+	// var boxImage = drawBoxes(cgImage, boxes:boxesText, color:NSColor.green)!
+	// boxImage = drawBoxes(boxImage, boxes:boxesNoText, color:NSColor.blue)!
 	// try? saveImage(boxImage)
 
 	return result
@@ -317,12 +317,11 @@ func classify(cgImage:CGImage) -> String {
 			message += "\(classes[c].key), "
 		}
 		Accessibility.speak(message)
-		/*
+
 		 if message.contains("document") {
 		 Navigation.shared.startOCR(cgImage:cgImage)
 		 message += "\n"+Navigation.shared.text()
 		 }
-		 */
 	}else {
 		Accessibility.speak("Unknown")
 	}
