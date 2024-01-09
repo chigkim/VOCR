@@ -49,7 +49,7 @@ struct RealTime {
 				while run {
 					if let cgImage = TakeScreensShots(rect: rect, resize:false) {
 						if let texts = performOCR(cgImage:cgImage) {
-							let newTexts = texts.map { $0.topCandidates(1)[0].string }
+							let newTexts = texts.map { $0.topCandidates(1)[0].string }.joined(separator: " ").components(separatedBy: " ")
 							let difference = newTexts.difference(from: oldTexts)
 							let insertedTexts = difference.compactMap { change -> String? in
 								switch change {
@@ -61,7 +61,7 @@ struct RealTime {
 							}
 							if insertedTexts.isNotEmpty {
 								oldTexts = newTexts
-								debugPrint(insertedTexts)
+								debugPrint("New:", insertedTexts)
 								Accessibility.speak(insertedTexts.joined(separator:" "))
 							}
 							}
