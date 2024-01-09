@@ -16,7 +16,8 @@ struct Shortcuts {
 	let vo = HotKey(key:.v, modifiers:[.command,.shift, .control])
 	let explore = HotKey(key:.e, modifiers:[.command,.shift, .control])
 	let ask = HotKey(key:.a, modifiers:[.command,.shift, .control])
-	
+	let realTime = HotKey(key:.r, modifiers:[.command,.shift, .control])
+
 	init() {
 
 		settings.keyDownHandler = {
@@ -40,6 +41,10 @@ struct Shortcuts {
 		
 		ask.keyDownHandler = {
 			recognizeVOCursor(mode:"GPT")
+		}
+
+		realTime.keyDownHandler = {
+			RealTime.continuousOCR()
 		}
 
 	}

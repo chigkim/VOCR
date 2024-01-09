@@ -142,7 +142,7 @@ cgPosition = CGPoint()
 			setWindow(0)
 		}
 		if cgSize != CGSize() {
-			if let  cgImage = TakeScreensShots() {
+			if let  cgImage = TakeScreensShots(rect:CGRect(origin: cgPosition, size: cgSize), resize:true) {
 				if mode == "OCR" {
 					startOCR(cgImage:cgImage)
 				} else {

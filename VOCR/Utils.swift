@@ -135,7 +135,7 @@ func resizeCGImage(_ cgImage: CGImage, toWidth width: Int, toHeight height: Int)
 	return context?.makeImage()
 }
 
-func TakeScreensShots() -> CGImage? {
+func TakeScreensShots(rect:CGRect, resize:Bool) -> CGImage? {
 	var displayCount: UInt32 = 0
 	var result = CGGetActiveDisplayList(0, nil, &displayCount)
 	if (result != CGError.success) {
@@ -150,12 +150,15 @@ func TakeScreensShots() -> CGImage? {
 		print("error: \(result)")
 		return nil
 	}
-	if let cgImage = CGDisplayCreateImage(activeDisplays[0], rect:CGRect(origin: Navigation.shared.cgPosition, size: Navigation.shared.cgSize)) {
-		debugPrint("Original:", cgImage.width, cgImage.height)
-		if let resizedImage = resizeCGImage(cgImage, toWidth: Int(Navigation.shared.cgSize.width), toHeight:Int(Navigation.shared.cgSize.height)) {
-			debugPrint("Resized:", resizedImage.width, resizedImage.height)
-			return resizedImage
+	if let cgImage = CGDisplayCreateImage(activeDisplays[0], rect:rect) {
+		if resize {
+			debugPrint("Original:", cgImage.width, cgImage.height)
+			if let resizedImage = resizeCGImage(cgImage, toWidth: Int(Navigation.shared.cgSize.width), toHeight:Int(Navigation.shared.cgSize.height)) {
+				debugPrint("Resized:", resizedImage.width, resizedImage.height)
+				return resizedImage
+			}
 		}
+return cgImage
 	}
 	return nil
 }
@@ -277,16 +280,24 @@ func runAppleScript(file:String) -> String? {
 	}
 	return nil
 }
-
-func recognizeVOCursor(mode:String) {
+func voCursorLocation() -> CGRect? {
 	if let output = runAppleScript(file: "VOCursor") {
 		let strings = output.split(separator: ",")
 		let cgFloats = strings.compactMap { CGFloat(Double($0) ?? 0) }
-		Navigation.shared.cgPosition = CGPoint(x: cgFloats[0], y: cgFloats[1])
-		Navigation.shared.cgSize = CGSize(width:(cgFloats[2]-cgFloats[0]), height: (cgFloats[3]-cgFloats[1]))
+		let cgPosition = CGPoint(x: cgFloats[0], y: cgFloats[1])
+		let cgSize = CGSize(width:(cgFloats[2]-cgFloats[0]), height: (cgFloats[3]-cgFloats[1]))
+		return CGRect(origin: cgPosition, size: cgSize)
+	}
+	return nil
+}
+
+func recognizeVOCursor(mode:String) {
+	if let rect = voCursorLocation() {
+		Navigation.shared.cgPosition = rect.origin
+		Navigation.shared.cgSize = rect.size
 		Navigation.shared.appName = "VOCursor"
 		Navigation.shared.windowName = ""
-		if let cgImage = TakeScreensShots() {
+		if let cgImage = TakeScreensShots(rect:CGRect(origin: Navigation.shared.cgPosition, size: Navigation.shared.cgSize), resize:true)  {
 			if mode == "GPT" {
 				GPT.askGpt(image:cgImage)
 			} else {

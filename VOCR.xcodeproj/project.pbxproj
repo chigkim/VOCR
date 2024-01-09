@@ -19,6 +19,7 @@
 		EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACB2351BB6D00D84042 /* Navigation.swift */; };
 		EA5C7AD02351C8DE00D84042 /* AXUIElement Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */; };
 		EA5C7AD92351D81100D84042 /* VOScreenshot.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EA5C7AD82351D81100D84042 /* VOScreenshot.scpt */; };
+		EA60A3B12B4D7FF0001F6EEA /* RealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA60A3B02B4D7FF0001F6EEA /* RealTime.swift */; };
 		EA688D452355BDC500F722C7 /* Bundle Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA688D442355BDC500F722C7 /* Bundle Extension.swift */; };
 		EA8AD6412352B4A000D26871 /* Double Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8AD6402352B4A000D26871 /* Double Extension.swift */; };
 		EA9EB89E28EA5B0A00FE6210 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9EB89D28EA5B0A00FE6210 /* Utils.swift */; };
@@ -46,6 +47,7 @@
 		EA5C7ACB2351BB6D00D84042 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AXUIElement Extension.swift"; sourceTree = "<group>"; };
 		EA5C7AD82351D81100D84042 /* VOScreenshot.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = VOScreenshot.scpt; sourceTree = "<group>"; };
+		EA60A3B02B4D7FF0001F6EEA /* RealTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealTime.swift; sourceTree = "<group>"; };
 		EA688D442355BDC500F722C7 /* Bundle Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle Extension.swift"; sourceTree = "<group>"; };
 		EA8AD6402352B4A000D26871 /* Double Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double Extension.swift"; sourceTree = "<group>"; };
 		EA9EB89D28EA5B0A00FE6210 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				EADE59BE232EB09A00E2F65A /* VOCR.entitlements */,
 				EA9EB89D28EA5B0A00FE6210 /* Utils.swift */,
 				EA3F43722B4857F9005453C2 /* Observation.swift */,
+				EA60A3B02B4D7FF0001F6EEA /* RealTime.swift */,
 			);
 			path = VOCR;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 				EA9EB89E28EA5B0A00FE6210 /* Utils.swift in Sources */,
 				EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */,
 				EA42F4512A2A05410010BC39 /* UIElement Extension.swift in Sources */,
+				EA60A3B12B4D7FF0001F6EEA /* RealTime.swift in Sources */,
 				EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */,
 				EAF9C3C82354A66200D4D77C /* Settings.swift in Sources */,
 				EA1F642C2352503D0089C967 /* Player.swift in Sources */,
@@ -383,7 +387,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -410,7 +414,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
