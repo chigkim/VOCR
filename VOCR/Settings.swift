@@ -36,45 +36,24 @@ enum Settings {
 		load()
 		let menu = NSMenu()
 		
-		let modeMenu = NSMenu()
-		
-		let ocrMenuItem = NSMenuItem(title: "OCR", action: #selector(target.selectMode(_:)), keyEquivalent: "")
-		ocrMenuItem.target = target
-		ocrMenuItem.state = (Settings.mode=="OCR") ? .on : .off
-		modeMenu.addItem(ocrMenuItem)
-		
-		let gptMenuItem = NSMenuItem(title: "GPT", action: #selector(target.selectMode(_:)), keyEquivalent: "")
-		gptMenuItem.target = target
-		gptMenuItem.state = (Settings.mode=="GPT") ? .on : .off
-		modeMenu.addItem(gptMenuItem)
-		
-		let modeMenuItem = NSMenuItem(title: "Mode", action: nil, keyEquivalent: "")
-		modeMenuItem.submenu = modeMenu
-		menu.addItem(modeMenuItem)
-		
-		let settingsMenu = NSMenu()
 		for setting in allSettings {
 			let menuItem = NSMenuItem(title: setting.title, action: setting.action, keyEquivalent: "")
 			menuItem.target = target
 			menuItem.state = setting.value ? .on : .off
-			settingsMenu.addItem(menuItem)
+			menu.addItem(menuItem)
 		}
 		
 		if Settings.autoScan {
 			installMouseMonitor()
 		}
-		
-		
+			
 		let soundOutputMenuItem = NSMenuItem(title: "Sound Output...", action: #selector(target.chooseOutput(_:)), keyEquivalent: "")
 		soundOutputMenuItem.target = target
-		settingsMenu.addItem(soundOutputMenuItem)
+		menu.addItem(soundOutputMenuItem)
 		
 		let enterAPIKeyMenuItem = NSMenuItem(title: "OpenAI API Key...", action: #selector(target.presentApiKeyInputDialog(_:)), keyEquivalent: "")
 		enterAPIKeyMenuItem.target = target
-		settingsMenu.addItem(enterAPIKeyMenuItem)
-		let settingsMenuItem = NSMenuItem(title: "Settings", action: nil, keyEquivalent: "")
-		settingsMenuItem.submenu = settingsMenu
-		menu.addItem(settingsMenuItem)
+		menu.addItem(enterAPIKeyMenuItem)
 
 		let saveMenuItem = NSMenuItem(title: "Save OCR Result...", action: #selector(target.saveResult(_:)), keyEquivalent: "")
 		saveMenuItem.target = target
@@ -96,13 +75,13 @@ enum Settings {
 					print("Left mouse click detected.")
 					if Navigation.shared.navigationShortcuts != nil {
 						Thread.sleep(forTimeInterval: 0.5)
-						Navigation.shared.initOCR()
+						Navigation.shared.prepare(mode:"OCR")
 					}
 				case .rightMouseDown:
 					print("Right mouse click detected.")
 					if Navigation.shared.navigationShortcuts != nil {
 						Thread.sleep(forTimeInterval: 0.5)
-						Navigation.shared.initOCR()
+						Navigation.shared.prepare(mode: "OCR")
 					}
 				default:
 					break

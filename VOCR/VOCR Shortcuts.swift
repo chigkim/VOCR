@@ -14,7 +14,9 @@ struct Shortcuts {
 	let settings = HotKey(key:.s, modifiers:[.command,.shift, .control])
 	let window = HotKey(key:.w, modifiers:[.command,.shift, .control])
 	let vo = HotKey(key:.v, modifiers:[.command,.shift, .control])
-
+	let explore = HotKey(key:.e, modifiers:[.command,.shift, .control])
+	let ask = HotKey(key:.a, modifiers:[.command,.shift, .control])
+	
 	init() {
 
 		settings.keyDownHandler = {
@@ -25,13 +27,21 @@ struct Shortcuts {
 		}
 
 		window.keyDownHandler = {
-			Navigation.shared.initOCR()
+			Navigation.shared.prepare(mode:"OCR")
 		}
-		
+
+		explore.keyDownHandler = {
+			Navigation.shared.prepare(mode:"GPT")
+		}
+
 		vo.keyDownHandler = {
-			recognizeVOCursor()
+			recognizeVOCursor(mode: "OCR")
 		}
 		
+		ask.keyDownHandler = {
+			recognizeVOCursor(mode:"GPT")
+		}
+
 	}
 }
 

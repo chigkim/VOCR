@@ -272,13 +272,13 @@ func runAppleScript(file:String) -> String? {
 			debugPrint(output)
 			return output
 		} else {
-			debugPrint(outputError)
+			debugPrint("Output Error: \(String(describing: outputError))")
 		}
 	}
 	return nil
 }
 
-func recognizeVOCursor() {
+func recognizeVOCursor(mode:String) {
 	if let output = runAppleScript(file: "VOCursor") {
 		let strings = output.split(separator: ",")
 		let cgFloats = strings.compactMap { CGFloat(Double($0) ?? 0) }
@@ -287,7 +287,7 @@ func recognizeVOCursor() {
 		Navigation.shared.appName = "VOCursor"
 		Navigation.shared.windowName = ""
 		if let cgImage = TakeScreensShots() {
-			if Settings.mode == "GPT" {
+			if mode == "GPT" {
 				GPT.askGpt(image:cgImage)
 			} else {
 				Navigation.shared.startOCR(cgImage: cgImage)

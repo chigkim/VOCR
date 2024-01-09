@@ -131,7 +131,7 @@ cgPosition = CGPoint()
 		}
 	}
 	
-	func initOCR() {
+	func prepare(mode:String) {
 		if !Accessibility.isTrusted(ask:true) {
 			print("Accessibility not enabled.")
 			return
@@ -143,7 +143,7 @@ cgPosition = CGPoint()
 		}
 		if cgSize != CGSize() {
 			if let  cgImage = TakeScreensShots() {
-				if Settings.mode == "OCR" {
+				if mode == "OCR" {
 					startOCR(cgImage:cgImage)
 				} else {
 					exploreWithGPT(cgImage: cgImage)
