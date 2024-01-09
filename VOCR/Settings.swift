@@ -18,6 +18,7 @@ enum Settings {
 	static var launchOnBoot = true
 	static var autoScan = false
 	static var targetWindow = false
+	static var detectObject = true
 	static var GPTAPIKEY = ""
 	static var mode = "OCR"
 	
@@ -25,6 +26,7 @@ enum Settings {
 		return [
 			("Target Window", #selector(MenuHandler.toggleSetting(_:)), targetWindow),
 			("Auto Scan", #selector(MenuHandler.toggleAutoScan(_:)), autoScan),
+			("Detect Objects", #selector(MenuHandler.toggleSetting(_:)), detectObject),
 			("Reset Position on Scan", #selector(MenuHandler.toggleSetting(_:)), positionReset),
 			("Positional Audio", #selector(MenuHandler.toggleSetting(_:)), positionalAudio),
 			("Move Mouse", #selector(MenuHandler.toggleSetting(_:)), moveMouse),
@@ -120,6 +122,7 @@ enum Settings {
 		Settings.positionalAudio = defaults.bool(forKey:"positionalAudio")
 		Settings.launchOnBoot = defaults.bool(forKey:"launchOnBoot")
 		Settings.autoScan = defaults.bool(forKey:"autoScan")
+		Settings.detectObject = defaults.bool(forKey:"detectObject")
 		Settings.targetWindow = defaults.bool(forKey:"targetWindow")
 		if let apikey = defaults.string(forKey: "GPTAPIKEY") {
 			Settings.GPTAPIKEY = apikey
@@ -136,6 +139,7 @@ enum Settings {
 		defaults.set(Settings.positionalAudio, forKey:"positionalAudio")
 		defaults.set(Settings.launchOnBoot, forKey:"launchOnBoot")
 		defaults.set(Settings.autoScan, forKey:"autoScan")
+		defaults.set(Settings.detectObject, forKey:"detectObject")
 		defaults.set(Settings.targetWindow, forKey:"targetWindow")
 		defaults.set(Settings.GPTAPIKEY, forKey:"GPTAPIKEY")
 		defaults.set(Settings.mode, forKey:"mode")
@@ -151,6 +155,8 @@ class MenuHandler: NSObject {
 		switch sender.title {
 		case "Target Window":
 			Settings.targetWindow = sender.state == .on
+		case "Detect Objects":
+			Settings.detectObject = sender.state == .on
 		case "Auto Scan":
 			Settings.autoScan = sender.state == .on
 		case "Reset Position on Scan":

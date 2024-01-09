@@ -183,46 +183,46 @@ func performOCR(cgImage:CGImage) -> [Observation] {
 		return []
 	}
 	var result = texts.map {Observation($0)}
-	
-	guard let boxes = rectDetectRequest.results else {
-		return []
-	}
-	
-	var boxesNoText:[Observation] = []
-	var boxesText:[Observation] = []
-	for box in boxes {
-		var intersectsFlag: Bool = false
-		for text in texts {
-			if box.boundingBox.intersects(text.boundingBox) {
-				let obs = Observation(box, value:"Text: "+text.topCandidates(1)[0].string)
-				boxesText.append(obs)
-				intersectsFlag = true
-				break
+	if Settings.detectObject {
+		guard let boxes = rectDetectRequest.results else {
+			return []
+		}
+		
+		var boxesNoText:[Observation] = []
+		var boxesText:[Observation] = []
+		for box in boxes {
+			var intersectsFlag: Bool = false
+			for text in texts {
+				if box.boundingBox.intersects(text.boundingBox) {
+					let obs = Observation(box, value:"Text: "+text.topCandidates(1)[0].string)
+					boxesText.append(obs)
+					intersectsFlag = true
+					break
+				}
+			}
+			if !intersectsFlag {
+				let obs = Observation(box, value:"OBJECT")
+				boxesNoText.append(obs)
+				result.append(obs)
 			}
 		}
-		if !intersectsFlag {
-			let obs = Observation(box, value:"OBJECT")
-			boxesNoText.append(obs)
-			result.append(obs)
-		}
+		
+		print("Box Count:", boxes.count)
+		print("Text Count:", texts.count)
+		print("boxesNoText Count:", boxesNoText.count)
+		print("boxesText count:", boxesText.count)
+		/*
+		 var pointBoxes: [CGRect] = []
+		 for point in texts {
+		 // print("point: ", point)
+		 pointBoxes.append(CGRect(x: point.boundingBox.minX-0.1, y: point.boundingBox.minY-0.1, width: 0.2, height: 0.2))
+		 }
+		 */
+		
+		// var boxImage = drawBoxes(cgImage, boxes:boxesText, color:NSColor.green)!
+		// boxImage = drawBoxes(boxImage, boxes:boxesNoText, color:NSColor.blue)!
+		// try? saveImage(boxImage)
 	}
-	
-	print("Box Count:", boxes.count)
-	print("Text Count:", texts.count)
-	print("boxesNoText Count:", boxesNoText.count)
-	print("boxesText count:", boxesText.count)
-	/*
-	 var pointBoxes: [CGRect] = []
-	 for point in texts {
-	 // print("point: ", point)
-	 pointBoxes.append(CGRect(x: point.boundingBox.minX-0.1, y: point.boundingBox.minY-0.1, width: 0.2, height: 0.2))
-	 }
-	 */
-	
-	// var boxImage = drawBoxes(cgImage, boxes:boxesText, color:NSColor.green)!
-	// boxImage = drawBoxes(boxImage, boxes:boxesNoText, color:NSColor.blue)!
-	// try? saveImage(boxImage)
-	
 	return result
 }
 
