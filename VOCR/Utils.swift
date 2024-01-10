@@ -155,10 +155,12 @@ func TakeScreensShots(rect:CGRect, resize:Bool) -> CGImage? {
 			debugPrint("Original:", cgImage.width, cgImage.height)
 			if let resizedImage = resizeCGImage(cgImage, toWidth: Int(Navigation.shared.cgSize.width), toHeight:Int(Navigation.shared.cgSize.height)) {
 				debugPrint("Resized:", resizedImage.width, resizedImage.height)
+				Navigation.shared.cgImage = resizedImage
 				return resizedImage
 			}
 		}
-return cgImage
+		Navigation.shared.cgImage = cgImage
+		return cgImage
 	}
 	return nil
 }

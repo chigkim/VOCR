@@ -23,8 +23,7 @@ struct Shortcuts {
 		settings.keyDownHandler = {
 			let mouseLocation = NSEvent.mouseLocation
 			let rect = CGRect(x: mouseLocation.x, y: mouseLocation.y, width: 1, height: 1)
-			guard let appDelegate = NSApplication.shared.delegate as? AppDelegate else { return }
-			appDelegate.statusItem.menu?.popUp(positioning: nil, at: rect.origin, in: nil)
+			Settings.setupMenu().popUp(positioning: nil, at: rect.origin, in: nil)
 		}
 
 		window.keyDownHandler = {

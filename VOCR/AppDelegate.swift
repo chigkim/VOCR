@@ -5,12 +5,12 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
 	let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-	let menuHandler = MenuHandler()
+
 	var windows:[NSWindow] = []
 	let shortcuts = Shortcuts()
 	
 	func applicationDidFinishLaunching(_ notification: Notification) {
-		statusItem.menu = Settings.setupMenu(target: menuHandler)
+		statusItem.menu = Settings.setupMenu()
 		
 		if let button = statusItem.button {
 			button.title = "VOCR"

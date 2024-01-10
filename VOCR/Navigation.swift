@@ -102,7 +102,6 @@ cgPosition = CGPoint()
 	}
 
 	func exploreWithGPT(cgImage:CGImage) {
-		self.cgImage = cgImage
 		if Settings.positionReset {
 			l = -1
 			w = -1
@@ -157,7 +156,6 @@ cgPosition = CGPoint()
 	}
 
 	func startOCR(cgImage:CGImage) {
-		self.cgImage = cgImage
 		if Settings.positionReset {
 			l = -1
 			w = -1

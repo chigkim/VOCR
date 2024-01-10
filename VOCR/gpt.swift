@@ -17,7 +17,6 @@ enum GPT {
 	static func askGpt(image:CGImage) {
 		let alert = NSAlert()
 		alert.messageText = "Ask GPT-4V"
-		alert.informativeText = "Type your question for GPT  below:"
 		alert.addButton(withTitle: "Ask")
 		alert.addButton(withTitle: "Cancel")
 		let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))

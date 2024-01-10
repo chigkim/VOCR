@@ -21,7 +21,7 @@ enum Settings {
 	static var detectObject = true
 	static var GPTAPIKEY = ""
 	static var mode = "OCR"
-	
+	static let target = MenuHandler()
 	static var allSettings: [(title: String, action: Selector, value: Bool)] {
 		return [
 			("Target Window", #selector(MenuHandler.toggleSetting(_:)), targetWindow),
@@ -34,15 +34,15 @@ enum Settings {
 		]
 	}
 	
-	static func setupMenu(target: AnyObject) -> NSMenu {
+	static func setupMenu() -> NSMenu {
 		load()
 		let menu = NSMenu()
-		
+		let settingsMenu = NSMenu()
 		for setting in allSettings {
 			let menuItem = NSMenuItem(title: setting.title, action: setting.action, keyEquivalent: "")
 			menuItem.target = target
 			menuItem.state = setting.value ? .on : .off
-			menu.addItem(menuItem)
+			settingsMenu.addItem(menuItem)
 		}
 		
 		if Settings.autoScan {
@@ -51,20 +51,37 @@ enum Settings {
 			
 		let soundOutputMenuItem = NSMenuItem(title: "Sound Output...", action: #selector(target.chooseOutput(_:)), keyEquivalent: "")
 		soundOutputMenuItem.target = target
-		menu.addItem(soundOutputMenuItem)
+		settingsMenu.addItem(soundOutputMenuItem)
 		
 		let enterAPIKeyMenuItem = NSMenuItem(title: "OpenAI API Key...", action: #selector(target.presentApiKeyInputDialog(_:)), keyEquivalent: "")
 		enterAPIKeyMenuItem.target = target
-		menu.addItem(enterAPIKeyMenuItem)
+		settingsMenu.addItem(enterAPIKeyMenuItem)
+		let settingsMenuItem = NSMenuItem(title: "Settings", action: nil, keyEquivalent: "")
+		settingsMenuItem.submenu = settingsMenu
+		menu.addItem(settingsMenuItem)
 
-		let saveMenuItem = NSMenuItem(title: "Save OCR Result...", action: #selector(target.saveResult(_:)), keyEquivalent: "")
-		saveMenuItem.target = target
-		menu.addItem(saveMenuItem)
+		if Navigation.shared.cgImage != nil {
+			let saveScreenshotMenuItem = NSMenuItem(title: "Save Screenschot", action: #selector(target.saveScreenShot(_:)), keyEquivalent: "s")
+			saveScreenshotMenuItem.target = target
+			menu.addItem(saveScreenshotMenuItem)
+		}
+
+		if Navigation.shared.displayResults.count>1 {
+			let saveMenuItem = NSMenuItem(title: "Save OCR Result...", action: #selector(target.saveResult(_:)), keyEquivalent: "")
+			saveMenuItem.target = target
+			menu.addItem(saveMenuItem)
+		}
 
 		let aboutMenuItem = NSMenuItem(title: "About...", action: #selector(target.displayAboutWindow(_:)), keyEquivalent: "")
 		aboutMenuItem.target = target
 		menu.addItem(aboutMenuItem)
-		
+
+		if Navigation.shared.navigationShortcuts != nil || RealTime.exit != nil {
+			let dismissMenuItem = NSMenuItem(title: "Dismiss Menu", action: #selector(target.dismiss(_:)), keyEquivalent: "x")
+			dismissMenuItem.target = target
+			menu.addItem(dismissMenuItem)
+		}
+
 		menu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
 		return menu
 	}
@@ -248,7 +265,7 @@ class MenuHandler: NSObject {
 			windows[1].close()
 		}
 	}
-
+	
 	@objc func selectMode(_ sender: NSMenuItem) {
 		guard let menu = sender.menu else { return }
 		for item in menu.items {
@@ -258,5 +275,14 @@ class MenuHandler: NSObject {
 		Settings.save()
 	}
 	
+	@objc func dismiss(_ sender: NSMenuItem) {
+
+	}
+
+	@objc func saveScreenShot(_ sender: NSMenuItem) {
+		if let cgImage = Navigation.shared.cgImage {
+			try! saveImage(cgImage)
+		}
+		}
 }
 
