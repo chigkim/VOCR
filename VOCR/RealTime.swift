@@ -128,7 +128,7 @@ return nil
 				while run {
 					if let cgImage = TakeScreensShots(rect: rect, resize:false) {
 						if let texts = performOCR(cgImage:cgImage) {
-							let newTexts = texts.map { $0.topCandidates(1)[0].string.trimmingCharacters(in: .whitespacesAndNewlines) }
+							let newTexts = texts.map { $0.topCandidates(1)[0].string.trimmingCharacters(in: .whitespaces) }
 							let newText = newTexts.joined(separator: " ")
 							if let insertedText = diff(old:oldText, new:newText) {
 								oldText = newText
