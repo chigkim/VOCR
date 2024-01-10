@@ -96,8 +96,8 @@ struct RealTime {
 	}
 
 	static func diff(old:String, new:String) -> String? {
-		let oldArray  = old.lowercased().components(separatedBy: " ")
-		let newArray = new.lowercased().components(separatedBy: " ")
+		let oldArray  = old.lowercased().components(separatedBy: .whitespaces)
+		let newArray = new.lowercased().components(separatedBy: .whitespaces)
 		let difference = newArray.difference(from: oldArray)
 		let insertedTexts = difference.compactMap { change -> String? in
 			switch change {
@@ -128,8 +128,7 @@ return nil
 				while run {
 					if let cgImage = TakeScreensShots(rect: rect, resize:false) {
 						if let texts = performOCR(cgImage:cgImage) {
-							let newTexts = texts.map { $0.topCandidates(1)[0].string.trimmingCharacters(in: .whitespaces) }
-							let newText = newTexts.joined(separator: " ")
+							let newText = texts.map { $0.topCandidates(1)[0].string }.joined(separator: " ")
 							if let insertedText = diff(old:oldText, new:newText) {
 								oldText = newText
 								debugPrint("New:", insertedText)
