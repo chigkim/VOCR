@@ -11,40 +11,47 @@ import HotKey
 
 struct Shortcuts {
 
-	let settings = HotKey(key:.s, modifiers:[.command,.shift, .control])
-	let window = HotKey(key:.w, modifiers:[.command,.shift, .control])
-	let vo = HotKey(key:.v, modifiers:[.command,.shift, .control])
-	let explore = HotKey(key:.e, modifiers:[.command,.shift, .control])
-	let ask = HotKey(key:.a, modifiers:[.command,.shift, .control])
-	let realTime = HotKey(key:.r, modifiers:[.command,.shift, .control])
+	var settings:HotKey? = HotKey(key:.s, modifiers:[.command,.shift, .control])
+	var window:HotKey? = HotKey(key:.w, modifiers:[.command,.shift, .control])
+	var vo:HotKey? = HotKey(key:.v, modifiers:[.command,.shift, .control])
+	var explore:HotKey? = HotKey(key:.e, modifiers:[.command,.shift, .control])
+	var ask:HotKey? = HotKey(key:.a, modifiers:[.command,.shift, .control])
+	var realTime:HotKey? = HotKey(key:.r, modifiers:[.command,.shift, .control])
 
 	init() {
 
-		settings.keyDownHandler = {
+		settings?.keyDownHandler = {
 			let mouseLocation = NSEvent.mouseLocation
 			let rect = CGRect(x: mouseLocation.x, y: mouseLocation.y, width: 1, height: 1)
 			Settings.setupMenu().popUp(positioning: nil, at: rect.origin, in: nil)
 		}
 
-		window.keyDownHandler = {
+		window?.keyDownHandler = {
 			Navigation.shared.prepare(mode:"OCR")
 		}
 
-		explore.keyDownHandler = {
+		explore?.keyDownHandler = {
 			Navigation.shared.prepare(mode:"GPT")
 		}
 
-		vo.keyDownHandler = {
+		vo?.keyDownHandler = {
 			recognizeVOCursor(mode: "OCR")
 		}
 		
-		ask.keyDownHandler = {
+		ask?.keyDownHandler = {
 			recognizeVOCursor(mode:"GPT")
 		}
 
-		realTime.keyDownHandler = {
+		realTime?.keyDownHandler = {
 			RealTime.continuousOCR()
 		}
+
+		settings = nil
+		window = nil
+		vo = nil
+		explore = nil
+		ask = nil
+		realTime = nil
 
 	}
 }

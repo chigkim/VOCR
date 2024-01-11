@@ -1,0 +1,19 @@
+[
+{"keyName":"⌃⇧⌘S","key":1,"modifiers":4864,"name":"Settings":"
+{"keyName":"⌃⇧⌘W","key":13,"modifiers":4864,"name":"OCR Window"},
+{"keyName":"⌃⇧⌘V","key":9,"modifiers":4864,"name":"OCR VoCursor"},
+{"keyName":"⌃⇧⌘E","key":14,"modifiers":4864,"name":"Explore Window with GPT"},
+{"keyName":"⌃⇧⌘A","key":0,"modifiers":4864,"name":"Ask GPT about VOCursor"},
+{"keyName":"⌃⇧⌘R","key":15,"modifiers":4864,"name":"Realtime OCR VOCursor"},
+{"keyName":"⌃⌘","key":124,"modifiers":4352,"name":"Right"},
+{"keyName":"⌃⌘","key":123,"modifiers":4352,"name":"Left"},
+{"keyName":"⌃⌘","key":125,"modifiers":4352,"name":"Down"},
+{"keyName":"⌃⌘","key":126,"modifiers":4352,"name":"Up"},
+{"keyName":"⌃⌘","key":115,"modifiers":4352,"name":"Beginning"},
+{"keyName":"⌃⌘","key":119,"modifiers":4352,"name":"End"},
+{"keyName":"⌃⌘","key":116,"modifiers":4352,"name":"Top"},
+{"keyName":"⌃⌘","key":121,"modifiers":4352,"name":"Bottom"},
+{"keyName":"⌃⇧⌘","key":124,"modifiers":4864,"name":"Next Character"},
+{"keyName":"⌃⇧⌘","key":123,"modifiers":4864,"name":"Previous Character"},
+{"keyName":"⌃⌘l","key":37,"modifiers":4352,"name":"Report Location"}
+]

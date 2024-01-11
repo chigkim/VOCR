@@ -52,7 +52,15 @@ enum Settings {
 		let soundOutputMenuItem = NSMenuItem(title: "Sound Output...", action: #selector(target.chooseOutput(_:)), keyEquivalent: "")
 		soundOutputMenuItem.target = target
 		settingsMenu.addItem(soundOutputMenuItem)
-		
+
+		let shortcutsMenuItem = NSMenuItem(title: "Shortcuts...", action: #selector(target.openShortcutsWindow(_:)), keyEquivalent: "")
+		shortcutsMenuItem.target = target
+		settingsMenu.addItem(shortcutsMenuItem)
+
+		let newShortcutMenuItem = NSMenuItem(title: "New Shortcuts", action: #selector(target.addShortcut(_:)), keyEquivalent: "")
+		newShortcutMenuItem.target = target
+		settingsMenu.addItem(newShortcutMenuItem)
+
 		let enterAPIKeyMenuItem = NSMenuItem(title: "OpenAI API Key...", action: #selector(target.presentApiKeyInputDialog(_:)), keyEquivalent: "")
 		enterAPIKeyMenuItem.target = target
 		settingsMenu.addItem(enterAPIKeyMenuItem)
@@ -276,13 +284,39 @@ class MenuHandler: NSObject {
 	}
 	
 	@objc func dismiss(_ sender: NSMenuItem) {
-
+		
 	}
-
+	
 	@objc func saveScreenShot(_ sender: NSMenuItem) {
 		if let cgImage = Navigation.shared.cgImage {
 			try! saveImage(cgImage)
 		}
-		}
+	}
+	
+	@objc func openShortcutsWindow(_ sender: NSMenuItem) {
+		ShortcutsWindowController.shared.showWindow(nil)
+		NSApp.activate(ignoringOtherApps: true)
+	}
+	
+	
+
+	@objc func addShortcut(_ sender: NSMenuItem) {
+		let alert = NSAlert()
+		alert.messageText = "New Shortcut"
+		alert.addButton(withTitle: "Create")
+		alert.addButton(withTitle: "Cancel")
+		let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+		inputTextField.placeholderString = "Shortcut Name"
+		alert.accessoryView = inputTextField
+		let response = alert.runModal()
+		if response == .alertFirstButtonReturn { // OK button
+				ShortcutsWindowController.shared.shortcuts.append(Shortcut(name: inputTextField.stringValue, key: UInt32(0), modifiers: UInt32(0), keyName:"Unassigned"))
+				let data = try? JSONEncoder().encode(ShortcutsWindowController.shared.shortcuts)
+				UserDefaults.standard.set(data, forKey: "userShortcuts")
+				ShortcutsWindowController.shared.loadShortcuts()
+			}
+
+
+	}
 }
 
