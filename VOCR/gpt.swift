@@ -4,6 +4,12 @@ import Cocoa
 enum GPT {
 
 	struct Response: Decodable {
+		struct Usage:Decodable {
+			let prompt_tokens:Int
+			let completion_tokens:Int
+			let total_tokens:Int
+		}
+
 		struct Choice: Decodable {
 			struct Message: Decodable {
 				let content: String
@@ -11,13 +17,13 @@ enum GPT {
 			
 			let message: Message
 		}
+		let usage:Usage
 		let choices: [Choice]
 	}
 	
 	static func ask(image:CGImage) {
 		GPT.describe(image:image, system:Settings.systemPrompt, prompt:Settings.prompt) { description in
 				Accessibility.speak(description)
-				copyToClipboard(description)
 			}
 	}
 
@@ -72,11 +78,21 @@ enum GPT {
 				completion("Error: \(error?.localizedDescription ?? "No data")")
 				return
 			}
+			debugPrint("GPT-4V: \(String(data: data, encoding: .utf8))")
 			do {
 				let response = try JSONDecoder().decode(Response.self, from: data)
+				let prompt_tokens = response.usage.prompt_tokens
+				let completion_tokens = response.usage.completion_tokens
+				let total_tokens = response.usage.total_tokens
+				let cost = Float(prompt_tokens)*(1.0/1000.0)+Float(completion_tokens)*(3.0/1000.0)
+				debugPrint("Prompt: \(prompt_tokens), Completion: \(completion_tokens), Cost: \(cost)")
 				if let firstChoice = response.choices.first {
-					let description = firstChoice.message.content
-					print("GPT-4V: \(description)")
+					var description = firstChoice.message.content
+					description += "\nPrompt tokens: \(prompt_tokens)"
+					description += "\nCompletion tokens: \(completion_tokens)"
+					description += "\nTotal tokens: \(total_tokens)"
+					description += "\nCost: \(cost) cents"
+					copyToClipboard(description)
 					completion(description)
 				}
 			} catch {
