@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EA0C88682B4F8F4B00F2E920 /* ShortcutsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */; };
+		EA14F2E02B50B30300011F82 /* LlamaCpp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14F2DF2B50B30300011F82 /* LlamaCpp.swift */; };
 		EA1AC96A2B4C51FA00D3543F /* VOCursor.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EA1AC9692B4C51FA00D3543F /* VOCursor.scpt */; };
 		EA1F63F92352427A0089C967 /* VOCR Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */; };
 		EA1F642C2352503D0089C967 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F642B2352503D0089C967 /* Player.swift */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsWindowController.swift; sourceTree = "<group>"; };
+		EA14F2DF2B50B30300011F82 /* LlamaCpp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LlamaCpp.swift; sourceTree = "<group>"; };
 		EA1AC9692B4C51FA00D3543F /* VOCursor.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = VOCursor.scpt; sourceTree = "<group>"; };
 		EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VOCR Shortcuts.swift"; sourceTree = "<group>"; };
 		EA1F642B2352503D0089C967 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -119,8 +121,6 @@
 		EADE59B3232EB09A00E2F65A /* VOCR */ = {
 			isa = PBXGroup;
 			children = (
-				EA3F43702B476759005453C2 /* gpt.swift */,
-				EA42F4502A2A05410010BC39 /* UIElement Extension.swift */,
 				EADE59B6232EB09A00E2F65A /* AboutViewController.swift */,
 				EA2DA1AB232EB1D600D31031 /* Accessibility.swift */,
 				EADE59B4232EB09A00E2F65A /* AppDelegate.swift */,
@@ -128,19 +128,22 @@
 				EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */,
 				EA688D442355BDC500F722C7 /* Bundle Extension.swift */,
 				EA8AD6402352B4A000D26871 /* Double Extension.swift */,
+				EA3F43702B476759005453C2 /* gpt.swift */,
 				EADE59BD232EB09A00E2F65A /* Info.plist */,
+				EA14F2DF2B50B30300011F82 /* LlamaCpp.swift */,
 				EADE59BA232EB09A00E2F65A /* Main.storyboard */,
 				EA5C7ACB2351BB6D00D84042 /* Navigation.swift */,
 				EAA12C4E234C89030036AF6A /* NavigationShortcuts.swift */,
 				EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */,
+				EA3F43722B4857F9005453C2 /* Observation.swift */,
 				EA1F642B2352503D0089C967 /* Player.swift */,
+				EA60A3B02B4D7FF0001F6EEA /* RealTime.swift */,
 				EAF9C3C72354A66200D4D77C /* Settings.swift */,
+				EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */,
+				EA42F4502A2A05410010BC39 /* UIElement Extension.swift */,
+				EA9EB89D28EA5B0A00FE6210 /* Utils.swift */,
 				EA1F63F82352427A0089C967 /* VOCR Shortcuts.swift */,
 				EADE59BE232EB09A00E2F65A /* VOCR.entitlements */,
-				EA9EB89D28EA5B0A00FE6210 /* Utils.swift */,
-				EA3F43722B4857F9005453C2 /* Observation.swift */,
-				EA60A3B02B4D7FF0001F6EEA /* RealTime.swift */,
-				EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */,
 			);
 			path = VOCR;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 				EA3F43712B476759005453C2 /* gpt.swift in Sources */,
 				EA2DA1AF232EB22300D31031 /* NSRunningApplication Extension.swift in Sources */,
 				EA3F43732B4857F9005453C2 /* Observation.swift in Sources */,
+				EA14F2E02B50B30300011F82 /* LlamaCpp.swift in Sources */,
 				EA9EB89E28EA5B0A00FE6210 /* Utils.swift in Sources */,
 				EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */,
 				EA42F4512A2A05410010BC39 /* UIElement Extension.swift in Sources */,

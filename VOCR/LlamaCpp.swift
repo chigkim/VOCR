@@ -1,17 +1,18 @@
+//
+//  LlamaCpp.swift
+//  VOCR
+//
+//  Created by Chi Kim on 1/11/24.
+//  Copyright © 2024 Chi Kim. All rights reserved.
+//
+
 import Foundation
 import Cocoa
 
-enum GPT {
-
+enum LlamaCpp {
+	
 	struct Response: Decodable {
-		struct Choice: Decodable {
-			struct Message: Decodable {
 				let content: String
-			}
-			
-			let message: Message
-		}
-		let choices: [Choice]
 	}
 	
 	static func ask(image:CGImage) {
@@ -21,68 +22,38 @@ enum GPT {
 		alert.addButton(withTitle: "Cancel")
 		let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
 		inputTextField.placeholderString = "Question"
-		inputTextField.stringValue = "Describe the image."
+		inputTextField.stringValue = "Analyze the image in a comprehensive and detailed manner.."
 		alert.accessoryView = inputTextField
 		let response = alert.runModal()
 		if response == .alertFirstButtonReturn { // OK button
 			let prompt = inputTextField.stringValue
 			let system = "You are a helpful assistant."
-			GPT.describe(image:image, system:system, prompt:prompt) { description in
+			LlamaCpp.describe(image:image, system:system, prompt:prompt) { description in
 				Accessibility.speak(description)
 				copyToClipboard(description)
 			}
 		}
 	}
-
-
+	
 	static func describe(image: CGImage, system:String, prompt: String, completion: @escaping (String) -> Void) {
-		if Settings.GPTAPIKEY == "" {
-				Settings.displayApiKeyDialog()
-		}
-		if Settings.GPTAPIKEY == "" {
-			return
-		}
-			let bitmapRep = NSBitmapImageRep(cgImage: image)
-		guard let imageData = bitmapRep.representation(using: .jpeg, properties: [:]) else {
-			fatalError("Could not convert image to JPEG.")
-		}
-		
-		let base64_image = imageData.base64EncodedString(options: [])
-		
+		let base64_image = imageToBase64(image: image)
 		let jsonBody: [String: Any] = [
-			"model": "gpt-4-vision-preview",
-			"messages": [
+			"temperature": 0.1,
+			"prompt": "User: [img-1]\n\(prompt)\nAssistant:",
+			"image_data": [
 				[
-					"role": "system",
-					"content": system
-				],
-				[
-					"role": "user",
-					"content": [
-						[
-							"type": "text",
-							"text": prompt
-						],
-						[
-							"type": "image_url",
-							"image_url": [
-								"url": "data:image/jpeg;base64,\(base64_image)"
-							]
-						]
-					]
+					"data": base64_image,
+					"id": 1
 				]
 			],
-			"max_tokens": 1000
+			"n_predict": 1000
 		]
-		
 		let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody, options: [])
-		
-		
-		let url = URL(string: "https://api.openai.com/v1/chat/completions")!
+		let url = URL(string: "http://127.0.0.1:8080/completion")!
 		var request = URLRequest(url: url)
+		request.timeoutInterval = 180
 		request.httpMethod = "POST"
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-		request.setValue("Bearer \(Settings.GPTAPIKEY)", forHTTPHeaderField: "Authorization")
 		request.httpBody = jsonData
 		let session = URLSession.shared
 		let task = session.dataTask(with: request) { data, response, error in
@@ -93,17 +64,12 @@ enum GPT {
 			}
 			do {
 				let response = try JSONDecoder().decode(Response.self, from: data)
-				if let firstChoice = response.choices.first {
-					let description = firstChoice.message.content
-					print("GPT-4V: \(description)")
+				let description = response.content
 					completion(description)
-				}
 			} catch {
 				print("Error decoding JSON: \(error)")
 				completion("Error: Could not parse JSON.")
 			}
-			
-			
 		}
 		Accessibility.speakWithSynthesizer("Getting response from ChatGPT... Please wait...")
 		task.resume()

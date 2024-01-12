@@ -19,6 +19,7 @@ enum Settings {
 	static var autoScan = false
 	static var targetWindow = false
 	static var detectObject = true
+	static var useLlama = false
 	static var GPTAPIKEY = ""
 	static var mode = "OCR"
 	static let target = MenuHandler()
@@ -27,6 +28,7 @@ enum Settings {
 			("Target Window", #selector(MenuHandler.toggleSetting(_:)), targetWindow),
 			("Auto Scan", #selector(MenuHandler.toggleAutoScan(_:)), autoScan),
 			("Detect Objects", #selector(MenuHandler.toggleSetting(_:)), detectObject),
+			("Use Llama.cpp", #selector(MenuHandler.toggleSetting(_:)), useLlama),
 			("Reset Position on Scan", #selector(MenuHandler.toggleSetting(_:)), positionReset),
 			("Positional Audio", #selector(MenuHandler.toggleSetting(_:)), positionalAudio),
 			("Move Mouse", #selector(MenuHandler.toggleSetting(_:)), moveMouse),
@@ -148,6 +150,7 @@ enum Settings {
 		Settings.launchOnBoot = defaults.bool(forKey:"launchOnBoot")
 		Settings.autoScan = defaults.bool(forKey:"autoScan")
 		Settings.detectObject = defaults.bool(forKey:"detectObject")
+		Settings.useLlama = defaults.bool(forKey:"useLlama")
 		Settings.targetWindow = defaults.bool(forKey:"targetWindow")
 		if let apikey = defaults.string(forKey: "GPTAPIKEY") {
 			Settings.GPTAPIKEY = apikey
@@ -165,6 +168,7 @@ enum Settings {
 		defaults.set(Settings.launchOnBoot, forKey:"launchOnBoot")
 		defaults.set(Settings.autoScan, forKey:"autoScan")
 		defaults.set(Settings.detectObject, forKey:"detectObject")
+		defaults.set(Settings.useLlama, forKey:"useLlama")
 		defaults.set(Settings.targetWindow, forKey:"targetWindow")
 		defaults.set(Settings.GPTAPIKEY, forKey:"GPTAPIKEY")
 		defaults.set(Settings.mode, forKey:"mode")
@@ -188,6 +192,8 @@ class MenuHandler: NSObject {
 			Settings.positionReset = sender.state == .on
 		case "Positional Audio":
 			Settings.positionalAudio = sender.state == .on
+		case "Use Llama.cpp":
+			Settings.useLlama = sender.state == .on
 		case "Move Mouse":
 			Settings.moveMouse = sender.state == .on
 		case "Launch on Login":

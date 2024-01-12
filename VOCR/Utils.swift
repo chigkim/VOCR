@@ -15,6 +15,22 @@ import AXSwift
 
 let logger = Logger()
 import Cocoa
+func ask(image:CGImage) {
+	if Settings.useLlama {
+		LlamaCpp.ask(image: image)
+	} else {
+		GPT.ask(image:image)
+	}
+}
+
+func imageToBase64(image: CGImage) -> String {
+	let bitmapRep = NSBitmapImageRep(cgImage: image)
+guard let imageData = bitmapRep.representation(using: .jpeg, properties: [:]) else {
+	fatalError("Could not convert image to JPEG.")
+}
+let base64_image = imageData.base64EncodedString(options: [])
+return base64_image
+}
 
 func copyToClipboard(_ string: String) {
 	let pasteboard = NSPasteboard.general
@@ -301,7 +317,7 @@ func recognizeVOCursor(mode:String) {
 		Navigation.shared.windowName = ""
 		if let cgImage = TakeScreensShots(rect:CGRect(origin: Navigation.shared.cgPosition, size: Navigation.shared.cgSize), resize:true)  {
 			if mode == "GPT" {
-				GPT.askGpt(image:cgImage)
+					ask(image: cgImage)
 			} else {
 				Navigation.shared.startOCR(cgImage: cgImage)
 				// classify(cgImage:cgImage)
@@ -318,7 +334,7 @@ func voCursorScreenshot() {
 			let dataProvider = CGDataProvider(data: dataImage as CFData)
 			if let cgImage = CGImage(pngDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent) {
 				if Settings.mode == "GPT" {
-					GPT.askGpt(image:cgImage)
+					ask(image:cgImage)
 				} else {
 					classify(cgImage:cgImage)
 				}

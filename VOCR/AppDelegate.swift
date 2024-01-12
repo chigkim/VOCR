@@ -52,7 +52,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		if let image = NSImage(contentsOf: fileURL) {
 			var rect = CGRect(origin: .zero, size: image.size)
 			if let cgImage = image.cgImage(forProposedRect: &rect, context: nil, hints: nil) {
-				GPT.askGpt(image:cgImage)
+				ask(image:cgImage)
 
 				return true  // Indicate success
 			} else {
