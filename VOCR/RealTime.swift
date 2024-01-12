@@ -73,7 +73,7 @@ return nil
 							}
 						}
 					}
-					Thread.sleep(forTimeInterval: 1.0)
+					Thread.sleep(forTimeInterval: 0.5)
 					// NSSound(contentsOfFile: "/System/Library/Sounds/Tink.aiff", byReference: true)?.play()
 				}
 			}

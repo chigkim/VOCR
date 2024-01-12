@@ -35,14 +35,14 @@ enum GPT {
 			"messages": [
 				[
 					"role": "system",
-					"content": Settings.systemPrompt
+					"content": system
 				],
 				[
 					"role": "user",
 					"content": [
 						[
 							"type": "text",
-							"text": Settings.prompt
+							"text": prompt
 						],
 						[
 							"type": "image_url",

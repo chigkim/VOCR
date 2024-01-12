@@ -26,7 +26,7 @@ enum LlamaCpp {
 		let base64_image = imageToBase64(image: image)
 		let jsonBody: [String: Any] = [
 			"temperature": 0.1,
-			"prompt": "USER: [img-1]\n\(Settings.prompt)\nASSISTANT:",
+			"prompt": "USER: [img-1]\n\(prompt)\nASSISTANT:",
 			"image_data": [
 				[
 					"data": base64_image,

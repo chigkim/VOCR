@@ -113,7 +113,10 @@ cgPosition = CGPoint()
 		let system = "You are a helpful assistant. Your response should be in JSON format."
 		let prompt = "Can you describe the user interface in the following JSON format?\n[{'label': 'label', 'short string', 'uid': id_int, 'description': 'description string', 'content': 'string of some examples of contents in the area', 'boundingBox': [top_left_x_pixel, top_left_y_pixel, width_pixel, height_pixel]]\nThe image has dimensions of \(cgImage.width) and \(cgImage.height) height, so scale the pixel coordinates accordingly. Only display json strings, nothing else in the beginning or at the end."
 		GPT.describe(image:cgImage, system:system, prompt:prompt) { description in
-			guard let json = extractString(text:description, startDelimiter: "```json\n", endDelimiter: "\n```") else { return }
+			guard let json = extractString(text:description, startDelimiter: "```json\n", endDelimiter: "\n```") else {
+				Accessibility.speakWithSynthesizer("Received response in incorrect format. Try again.")
+				return
+			}
 			if let elements = self.decode(message:json) {
 				let result = elements.map {Observation($0)}
 				self.process(result)
@@ -125,7 +128,7 @@ cgPosition = CGPoint()
 				}
 				
 			} else {
-				Accessibility.speak("Nothing found")
+				Accessibility.speakWithSynthesizer("Received response in incorrect format. Try again.")
 			}
 		}
 	}
