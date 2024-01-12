@@ -15,9 +15,8 @@ enum LlamaCpp {
 				let content: String
 	}
 	
-	static func ask(image:CGImage, prompt:String) {
-			let system = "You are a helpful assistant."
-			LlamaCpp.describe(image:image, system:system, prompt:prompt) { description in
+	static func ask(image:CGImage) {
+			LlamaCpp.describe(image:image, system:Settings.systemPrompt, prompt:Settings.prompt) { description in
 				Accessibility.speak(description)
 				copyToClipboard(description)
 			}
@@ -27,7 +26,7 @@ enum LlamaCpp {
 		let base64_image = imageToBase64(image: image)
 		let jsonBody: [String: Any] = [
 			"temperature": 0.1,
-			"prompt": "User: [img-1]\n\(prompt)\nAssistant:",
+			"prompt": "USER: [img-1]\n\(Settings.prompt)\nASSISTANT:",
 			"image_data": [
 				[
 					"data": base64_image,

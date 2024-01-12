@@ -16,18 +16,13 @@ import AXSwift
 let logger = Logger()
 import Cocoa
 
-func askPrompt() -> String? {
+func askPrompt(value:String) -> String? {
 	let alert = NSAlert()
 	alert.messageText = "Prompt"
-	alert.addButton(withTitle: "Ask")
+	alert.addButton(withTitle: "Ok")
 	alert.addButton(withTitle: "Cancel")
 	let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
-	inputTextField.placeholderString = "Prompt"
-	if Settings.defaultPrompt != "" {
-		inputTextField.stringValue = Settings.defaultPrompt
-	} else {
-		inputTextField.stringValue = "Analyze the image in a comprehensive and detailed manner."
-	}
+	inputTextField.stringValue = value
 		alert.accessoryView = inputTextField
 	let response = alert.runModal()
 	if response == .alertFirstButtonReturn {
@@ -38,28 +33,18 @@ func askPrompt() -> String? {
 }
 
 func ask(image:CGImage) {
-	var prompt = ""
-	if Settings.useDefaultPrompt {
-		if Settings.defaultPrompt == "" {
-			Settings.displayDefaultPromptDialog()
-		}
-		if Settings.defaultPrompt == "" {
-			return
-		}else {
-			prompt = Settings.defaultPrompt
-		}
-	} else {
-		if let newPrompt = askPrompt() {
-			prompt = newPrompt
+	if !Settings.useLastPrompt {
+		if let prompt = askPrompt(value:Settings.prompt) {
+			Settings.prompt = prompt
 		} else {
 			return
 		}
 	}
-	
+
 	if Settings.useLlama {
-		LlamaCpp.ask(image: image, prompt:prompt)
+		LlamaCpp.ask(image: image)
 	} else {
-		GPT.ask(image:image, prompt:prompt)
+		GPT.ask(image:image)
 	}
 }
 

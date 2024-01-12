@@ -14,41 +14,35 @@ enum GPT {
 		let choices: [Choice]
 	}
 	
-	static func ask(image:CGImage, prompt:String) {
-			let system = "You are a helpful assistant."
-			GPT.describe(image:image, system:system, prompt:prompt) { description in
+	static func ask(image:CGImage) {
+		GPT.describe(image:image, system:Settings.systemPrompt, prompt:Settings.prompt) { description in
 				Accessibility.speak(description)
 				copyToClipboard(description)
 			}
 	}
 
-	static func describe(image: CGImage, system:String, prompt: String, completion: @escaping (String) -> Void) {
+	static func describe(image: CGImage, system:String, prompt:String, completion: @escaping (String) -> Void) {
 		if Settings.GPTAPIKEY == "" {
 				Settings.displayApiKeyDialog()
 		}
 		if Settings.GPTAPIKEY == "" {
 			return
 		}
-			let bitmapRep = NSBitmapImageRep(cgImage: image)
-		guard let imageData = bitmapRep.representation(using: .jpeg, properties: [:]) else {
-			fatalError("Could not convert image to JPEG.")
-		}
-		
-		let base64_image = imageData.base64EncodedString(options: [])
+		let base64_image = imageToBase64(image: image)
 		
 		let jsonBody: [String: Any] = [
 			"model": "gpt-4-vision-preview",
 			"messages": [
 				[
 					"role": "system",
-					"content": system
+					"content": Settings.systemPrompt
 				],
 				[
 					"role": "user",
 					"content": [
 						[
 							"type": "text",
-							"text": prompt
+							"text": Settings.prompt
 						],
 						[
 							"type": "image_url",

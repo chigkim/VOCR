@@ -20,8 +20,9 @@ enum Settings {
 	static var targetWindow = false
 	static var detectObject = true
 	static var useLlama = false
-	static var useDefaultPrompt = false
-	static var defaultPrompt = ""
+	static var useLastPrompt = false
+	static var prompt = "Analyze the image in a comprehensive and detailed manner."
+	static var systemPrompt = "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions."
 	static var GPTAPIKEY = ""
 	static var mode = "OCR"
 	static let target = MenuHandler()
@@ -30,7 +31,7 @@ enum Settings {
 			("Target Window", #selector(MenuHandler.toggleSetting(_:)), targetWindow),
 			("Auto Scan", #selector(MenuHandler.toggleAutoScan(_:)), autoScan),
 			("Detect Objects", #selector(MenuHandler.toggleSetting(_:)), detectObject),
-			("Use Default Prompt", #selector(MenuHandler.toggleSetting(_:)), useDefaultPrompt),
+			("Use Last Prompt", #selector(MenuHandler.toggleSetting(_:)), useLastPrompt),
 			("Use Llama.cpp", #selector(MenuHandler.toggleSetting(_:)), useLlama),
 			("Reset Position on Scan", #selector(MenuHandler.toggleSetting(_:)), positionReset),
 			("Positional Audio", #selector(MenuHandler.toggleSetting(_:)), positionalAudio),
@@ -54,9 +55,9 @@ enum Settings {
 			installMouseMonitor()
 		}
 			
-		let defaultPromptMenuItem = NSMenuItem(title: "Set Default Prompt...", action: #selector(target.presentDefaultPromptDialog(_:)), keyEquivalent: "")
-		defaultPromptMenuItem.target = target
-		settingsMenu.addItem(defaultPromptMenuItem)
+		let systemPromptMenuItem = NSMenuItem(title: "Set System Prompt...", action: #selector(target.presentSystemPromptDialog(_:)), keyEquivalent: "")
+		systemPromptMenuItem.target = target
+		settingsMenu.addItem(systemPromptMenuItem)
 
 		let soundOutputMenuItem = NSMenuItem(title: "Sound Output...", action: #selector(target.chooseOutput(_:)), keyEquivalent: "")
 		soundOutputMenuItem.target = target
@@ -64,7 +65,7 @@ enum Settings {
 
 		let shortcutsMenuItem = NSMenuItem(title: "Shortcuts...", action: #selector(target.openShortcutsWindow(_:)), keyEquivalent: "")
 		shortcutsMenuItem.target = target
-		settingsMenu.addItem(shortcutsMenuItem)
+//		settingsMenu.addItem(shortcutsMenuItem)
 
 		let newShortcutMenuItem = NSMenuItem(title: "New Shortcuts", action: #selector(target.addShortcut(_:)), keyEquivalent: "")
 		newShortcutMenuItem.target = target
@@ -149,9 +150,9 @@ enum Settings {
 		}
 	}
 	
-	static func displayDefaultPromptDialog() {
-		if let prompt = askPrompt() {
-			Settings.defaultPrompt = prompt
+	static func displaySystemPromptDialog() {
+		if let prompt = askPrompt(value:Settings.systemPrompt) {
+			Settings.systemPrompt = prompt
 			Settings.save()
 		}
 	}
@@ -164,7 +165,7 @@ enum Settings {
 		Settings.autoScan = defaults.bool(forKey:"autoScan")
 		Settings.detectObject = defaults.bool(forKey:"detectObject")
 		Settings.useLlama = defaults.bool(forKey:"useLlama")
-		Settings.useDefaultPrompt = defaults.bool(forKey:"useDefaultPrompt")
+		Settings.useLastPrompt = defaults.bool(forKey:"useLastPrompt")
 		Settings.targetWindow = defaults.bool(forKey:"targetWindow")
 		if let apikey = defaults.string(forKey: "GPTAPIKEY") {
 			Settings.GPTAPIKEY = apikey
@@ -172,9 +173,13 @@ enum Settings {
 		if let mode = defaults.string(forKey: "mode") {
 			Settings.mode = mode
 		}
-		if let prompt = defaults.string(forKey: "defaultPrompt") {
-			Settings.defaultPrompt = prompt
+		if let prompt = defaults.string(forKey: "prompt") {
+			Settings.prompt = prompt
 		}
+		if let systemPrompt = defaults.string(forKey: "systemPrompt") {
+			Settings.systemPrompt = systemPrompt
+		}
+
 	}
 	
 	static func save() {
@@ -185,10 +190,11 @@ enum Settings {
 		defaults.set(Settings.autoScan, forKey:"autoScan")
 		defaults.set(Settings.detectObject, forKey:"detectObject")
 		defaults.set(Settings.useLlama, forKey:"useLlama")
-		defaults.set(Settings.useDefaultPrompt, forKey:"useDefaultPrompt")
+		defaults.set(Settings.useLastPrompt, forKey:"useLastPrompt")
 		defaults.set(Settings.targetWindow, forKey:"targetWindow")
 		defaults.set(Settings.GPTAPIKEY, forKey:"GPTAPIKEY")
-		defaults.set(Settings.defaultPrompt, forKey:"defaultPrompt")
+		defaults.set(Settings.prompt, forKey:"prompt")
+			defaults.set(Settings.systemPrompt, forKey:"systemPrompt")
 		defaults.set(Settings.mode, forKey:"mode")
 	}
 	
@@ -210,8 +216,8 @@ class MenuHandler: NSObject {
 			Settings.positionReset = sender.state == .on
 		case "Positional Audio":
 			Settings.positionalAudio = sender.state == .on
-		case "Use Default Prompt":
-			Settings.useDefaultPrompt = sender.state == .on
+		case "Use Last Prompt":
+			Settings.useLastPrompt = sender.state == .on
 		case "Use Llama.cpp":
 			Settings.useLlama = sender.state == .on
 		case "Move Mouse":
@@ -256,8 +262,8 @@ class MenuHandler: NSObject {
 		Settings.displayApiKeyDialog()
 	}
 
-	@objc func presentDefaultPromptDialog(_ sender: AnyObject?) {
-		Settings.displayDefaultPromptDialog()
+	@objc func presentSystemPromptDialog(_ sender: AnyObject?) {
+		Settings.displaySystemPromptDialog()
 	}
 
 	@objc func displayAboutWindow(_ sender: Any?) {

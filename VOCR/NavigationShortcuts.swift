@@ -22,13 +22,17 @@ struct NavigationShortcuts {
 	let nextCharacter = HotKey(key:.rightArrow, modifiers:[.command,.shift,.control])
 	let previousCharacter = HotKey(key:.leftArrow, modifiers:[.command,.shift,.control])
 	let location = HotKey(key:.l, modifiers:[.command,.control])
+	let identify = HotKey(key:.i, modifiers:[.command,.control])
 	let exit = HotKey(key:.escape, modifiers:[])
 
 	init() {
 		location.keyDownHandler = {
 			Navigation.shared.location()
 		}
-		
+		identify.keyDownHandler = {
+			Navigation.shared.identifyObject()
+		}
+
 		right.keyDownHandler = {
 			Navigation.shared.right()
 		}
