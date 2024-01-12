@@ -242,7 +242,8 @@ cgPosition = CGPoint()
 	func identifyObject() {
 		if displayResults[l][w].value == "OBJECT" {
 			if let image =  cgImage, let croppedImage = image.cropping(to: VNImageRectForNormalizedRect(displayResults[l][w].boundingBox, image.width, image.height)) {
-				classify(cgImage:croppedImage)
+				ask(image: croppedImage)
+				// classify(cgImage:croppedImage)
 			}
 		}
 	}
@@ -259,7 +260,7 @@ cgPosition = CGPoint()
 			CGWarpMouseCursorPosition(convert2coordinates(displayResults[l][w].boundingBox))
 		}
 		Accessibility.speak(displayResults[l][w].value)
-		// identifyObject()
+//		 identifyObject()
 	}
 
 	func left() {
@@ -274,7 +275,7 @@ cgPosition = CGPoint()
 			CGWarpMouseCursorPosition(convert2coordinates(displayResults[l][w].boundingBox))
 		}
 		Accessibility.speak(displayResults[l][w].value)
-		// identifyObject()
+//		 identifyObject()
 	}
 	
 	func down() {

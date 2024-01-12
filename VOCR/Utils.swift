@@ -15,21 +15,61 @@ import AXSwift
 
 let logger = Logger()
 import Cocoa
-func ask(image:CGImage) {
-	if Settings.useLlama {
-		LlamaCpp.ask(image: image)
+
+func askPrompt() -> String? {
+	let alert = NSAlert()
+	alert.messageText = "Prompt"
+	alert.addButton(withTitle: "Ask")
+	alert.addButton(withTitle: "Cancel")
+	let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+	inputTextField.placeholderString = "Prompt"
+	if Settings.defaultPrompt != "" {
+		inputTextField.stringValue = Settings.defaultPrompt
 	} else {
-		GPT.ask(image:image)
+		inputTextField.stringValue = "Analyze the image in a comprehensive and detailed manner."
+	}
+		alert.accessoryView = inputTextField
+	let response = alert.runModal()
+	if response == .alertFirstButtonReturn {
+		let prompt = inputTextField.stringValue
+		return prompt
+	}
+	return nil
+}
+
+func ask(image:CGImage) {
+	var prompt = ""
+	if Settings.useDefaultPrompt {
+		if Settings.defaultPrompt == "" {
+			Settings.displayDefaultPromptDialog()
+		}
+		if Settings.defaultPrompt == "" {
+			return
+		}else {
+			prompt = Settings.defaultPrompt
+		}
+	} else {
+		if let newPrompt = askPrompt() {
+			prompt = newPrompt
+		} else {
+			return
+		}
+	}
+	
+	if Settings.useLlama {
+		LlamaCpp.ask(image: image, prompt:prompt)
+	} else {
+		GPT.ask(image:image, prompt:prompt)
 	}
 }
 
 func imageToBase64(image: CGImage) -> String {
 	let bitmapRep = NSBitmapImageRep(cgImage: image)
-guard let imageData = bitmapRep.representation(using: .jpeg, properties: [:]) else {
-	fatalError("Could not convert image to JPEG.")
-}
-let base64_image = imageData.base64EncodedString(options: [])
-return base64_image
+	guard let imageData = bitmapRep.representation(using: .jpeg, properties: [:]) else {
+		fatalError("Could not convert image to JPEG.")
+	}
+	let base64_image = imageData.base64EncodedString(options: [])
+	return base64_image
 }
 
 func copyToClipboard(_ string: String) {
@@ -317,7 +357,7 @@ func recognizeVOCursor(mode:String) {
 		Navigation.shared.windowName = ""
 		if let cgImage = TakeScreensShots(rect:CGRect(origin: Navigation.shared.cgPosition, size: Navigation.shared.cgSize), resize:true)  {
 			if mode == "GPT" {
-					ask(image: cgImage)
+				ask(image: cgImage)
 			} else {
 				Navigation.shared.startOCR(cgImage: cgImage)
 				// classify(cgImage:cgImage)

@@ -15,24 +15,12 @@ enum LlamaCpp {
 				let content: String
 	}
 	
-	static func ask(image:CGImage) {
-		let alert = NSAlert()
-		alert.messageText = "Ask GPT-4V"
-		alert.addButton(withTitle: "Ask")
-		alert.addButton(withTitle: "Cancel")
-		let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
-		inputTextField.placeholderString = "Question"
-		inputTextField.stringValue = "Analyze the image in a comprehensive and detailed manner.."
-		alert.accessoryView = inputTextField
-		let response = alert.runModal()
-		if response == .alertFirstButtonReturn { // OK button
-			let prompt = inputTextField.stringValue
+	static func ask(image:CGImage, prompt:String) {
 			let system = "You are a helpful assistant."
 			LlamaCpp.describe(image:image, system:system, prompt:prompt) { description in
 				Accessibility.speak(description)
 				copyToClipboard(description)
 			}
-		}
 	}
 	
 	static func describe(image: CGImage, system:String, prompt: String, completion: @escaping (String) -> Void) {
@@ -71,7 +59,7 @@ enum LlamaCpp {
 				completion("Error: Could not parse JSON.")
 			}
 		}
-		Accessibility.speakWithSynthesizer("Getting response from ChatGPT... Please wait...")
+		Accessibility.speakWithSynthesizer("Getting response from LlamaCpp... Please wait...")
 		task.resume()
 	}
 }

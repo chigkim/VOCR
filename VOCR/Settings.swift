@@ -20,6 +20,8 @@ enum Settings {
 	static var targetWindow = false
 	static var detectObject = true
 	static var useLlama = false
+	static var useDefaultPrompt = false
+	static var defaultPrompt = ""
 	static var GPTAPIKEY = ""
 	static var mode = "OCR"
 	static let target = MenuHandler()
@@ -28,6 +30,7 @@ enum Settings {
 			("Target Window", #selector(MenuHandler.toggleSetting(_:)), targetWindow),
 			("Auto Scan", #selector(MenuHandler.toggleAutoScan(_:)), autoScan),
 			("Detect Objects", #selector(MenuHandler.toggleSetting(_:)), detectObject),
+			("Use Default Prompt", #selector(MenuHandler.toggleSetting(_:)), useDefaultPrompt),
 			("Use Llama.cpp", #selector(MenuHandler.toggleSetting(_:)), useLlama),
 			("Reset Position on Scan", #selector(MenuHandler.toggleSetting(_:)), positionReset),
 			("Positional Audio", #selector(MenuHandler.toggleSetting(_:)), positionalAudio),
@@ -51,6 +54,10 @@ enum Settings {
 			installMouseMonitor()
 		}
 			
+		let defaultPromptMenuItem = NSMenuItem(title: "Set Default Prompt...", action: #selector(target.presentDefaultPromptDialog(_:)), keyEquivalent: "")
+		defaultPromptMenuItem.target = target
+		settingsMenu.addItem(defaultPromptMenuItem)
+
 		let soundOutputMenuItem = NSMenuItem(title: "Sound Output...", action: #selector(target.chooseOutput(_:)), keyEquivalent: "")
 		soundOutputMenuItem.target = target
 		settingsMenu.addItem(soundOutputMenuItem)
@@ -142,7 +149,13 @@ enum Settings {
 		}
 	}
 	
-	
+	static func displayDefaultPromptDialog() {
+		if let prompt = askPrompt() {
+			Settings.defaultPrompt = prompt
+			Settings.save()
+		}
+	}
+
 	static func load() {
 		let defaults = UserDefaults.standard
 		Settings.positionReset = defaults.bool(forKey:"positionReset")
@@ -151,6 +164,7 @@ enum Settings {
 		Settings.autoScan = defaults.bool(forKey:"autoScan")
 		Settings.detectObject = defaults.bool(forKey:"detectObject")
 		Settings.useLlama = defaults.bool(forKey:"useLlama")
+		Settings.useDefaultPrompt = defaults.bool(forKey:"useDefaultPrompt")
 		Settings.targetWindow = defaults.bool(forKey:"targetWindow")
 		if let apikey = defaults.string(forKey: "GPTAPIKEY") {
 			Settings.GPTAPIKEY = apikey
@@ -158,7 +172,9 @@ enum Settings {
 		if let mode = defaults.string(forKey: "mode") {
 			Settings.mode = mode
 		}
-		
+		if let prompt = defaults.string(forKey: "defaultPrompt") {
+			Settings.defaultPrompt = prompt
+		}
 	}
 	
 	static func save() {
@@ -169,8 +185,10 @@ enum Settings {
 		defaults.set(Settings.autoScan, forKey:"autoScan")
 		defaults.set(Settings.detectObject, forKey:"detectObject")
 		defaults.set(Settings.useLlama, forKey:"useLlama")
+		defaults.set(Settings.useDefaultPrompt, forKey:"useDefaultPrompt")
 		defaults.set(Settings.targetWindow, forKey:"targetWindow")
 		defaults.set(Settings.GPTAPIKEY, forKey:"GPTAPIKEY")
+		defaults.set(Settings.defaultPrompt, forKey:"defaultPrompt")
 		defaults.set(Settings.mode, forKey:"mode")
 	}
 	
@@ -192,6 +210,8 @@ class MenuHandler: NSObject {
 			Settings.positionReset = sender.state == .on
 		case "Positional Audio":
 			Settings.positionalAudio = sender.state == .on
+		case "Use Default Prompt":
+			Settings.useDefaultPrompt = sender.state == .on
 		case "Use Llama.cpp":
 			Settings.useLlama = sender.state == .on
 		case "Move Mouse":
@@ -235,7 +255,11 @@ class MenuHandler: NSObject {
 	@objc func presentApiKeyInputDialog(_ sender: AnyObject?) {
 		Settings.displayApiKeyDialog()
 	}
-	
+
+	@objc func presentDefaultPromptDialog(_ sender: AnyObject?) {
+		Settings.displayDefaultPromptDialog()
+	}
+
 	@objc func displayAboutWindow(_ sender: Any?) {
 		let storyboardName = NSStoryboard.Name(stringLiteral: "Main")
 		let storyboard = NSStoryboard(name: storyboardName, bundle: nil)
