@@ -114,12 +114,12 @@ func drawBoxes(_ cgImageInput : CGImage, boxes:[Observation], color:NSColor) -> 
 			if let ctx = CGContext(data: bytes, width: cgImageInput.width, height: cgImageInput.height, bitsPerComponent: cgImageInput.bitsPerComponent, bytesPerRow: cgImageInput.bytesPerRow, space: cgImageInput.colorSpace!, bitmapInfo: cgImageInput.bitmapInfo.rawValue) {
 				ctx.setFillColor(color.cgColor)
 				ctx.setStrokeColor(color.cgColor)
-				ctx.setLineWidth(10)
+				ctx.setLineWidth(1)
 				debugPrint("Drawing boxes:")
 				let rects = boxes.map { VNImageRectForNormalizedRect($0.boundingBox, cgImageInput.width, cgImageInput.height) }
 				for box in rects {
 					debugPrint(box)
-					ctx.stroke(box, width: 10.0)
+					ctx.stroke(box, width: 1.0)
 				}
 				cgImageOutput = (ctx.makeImage())
 				if cgImageOutput == nil {
@@ -265,9 +265,9 @@ func performOCR(cgImage:CGImage) -> [Observation] {
 		 }
 		 */
 		
-		// var boxImage = drawBoxes(cgImage, boxes:boxesText, color:NSColor.green)!
-		// boxImage = drawBoxes(boxImage, boxes:boxesNoText, color:NSColor.blue)!
-		// try? saveImage(boxImage)
+//		var boxImage = drawBoxes(cgImage, boxes:boxesText, color:NSColor.green)!
+//		 var boxImage = drawBoxes(cgImage, boxes:boxesNoText, color:NSColor.red)!
+//		 try? saveImage(boxImage)
 	}
 	return result
 }

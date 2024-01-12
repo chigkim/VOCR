@@ -191,7 +191,10 @@ cgPosition = CGPoint()
 	}
 	
 	func convert2coordinates(_ rect:CGRect) -> CGPoint {
-		let box = CGRect(x:rect.minX, y:1-rect.maxY, width:rect.width, height:rect.height)
+		if let image =  cgImage {
+			debugPrint("Box:", VNImageRectForNormalizedRect(rect, image.width, image.height))
+		}
+			let box = CGRect(x:rect.minX, y:1-rect.maxY, width:rect.width, height:rect.height)
 		var center = CGPoint(x:box.midX, y:box.midY)
 		debugPrint(center)
 		if Settings.positionalAudio {
@@ -241,11 +244,18 @@ cgPosition = CGPoint()
 
 	func identifyObject() {
 		if displayResults[l][w].value == "OBJECT" {
-			if let image =  cgImage, let croppedImage = image.cropping(to: VNImageRectForNormalizedRect(displayResults[l][w].boundingBox, image.width, image.height)) {
-				ask(image: croppedImage)
-				// classify(cgImage:croppedImage)
+			if let image =  cgImage {
+				var rect = displayResults[l][w].boundingBox
+				rect = CGRect(x:rect.minX, y:1-rect.maxY, width:rect.width, height:rect.height)
+				rect = VNImageRectForNormalizedRect(rect, image.width, image.height)
+				debugPrint(rect)
+				if let croppedImage = image.cropping(to: rect) {
+					ask(image: croppedImage)
+//					try! saveImage(croppedImage)
+					// classify(cgImage:croppedImage)
+				}
 			}
-		}
+			}
 	}
 
 	func right() {
