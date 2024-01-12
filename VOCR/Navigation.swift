@@ -11,21 +11,7 @@ import Vision
 import Cocoa
 
 class Navigation {
-
-		func decode(message:String) -> [GPTObservation]? {
-			let jsonData = message.data(using: .utf8)!
-			do {
-				let elements = try JSONDecoder().decode([GPTObservation].self, from: jsonData)
-				for element in elements {
-					print("Label: \(element.label), UID: \(element.uid), Bounding Box: \(element.boundingBox)")
-				}
-				return elements
-			} catch {
-				print("Error decoding JSON: \(error)")
-			}
-			return nil
-		}
-
+	
 	static let shared = Navigation()
 	var displayResults:[[Observation]] = []
 	var navigationShortcuts:NavigationShortcuts?
@@ -37,11 +23,11 @@ class Navigation {
 	var l = -1
 	var w = -1
 	var c = -1
-
+	
 	func setWindow(_ n:Int) {
 		windowName = "Unknown Window"
 		appName = "Unknown App"
-cgPosition = CGPoint()
+		cgPosition = CGPoint()
 		cgSize = CGSize()
 		let currentApp = NSWorkspace.shared.frontmostApplication
 		appName = currentApp!.localizedName!
@@ -100,7 +86,40 @@ cgPosition = CGPoint()
 		}
 		
 	}
-
+	func decode(message:String) -> [GPTObservation]? {
+		let jsonData = message.data(using: .utf8)!
+		do {
+			let elements = try JSONDecoder().decode([GPTObservation].self, from: jsonData)
+			for element in elements {
+				print("Label: \(element.label), UID: \(element.uid), Bounding Box: \(element.boundingBox)")
+			}
+			return elements
+		} catch {
+			print("Error decoding JSON: \(error)")
+		}
+		return nil
+	}
+	
+	func exploreHandler(description:String) {
+		guard let json = extractString(text:description, startDelimiter: "```json\n", endDelimiter: "\n```") else {
+			Accessibility.speakWithSynthesizer("Received response in incorrect format. Try again.")
+			return
+		}
+		if let elements = self.decode(message:json) {
+			let result = elements.map {Observation($0)}
+			self.process(result)
+			self.navigationShortcuts = NavigationShortcuts()
+			Accessibility.speak("Finished scanning \(self.appName), \(self.windowName)")
+			DispatchQueue.main.async {
+				// let boxImage = drawBoxes(cgImage, boxes:result, color:NSColor.red)!
+				// try? saveImage(boxImage)
+			}
+			
+		} else {
+			Accessibility.speakWithSynthesizer("Received response in incorrect format. Try again.")
+		}
+	}
+	
 	func exploreWithGPT(cgImage:CGImage) {
 		if Settings.positionReset {
 			l = -1
@@ -112,24 +131,10 @@ cgPosition = CGPoint()
 		NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
 		let system = "You are a helpful assistant. Your response should be in JSON format."
 		let prompt = "Can you describe the user interface in the following JSON format?\n[{'label': 'label', 'short string', 'uid': id_int, 'description': 'description string', 'content': 'string of some examples of contents in the area', 'boundingBox': [top_left_x_pixel, top_left_y_pixel, width_pixel, height_pixel]]\nThe image has dimensions of \(cgImage.width) and \(cgImage.height) height, so scale the pixel coordinates accordingly. Only display json strings, nothing else in the beginning or at the end."
-		GPT.describe(image:cgImage, system:system, prompt:prompt) { description in
-			guard let json = extractString(text:description, startDelimiter: "```json\n", endDelimiter: "\n```") else {
-				Accessibility.speakWithSynthesizer("Received response in incorrect format. Try again.")
-				return
-			}
-			if let elements = self.decode(message:json) {
-				let result = elements.map {Observation($0)}
-				self.process(result)
-				self.navigationShortcuts = NavigationShortcuts()
-				Accessibility.speak("Finished scanning \(self.appName), \(self.windowName)")
-				DispatchQueue.main.async {
-					// let boxImage = drawBoxes(cgImage, boxes:result, color:NSColor.red)!
-					// try? saveImage(boxImage)
-				}
-				
-			} else {
-				Accessibility.speakWithSynthesizer("Received response in incorrect format. Try again.")
-			}
+		if Settings.useLlama {
+			LlamaCpp.describe(image:cgImage, system:system, prompt:prompt, completion: exploreHandler)
+		} else {
+			GPT.describe(image:cgImage, system:system, prompt:prompt, completion: exploreHandler)
 		}
 	}
 	
@@ -157,7 +162,7 @@ cgPosition = CGPoint()
 			Accessibility.speakWithSynthesizer("Faild to access \(appName), \(windowName)")
 		}
 	}
-
+	
 	func startOCR(cgImage:CGImage) {
 		if Settings.positionReset {
 			l = -1
@@ -197,7 +202,7 @@ cgPosition = CGPoint()
 		if let image =  cgImage {
 			debugPrint("Box:", VNImageRectForNormalizedRect(rect, image.width, image.height))
 		}
-			let box = CGRect(x:rect.minX, y:1-rect.maxY, width:rect.width, height:rect.height)
+		let box = CGRect(x:rect.minX, y:1-rect.maxY, width:rect.width, height:rect.height)
 		var center = CGPoint(x:box.midX, y:box.midY)
 		debugPrint(center)
 		if Settings.positionalAudio {
@@ -244,7 +249,7 @@ cgPosition = CGPoint()
 			w = displayResults[l].count-1
 		}
 	}
-
+	
 	func identifyObject() {
 		if displayResults[l][w].value == "OBJECT" {
 			if let image =  cgImage {
@@ -254,13 +259,13 @@ cgPosition = CGPoint()
 				debugPrint(rect)
 				if let croppedImage = image.cropping(to: rect) {
 					ask(image: croppedImage)
-//					try! saveImage(croppedImage)
+					//					try! saveImage(croppedImage)
 					// classify(cgImage:croppedImage)
 				}
 			}
-			}
+		}
 	}
-
+	
 	func right() {
 		if displayResults.count == 0 {
 			return
@@ -273,9 +278,9 @@ cgPosition = CGPoint()
 			CGWarpMouseCursorPosition(convert2coordinates(displayResults[l][w].boundingBox))
 		}
 		Accessibility.speak(displayResults[l][w].value)
-//		 identifyObject()
+		//		 identifyObject()
 	}
-
+	
 	func left() {
 		if displayResults.count == 0 {
 			return
@@ -288,7 +293,7 @@ cgPosition = CGPoint()
 			CGWarpMouseCursorPosition(convert2coordinates(displayResults[l][w].boundingBox))
 		}
 		Accessibility.speak(displayResults[l][w].value)
-//		 identifyObject()
+		//		 identifyObject()
 	}
 	
 	func down() {

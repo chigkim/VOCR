@@ -18,7 +18,6 @@ enum LlamaCpp {
 	static func ask(image:CGImage) {
 			LlamaCpp.describe(image:image, system:Settings.systemPrompt, prompt:Settings.prompt) { description in
 				Accessibility.speak(description)
-				copyToClipboard(description)
 			}
 	}
 	
@@ -52,7 +51,8 @@ enum LlamaCpp {
 			do {
 				let response = try JSONDecoder().decode(Response.self, from: data)
 				let description = response.content
-					completion(description)
+				copyToClipboard(description)
+				completion(description)
 			} catch {
 				print("Error decoding JSON: \(error)")
 				completion("Error: Could not parse JSON.")

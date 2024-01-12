@@ -31,7 +31,7 @@ struct Shortcuts {
 		}
 
 		explore.keyDownHandler = {
-			Navigation.shared.prepare(mode:"GPT")
+			Navigation.shared.prepare(mode:"Explore")
 		}
 
 		vo.keyDownHandler = {

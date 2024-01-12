@@ -78,7 +78,7 @@ enum GPT {
 				completion("Error: \(error?.localizedDescription ?? "No data")")
 				return
 			}
-			debugPrint("GPT-4V: \(String(data: data, encoding: .utf8))")
+			debugPrint("GPT-4V: \(String(data: data, encoding: .utf8)!)")
 			do {
 				let response = try JSONDecoder().decode(Response.self, from: data)
 				let prompt_tokens = response.usage.prompt_tokens
