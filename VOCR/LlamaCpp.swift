@@ -59,7 +59,7 @@ enum LlamaCpp {
 				completion("Error: Could not parse JSON.")
 			}
 		}
-		Accessibility.speakWithSynthesizer("Getting response from LlamaCpp... Please wait...")
+		Accessibility.speak("Getting response from LlamaCpp... Please wait...")
 		task.resume()
 	}
 }

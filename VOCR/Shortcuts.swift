@@ -65,13 +65,11 @@ struct Shortcuts {
 
 		if let data = UserDefaults.standard.data(forKey: "userShortcuts"),
 			   let decodedShortcuts = try? JSONDecoder().decode([Shortcut].self, from: data) {
-			debugPrint(String(data: data, encoding: .utf8))
 			shortcuts = decodedShortcuts
 			for shortcut in shortcuts {
 				debugPrint(shortcut.name, shortcut.keyName, shortcut.modifiers, shortcut.key)
 			}
 		}
-
 	}
 
 	static func registerAll() {
@@ -88,7 +86,6 @@ struct Shortcuts {
 				let hotkey = HotKey(carbonKeyCode:shortcut.key, carbonModifiers:shortcut.modifiers)
 				hotkey.keyDownHandler = handlers[shortcut.name]
 				hotkeys.append(hotkey)
-				debugPrint("Registering \(shortcut.name) \(shortcut.keyName)")
 			}
 		}
 	}
@@ -103,13 +100,11 @@ struct Shortcuts {
 	}
 
 	static func deactivateNavigationShortcuts() {
-		debugPrint("ok")
 		navigationActive = false
 		deregister(names:navigationShortcuts)
 	}
 
 	static func activateNavigationShortcuts() {
-		debugPrint("ok")
 		navigationActive = true
 		register(names:navigationShortcuts)
 	}
