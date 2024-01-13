@@ -103,7 +103,7 @@ class ShortcutsWindowController: NSWindowController, NSTableViewDelegate, NSTabl
 			strongSelf.refreshTable()
 			let data = try? JSONEncoder().encode(Shortcuts.shortcuts)
 			UserDefaults.standard.set(data, forKey: "userShortcuts")
-			Shortcuts.register()
+			Shortcuts.registerAll()
 		}
 		
 		self.window!.contentView!.addSubview(recorder)
@@ -127,7 +127,7 @@ class ShortcutsWindowController: NSWindowController, NSTableViewDelegate, NSTabl
 		Shortcuts.shortcuts.remove(at: row)
 		let data = try? JSONEncoder().encode(Shortcuts.shortcuts)
 		UserDefaults.standard.set(data, forKey: "userShortcuts")
-		Shortcuts.register()
+		Shortcuts.registerAll()
 		refreshTable()
 	}
 

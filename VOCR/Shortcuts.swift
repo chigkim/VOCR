@@ -46,11 +46,11 @@ struct Shortcuts {
 		handlers["Previous Character"] = Navigation.shared.previousCharacter
 		handlers["Exit Navigation"] = {
 			Accessibility.speak("Exit VOCR navigation.")
-			Shortcuts.deactivateNavigationShortcuts()
+			deactivateNavigationShortcuts()
 		}
 
 		loadShortcuts()
-		register()
+		register(names:globalShortcuts)
 	}
 
 	static func loadShortcuts() {
@@ -66,7 +66,7 @@ struct Shortcuts {
 		if let data = UserDefaults.standard.data(forKey: "userShortcuts"),
 			   let decodedShortcuts = try? JSONDecoder().decode([Shortcut].self, from: data) {
 			debugPrint(String(data: data, encoding: .utf8))
-			Shortcuts.shortcuts = decodedShortcuts
+			shortcuts = decodedShortcuts
 			for shortcut in shortcuts {
 				debugPrint(shortcut.name, shortcut.keyName, shortcut.modifiers, shortcut.key)
 			}
@@ -74,33 +74,43 @@ struct Shortcuts {
 
 	}
 
-	static func register() {
-		deregister()
+	static func registerAll() {
+		hotkeys.removeAll()
+		register(names:globalShortcuts)
+		if navigationActive {
+			register(names:navigationShortcuts)
+		}
+	}
+
+	static func register(names:[String]) {
 		for shortcut in shortcuts {
-			if !Shortcuts.navigationActive && navigationShortcuts.contains(shortcut.name) {
-				continue
+			if names.contains(shortcut.name) {
+				let hotkey = HotKey(carbonKeyCode:shortcut.key, carbonModifiers:shortcut.modifiers)
+				hotkey.keyDownHandler = handlers[shortcut.name]
+				hotkeys.append(hotkey)
+				debugPrint("Registering \(shortcut.name) \(shortcut.keyName)")
 			}
-			let hotkey = HotKey(carbonKeyCode:shortcut.key, carbonModifiers:shortcut.modifiers)
-			hotkey.keyDownHandler = handlers[shortcut.name]
-			Shortcuts.hotkeys.append(hotkey)
-			debugPrint("Registering \(shortcut.name) \(shortcut.keyName)")
 		}
 	}
 	
-	static func deregister() {
-		hotkeys.removeAll()
+	static func deregister(names:[String]) {
+		let searchShortcuts = shortcuts.filter { names.contains($0.name) }
+		for shortcut in searchShortcuts {
+			let kc = KeyCombo(carbonKeyCode: shortcut.key, carbonModifiers: shortcut.modifiers)
+			hotkeys.removeAll { ($0.keyCombo == kc) }
+		}
 	}
 
 	static func deactivateNavigationShortcuts() {
 		debugPrint("ok")
-		Shortcuts.navigationActive = false
-		register()
+		navigationActive = false
+		deregister(names:navigationShortcuts)
 	}
 
 	static func activateNavigationShortcuts() {
 		debugPrint("ok")
-		Shortcuts.navigationActive = true
-		register()
+		navigationActive = true
+		register(names:navigationShortcuts)
 	}
 
 	static func settingsHandler() {
