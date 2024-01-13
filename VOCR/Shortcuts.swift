@@ -94,10 +94,11 @@ struct Shortcuts {
 	}
 	
 	static func deregister(names:[String]) {
-		let searchShortcuts = shortcuts.filter { names.contains($0.name) }
-		for shortcut in searchShortcuts {
-			let kc = KeyCombo(carbonKeyCode: shortcut.key, carbonModifiers: shortcut.modifiers)
-			hotkeys.removeAll { ($0.keyCombo == kc) }
+		for shortcut in shortcuts {
+			if names.contains(shortcut.name) {
+				let kc = KeyCombo(carbonKeyCode: shortcut.key, carbonModifiers: shortcut.modifiers)
+				hotkeys.removeAll { ($0.keyCombo == kc) }
+			}
 		}
 	}
 
