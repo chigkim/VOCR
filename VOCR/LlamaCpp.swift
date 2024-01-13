@@ -48,6 +48,7 @@ enum LlamaCpp {
 				completion("Error: \(error?.localizedDescription ?? "No data")")
 				return
 			}
+//			debugPrint("Llama: \(String(data: data, encoding: .utf8)!)")
 			do {
 				let response = try JSONDecoder().decode(Response.self, from: data)
 				let description = response.content

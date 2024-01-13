@@ -7,11 +7,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
 	var windows:[NSWindow] = []
-	let shortcuts = Shortcuts()
+
 	
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		statusItem.menu = Settings.setupMenu()
-		
+		Shortcuts.SetupShortcuts()
 		if let button = statusItem.button {
 			button.title = "VOCR"
 			button.action = #selector(click(_:))

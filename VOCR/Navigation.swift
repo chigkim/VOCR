@@ -14,7 +14,6 @@ class Navigation {
 	
 	static let shared = Navigation()
 	var displayResults:[[Observation]] = []
-	var navigationShortcuts:NavigationShortcuts?
 	var cgPosition = CGPoint()
 	var cgSize = CGSize()
 	var cgImage:CGImage?
@@ -108,7 +107,7 @@ class Navigation {
 		if let elements = self.decode(message:json) {
 			let result = elements.map {Observation($0)}
 			self.process(result)
-			self.navigationShortcuts = NavigationShortcuts()
+			Shortcuts.activateNavigationShortcuts()
 			Accessibility.speak("Finished scanning \(self.appName), \(self.windowName)")
 			DispatchQueue.main.async {
 				// let boxImage = drawBoxes(cgImage, boxes:result, color:NSColor.red)!
@@ -127,7 +126,7 @@ class Navigation {
 			c = -1
 		}
 		displayResults = []
-		navigationShortcuts = nil
+		Shortcuts.deactivateNavigationShortcuts()
 		NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
 		let system = "You are a helpful assistant. Your response should be in JSON format."
 		let prompt = "Can you describe the user interface in the following JSON format?\n[{'label': 'label', 'short string', 'uid': id_int, 'description': 'description string', 'content': 'string of some examples of contents in the area', 'boundingBox': [top_left_x_pixel, top_left_y_pixel, width_pixel, height_pixel]]\nThe image has dimensions of \(cgImage.width) and \(cgImage.height) height, so scale the pixel coordinates accordingly. Only display json strings, nothing else in the beginning or at the end."
@@ -170,7 +169,7 @@ class Navigation {
 			c = -1
 		}
 		displayResults = []
-		navigationShortcuts = nil
+		Shortcuts.deactivateNavigationShortcuts()
 		NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
 		let result = performOCR(cgImage:cgImage)
 		if result.count == 0 {
@@ -179,7 +178,7 @@ class Navigation {
 		}
 		process(result)
 		Accessibility.speak("Finished scanning \(appName), \(windowName)")
-		navigationShortcuts = NavigationShortcuts()
+		Shortcuts.activateNavigationShortcuts()
 	}
 	
 	func process(_ results:[Observation]) {

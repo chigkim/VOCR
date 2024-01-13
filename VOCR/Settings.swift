@@ -65,7 +65,7 @@ enum Settings {
 
 		let shortcutsMenuItem = NSMenuItem(title: "Shortcuts...", action: #selector(target.openShortcutsWindow(_:)), keyEquivalent: "")
 		shortcutsMenuItem.target = target
-//		settingsMenu.addItem(shortcutsMenuItem)
+		settingsMenu.addItem(shortcutsMenuItem)
 
 		let newShortcutMenuItem = NSMenuItem(title: "New Shortcuts", action: #selector(target.addShortcut(_:)), keyEquivalent: "")
 		newShortcutMenuItem.target = target
@@ -94,7 +94,7 @@ enum Settings {
 		aboutMenuItem.target = target
 		menu.addItem(aboutMenuItem)
 
-		if Navigation.shared.navigationShortcuts != nil || RealTime.exit != nil {
+		if Shortcuts.navigationActive || RealTime.exit != nil {
 			let dismissMenuItem = NSMenuItem(title: "Dismiss Menu", action: #selector(target.dismiss(_:)), keyEquivalent: "z")
 			dismissMenuItem.target = target
 			menu.addItem(dismissMenuItem)
@@ -110,13 +110,13 @@ enum Settings {
 				switch event.type {
 				case .leftMouseDown:
 					print("Left mouse click detected.")
-					if Navigation.shared.navigationShortcuts != nil {
+					if Shortcuts.navigationActive {
 						Thread.sleep(forTimeInterval: 0.5)
 						Navigation.shared.prepare(mode:"OCR")
 					}
 				case .rightMouseDown:
 					print("Right mouse click detected.")
-					if Navigation.shared.navigationShortcuts != nil {
+					if Shortcuts.navigationActive {
 						Thread.sleep(forTimeInterval: 0.5)
 						Navigation.shared.prepare(mode: "OCR")
 					}
@@ -346,10 +346,10 @@ class MenuHandler: NSObject {
 		alert.accessoryView = inputTextField
 		let response = alert.runModal()
 		if response == .alertFirstButtonReturn { // OK button
-				ShortcutsWindowController.shared.shortcuts.append(Shortcut(name: inputTextField.stringValue, key: UInt32(0), modifiers: UInt32(0), keyName:"Unassigned"))
-				let data = try? JSONEncoder().encode(ShortcutsWindowController.shared.shortcuts)
+				Shortcuts.shortcuts.append(Shortcut(name: inputTextField.stringValue, key: UInt32(0), modifiers: UInt32(0), keyName:"Unassigned"))
+				let data = try? JSONEncoder().encode(Shortcuts.shortcuts)
 				UserDefaults.standard.set(data, forKey: "userShortcuts")
-				ShortcutsWindowController.shared.loadShortcuts()
+				Shortcuts.loadShortcuts()
 			}
 
 

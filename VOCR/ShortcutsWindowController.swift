@@ -10,26 +10,17 @@ import Foundation
 import Cocoa
 import HotKey
 
-struct Shortcut: Codable {
-	var name: String
-	var key: UInt32
-	var modifiers:UInt32
-	var keyName:String
-}
-
 class ShortcutsWindowController: NSWindowController, NSTableViewDelegate, NSTableViewDataSource {
 
 	static let shared = ShortcutsWindowController()
-	var shortcuts: [Shortcut] = []
 	var tableView: NSTableView!
-	var hotkeys:[HotKey] = []
+
 
 	init() {
 		super.init(window: nil)
-		loadShortcuts()
-		registerGlobalShortcuts()
 		setupWindow()
 		setupTableView()
+		refreshTable()
 		window?.contentView?.needsDisplay = true
 	}
 	
@@ -37,33 +28,6 @@ class ShortcutsWindowController: NSWindowController, NSTableViewDelegate, NSTabl
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	func loadShortcuts() {
-		if let data = UserDefaults.standard.data(forKey: "userShortcuts"),
-		   let decodedShortcuts = try? JSONDecoder().decode([Shortcut].self, from: data) {
-			debugPrint(String(data: data, encoding: .utf8))
-			self.shortcuts =  decodedShortcuts
-			for shortcut in shortcuts {
-				debugPrint(shortcut.name, shortcut.keyName, shortcut.modifiers, shortcut.key)
-			}
-			DispatchQueue.main.async {
-				self.tableView.reloadData()
-			}
-
-		}
-	}
-
-	func registerGlobalShortcuts() {
-		unregisterGlobalShortcuts()
-		for shortcut in shortcuts {
-			let hotKey = HotKey(carbonKeyCode:shortcut.key, carbonModifiers:shortcut.modifiers)
-			hotkeys.append(hotKey)
-		}
-	}
-	
-	func unregisterGlobalShortcuts() {
-		hotkeys.removeAll()
-	}
-	
 	private func setupWindow() {
 		let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 400, height: 300),
 							  styleMask: [.titled, .closable],
@@ -83,17 +47,21 @@ class ShortcutsWindowController: NSWindowController, NSTableViewDelegate, NSTabl
 		hotkeyColumn.title = "Hotkey"
 		tableView.addTableColumn(hotkeyColumn)
 		self.window?.contentView?.addSubview(tableView)
+		refreshTable()
+	}
+
+	func refreshTable() {
 		DispatchQueue.main.async {
 			self.tableView.reloadData()
 		}
 	}
 
 	func numberOfRows(in tableView: NSTableView) -> Int {
-		return shortcuts.count
+		return Shortcuts.shortcuts.count
 	}
 	
 	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-		let shortcut = shortcuts[row]
+		let shortcut = Shortcuts.shortcuts[row]
 //		debugPrint(tableColumn!.title, row)
 		switch tableColumn?.identifier {
 		case NSUserInterfaceItemIdentifier("NameColumn"):
@@ -129,13 +97,13 @@ class ShortcutsWindowController: NSWindowController, NSTableViewDelegate, NSTabl
 		let recorder = ShortcutRecorderView(frame: self.window!.contentView!.bounds)
 		recorder.onShortcutRecorded = { [weak self] event in
 			guard let strongSelf = self else { return }
-			strongSelf.shortcuts[shortcutIndex].key = UInt32(event.keyCode)
-			strongSelf.shortcuts[shortcutIndex].modifiers = event.modifierFlags.carbonFlags
-			strongSelf.shortcuts[shortcutIndex].keyName = event.modifierFlags.description+event.charactersIgnoringModifiers!
-			strongSelf.tableView.reloadData()
-			let data = try? JSONEncoder().encode(strongSelf.shortcuts)
+			Shortcuts.shortcuts[shortcutIndex].key = UInt32(event.keyCode)
+			Shortcuts.shortcuts[shortcutIndex].modifiers = event.modifierFlags.carbonFlags
+			Shortcuts.shortcuts[shortcutIndex].keyName = event.modifierFlags.description+event.charactersIgnoringModifiers!
+			strongSelf.refreshTable()
+			let data = try? JSONEncoder().encode(Shortcuts.shortcuts)
 			UserDefaults.standard.set(data, forKey: "userShortcuts")
-			self?.registerGlobalShortcuts()
+			Shortcuts.register()
 		}
 		
 		self.window!.contentView!.addSubview(recorder)
@@ -156,16 +124,11 @@ class ShortcutsWindowController: NSWindowController, NSTableViewDelegate, NSTabl
 		let row = tableView.selectedRow
 
 		// Remove the shortcut from the array and update UserDefaults
-		shortcuts.remove(at: row)
-		let data = try? JSONEncoder().encode(shortcuts)
+		Shortcuts.shortcuts.remove(at: row)
+		let data = try? JSONEncoder().encode(Shortcuts.shortcuts)
 		UserDefaults.standard.set(data, forKey: "userShortcuts")
-
-		// Unregister and re-register global shortcuts
-		unregisterGlobalShortcuts()
-		registerGlobalShortcuts()
-
-		// Reload the table view
-		tableView.reloadData()
+		Shortcuts.register()
+		refreshTable()
 	}
 
 }
