@@ -12,6 +12,7 @@
 		EA14F2E02B50B30300011F82 /* LlamaCpp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14F2DF2B50B30300011F82 /* LlamaCpp.swift */; };
 		EA1AC96A2B4C51FA00D3543F /* VOCursor.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EA1AC9692B4C51FA00D3543F /* VOCursor.scpt */; };
 		EA1F642C2352503D0089C967 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F642B2352503D0089C967 /* Player.swift */; };
+		EA2D4F092B5215CD001D6D24 /* Shortcuts.json in Resources */ = {isa = PBXBuildFile; fileRef = EA2D4F082B5215CD001D6D24 /* Shortcuts.json */; };
 		EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1AB232EB1D600D31031 /* Accessibility.swift */; };
 		EA2DA1AF232EB22300D31031 /* NSRunningApplication Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */; };
 		EA3F43712B476759005453C2 /* gpt.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3F43702B476759005453C2 /* gpt.swift */; };
@@ -42,6 +43,7 @@
 		EA14F2DF2B50B30300011F82 /* LlamaCpp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LlamaCpp.swift; sourceTree = "<group>"; };
 		EA1AC9692B4C51FA00D3543F /* VOCursor.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = VOCursor.scpt; sourceTree = "<group>"; };
 		EA1F642B2352503D0089C967 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		EA2D4F082B5215CD001D6D24 /* Shortcuts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Shortcuts.json; sourceTree = "<group>"; };
 		EA2DA1AB232EB1D600D31031 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSRunningApplication Extension.swift"; sourceTree = "<group>"; };
 		EA3F43702B476759005453C2 /* gpt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = gpt.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 		EADE59A8232EB09A00E2F65A = {
 			isa = PBXGroup;
 			children = (
+				EA2D4F082B5215CD001D6D24 /* Shortcuts.json */,
 				EAAD42AD298596FB00BE5D98 /* com.chikim.VOCR.plist */,
 				EA5C7AD72351D81100D84042 /* Scripts */,
 				EADE59B3232EB09A00E2F65A /* VOCR */,
@@ -216,6 +219,7 @@
 				EADE59B9232EB09A00E2F65A /* Assets.xcassets in Resources */,
 				EAD9CFD22355E11600E7F594 /* say.scpt in Resources */,
 				EA1AC96A2B4C51FA00D3543F /* VOCursor.scpt in Resources */,
+				EA2D4F092B5215CD001D6D24 /* Shortcuts.json in Resources */,
 				EA5C7AD92351D81100D84042 /* VOScreenshot.scpt in Resources */,
 				EADE59BC232EB09A00E2F65A /* Main.storyboard in Resources */,
 				EAAD42AE298596FB00BE5D98 /* com.chikim.VOCR.plist in Resources */,
@@ -391,7 +395,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -418,7 +422,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;

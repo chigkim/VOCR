@@ -69,7 +69,7 @@ enum Settings {
 
 		let newShortcutMenuItem = NSMenuItem(title: "New Shortcuts", action: #selector(target.addShortcut(_:)), keyEquivalent: "")
 		newShortcutMenuItem.target = target
-		settingsMenu.addItem(newShortcutMenuItem)
+//		settingsMenu.addItem(newShortcutMenuItem)
 
 		let enterAPIKeyMenuItem = NSMenuItem(title: "OpenAI API Key...", action: #selector(target.presentApiKeyInputDialog(_:)), keyEquivalent: "")
 		enterAPIKeyMenuItem.target = target

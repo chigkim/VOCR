@@ -54,14 +54,24 @@ struct Shortcuts {
 	}
 
 	static func loadShortcuts() {
+//		UserDefaults.standard.removeObject(forKey: "userShortcuts")
+		if UserDefaults.standard.data(forKey: "userShortcuts") == nil {
+			let bundle = Bundle.main
+			if let bundlePath = bundle.path(forResource: "Shortcuts", ofType: "json") {
+				let data = try! Data(contentsOf: URL(fileURLWithPath: bundlePath))
+				UserDefaults.standard.set(data, forKey: "userShortcuts")
+			}
+		}
+
 		if let data = UserDefaults.standard.data(forKey: "userShortcuts"),
-		   let decodedShortcuts = try? JSONDecoder().decode([Shortcut].self, from: data) {
+			   let decodedShortcuts = try? JSONDecoder().decode([Shortcut].self, from: data) {
 			debugPrint(String(data: data, encoding: .utf8))
 			Shortcuts.shortcuts = decodedShortcuts
 			for shortcut in shortcuts {
 				debugPrint(shortcut.name, shortcut.keyName, shortcut.modifiers, shortcut.key)
 			}
 		}
+
 	}
 
 	static func register() {
