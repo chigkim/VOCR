@@ -158,7 +158,7 @@ return nil
 			setVOCursor()
 		}
 		if cgSize != CGSize() {
-			if let  image = TakeScreensShots(rect:CGRect(origin: cgPosition, size: cgSize), resize:true) {
+			if let  image = TakeScreensShots(rect:CGRect(origin: cgPosition, size: cgSize)) {
 cgImage  = image
 			} else {
 				Accessibility.speak("Faild to take a screenshot of \(appName), \(windowName)")
@@ -184,7 +184,9 @@ cgImage  = image
 
 	static func explore() {
 		prepare()
-		guard let  image = cgImage else { return }
+		guard let  image = cgImage, let image = resizeCGImage(image, toWidth: Int(Navigation.cgSize.width), toHeight:Int(Navigation.cgSize.height)) else { return }
+		   debugPrint("Resized:", image.width, image.height)
+
 		let system = "You are a helpful assistant. Your response should be in JSON format."
 		let prompt = "Can you describe the user interface in the following JSON format?\n[{'label': 'label', 'short string', 'uid': id_int, 'description': 'description string', 'content': 'string of some examples of contents in the area', 'boundingBox': [top_left_x_pixel, top_left_y_pixel, width_pixel, height_pixel]]\nThe image has dimensions of \(image.width) and \(image.height) height, so scale the pixel coordinates accordingly."
 		if Settings.useLlama {
@@ -298,10 +300,11 @@ cgImage  = image
 	
 	static func identifyObject() {
 		if displayResults[l][w].value == "OBJECT" {
-			if let image =  cgImage {
+			if let image = cgImage {
 				var rect = displayResults[l][w].boundingBox
 				rect = CGRect(x:rect.minX, y:1-rect.maxY, width:rect.width, height:rect.height)
 				rect = VNImageRectForNormalizedRect(rect, image.width, image.height)
+
 				debugPrint(rect)
 				if let croppedImage = image.cropping(to: rect) {
 					ask(image: croppedImage)

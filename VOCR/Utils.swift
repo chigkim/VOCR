@@ -48,7 +48,7 @@ func grabScreenshot() -> CGImage? {
 		rect = Navigation.getVOCursor()
 	}
 	if let rect = rect,
-	let screenshot = TakeScreensShots(rect:rect, resize:false) {
+	let screenshot = TakeScreensShots(rect:rect) {
 		return screenshot
 	} else {
 		Accessibility.speakWithSynthesizer("Faild to access \(Navigation.appName), \(Navigation.windowName)")
@@ -202,7 +202,7 @@ func resizeCGImage(_ cgImage: CGImage, toWidth width: Int, toHeight height: Int)
 	return context?.makeImage()
 }
 
-func TakeScreensShots(rect:CGRect, resize:Bool) -> CGImage? {
+func TakeScreensShots(rect:CGRect) -> CGImage? {
 	var displayCount: UInt32 = 0
 	var result = CGGetActiveDisplayList(0, nil, &displayCount)
 	if (result != CGError.success) {
@@ -218,14 +218,7 @@ func TakeScreensShots(rect:CGRect, resize:Bool) -> CGImage? {
 		return nil
 	}
 	if let cgImage = CGDisplayCreateImage(activeDisplays[0], rect:rect) {
-		if resize {
-			debugPrint("Original:", cgImage.width, cgImage.height)
-			if let resizedImage = resizeCGImage(cgImage, toWidth: Int(Navigation.cgSize.width), toHeight:Int(Navigation.cgSize.height)) {
-				debugPrint("Resized:", resizedImage.width, resizedImage.height)
-				Navigation.cgImage = resizedImage
-				return resizedImage
-			}
-		}
+		debugPrint("Original:", cgImage.width, cgImage.height)
 		Navigation.cgImage = cgImage
 		return cgImage
 	}

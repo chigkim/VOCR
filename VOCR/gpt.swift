@@ -100,7 +100,7 @@ enum GPT {
 				completion("Error: Could not parse JSON.")
 			}
 		}
-		Accessibility.speak("Getting response from ChatGPT... Please wait...")
+		Accessibility.speakWithSynthesizer("Getting response from ChatGPT... Please wait...")
 		task.resume()
 	}
 }

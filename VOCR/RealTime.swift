@@ -68,7 +68,7 @@ return nil
 				var oldText = ""
 				run = true
 				while run {
-					if let cgImage = TakeScreensShots(rect: rect, resize:false) {
+					if let cgImage = TakeScreensShots(rect: rect) {
 						if let texts = performOCR(cgImage:cgImage) {
 							let newText = texts.map { $0.topCandidates(1)[0].string }.joined(separator: " ")
 							if let insertedText = diff(old:oldText, new:newText) {
