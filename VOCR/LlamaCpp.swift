@@ -32,7 +32,7 @@ enum LlamaCpp {
 					"id": 1
 				]
 			],
-			"n_predict": 1000
+			"n_predict": 4096
 		]
 		let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody, options: [])
 		let url = URL(string: "http://127.0.0.1:8080/completion")!

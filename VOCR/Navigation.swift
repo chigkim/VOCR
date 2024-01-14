@@ -10,28 +10,46 @@ import Foundation
 import Vision
 import Cocoa
 
-class Navigation {
-	
-	static let shared = Navigation()
-	var displayResults:[[Observation]] = []
-	var cgPosition = CGPoint()
-	var cgSize = CGSize()
-	var cgImage:CGImage?
-	var windowName = "Unknown Window"
-	var appName = "Unknown App"
-	var l = -1
-	var w = -1
-	var c = -1
-	
-	func setWindow(_ n:Int) {
-		windowName = "Unknown Window"
-		appName = "Unknown App"
-		cgPosition = CGPoint()
-		cgSize = CGSize()
+enum Navigation {
+
+	enum Mode: Int, CaseIterable {
+		case WINDOW = 0
+		case VOCURSOR = 1
+		func next() -> Mode {
+			let allCases = Mode.allCases
+			let nextIndex = (self.rawValue + 1) % allCases.count
+			return allCases[nextIndex]
+		}
+
+		func name() -> String {
+			switch (self) {
+			case.WINDOW:
+				return "Window"
+			case .VOCURSOR:
+				return "VOCursor"
+			default:
+				return "Unknown"
+			}
+		}
+	}
+
+	static var mode = Mode.WINDOW
+
+	static var displayResults:[[Observation]] = []
+	static var cgPosition = CGPoint()
+	static var cgSize = CGSize()
+	static var cgImage:CGImage?
+	static var windowName = "Unknown Window"
+	static var appName = "Unknown App"
+	static var l = -1
+	static var w = -1
+	static var c = -1
+
+	static func getWindow() -> CGRect? {
 		let currentApp = NSWorkspace.shared.frontmostApplication
 		appName = currentApp!.localizedName!
 		let windows = currentApp?.windows()
-		
+
 		/*
 		 // filter main window.
 		 windows = windows!.filter {
@@ -45,11 +63,11 @@ class Navigation {
 		 */
 		
 		if (windows!.isEmpty) {
-			return
+			return nil
 		}
 		var window = windows![0]
 		
-		if (n == -1) {
+		if Settings.targetWindow {
 			let alert = NSAlert()
 			alert.alertStyle = .informational
 			alert.messageText = "Target Window"
@@ -77,29 +95,106 @@ class Navigation {
 		AXUIElementCopyAttributeValue(window, "AXSize" as CFString, &size)
 		
 		if position != nil && size != nil {
-			AXValueGetValue(position as! AXValue, AXValueType.cgPoint, &cgPosition)
-			AXValueGetValue(size as! AXValue, AXValueType.cgSize, &cgSize)
-			print("\(cgPosition), \(cgSize)")
+			var windowPosition = CGPoint()
+			var windowSize = CGSize()
+			AXValueGetValue(position as! AXValue, AXValueType.cgPoint, &windowPosition)
+			AXValueGetValue(size as! AXValue, AXValueType.cgSize, &windowSize)
+let rect =  CGRect(origin: windowPosition, size: windowSize)
+			print(rect)
+			return rect
 		} else {
 			print("Failed to get position or size")
 		}
-		
-	}
-	func decode(message:String) -> [GPTObservation]? {
-		let jsonData = message.data(using: .utf8)!
-		do {
-			let elements = try JSONDecoder().decode([GPTObservation].self, from: jsonData)
-			for element in elements {
-				print("Label: \(element.label), UID: \(element.uid), Bounding Box: \(element.boundingBox)")
-			}
-			return elements
-		} catch {
-			print("Error decoding JSON: \(error)")
-		}
 		return nil
 	}
+
+	static func setWindow() {
+		if let rect = getWindow() {
+			cgPosition = rect.origin
+			cgSize = rect.size
+		}
+	}
 	
-	func exploreHandler(description:String) {
+	static func getVOCursor() -> CGRect? {
+		if let output = runAppleScript(file: "VOCursor") {
+			let strings = output.split(separator: ",")
+			let cgFloats = strings.compactMap { CGFloat(Double($0) ?? 0) }
+			let position = CGPoint(x: cgFloats[0], y: cgFloats[1])
+			let size = CGSize(width:(cgFloats[2]-cgFloats[0]), height: (cgFloats[3]-cgFloats[1]))
+			appName = "VOCursor"
+			windowName = ""
+			return CGRect(origin: position, size: size)
+		}
+return nil
+	}
+	static func setVOCursor() {
+		if let rect = getVOCursor() {
+			cgPosition = rect.origin
+			cgSize = rect.size
+		}
+	}
+	
+	static func prepare() {
+		if !Accessibility.isTrusted(ask:true) {
+			print("Accessibility not enabled.")
+			return
+		}
+		windowName = "Unknown Window"
+		appName = "Unknown App"
+		cgPosition = CGPoint()
+		cgSize = CGSize()
+		cgImage = nil
+		if Settings.positionReset {
+			l = -1
+			w = -1
+			c = -1
+		}
+		displayResults = []
+		Shortcuts.deactivateNavigationShortcuts()
+		NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
+		if mode == .WINDOW {
+			setWindow()
+		} else {
+			setVOCursor()
+		}
+		if cgSize != CGSize() {
+			if let  image = TakeScreensShots(rect:CGRect(origin: cgPosition, size: cgSize), resize:true) {
+cgImage  = image
+			} else {
+				Accessibility.speak("Faild to take a screenshot of \(appName), \(windowName)")
+			}
+		} else {
+			Accessibility.speak("Faild to access \(appName), \(windowName)")
+		}
+	}
+	
+	static func startOCR() {
+		prepare()
+		guard let  image = cgImage else { return }
+		let result = performOCR(cgImage:image)
+		if result.count == 0 {
+			Accessibility.speak("Nothing found")
+			return
+		}
+		process(result)
+		Accessibility.speak("Finished scanning \(appName), \(windowName)")
+		Shortcuts.activateNavigationShortcuts()
+	}
+	
+
+	static func explore() {
+		prepare()
+		guard let  image = cgImage else { return }
+		let system = "You are a helpful assistant. Your response should be in JSON format."
+		let prompt = "Can you describe the user interface in the following JSON format?\n[{'label': 'label', 'short string', 'uid': id_int, 'description': 'description string', 'content': 'string of some examples of contents in the area', 'boundingBox': [top_left_x_pixel, top_left_y_pixel, width_pixel, height_pixel]]\nThe image has dimensions of \(image.width) and \(image.height) height, so scale the pixel coordinates accordingly."
+		if Settings.useLlama {
+			LlamaCpp.describe(image:image, system:system, prompt:prompt, completion: exploreHandler)
+		} else {
+			GPT.describe(image:image, system:system, prompt:prompt, completion: exploreHandler)
+		}
+	}
+
+	static func exploreHandler(description:String) {
 		guard let json = extractString(text:description, startDelimiter: "```json\n", endDelimiter: "\n```") else {
 			Accessibility.speakWithSynthesizer("Received response in incorrect format. Try again.")
 			return
@@ -119,69 +214,21 @@ class Navigation {
 		}
 	}
 	
-	func exploreWithGPT(cgImage:CGImage) {
-		if Settings.positionReset {
-			l = -1
-			w = -1
-			c = -1
-		}
-		displayResults = []
-		Shortcuts.deactivateNavigationShortcuts()
-		NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
-		let system = "You are a helpful assistant. Your response should be in JSON format."
-		let prompt = "Can you describe the user interface in the following JSON format?\n[{'label': 'label', 'short string', 'uid': id_int, 'description': 'description string', 'content': 'string of some examples of contents in the area', 'boundingBox': [top_left_x_pixel, top_left_y_pixel, width_pixel, height_pixel]]\nThe image has dimensions of \(cgImage.width) and \(cgImage.height) height, so scale the pixel coordinates accordingly. Only display json strings, nothing else in the beginning or at the end."
-		if Settings.useLlama {
-			LlamaCpp.describe(image:cgImage, system:system, prompt:prompt, completion: exploreHandler)
-		} else {
-			GPT.describe(image:cgImage, system:system, prompt:prompt, completion: exploreHandler)
-		}
-	}
-	
-	func prepare(mode:String) {
-		if !Accessibility.isTrusted(ask:true) {
-			print("Accessibility not enabled.")
-			return
-		}
-		if Settings.targetWindow {
-			setWindow(-1)
-		} else {
-			setWindow(0)
-		}
-		if cgSize != CGSize() {
-			if let  cgImage = TakeScreensShots(rect:CGRect(origin: cgPosition, size: cgSize), resize:true) {
-				if mode == "OCR" {
-					startOCR(cgImage:cgImage)
-				} else {
-					exploreWithGPT(cgImage: cgImage)
-				}
-			} else {
-				Accessibility.speakWithSynthesizer("Faild to take a screenshot of \(appName), \(windowName)")
+	static func decode(message:String) -> [GPTObservation]? {
+		let jsonData = message.data(using: .utf8)!
+		do {
+			let elements = try JSONDecoder().decode([GPTObservation].self, from: jsonData)
+			for element in elements {
+				print("Label: \(element.label), UID: \(element.uid), Bounding Box: \(element.boundingBox)")
 			}
-		} else {
-			Accessibility.speakWithSynthesizer("Faild to access \(appName), \(windowName)")
+			return elements
+		} catch {
+			print("Error decoding JSON: \(error)")
 		}
+		return nil
 	}
-	
-	func startOCR(cgImage:CGImage) {
-		if Settings.positionReset {
-			l = -1
-			w = -1
-			c = -1
-		}
-		displayResults = []
-		Shortcuts.deactivateNavigationShortcuts()
-		NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
-		let result = performOCR(cgImage:cgImage)
-		if result.count == 0 {
-			Accessibility.speak("Nothing found")
-			return
-		}
-		process(result)
-		Accessibility.speak("Finished scanning \(appName), \(windowName)")
-		Shortcuts.activateNavigationShortcuts()
-	}
-	
-	func process(_ results:[Observation]) {
+
+	static func process(_ results:[Observation]) {
 		let sorted = results.sorted(by: sort)
 		var line:[Observation] = []
 		var y = sorted[0].boundingBox.midY
@@ -197,7 +244,7 @@ class Navigation {
 		displayResults.append(line)
 	}
 	
-	func convert2coordinates(_ rect:CGRect) -> CGPoint {
+	static func convert2coordinates(_ rect:CGRect) -> CGPoint {
 		if let image =  cgImage {
 			debugPrint("Box:", VNImageRectForNormalizedRect(rect, image.width, image.height))
 		}
@@ -216,7 +263,7 @@ class Navigation {
 		return center
 	}
 	
-	func sort(_ a:Observation, _ b:Observation) -> Bool {
+	static func sort(_ a:Observation, _ b:Observation) -> Bool {
 		if a.boundingBox.midY-b.boundingBox.midY>0.01 {
 			return true
 		} else if b.boundingBox.midY-a.boundingBox.midY>0.01 {
@@ -229,14 +276,14 @@ class Navigation {
 		}
 	}
 	
-	func location() {
+	static func location() {
 		var center = convert2coordinates(displayResults[l][w].boundingBox)
 		center.x -= cgPosition.x
 		center.y -= cgPosition.y
 		Accessibility.speak("\(Int(center.x)), \(Int(center.y))")
 	}
 	
-	func correctLimit() {
+	static func correctLimit() {
 		if l < 0 {
 			l = 0
 		} else if l >= displayResults.count {
@@ -249,7 +296,7 @@ class Navigation {
 		}
 	}
 	
-	func identifyObject() {
+	static func identifyObject() {
 		if displayResults[l][w].value == "OBJECT" {
 			if let image =  cgImage {
 				var rect = displayResults[l][w].boundingBox
@@ -265,7 +312,7 @@ class Navigation {
 		}
 	}
 	
-	func right() {
+	static func right() {
 		if displayResults.count == 0 {
 			return
 		}
@@ -280,7 +327,7 @@ class Navigation {
 		//		 identifyObject()
 	}
 	
-	func left() {
+	static func left() {
 		if displayResults.count == 0 {
 			return
 		}
@@ -295,7 +342,7 @@ class Navigation {
 		//		 identifyObject()
 	}
 	
-	func down() {
+	static func down() {
 		if displayResults.count == 0 {
 			return
 		}
@@ -314,7 +361,7 @@ class Navigation {
 		Accessibility.speak(line)
 	}
 	
-	func up() {
+	static func up() {
 		if displayResults.count == 0 {
 			return
 		}
@@ -333,7 +380,7 @@ class Navigation {
 		Accessibility.speak(line)
 	}
 	
-	func top() {
+	static func top() {
 		if displayResults.count == 0 {
 			return
 		}
@@ -342,7 +389,7 @@ class Navigation {
 		up()
 	}
 	
-	func bottom() {
+	static func bottom() {
 		if displayResults.count == 0 {
 			return
 		}
@@ -351,7 +398,7 @@ class Navigation {
 		down()
 	}
 	
-	func beginning() {
+	static func beginning() {
 		if displayResults.count == 0 {
 			return
 		}
@@ -359,7 +406,7 @@ class Navigation {
 		left()
 	}
 	
-	func end() {
+	static func end() {
 		if displayResults.count == 0 {
 			return
 		}
@@ -367,7 +414,7 @@ class Navigation {
 		right()
 	}
 	
-	func nextCharacter() {
+	static func nextCharacter() {
 		if displayResults.count == 0 {
 			return
 		}
@@ -404,7 +451,7 @@ class Navigation {
 		}
 	}
 	
-	func previousCharacter() {
+	static func previousCharacter() {
 		if displayResults.count == 0 {
 			return
 		}
@@ -442,7 +489,7 @@ class Navigation {
 		}
 	}
 	
-	func text() -> String {
+	static func text() -> String {
 		var text = ""
 		for line in displayResults {
 			for word in line {

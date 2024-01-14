@@ -10,7 +10,7 @@ import Cocoa
 import AudioKit
 
 enum Settings {
-	
+
 	static private var eventMonitor: Any?
 	static var positionReset = true
 	static var positionalAudio = false
@@ -20,6 +20,7 @@ enum Settings {
 	static var targetWindow = false
 	static var detectObject = true
 	static var useLlama = false
+	static var windowRealtime = true
 	static var useLastPrompt = false
 	static var prompt = "Analyze the image in a comprehensive and detailed manner."
 	static var systemPrompt = "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions."
@@ -69,7 +70,7 @@ enum Settings {
 
 		let newShortcutMenuItem = NSMenuItem(title: "New Shortcuts", action: #selector(target.addShortcut(_:)), keyEquivalent: "")
 		newShortcutMenuItem.target = target
-//		settingsMenu.addItem(newShortcutMenuItem)
+		settingsMenu.addItem(newShortcutMenuItem)
 
 		let enterAPIKeyMenuItem = NSMenuItem(title: "OpenAI API Key...", action: #selector(target.presentApiKeyInputDialog(_:)), keyEquivalent: "")
 		enterAPIKeyMenuItem.target = target
@@ -78,13 +79,13 @@ enum Settings {
 		settingsMenuItem.submenu = settingsMenu
 		menu.addItem(settingsMenuItem)
 
-		if Navigation.shared.cgImage != nil {
+		if Navigation.cgImage != nil {
 			let saveScreenshotMenuItem = NSMenuItem(title: "Save Screenschot", action: #selector(target.saveScreenShot(_:)), keyEquivalent: "s")
 			saveScreenshotMenuItem.target = target
 			menu.addItem(saveScreenshotMenuItem)
 		}
 
-		if Navigation.shared.displayResults.count>1 {
+		if Navigation.displayResults.count>1 {
 			let saveMenuItem = NSMenuItem(title: "Save OCR Result...", action: #selector(target.saveResult(_:)), keyEquivalent: "")
 			saveMenuItem.target = target
 			menu.addItem(saveMenuItem)
@@ -112,13 +113,13 @@ enum Settings {
 					print("Left mouse click detected.")
 					if Shortcuts.navigationActive {
 						Thread.sleep(forTimeInterval: 0.5)
-						Navigation.shared.prepare(mode:"OCR")
+						Navigation.startOCR()
 					}
 				case .rightMouseDown:
 					print("Right mouse click detected.")
 					if Shortcuts.navigationActive {
 						Thread.sleep(forTimeInterval: 0.5)
-						Navigation.shared.prepare(mode: "OCR")
+						Navigation.startOCR()
 					}
 				default:
 					break
@@ -203,8 +204,8 @@ enum Settings {
 
 class MenuHandler: NSObject {
 	@objc func toggleSetting(_ sender: NSMenuItem) {
+		hide()
 		sender.state = (sender.state == .off) ? .on : .off
-		
 		switch sender.title {
 		case "Target Window":
 			Settings.targetWindow = sender.state == .on
@@ -300,7 +301,7 @@ class MenuHandler: NSObject {
 		savePanel.begin { (result) in
 			if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
 				if let url = savePanel.url {
-					let text = Navigation.shared.text()
+					let text = Navigation.text()
 					try! text.write(to: url, atomically: false, encoding: .utf8)
 				}
 			}
@@ -324,7 +325,7 @@ class MenuHandler: NSObject {
 	}
 	
 	@objc func saveScreenShot(_ sender: NSMenuItem) {
-		if let cgImage = Navigation.shared.cgImage {
+		if let cgImage = Navigation.cgImage {
 			try! saveImage(cgImage)
 		}
 	}

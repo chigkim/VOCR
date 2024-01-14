@@ -16,51 +16,63 @@ struct Shortcut: Codable {
 	var keyName:String
 }
 
-struct Shortcuts {
+enum Shortcuts {
 	
 	static var handlers: [String: () -> Void] = [:]
 	static var hotkeys:[HotKey] = []
 	static var shortcuts: [Shortcut] = []
 	static var navigationActive = false
-	static let globalShortcuts = ["Settings", "OCR Window", "OCR VoCursor", "Explore Window with GPT", "Ask GPT about VOCursor", "Realtime OCR VOCursor"]
+	static let globalShortcuts = ["Settings", "OCR Window", "OCR VOCursor", "Realtime OCR", "Ask", "Explore"]
 	static let navigationShortcuts = ["Right", "Left", "Down", "Up", "Beginning", "End", "Top", "Bottom", "Next Character", "Previous Character", "Report Location", "Identify Object", "Exit Navigation"]
+	static let allShortcuts = globalShortcuts+navigationShortcuts
 
 	static func SetupShortcuts() {
 		handlers["Settings"] = settingsHandler
-		handlers["OCR Window"] = windowHandler
-		handlers["Explore Window with GPT"] = exploreHandler
-		handlers["Ask GPT about VOCursor"] = askHandler
-		handlers["OCR VoCursor"] = voHandler
-		handlers["Realtime OCR VOCursor"] = realTimeHandler
-		handlers["Report Location"] = Navigation.shared.location
-		handlers["Identify Object"]  = Navigation.shared.identifyObject
-		handlers["Right"] = Navigation.shared.right
-		handlers["Left"] = Navigation.shared.left
-		handlers["Up"] = Navigation.shared.up
-		handlers["Down"] = Navigation.shared.down
-		handlers["Top"] = Navigation.shared.top
-		handlers["Bottom"] = Navigation.shared.bottom
-		handlers["Beginning"] = Navigation.shared.beginning
-		handlers["End"] = Navigation.shared.end
-		handlers["Next Character"] = Navigation.shared.nextCharacter
-		handlers["Previous Character"] = Navigation.shared.previousCharacter
+		handlers["OCR Window"] = {
+			Navigation.mode = .WINDOW
+			Navigation.startOCR()
+		}
+		handlers["OCR VOCursor"] = {
+			Navigation.mode = .VOCURSOR
+			Navigation.startOCR()
+		}
+		handlers["Realtime OCR"] = RealTime.continuousOCR
+		handlers["Explore"] = Navigation.explore
+		handlers["Ask"] = {
+			ask()
+		}
+		handlers["Report Location"] = Navigation.location
+		handlers["Identify Object"]  = Navigation.identifyObject
+		handlers["Right"] = Navigation.right
+		handlers["Left"] = Navigation.left
+		handlers["Up"] = Navigation.up
+		handlers["Down"] = Navigation.down
+		handlers["Top"] = Navigation.top
+		handlers["Bottom"] = Navigation.bottom
+		handlers["Beginning"] = Navigation.beginning
+		handlers["End"] = Navigation.end
+		handlers["Next Character"] = Navigation.nextCharacter
+		handlers["Previous Character"] = Navigation.previousCharacter
 		handlers["Exit Navigation"] = {
 			Accessibility.speak("Exit VOCR navigation.")
 			deactivateNavigationShortcuts()
 		}
 
 		loadShortcuts()
-		register(names:globalShortcuts)
+	}
+
+	static func loadDefaults() {
+		let bundle = Bundle.main
+		if let bundlePath = bundle.path(forResource: "Shortcuts", ofType: "json") {
+			let data = try! Data(contentsOf: URL(fileURLWithPath: bundlePath))
+			UserDefaults.standard.removeObject(forKey: "userShortcuts")
+			UserDefaults.standard.set(data, forKey: "userShortcuts")
+		}
 	}
 
 	static func loadShortcuts() {
-//		UserDefaults.standard.removeObject(forKey: "userShortcuts")
 		if UserDefaults.standard.data(forKey: "userShortcuts") == nil {
-			let bundle = Bundle.main
-			if let bundlePath = bundle.path(forResource: "Shortcuts", ofType: "json") {
-				let data = try! Data(contentsOf: URL(fileURLWithPath: bundlePath))
-				UserDefaults.standard.set(data, forKey: "userShortcuts")
-			}
+loadDefaults()
 		}
 
 		if let data = UserDefaults.standard.data(forKey: "userShortcuts"),
@@ -68,7 +80,14 @@ struct Shortcuts {
 			shortcuts = decodedShortcuts
 			for shortcut in shortcuts {
 				debugPrint(shortcut.name, shortcut.keyName, shortcut.modifiers, shortcut.key)
+				if !allShortcuts.contains(shortcut.name) {
+					Accessibility.speakWithSynthesizer("Resetting shortcuts.")
+					loadDefaults()
+					loadShortcuts()
+					break
+				}
 			}
+			registerAll()
 		}
 	}
 
@@ -114,28 +133,6 @@ struct Shortcuts {
 		   let rect = CGRect(x: mouseLocation.x, y: mouseLocation.y, width: 1, height: 1)
 		   Settings.setupMenu().popUp(positioning: nil, at: rect.origin, in: nil)
 	   }
-
-	   static func windowHandler() {
-		   Navigation.shared.prepare(mode:"OCR")
-	   }
-
-	   static func exploreHandler() {
-		   Navigation.shared.prepare(mode:"Explore")
-	   }
-
-	   static func voHandler() {
-		   recognizeVOCursor(mode: "OCR")
-	   }
-
-	   static func askHandler() {
-		   recognizeVOCursor(mode:"GPT")
-	   }
-
-	   static func realTimeHandler() {
-		   RealTime.continuousOCR()
-	   }
-
-
 
 }
 

@@ -5,9 +5,6 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
 	let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-
-	var windows:[NSWindow] = []
-
 	
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		statusItem.menu = Settings.setupMenu()
@@ -33,10 +30,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			Settings.save()
 		}
 
-		windows = NSApplication.shared.windows
-		NSApplication.shared.hide(self)
-		windows[1].close()
-		
+hide()
 	}
 	
 	@objc func click(_ sender: Any?) {

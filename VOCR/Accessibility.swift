@@ -9,7 +9,7 @@
 import Cocoa
 import Carbon
 
-class Accessibility {
+enum Accessibility {
 
 	static let speech:NSSpeechSynthesizer = NSSpeechSynthesizer()
 

@@ -16,6 +16,12 @@ import AXSwift
 let logger = Logger()
 import Cocoa
 
+func hide() {
+	let windows = NSApplication.shared.windows
+	NSApplication.shared.hide(nil)
+	windows[1].close()
+}
+
 func askPrompt(value:String) -> String? {
 	let alert = NSAlert()
 	alert.messageText = "Prompt"
@@ -26,13 +32,31 @@ func askPrompt(value:String) -> String? {
 		alert.accessoryView = inputTextField
 	let response = alert.runModal()
 	if response == .alertFirstButtonReturn {
+		hide()
+		Thread.sleep(forTimeInterval: 0.1)
 		let prompt = inputTextField.stringValue
 		return prompt
 	}
 	return nil
 }
 
-func ask(image:CGImage) {
+func grabScreenshot() -> CGImage? {
+	var rect:CGRect?
+	if Navigation.mode == .WINDOW {
+		rect = Navigation.getWindow()
+	} else {
+		rect = Navigation.getVOCursor()
+	}
+	if let rect = rect,
+	let screenshot = TakeScreensShots(rect:rect, resize:false) {
+		return screenshot
+	} else {
+		Accessibility.speakWithSynthesizer("Faild to access \(Navigation.appName), \(Navigation.windowName)")
+	}
+return nil
+}
+
+func ask(image:CGImage?=nil) {
 	if !Settings.useLastPrompt {
 		if let prompt = askPrompt(value:Settings.prompt) {
 			Settings.prompt = prompt
@@ -41,10 +65,12 @@ func ask(image:CGImage) {
 		}
 	}
 
+	let cgImage = image ?? grabScreenshot()
+	guard let cgImage = cgImage else { return }
 	if Settings.useLlama {
-		LlamaCpp.ask(image: image)
+		LlamaCpp.ask(image: cgImage)
 	} else {
-		GPT.ask(image:image)
+		GPT.ask(image:cgImage)
 	}
 }
 
@@ -88,7 +114,7 @@ func saveImage(_ cgImage: CGImage) throws {
 	savePanel.title = "Save Your File"
 	savePanel.message = "Choose a destination and save your file."
 	savePanel.allowedContentTypes = [.png]
-	savePanel.nameFieldStringValue = Navigation.shared.appName+".png"
+	savePanel.nameFieldStringValue = Navigation.appName+".png"
 	savePanel.begin { response in
 		if response == .OK {
 			if let selectedURL = savePanel.url {
@@ -194,13 +220,13 @@ func TakeScreensShots(rect:CGRect, resize:Bool) -> CGImage? {
 	if let cgImage = CGDisplayCreateImage(activeDisplays[0], rect:rect) {
 		if resize {
 			debugPrint("Original:", cgImage.width, cgImage.height)
-			if let resizedImage = resizeCGImage(cgImage, toWidth: Int(Navigation.shared.cgSize.width), toHeight:Int(Navigation.shared.cgSize.height)) {
+			if let resizedImage = resizeCGImage(cgImage, toWidth: Int(Navigation.cgSize.width), toHeight:Int(Navigation.cgSize.height)) {
 				debugPrint("Resized:", resizedImage.width, resizedImage.height)
-				Navigation.shared.cgImage = resizedImage
+				Navigation.cgImage = resizedImage
 				return resizedImage
 			}
 		}
-		Navigation.shared.cgImage = cgImage
+		Navigation.cgImage = cgImage
 		return cgImage
 	}
 	return nil
@@ -296,11 +322,6 @@ func classify(cgImage:CGImage) -> String {
 			message += "\(classes[c].key), "
 		}
 		Accessibility.speak(message)
-		
-		if message.contains("document") {
-			Navigation.shared.startOCR(cgImage:cgImage)
-			message += "\n"+Navigation.shared.text()
-		}
 	}else {
 		Accessibility.speak("Unknown")
 	}
@@ -323,50 +344,5 @@ func runAppleScript(file:String) -> String? {
 	}
 	return nil
 }
-func voCursorLocation() -> CGRect? {
-	if let output = runAppleScript(file: "VOCursor") {
-		let strings = output.split(separator: ",")
-		let cgFloats = strings.compactMap { CGFloat(Double($0) ?? 0) }
-		let cgPosition = CGPoint(x: cgFloats[0], y: cgFloats[1])
-		let cgSize = CGSize(width:(cgFloats[2]-cgFloats[0]), height: (cgFloats[3]-cgFloats[1]))
-		return CGRect(origin: cgPosition, size: cgSize)
-	}
-	return nil
-}
 
-func recognizeVOCursor(mode:String) {
-	if let rect = voCursorLocation() {
-		Navigation.shared.cgPosition = rect.origin
-		Navigation.shared.cgSize = rect.size
-		Navigation.shared.appName = "VOCursor"
-		Navigation.shared.windowName = ""
-		if let cgImage = TakeScreensShots(rect:CGRect(origin: Navigation.shared.cgPosition, size: Navigation.shared.cgSize), resize:true)  {
-			if mode == "GPT" {
-				ask(image: cgImage)
-			} else {
-				Navigation.shared.startOCR(cgImage: cgImage)
-				// classify(cgImage:cgImage)
-			}
-		}
-	}
-}
-
-func voCursorScreenshot() {
-	if let output = runAppleScript(file: "VOScreenshot") {
-		print("Output: \(output)")
-		let url = URL(fileURLWithPath: output)
-		if let dataImage = try? Data(contentsOf:url) {
-			let dataProvider = CGDataProvider(data: dataImage as CFData)
-			if let cgImage = CGImage(pngDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent) {
-				if Settings.mode == "GPT" {
-					ask(image:cgImage)
-				} else {
-					classify(cgImage:cgImage)
-				}
-			}
-		}
-		let fileManager = FileManager.default
-		try? fileManager.removeItem(at: url)
-	}
-}
 

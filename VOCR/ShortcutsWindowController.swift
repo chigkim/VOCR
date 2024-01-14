@@ -103,7 +103,7 @@ class ShortcutsWindowController: NSWindowController, NSTableViewDelegate, NSTabl
 			strongSelf.refreshTable()
 			let data = try? JSONEncoder().encode(Shortcuts.shortcuts)
 			UserDefaults.standard.set(data, forKey: "userShortcuts")
-			Shortcuts.registerAll()
+			Shortcuts.loadShortcuts()
 		}
 		
 		self.window!.contentView!.addSubview(recorder)

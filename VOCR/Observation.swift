@@ -42,7 +42,7 @@ struct Observation {
 		let height = CGFloat(obs.boundingBox[3])
 		var rect = CGRect(x:x, y:y, width:width, height:height)
 		// debugPrint(value, rect, rect)
-		rect = VNNormalizedRectForImageRect(rect, Int(Navigation.shared.cgSize.width), Int(Navigation.shared.cgSize.height))
+		rect = VNNormalizedRectForImageRect(rect, Int(Navigation.cgSize.width), Int(Navigation.cgSize.height))
 		rect = CGRect(x:rect.minX, y:1-rect.maxY, width:rect.width, height:rect.height)
 		self.boundingBox = rect
 		// debugPrint(boundingBox)

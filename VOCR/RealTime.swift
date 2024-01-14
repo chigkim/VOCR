@@ -11,7 +11,7 @@ import Vision
 import Cocoa
 import HotKey
 
-struct RealTime {
+enum RealTime {
 	
 	static var run:Bool = false
 	static var exit:HotKey?
@@ -52,7 +52,12 @@ return nil
 
 	static func continuousOCR() {
 		DispatchQueue.global(qos: .background).async {
-			if let rect = voCursorLocation() {
+			var rect = CGRect()
+			Navigation.prepare()
+			if Navigation.cgSize != CGSize() {
+				rect = CGRect(origin: Navigation.cgPosition, size: Navigation.cgSize)
+			}
+			if rect != CGRect() {
 				Accessibility.speakWithSynthesizer("Press escape to stop Realtime OCR.")
 				exit = HotKey(key:.escape, modifiers:[])
 				exit?.keyDownHandler = {
