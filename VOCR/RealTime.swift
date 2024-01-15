@@ -51,19 +51,23 @@ return nil
 	}
 
 	static func continuousOCR() {
+		if run {
+			return
+		}
 		DispatchQueue.global(qos: .background).async {
-			var rect = CGRect()
-			Navigation.prepare()
-			if Navigation.cgSize != CGSize() {
-				rect = CGRect(origin: Navigation.cgPosition, size: Navigation.cgSize)
+			var rect:CGRect?
+			if Navigation.mode == .WINDOW {
+				rect = Navigation.getWindow()
+			} else {
+				rect = Navigation.getVOCursor()
 			}
-			if rect != CGRect() {
+				if let rect = rect {
 				Accessibility.speakWithSynthesizer("Press escape to stop Realtime OCR.")
 				exit = HotKey(key:.escape, modifiers:[])
 				exit?.keyDownHandler = {
-					Accessibility.speak("Exit Realtime OCR navigation.")
 					RealTime.run = false
 					RealTime.exit = nil
+					Accessibility.speak("Exit Realtime OCR navigation.")
 				}
 				var oldText = ""
 				run = true

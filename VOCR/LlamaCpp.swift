@@ -6,10 +6,10 @@
 //  Copyright © 2024 Chi Kim. All rights reserved.
 //
 
-import Foundation
+
 import Cocoa
 
-enum LlamaCpp {
+enum LlamaCpp:ModelAsking {
 	
 	struct Response: Decodable {
 				let content: String
@@ -37,17 +37,11 @@ enum LlamaCpp {
 		let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody, options: [])
 		let url = URL(string: "http://127.0.0.1:8080/completion")!
 		var request = URLRequest(url: url)
-		request.timeoutInterval = 180
+		request.timeoutInterval = 600
 		request.httpMethod = "POST"
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.httpBody = jsonData
-		let session = URLSession.shared
-		let task = session.dataTask(with: request) { data, response, error in
-			guard let data = data, error == nil else {
-				print("Request failed with error: \(error?.localizedDescription ?? "No data")")
-				completion("Error: \(error?.localizedDescription ?? "No data")")
-				return
-			}
+		performRequest(request, name:"Llama.Cpp") { data in
 //			debugPrint("Llama: \(String(data: data, encoding: .utf8)!)")
 			do {
 				let response = try JSONDecoder().decode(Response.self, from: data)
@@ -59,8 +53,6 @@ enum LlamaCpp {
 				completion("Error: Could not parse JSON.")
 			}
 		}
-		Accessibility.speakWithSynthesizer("Getting response from LlamaCpp... Please wait...")
-		task.resume()
 	}
 }
 

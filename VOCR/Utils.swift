@@ -16,6 +16,35 @@ import AXSwift
 let logger = Logger()
 import Cocoa
 
+func performRequest(_ request: URLRequest, name:String, completion: @escaping (Data) -> Void) {
+	let task = URLSession.shared.dataTask(with: request) { data, response, error in
+		if let error = error {
+			Accessibility.speakWithSynthesizer("Connection error: \(error.localizedDescription)")
+			return
+		}
+
+		guard let httpResponse = response as? HTTPURLResponse else {
+			Accessibility.speakWithSynthesizer("Invalid response from server.")
+			return
+		}
+
+		guard httpResponse.statusCode == 200 else {
+			Accessibility.speakWithSynthesizer("HTTP Error: Status code \(httpResponse.statusCode)")
+			return
+		}
+
+		guard let data = data else {
+			Accessibility.speakWithSynthesizer("No data received from server.")
+			return
+		}
+
+		completion(data)
+	}
+	Accessibility.speakWithSynthesizer("Getting response from \(name)... Please wait...")
+	task.resume()
+}
+
+
 func hide() {
 	let windows = NSApplication.shared.windows
 	NSApplication.shared.hide(nil)
@@ -67,11 +96,7 @@ func ask(image:CGImage?=nil) {
 
 	let cgImage = image ?? grabScreenshot()
 	guard let cgImage = cgImage else { return }
-	if Settings.useLlama {
-		LlamaCpp.ask(image: cgImage)
-	} else {
-		GPT.ask(image:cgImage)
-	}
+	getModel(for: Settings.model).ask(image: cgImage)
 }
 
 func imageToBase64(image: CGImage) -> String {

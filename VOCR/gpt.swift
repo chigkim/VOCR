@@ -1,7 +1,7 @@
 import Foundation
 import Cocoa
 
-enum GPT {
+enum GPT:ModelAsking {
 
 	struct Response: Decodable {
 		struct Usage:Decodable {
@@ -67,18 +67,13 @@ enum GPT {
 		
 		let url = URL(string: "https://api.openai.com/v1/chat/completions")!
 		var request = URLRequest(url: url)
+		request.timeoutInterval = 600
 		request.httpMethod = "POST"
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.setValue("Bearer \(Settings.GPTAPIKEY)", forHTTPHeaderField: "Authorization")
 		request.httpBody = jsonData
-		let session = URLSession.shared
-		let task = session.dataTask(with: request) { data, response, error in
-			guard let data = data, error == nil else {
-				print("Request failed with error: \(error?.localizedDescription ?? "No data")")
-				completion("Error: \(error?.localizedDescription ?? "No data")")
-				return
-			}
-//			debugPrint("GPT-4V: \(String(data: data, encoding: .utf8)!)")
+		performRequest(request, name:"GPT") { data in
+			//			debugPrint("GPT-4V: \(String(data: data, encoding: .utf8)!)")
 			do {
 				let response = try JSONDecoder().decode(Response.self, from: data)
 				let prompt_tokens = response.usage.prompt_tokens
@@ -100,8 +95,6 @@ enum GPT {
 				completion("Error: Could not parse JSON.")
 			}
 		}
-		Accessibility.speakWithSynthesizer("Getting response from ChatGPT... Please wait...")
-		task.resume()
 	}
 }
 

@@ -184,21 +184,18 @@ cgImage  = image
 
 	static func explore() {
 		prepare()
-		guard let  image = cgImage, let image = resizeCGImage(image, toWidth: Int(Navigation.cgSize.width), toHeight:Int(Navigation.cgSize.height)) else { return }
-		   debugPrint("Resized:", image.width, image.height)
-
+//		guard let  image = cgImage, let image = resizeCGImage(image, toWidth: Int(Navigation.cgSize.width), toHeight:Int(Navigation.cgSize.height)) else { return }
+//		   debugPrint("Resized:", image.width, image.height)
+		guard let image = cgImage else { return }
+		
 		let system = "You are a helpful assistant. Your response should be in JSON format."
-		let prompt = "Can you describe the user interface in the following JSON format?\n[{'label': 'label', 'short string', 'uid': id_int, 'description': 'description string', 'content': 'string of some examples of contents in the area', 'boundingBox': [top_left_x_pixel, top_left_y_pixel, width_pixel, height_pixel]]\nThe image has dimensions of \(image.width) and \(image.height) height, so scale the pixel coordinates accordingly."
-		if Settings.useLlama {
-			LlamaCpp.describe(image:image, system:system, prompt:prompt, completion: exploreHandler)
-		} else {
-			GPT.describe(image:image, system:system, prompt:prompt, completion: exploreHandler)
-		}
+		let prompt = "Can you describe the user interface in the following JSON format?\n[{'label': 'label', 'short string', 'uid': id_int, 'description': 'description string', 'content': 'string of some examples of contents in the area', 'boundingBox': [bottom_left_x_pixel, bottom_left_y_pixel, width_pixel, height_pixel]]\nThe image has dimensions of \(image.width) and \(image.height) height. Normalize pixel coordinates to between 0.0 and 1.0. The origin coordinate 0.0,0.0 is bottom left corner. Surround the response should start with ```json and ends with ```. The response should have only the json string but nothing else. There should be no comments in the response nor inline comments in json string at all. Utmost vigilance is imperative in ensuring the precision of the boundingBox coordinates. Any deviation, even a single coordinate inaccurately placed, could precipitate a situation of extreme severity. Such an error carries with it a gravely critical and irreversible risk, potentially leading to catastrophic and irreversible outcomes that could profoundly and detrimentally impact the user."
+		getModel(for: Settings.model).describe(image:image, system:system, prompt:prompt, completion: exploreHandler)
 	}
 
 	static func exploreHandler(description:String) {
 		guard let json = extractString(text:description, startDelimiter: "```json\n", endDelimiter: "\n```") else {
-			Accessibility.speakWithSynthesizer("Received response in incorrect format. Try again.")
+			Accessibility.speakWithSynthesizer("Cannot extract JSON string from the response. Try again.")
 			return
 		}
 		if let elements = self.decode(message:json) {
@@ -207,12 +204,14 @@ cgImage  = image
 			Shortcuts.activateNavigationShortcuts()
 			Accessibility.speak("Finished scanning \(self.appName), \(self.windowName)")
 			DispatchQueue.main.async {
-				// let boxImage = drawBoxes(cgImage, boxes:result, color:NSColor.red)!
-				// try? saveImage(boxImage)
-			}
+				if let cgImage = cgImage {
+					let boxImage = drawBoxes(cgImage, boxes:result, color:NSColor.red)!
+					try? saveImage(boxImage)
+					
+				}	}
 			
 		} else {
-			Accessibility.speakWithSynthesizer("Received response in incorrect format. Try again.")
+			Accessibility.speakWithSynthesizer("Cannot parse the JSON string. Try again.")
 		}
 	}
 	

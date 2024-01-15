@@ -10,7 +10,7 @@ import Cocoa
 import AudioKit
 
 enum Settings {
-
+	
 	static private var eventMonitor: Any?
 	static var positionReset = true
 	static var positionalAudio = false
@@ -19,7 +19,6 @@ enum Settings {
 	static var autoScan = false
 	static var targetWindow = false
 	static var detectObject = true
-	static var useLlama = false
 	static var windowRealtime = true
 	static var useLastPrompt = false
 	static var prompt = "Analyze the image in a comprehensive and detailed manner."
@@ -27,13 +26,14 @@ enum Settings {
 	static var GPTAPIKEY = ""
 	static var mode = "OCR"
 	static let target = MenuHandler()
+	static var model: Models = .ollama
+
 	static var allSettings: [(title: String, action: Selector, value: Bool)] {
 		return [
 			("Target Window", #selector(MenuHandler.toggleSetting(_:)), targetWindow),
 			("Auto Scan", #selector(MenuHandler.toggleAutoScan(_:)), autoScan),
 			("Detect Objects", #selector(MenuHandler.toggleSetting(_:)), detectObject),
 			("Use Last Prompt", #selector(MenuHandler.toggleSetting(_:)), useLastPrompt),
-			("Use Llama.cpp", #selector(MenuHandler.toggleSetting(_:)), useLlama),
 			("Reset Position on Scan", #selector(MenuHandler.toggleSetting(_:)), positionReset),
 			("Positional Audio", #selector(MenuHandler.toggleSetting(_:)), positionalAudio),
 			("Move Mouse", #selector(MenuHandler.toggleSetting(_:)), moveMouse),
@@ -55,52 +55,77 @@ enum Settings {
 		if Settings.autoScan {
 			installMouseMonitor()
 		}
-			
+
+		let modelMenu = NSMenu()
+
+		let gptItem = NSMenuItem(title: "GPT", action: #selector(target.selectModel(_:)), keyEquivalent: "")
+		gptItem.target = target
+		gptItem.tag = Models.gpt.rawValue
+		modelMenu.addItem(gptItem)
+
+		let ollamaItem = NSMenuItem(title: "Ollama", action: #selector(target.selectModel(_:)), keyEquivalent: "")
+		ollamaItem.target = target
+		ollamaItem.tag = Models.ollama.rawValue
+		modelMenu.addItem(ollamaItem)
+
+		let llamaCppItem = NSMenuItem(title: "LlamaCpp", action: #selector(target.selectModel(_:)), keyEquivalent: "")
+		llamaCppItem.target = target
+		llamaCppItem.tag = Models.llamaCpp.rawValue
+		modelMenu.addItem(llamaCppItem)
+
+		for item in modelMenu.items {
+			item.state = (item.tag == Settings.model.rawValue) ? .on : .off
+		}
+
+		let modelsMenuItem = NSMenuItem(title: "Models", action: nil, keyEquivalent: "")
+		modelsMenuItem.submenu = modelMenu
+		settingsMenu.addItem(modelsMenuItem)
+
 		let systemPromptMenuItem = NSMenuItem(title: "Set System Prompt...", action: #selector(target.presentSystemPromptDialog(_:)), keyEquivalent: "")
 		systemPromptMenuItem.target = target
 		settingsMenu.addItem(systemPromptMenuItem)
-
+		
 		let soundOutputMenuItem = NSMenuItem(title: "Sound Output...", action: #selector(target.chooseOutput(_:)), keyEquivalent: "")
 		soundOutputMenuItem.target = target
 		settingsMenu.addItem(soundOutputMenuItem)
-
+		
 		let shortcutsMenuItem = NSMenuItem(title: "Shortcuts...", action: #selector(target.openShortcutsWindow(_:)), keyEquivalent: "")
 		shortcutsMenuItem.target = target
 		settingsMenu.addItem(shortcutsMenuItem)
-
+		
 		let newShortcutMenuItem = NSMenuItem(title: "New Shortcuts", action: #selector(target.addShortcut(_:)), keyEquivalent: "")
 		newShortcutMenuItem.target = target
-		settingsMenu.addItem(newShortcutMenuItem)
-
+		//		settingsMenu.addItem(newShortcutMenuItem)
+		
 		let enterAPIKeyMenuItem = NSMenuItem(title: "OpenAI API Key...", action: #selector(target.presentApiKeyInputDialog(_:)), keyEquivalent: "")
 		enterAPIKeyMenuItem.target = target
 		settingsMenu.addItem(enterAPIKeyMenuItem)
 		let settingsMenuItem = NSMenuItem(title: "Settings", action: nil, keyEquivalent: "")
 		settingsMenuItem.submenu = settingsMenu
 		menu.addItem(settingsMenuItem)
-
+		
 		if Navigation.cgImage != nil {
 			let saveScreenshotMenuItem = NSMenuItem(title: "Save Screenschot", action: #selector(target.saveScreenShot(_:)), keyEquivalent: "s")
 			saveScreenshotMenuItem.target = target
 			menu.addItem(saveScreenshotMenuItem)
 		}
-
+		
 		if Navigation.displayResults.count>1 {
 			let saveMenuItem = NSMenuItem(title: "Save OCR Result...", action: #selector(target.saveResult(_:)), keyEquivalent: "")
 			saveMenuItem.target = target
 			menu.addItem(saveMenuItem)
 		}
-
+		
 		let aboutMenuItem = NSMenuItem(title: "About...", action: #selector(target.displayAboutWindow(_:)), keyEquivalent: "")
 		aboutMenuItem.target = target
 		menu.addItem(aboutMenuItem)
-
+		
 		if Shortcuts.navigationActive || RealTime.exit != nil {
 			let dismissMenuItem = NSMenuItem(title: "Dismiss Menu", action: #selector(target.dismiss(_:)), keyEquivalent: "z")
 			dismissMenuItem.target = target
 			menu.addItem(dismissMenuItem)
 		}
-
+		
 		menu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
 		return menu
 	}
@@ -157,7 +182,7 @@ enum Settings {
 			Settings.save()
 		}
 	}
-
+	
 	static func load() {
 		let defaults = UserDefaults.standard
 		Settings.positionReset = defaults.bool(forKey:"positionReset")
@@ -165,7 +190,7 @@ enum Settings {
 		Settings.launchOnBoot = defaults.bool(forKey:"launchOnBoot")
 		Settings.autoScan = defaults.bool(forKey:"autoScan")
 		Settings.detectObject = defaults.bool(forKey:"detectObject")
-		Settings.useLlama = defaults.bool(forKey:"useLlama")
+		Settings.model = Models(rawValue: defaults.integer(forKey:"model"))!
 		Settings.useLastPrompt = defaults.bool(forKey:"useLastPrompt")
 		Settings.targetWindow = defaults.bool(forKey:"targetWindow")
 		if let apikey = defaults.string(forKey: "GPTAPIKEY") {
@@ -180,7 +205,7 @@ enum Settings {
 		if let systemPrompt = defaults.string(forKey: "systemPrompt") {
 			Settings.systemPrompt = systemPrompt
 		}
-
+		
 	}
 	
 	static func save() {
@@ -190,12 +215,12 @@ enum Settings {
 		defaults.set(Settings.launchOnBoot, forKey:"launchOnBoot")
 		defaults.set(Settings.autoScan, forKey:"autoScan")
 		defaults.set(Settings.detectObject, forKey:"detectObject")
-		defaults.set(Settings.useLlama, forKey:"useLlama")
+		defaults.set(Settings.model.rawValue, forKey:"model")
 		defaults.set(Settings.useLastPrompt, forKey:"useLastPrompt")
 		defaults.set(Settings.targetWindow, forKey:"targetWindow")
 		defaults.set(Settings.GPTAPIKEY, forKey:"GPTAPIKEY")
 		defaults.set(Settings.prompt, forKey:"prompt")
-			defaults.set(Settings.systemPrompt, forKey:"systemPrompt")
+		defaults.set(Settings.systemPrompt, forKey:"systemPrompt")
 		defaults.set(Settings.mode, forKey:"mode")
 	}
 	
@@ -219,8 +244,6 @@ class MenuHandler: NSObject {
 			Settings.positionalAudio = sender.state == .on
 		case "Use Last Prompt":
 			Settings.useLastPrompt = sender.state == .on
-		case "Use Llama.cpp":
-			Settings.useLlama = sender.state == .on
 		case "Move Mouse":
 			Settings.moveMouse = sender.state == .on
 		case "Launch on Login":
@@ -262,11 +285,11 @@ class MenuHandler: NSObject {
 	@objc func presentApiKeyInputDialog(_ sender: AnyObject?) {
 		Settings.displayApiKeyDialog()
 	}
-
+	
 	@objc func presentSystemPromptDialog(_ sender: AnyObject?) {
 		Settings.displaySystemPromptDialog()
 	}
-
+	
 	@objc func displayAboutWindow(_ sender: Any?) {
 		let storyboardName = NSStoryboard.Name(stringLiteral: "Main")
 		let storyboard = NSStoryboard(name: storyboardName, bundle: nil)
@@ -336,7 +359,7 @@ class MenuHandler: NSObject {
 	}
 	
 	
-
+	
 	@objc func addShortcut(_ sender: NSMenuItem) {
 		let alert = NSAlert()
 		alert.messageText = "New Shortcut"
@@ -347,13 +370,17 @@ class MenuHandler: NSObject {
 		alert.accessoryView = inputTextField
 		let response = alert.runModal()
 		if response == .alertFirstButtonReturn { // OK button
-				Shortcuts.shortcuts.append(Shortcut(name: inputTextField.stringValue, key: UInt32(0), modifiers: UInt32(0), keyName:"Unassigned"))
-				let data = try? JSONEncoder().encode(Shortcuts.shortcuts)
-				UserDefaults.standard.set(data, forKey: "userShortcuts")
-				Shortcuts.loadShortcuts()
-			}
-
-
+			Shortcuts.shortcuts.append(Shortcut(name: inputTextField.stringValue, key: UInt32(0), modifiers: UInt32(0), keyName:"Unassigned"))
+			let data = try? JSONEncoder().encode(Shortcuts.shortcuts)
+			UserDefaults.standard.set(data, forKey: "userShortcuts")
+			Shortcuts.loadShortcuts()
+		}
 	}
+	
+	@objc func selectModel(_ sender: NSMenuItem) {
+		Settings.model = Models(rawValue: sender.tag)!
+		Settings.save()
+	}
+
 }
 
