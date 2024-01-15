@@ -77,14 +77,19 @@ enum Settings {
 			item.state = (item.tag == Settings.model.rawValue) ? .on : .off
 		}
 
-		let modelsMenuItem = NSMenuItem(title: "Models", action: nil, keyEquivalent: "")
-		modelsMenuItem.submenu = modelMenu
-		settingsMenu.addItem(modelsMenuItem)
+		let enterAPIKeyMenuItem = NSMenuItem(title: "OpenAI API Key...", action: #selector(target.presentApiKeyInputDialog(_:)), keyEquivalent: "")
+		enterAPIKeyMenuItem.target = target
+		modelMenu.addItem(enterAPIKeyMenuItem)
 
 		let systemPromptMenuItem = NSMenuItem(title: "Set System Prompt...", action: #selector(target.presentSystemPromptDialog(_:)), keyEquivalent: "")
 		systemPromptMenuItem.target = target
-		settingsMenu.addItem(systemPromptMenuItem)
+		modelMenu.addItem(systemPromptMenuItem)
 		
+
+		let modelsMenuItem = NSMenuItem(title: "Model", action: nil, keyEquivalent: "")
+		modelsMenuItem.submenu = modelMenu
+		settingsMenu.addItem(modelsMenuItem)
+
 		let soundOutputMenuItem = NSMenuItem(title: "Sound Output...", action: #selector(target.chooseOutput(_:)), keyEquivalent: "")
 		soundOutputMenuItem.target = target
 		settingsMenu.addItem(soundOutputMenuItem)
@@ -97,9 +102,6 @@ enum Settings {
 		newShortcutMenuItem.target = target
 		//		settingsMenu.addItem(newShortcutMenuItem)
 		
-		let enterAPIKeyMenuItem = NSMenuItem(title: "OpenAI API Key...", action: #selector(target.presentApiKeyInputDialog(_:)), keyEquivalent: "")
-		enterAPIKeyMenuItem.target = target
-		settingsMenu.addItem(enterAPIKeyMenuItem)
 		let settingsMenuItem = NSMenuItem(title: "Settings", action: nil, keyEquivalent: "")
 		settingsMenuItem.submenu = settingsMenu
 		menu.addItem(settingsMenuItem)

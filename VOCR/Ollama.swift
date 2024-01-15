@@ -27,11 +27,8 @@ enum Ollama:ModelAsking {
 		
 		let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody, options: [])
 		var request = URLRequest(url: URL(string: ollamaAPIURL)!)
-		request.timeoutInterval = 600
-		request.httpMethod = "POST"
-		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.httpBody = jsonData
-		performRequest(request, name:"Ollama") { data in
+		performRequest(&request, name:"Ollama") { data in
 			do {
 				let response = try JSONDecoder().decode(Response.self, from: data)
 				let description = response.response

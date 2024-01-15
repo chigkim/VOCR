@@ -37,11 +37,8 @@ enum LlamaCpp:ModelAsking {
 		let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody, options: [])
 		let url = URL(string: "http://127.0.0.1:8080/completion")!
 		var request = URLRequest(url: url)
-		request.timeoutInterval = 600
-		request.httpMethod = "POST"
-		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.httpBody = jsonData
-		performRequest(request, name:"Llama.Cpp") { data in
+		performRequest(&request, name:"Llama.Cpp") { data in
 //			debugPrint("Llama: \(String(data: data, encoding: .utf8)!)")
 			do {
 				let response = try JSONDecoder().decode(Response.self, from: data)

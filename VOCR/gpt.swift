@@ -67,12 +67,9 @@ enum GPT:ModelAsking {
 		
 		let url = URL(string: "https://api.openai.com/v1/chat/completions")!
 		var request = URLRequest(url: url)
-		request.timeoutInterval = 600
-		request.httpMethod = "POST"
-		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.setValue("Bearer \(Settings.GPTAPIKEY)", forHTTPHeaderField: "Authorization")
 		request.httpBody = jsonData
-		performRequest(request, name:"GPT") { data in
+		performRequest(&request, name:"GPT") { data in
 			//			debugPrint("GPT-4V: \(String(data: data, encoding: .utf8)!)")
 			do {
 				let response = try JSONDecoder().decode(Response.self, from: data)

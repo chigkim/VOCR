@@ -16,10 +16,18 @@ import AXSwift
 let logger = Logger()
 import Cocoa
 
-func performRequest(_ request: URLRequest, name:String, completion: @escaping (Data) -> Void) {
-	let task = URLSession.shared.dataTask(with: request) { data, response, error in
+var task:URLSessionDataTask?
+
+func performRequest(_ request:inout URLRequest, name:String, completion: @escaping (Data) -> Void) {
+		request.httpMethod = "POST"
+	request.timeoutInterval = 300
+	request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+	task?.cancel()
+	task = URLSession.shared.dataTask(with: request) { data, response, error in
 		if let error = error {
-			Accessibility.speakWithSynthesizer("Connection error: \(error.localizedDescription)")
+			if error.localizedDescription != "cancelled" {
+				Accessibility.speakWithSynthesizer("Connection error: \(error.localizedDescription)")
+			}
 			return
 		}
 
@@ -41,7 +49,7 @@ func performRequest(_ request: URLRequest, name:String, completion: @escaping (D
 		completion(data)
 	}
 	Accessibility.speakWithSynthesizer("Getting response from \(name)... Please wait...")
-	task.resume()
+	task?.resume()
 }
 
 
