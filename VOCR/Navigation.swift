@@ -187,7 +187,8 @@ cgImage  = image
 		guard let image = cgImage else { return }
 		
 		let system = "You are a helpful assistant. Your response should be in JSON format."
-		let prompt = "Can you describe the user interface in the following JSON format?\n[{'label': 'label', 'short string', 'uid': id_int, 'description': 'description string', 'content': 'string of some examples of contents in the area', 'boundingBox': [bottom_left_x_pixel, bottom_left_y_pixel, width_pixel, height_pixel]]\nThe image has dimensions of \(image.width) and \(image.height) height. Normalize pixel coordinates to between 0.0 and 1.0. The origin coordinate 0.0,0.0 is bottom left corner. Surround the response should start with ```json and ends with ```. The response should have only the json string but nothing else. There should be no comments in the response nor inline comments in json string at all. Utmost vigilance is imperative in ensuring the precision of the boundingBox coordinates. Any deviation, even a single coordinate inaccurately placed, could precipitate a situation of extreme severity. Such an error carries with it a gravely critical and irreversible risk, potentially leading to catastrophic and irreversible outcomes that could profoundly and detrimentally impact the user."
+		let prompt = "Process the provided user interface image by segmenting it into distinct areas with related items. Output a JSON format description for each segmented area. The JSON should include: 'label' (a concise string name), 'uid' (a unique integer identifier), 'description' (a brief explanation of the area), 'content' (a string with examples of elements within the area), and 'boundingBox' (coordinates as an array: bottom_left_x, bottom_left_y, width, height). Ensure the boundingBox coordinates are normalized between 0.0 and 1.0 relative to the image's resolution (\(image.width) width and \(image.height) height), with the origin at the bottom left (0.0, 0.0). The response should start with ```json and end with ```, containing only the JSON string. Emphasize accuracy in the boundingBox coordinates for reliable results."
+		print(prompt)
 		getModel(for: Settings.model).describe(image:image, system:system, prompt:prompt, completion: exploreHandler)
 	}
 
@@ -201,13 +202,14 @@ cgImage  = image
 			self.process(result)
 			Shortcuts.activateNavigationShortcuts()
 			Accessibility.speak("Finished scanning \(self.appName), \(self.windowName)")
-			DispatchQueue.main.async {
-				if let cgImage = cgImage {
-					let boxImage = drawBoxes(cgImage, boxes:result, color:NSColor.red)!
-					try? saveImage(boxImage)
-					
-				}	}
-			
+
+//			DispatchQueue.main.async {
+//				if let cgImage = cgImage {
+//					let boxImage = drawBoxes(cgImage, boxes:result, color:NSColor.red)!
+//					try? saveImage(boxImage)
+//				}
+//			}
+
 		} else {
 			Accessibility.speakWithSynthesizer("Cannot parse the JSON string. Try again.")
 		}
