@@ -93,6 +93,8 @@ return nil
 }
 
 func ask(image:CGImage?=nil) {
+	let cgImage = image ?? grabScreenshot()
+	guard let cgImage = cgImage else { return }
 	if !Settings.useLastPrompt {
 		if let prompt = askPrompt(value:Settings.prompt) {
 			Settings.prompt = prompt
@@ -101,8 +103,6 @@ func ask(image:CGImage?=nil) {
 		}
 	}
 
-	let cgImage = image ?? grabScreenshot()
-	guard let cgImage = cgImage else { return }
 	getModel(for: Settings.model).ask(image: cgImage)
 }
 
@@ -172,12 +172,12 @@ func drawBoxes(_ cgImageInput : CGImage, boxes:[Observation], color:NSColor) -> 
 			if let ctx = CGContext(data: bytes, width: cgImageInput.width, height: cgImageInput.height, bitsPerComponent: cgImageInput.bitsPerComponent, bytesPerRow: cgImageInput.bytesPerRow, space: cgImageInput.colorSpace!, bitmapInfo: cgImageInput.bitmapInfo.rawValue) {
 				ctx.setFillColor(color.cgColor)
 				ctx.setStrokeColor(color.cgColor)
-				ctx.setLineWidth(1)
+				ctx.setLineWidth(3.0)
 				debugPrint("Drawing boxes:")
 				let rects = boxes.map { VNImageRectForNormalizedRect($0.boundingBox, cgImageInput.width, cgImageInput.height) }
 				for box in rects {
 					debugPrint(box)
-					ctx.stroke(box, width: 1.0)
+					ctx.stroke(box, width: 3.0)
 				}
 				cgImageOutput = (ctx.makeImage())
 				if cgImageOutput == nil {
