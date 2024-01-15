@@ -52,7 +52,6 @@ func performRequest(_ request:inout URLRequest, name:String, completion: @escapi
 	task?.resume()
 }
 
-
 func hide() {
 	let windows = NSApplication.shared.windows
 	NSApplication.shared.hide(nil)

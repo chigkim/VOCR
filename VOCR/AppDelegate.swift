@@ -2,12 +2,12 @@ import Cocoa
 
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
 	let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 	
 	func applicationDidFinishLaunching(_ notification: Notification) {
-		statusItem.menu = Settings.setupMenu()
+		menuNeedsUpdate(NSMenu())
 		Shortcuts.SetupShortcuts()
 		if let button = statusItem.button {
 			button.title = "VOCR"
@@ -37,6 +37,12 @@ hide()
 		print("Clicked")
 	}
 	
+	func menuNeedsUpdate(_ menu: NSMenu) {
+		let menu = Settings.setupMenu()
+		menu.delegate = self
+		statusItem.menu = menu
+	}
+
 	func applicationWillTerminate(_ notification: Notification) {
 		Settings.removeMouseMonitor()
 	}

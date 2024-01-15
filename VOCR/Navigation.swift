@@ -27,8 +27,6 @@ enum Navigation {
 				return "Window"
 			case .VOCURSOR:
 				return "VOCursor"
-			default:
-				return "Unknown"
 			}
 		}
 	}
