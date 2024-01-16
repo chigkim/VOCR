@@ -381,6 +381,9 @@ class MenuHandler: NSObject {
 	
 	@objc func selectModel(_ sender: NSMenuItem) {
 		Settings.model = Models(rawValue: sender.tag)!
+		if Settings.model == .ollama {
+			Ollama.setModel()
+		}
 		Settings.save()
 	}
 

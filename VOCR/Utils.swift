@@ -18,8 +18,8 @@ import Cocoa
 
 var task:URLSessionDataTask?
 
-func performRequest(_ request:inout URLRequest, name:String, completion: @escaping (Data) -> Void) {
-		request.httpMethod = "POST"
+func performRequest(_ request:inout URLRequest, method:String="POST", name:String?=nil, completion: @escaping (Data) -> Void) {
+		request.httpMethod = method
 	request.timeoutInterval = 300
 	request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 	task?.cancel()
@@ -45,11 +45,13 @@ func performRequest(_ request:inout URLRequest, name:String, completion: @escapi
 			Accessibility.speakWithSynthesizer("No data received from server.")
 			return
 		}
-
+//		debugPrint(String(data: data, encoding: .utf8))
 		completion(data)
 	}
-	Accessibility.speakWithSynthesizer("Getting response from \(name)... Please wait...")
-	task?.resume()
+	if let name = name {
+		Accessibility.speakWithSynthesizer("Getting response from \(name)... Please wait...")
+	}
+		task?.resume()
 }
 
 func hide() {
@@ -67,9 +69,8 @@ func askPrompt(value:String) -> String? {
 	inputTextField.stringValue = value
 		alert.accessoryView = inputTextField
 	let response = alert.runModal()
+	hide()
 	if response == .alertFirstButtonReturn {
-		hide()
-		Thread.sleep(forTimeInterval: 0.1)
 		let prompt = inputTextField.stringValue
 		return prompt
 	}
@@ -93,6 +94,10 @@ return nil
 }
 
 func ask(image:CGImage?=nil) {
+	if Settings.model == .ollama && Ollama.model == nil {
+		Ollama.setModel()
+		return
+	}
 	let cgImage = image ?? grabScreenshot()
 	guard let cgImage = cgImage else { return }
 	if !Settings.useLastPrompt {
