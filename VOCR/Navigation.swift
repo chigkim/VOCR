@@ -188,7 +188,7 @@ cgImage  = image
 		
 		let system = "You are a helpful assistant. Your response should be in JSON format."
 		let prompt = "Process the provided user interface image by segmenting it into distinct areas with related items. Output a JSON format description for each segmented area. The JSON should include: 'label' (a concise string name), 'uid' (a unique integer identifier), 'description' (a brief explanation of the area), 'content' (a string with examples of elements within the area), and 'boundingBox' (coordinates as an array: bottom_left_x, bottom_left_y, width, height). Ensure the boundingBox coordinates are normalized between 0.0 and 1.0 relative to the image's resolution (\(image.width) width and \(image.height) height), with the origin at the bottom left (0.0, 0.0). The response should start with ```json and end with ```, containing only the JSON string without inline comments or extra notes. Precision in the 'boundingBox' coordinates is crucial; even one minor inaccuracy can have severe and irreversible consequences for users."
-		getModel(for: Settings.model).describe(image:image, system:system, prompt:prompt, completion: exploreHandler)
+		getEngine(for: Settings.engine).describe(image:image, system:system, prompt:prompt, completion: exploreHandler)
 	}
 
 	static func exploreHandler(description:String) {

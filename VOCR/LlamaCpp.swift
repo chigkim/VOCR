@@ -9,7 +9,7 @@
 
 import Cocoa
 
-enum LlamaCpp:ModelAsking {
+enum LlamaCpp:EngineAsking {
 	
 	struct Response: Decodable {
 				let content: String

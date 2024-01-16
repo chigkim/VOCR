@@ -94,7 +94,7 @@ return nil
 }
 
 func ask(image:CGImage?=nil) {
-	if Settings.model == .ollama && Ollama.model == nil {
+	if Settings.engine == .ollama && Ollama.model == nil {
 		Ollama.setModel()
 		return
 	}
@@ -108,7 +108,7 @@ func ask(image:CGImage?=nil) {
 		}
 	}
 
-	getModel(for: Settings.model).ask(image: cgImage)
+	getEngine(for: Settings.engine).ask(image: cgImage)
 }
 
 func imageToBase64(image: CGImage) -> String {

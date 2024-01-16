@@ -1,16 +1,16 @@
 import Cocoa
 
-protocol ModelAsking {
+protocol EngineAsking {
 	static func ask(image: CGImage)
 	static func describe(image: CGImage, system: String, prompt: String, completion: @escaping (String) -> Void)
 }
 
-enum Models: Int {
+enum Engines: Int {
 	case gpt = 0, ollama, llamaCpp
 }
 
-func getModel(for model: Models) -> ModelAsking.Type {
-	switch model {
+func getEngine(for engine: Engines) -> EngineAsking.Type {
+	switch engine {
 	case .gpt:
 		return GPT.self
 	case .ollama:

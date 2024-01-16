@@ -26,7 +26,7 @@ enum Settings {
 	static var GPTAPIKEY = ""
 	static var mode = "OCR"
 	static let target = MenuHandler()
-	static var model: Models = .ollama
+	static var engine: Engines = .ollama
 
 	static var allSettings: [(title: String, action: Selector, value: Bool)] {
 		return [
@@ -56,39 +56,39 @@ enum Settings {
 			installMouseMonitor()
 		}
 
-		let modelMenu = NSMenu()
+		let engineMenu = NSMenu()
 
 		let gptItem = NSMenuItem(title: "GPT", action: #selector(target.selectModel(_:)), keyEquivalent: "")
 		gptItem.target = target
-		gptItem.tag = Models.gpt.rawValue
-		modelMenu.addItem(gptItem)
+		gptItem.tag = Engines.gpt.rawValue
+		engineMenu.addItem(gptItem)
 
 		let ollamaItem = NSMenuItem(title: "Ollama", action: #selector(target.selectModel(_:)), keyEquivalent: "")
 		ollamaItem.target = target
-		ollamaItem.tag = Models.ollama.rawValue
-		modelMenu.addItem(ollamaItem)
+		ollamaItem.tag = Engines.ollama.rawValue
+		engineMenu.addItem(ollamaItem)
 
 		let llamaCppItem = NSMenuItem(title: "LlamaCpp", action: #selector(target.selectModel(_:)), keyEquivalent: "")
 		llamaCppItem.target = target
-		llamaCppItem.tag = Models.llamaCpp.rawValue
-		modelMenu.addItem(llamaCppItem)
+		llamaCppItem.tag = Engines.llamaCpp.rawValue
+		engineMenu.addItem(llamaCppItem)
 
-		for item in modelMenu.items {
-			item.state = (item.tag == Settings.model.rawValue) ? .on : .off
+		for item in engineMenu.items {
+			item.state = (item.tag == Settings.engine.rawValue) ? .on : .off
 		}
 
 		let enterAPIKeyMenuItem = NSMenuItem(title: "OpenAI API Key...", action: #selector(target.presentApiKeyInputDialog(_:)), keyEquivalent: "")
 		enterAPIKeyMenuItem.target = target
-		modelMenu.addItem(enterAPIKeyMenuItem)
+		engineMenu.addItem(enterAPIKeyMenuItem)
 
 		let systemPromptMenuItem = NSMenuItem(title: "Set System Prompt...", action: #selector(target.presentSystemPromptDialog(_:)), keyEquivalent: "")
 		systemPromptMenuItem.target = target
-		modelMenu.addItem(systemPromptMenuItem)
+		engineMenu.addItem(systemPromptMenuItem)
 		
 
-		let modelsMenuItem = NSMenuItem(title: "Model", action: nil, keyEquivalent: "")
-		modelsMenuItem.submenu = modelMenu
-		settingsMenu.addItem(modelsMenuItem)
+		let engineMenuItem = NSMenuItem(title: "Engine", action: nil, keyEquivalent: "")
+		engineMenuItem.submenu = engineMenu
+		settingsMenu.addItem(engineMenuItem)
 
 		let soundOutputMenuItem = NSMenuItem(title: "Sound Output...", action: #selector(target.chooseOutput(_:)), keyEquivalent: "")
 		soundOutputMenuItem.target = target
@@ -192,7 +192,7 @@ enum Settings {
 		Settings.launchOnBoot = defaults.bool(forKey:"launchOnBoot")
 		Settings.autoScan = defaults.bool(forKey:"autoScan")
 		Settings.detectObject = defaults.bool(forKey:"detectObject")
-		Settings.model = Models(rawValue: defaults.integer(forKey:"model"))!
+		Settings.engine = Engines(rawValue: defaults.integer(forKey:"engine"))!
 		Settings.useLastPrompt = defaults.bool(forKey:"useLastPrompt")
 		Settings.targetWindow = defaults.bool(forKey:"targetWindow")
 		if let apikey = defaults.string(forKey: "GPTAPIKEY") {
@@ -217,7 +217,7 @@ enum Settings {
 		defaults.set(Settings.launchOnBoot, forKey:"launchOnBoot")
 		defaults.set(Settings.autoScan, forKey:"autoScan")
 		defaults.set(Settings.detectObject, forKey:"detectObject")
-		defaults.set(Settings.model.rawValue, forKey:"model")
+		defaults.set(Settings.engine.rawValue, forKey:"engine")
 		defaults.set(Settings.useLastPrompt, forKey:"useLastPrompt")
 		defaults.set(Settings.targetWindow, forKey:"targetWindow")
 		defaults.set(Settings.GPTAPIKEY, forKey:"GPTAPIKEY")
@@ -380,8 +380,8 @@ class MenuHandler: NSObject {
 	}
 	
 	@objc func selectModel(_ sender: NSMenuItem) {
-		Settings.model = Models(rawValue: sender.tag)!
-		if Settings.model == .ollama {
+		Settings.engine = Engines(rawValue: sender.tag)!
+		if Settings.engine == .ollama {
 			Ollama.setModel()
 		}
 		Settings.save()

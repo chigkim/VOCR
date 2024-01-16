@@ -1,7 +1,7 @@
 import Foundation
 import Cocoa
 
-enum GPT:ModelAsking {
+enum GPT:EngineAsking {
 
 	struct Response: Decodable {
 		struct Usage:Decodable {

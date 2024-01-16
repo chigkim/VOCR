@@ -1,7 +1,7 @@
 
 import Cocoa
 
-enum Ollama:ModelAsking {
+enum Ollama:EngineAsking {
 	
 	struct Response: Decodable {
 		let response: String
