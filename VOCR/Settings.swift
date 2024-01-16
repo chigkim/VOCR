@@ -117,7 +117,11 @@ enum Settings {
 			saveMenuItem.target = target
 			menu.addItem(saveMenuItem)
 		}
-		
+
+		let checkForUpdatesItem = NSMenuItem(title: "Check for Updates", action: #selector(target.checkForUpdates), keyEquivalent: "")
+		checkForUpdatesItem.target = target
+		menu.addItem(checkForUpdatesItem)
+
 		let aboutMenuItem = NSMenuItem(title: "About...", action: #selector(target.displayAboutWindow(_:)), keyEquivalent: "")
 		aboutMenuItem.target = target
 		menu.addItem(aboutMenuItem)
@@ -385,6 +389,12 @@ class MenuHandler: NSObject {
 			Ollama.setModel()
 		}
 		Settings.save()
+	}
+
+	@objc func checkForUpdates() {
+		if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
+			appDelegate.updaterController?.checkForUpdates(nil)
+		}
 	}
 
 }

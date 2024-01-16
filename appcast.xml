@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>VOCR</title>
+        <item>
+            <title>2.0.0</title>
+            <pubDate>Tue, 16 Jan 2024 13:13:50 -0500</pubDate>
+            <sparkle:version>25</sparkle:version>
+            <sparkle:shortVersionString>2.0.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://raw.githubusercontent.com/chigkim/VOCR/main/VOCR.app.zip" length="3183149" type="application/octet-stream" sparkle:edSignature="470FJrpzeiOXmPWrGnjt/aqtIL7EvqQpJFkjM+pu6Ev3+mBpPqxPQkNQPrd80zVobARda62aLpthGM1ml6cQAw=="/>
+        </item>
+    </channel>
+</rss>

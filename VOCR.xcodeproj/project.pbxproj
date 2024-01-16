@@ -24,6 +24,7 @@
 		EA5C7AD92351D81100D84042 /* VOScreenshot.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EA5C7AD82351D81100D84042 /* VOScreenshot.scpt */; };
 		EA60A3B12B4D7FF0001F6EEA /* RealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA60A3B02B4D7FF0001F6EEA /* RealTime.swift */; };
 		EA688D452355BDC500F722C7 /* Bundle Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA688D442355BDC500F722C7 /* Bundle Extension.swift */; };
+		EA78235B2B56E75E004B141B /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = EA78235A2B56E75E004B141B /* Sparkle */; };
 		EA8AD6412352B4A000D26871 /* Double Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8AD6402352B4A000D26871 /* Double Extension.swift */; };
 		EA9AF47D2B54BD3A001B1BBE /* Ollama.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AF47C2B54BD3A001B1BBE /* Ollama.swift */; };
 		EA9AF47F2B54D03D001B1BBE /* Engines.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AF47E2B54D03D001B1BBE /* Engines.swift */; };
@@ -78,6 +79,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA42F44F2A2A04440010BC39 /* AXSwift in Frameworks */,
+				EA78235B2B56E75E004B141B /* Sparkle in Frameworks */,
 				EAD9AAE927310A3900473054 /* SoundpipeAudioKit in Frameworks */,
 				EAD9AAE62731075600473054 /* HotKey in Frameworks */,
 			);
@@ -174,6 +176,7 @@
 				EAD9AAE52731075600473054 /* HotKey */,
 				EAD9AAE827310A3900473054 /* SoundpipeAudioKit */,
 				EA42F44E2A2A04440010BC39 /* AXSwift */,
+				EA78235A2B56E75E004B141B /* Sparkle */,
 			);
 			productName = VOCR;
 			productReference = EADE59B1232EB09A00E2F65A /* VOCR.app */;
@@ -207,6 +210,7 @@
 				EAD9AAE42731075600473054 /* XCRemoteSwiftPackageReference "HotKey" */,
 				EAD9AAE727310A3900473054 /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */,
 				EA42F44D2A2A04440010BC39 /* XCRemoteSwiftPackageReference "AXSwift" */,
+				EA7823592B56E75E004B141B /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			productRefGroup = EADE59B2232EB09A00E2F65A /* Products */;
 			projectDirPath = "";
@@ -403,7 +407,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 25;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -430,7 +434,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 25;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -481,6 +485,14 @@
 				kind = branch;
 			};
 		};
+		EA7823592B56E75E004B141B /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		EAD9AAE42731075600473054 /* XCRemoteSwiftPackageReference "HotKey" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/soffes/HotKey";
@@ -504,6 +516,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EA42F44D2A2A04440010BC39 /* XCRemoteSwiftPackageReference "AXSwift" */;
 			productName = AXSwift;
+		};
+		EA78235A2B56E75E004B141B /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA7823592B56E75E004B141B /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 		EAD9AAE52731075600473054 /* HotKey */ = {
 			isa = XCSwiftPackageProductDependency;

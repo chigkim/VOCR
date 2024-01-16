@@ -1,12 +1,17 @@
 import Cocoa
-
+import Sparkle
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUUpdaterDelegate {
 
 	let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-	
+	var updaterController: SPUStandardUpdaterController?
+
 	func applicationDidFinishLaunching(_ notification: Notification) {
+		updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: self, userDriverDelegate: nil)
+		updaterController?.updater.automaticallyChecksForUpdates = true
+		updaterController?.updater.updateCheckInterval = 3600  // Check every hour
+		updaterController?.updater.automaticallyDownloadsUpdates = true
 		menuNeedsUpdate(NSMenu())
 		Shortcuts.SetupShortcuts()
 		if let button = statusItem.button {
@@ -62,4 +67,8 @@ hide()
 		return false
 	}
 	
+	func feedURLString(for updater: SPUUpdater) -> String? {
+		return "https://example.com/appcast.xml"
+	}
+
 }
