@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>SUFeedURL</key>
-	<string>https://raw.githubusercontent.com/chigkim/VOCR/main/appcast.xml</string>
+	<string>https://chigkim.github.io/VOCR/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>mag38x5Zl6J5oFFwEeO4MfVY+4jJqEsDZPL6nHmbPg8=</string>
 	<key>NSAppTransportSecurity</key>
