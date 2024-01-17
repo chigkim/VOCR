@@ -14,8 +14,7 @@ import HotKey
 enum RealTime {
 	
 	static var run:Bool = false
-	static var exit:HotKey?
-	
+
 	static func performOCR(cgImage:CGImage) -> [VNRecognizedTextObservation]? {
 		let textRecognitionRequest = VNRecognizeTextRequest()
 		textRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate
@@ -33,7 +32,7 @@ enum RealTime {
 		}
 		return texts
 	}
-
+	
 	static func diff(old:String, new:String) -> String? {
 		let oldArray  = old.lowercased().components(separatedBy: .whitespaces)
 		let newArray = new.lowercased().components(separatedBy: .whitespaces)
@@ -43,17 +42,14 @@ enum RealTime {
 				return element
 			} else { return nil }
 		}
-
+		
 		if insertedTexts.isNotEmpty {
 			return insertedTexts.joined(separator: " ")
 		}
-return nil
+		return nil
 	}
-
+	
 	static func continuousOCR() {
-		if run {
-			return
-		}
 		DispatchQueue.global(qos: .background).async {
 			var rect:CGRect?
 			if Navigation.mode == .WINDOW {
@@ -61,16 +57,8 @@ return nil
 			} else {
 				rect = Navigation.getVOCursor()
 			}
-				if let rect = rect {
-				Accessibility.speakWithSynthesizer("Press escape to stop Realtime OCR.")
-				exit = HotKey(key:.escape, modifiers:[])
-				exit?.keyDownHandler = {
-					RealTime.run = false
-					RealTime.exit = nil
-					Accessibility.speak("Exit Realtime OCR navigation.")
-				}
+			if let rect = rect {
 				var oldText = ""
-				run = true
 				while run {
 					if let cgImage = TakeScreensShots(rect: rect) {
 						if let texts = performOCR(cgImage:cgImage) {

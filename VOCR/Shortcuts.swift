@@ -36,7 +36,7 @@ enum Shortcuts {
 			Navigation.mode = .VOCURSOR
 			Navigation.startOCR()
 		}
-		handlers["Realtime OCR"] = RealTime.continuousOCR
+		handlers["Realtime OCR"] = realTimeHandler
 		handlers["Explore"] = Navigation.explore
 		handlers["Ask"] = {
 			ask()
@@ -133,6 +133,16 @@ loadDefaults()
 		   let rect = CGRect(x: mouseLocation.x, y: mouseLocation.y, width: 1, height: 1)
 		   Settings.setupMenu().popUp(positioning: nil, at: rect.origin, in: nil)
 	   }
-
+	static func realTimeHandler() {
+		if RealTime.run {
+			Accessibility.speakWithSynthesizer("Stopping RealTime OCR.")
+			RealTime.run = false
+		} else {
+			Accessibility.speakWithSynthesizer("RealTime OCR started.")
+			RealTime.run = true
+			RealTime.continuousOCR()
+		}
+			
+	}
 }
 

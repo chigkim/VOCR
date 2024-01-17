@@ -128,7 +128,7 @@ enum Settings {
 		aboutMenuItem.target = target
 		menu.addItem(aboutMenuItem)
 		
-		if Shortcuts.navigationActive || RealTime.exit != nil {
+		if Shortcuts.navigationActive {
 			let dismissMenuItem = NSMenuItem(title: "Dismiss Menu", action: #selector(target.dismiss(_:)), keyEquivalent: "z")
 			dismissMenuItem.target = target
 			menu.addItem(dismissMenuItem)
