@@ -77,7 +77,6 @@ return nil
 							let newText = texts.map { $0.topCandidates(1)[0].string }.joined(separator: " ")
 							if let insertedText = diff(old:oldText, new:newText) {
 								oldText = newText
-								debugPrint("New:", insertedText)
 								Accessibility.speak(insertedText)
 							}
 						}

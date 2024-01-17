@@ -27,7 +27,8 @@ enum Settings {
 	static var mode = "OCR"
 	static let target = MenuHandler()
 	static var engine: Engines = .ollama
-
+	static var writeLog = false
+	
 	static var allSettings: [(title: String, action: Selector, value: Bool)] {
 		return [
 			("Target Window", #selector(MenuHandler.toggleSetting(_:)), targetWindow),
@@ -37,7 +38,8 @@ enum Settings {
 			("Reset Position on Scan", #selector(MenuHandler.toggleSetting(_:)), positionReset),
 			("Positional Audio", #selector(MenuHandler.toggleSetting(_:)), positionalAudio),
 			("Move Mouse", #selector(MenuHandler.toggleSetting(_:)), moveMouse),
-			("Launch on Login", #selector(MenuHandler.toggleLaunch(_:)), launchOnBoot)
+			("Launch on Login", #selector(MenuHandler.toggleLaunch(_:)), launchOnBoot),
+			("Log", #selector(MenuHandler.toggleLaunch(_:)), writeLog)
 		]
 	}
 	
@@ -141,13 +143,13 @@ enum Settings {
 			handler: { (event: NSEvent) in
 				switch event.type {
 				case .leftMouseDown:
-					print("Left mouse click detected.")
+					log("Left mouse click detected.")
 					if Shortcuts.navigationActive {
 						Thread.sleep(forTimeInterval: 0.5)
 						Navigation.startOCR()
 					}
 				case .rightMouseDown:
-					print("Right mouse click detected.")
+					log("Right mouse click detected.")
 					if Shortcuts.navigationActive {
 						Thread.sleep(forTimeInterval: 0.5)
 						Navigation.startOCR()
@@ -254,6 +256,8 @@ class MenuHandler: NSObject {
 			Settings.moveMouse = sender.state == .on
 		case "Launch on Login":
 			Settings.launchOnBoot = sender.state == .on
+		case "Log":
+			Settings.writeLog = sender.state == .on
 		default: break
 		}
 		

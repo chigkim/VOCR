@@ -30,6 +30,7 @@
 		EA9AF47F2B54D03D001B1BBE /* Engines.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AF47E2B54D03D001B1BBE /* Engines.swift */; };
 		EA9EB89E28EA5B0A00FE6210 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9EB89D28EA5B0A00FE6210 /* Utils.swift */; };
 		EAAD42AE298596FB00BE5D98 /* com.chikim.VOCR.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAAD42AD298596FB00BE5D98 /* com.chikim.VOCR.plist */; };
+		EAD0E5A92B57942F004E69AD /* FileLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD0E5A82B57942F004E69AD /* FileLogger.swift */; };
 		EAD9AAE62731075600473054 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = EAD9AAE52731075600473054 /* HotKey */; };
 		EAD9AAE927310A3900473054 /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = EAD9AAE827310A3900473054 /* SoundpipeAudioKit */; };
 		EAD9CFD22355E11600E7F594 /* say.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EAD9CFD12355E11600E7F594 /* say.scpt */; };
@@ -62,6 +63,7 @@
 		EA9AF47E2B54D03D001B1BBE /* Engines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Engines.swift; sourceTree = "<group>"; };
 		EA9EB89D28EA5B0A00FE6210 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EAAD42AD298596FB00BE5D98 /* com.chikim.VOCR.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = com.chikim.VOCR.plist; sourceTree = "<group>"; };
+		EAD0E5A82B57942F004E69AD /* FileLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLogger.swift; sourceTree = "<group>"; };
 		EAD9CFD12355E11600E7F594 /* say.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = say.scpt; sourceTree = "<group>"; };
 		EADE59B1232EB09A00E2F65A /* VOCR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VOCR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EADE59B4232EB09A00E2F65A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -128,8 +130,6 @@
 		EADE59B3232EB09A00E2F65A /* VOCR */ = {
 			isa = PBXGroup;
 			children = (
-				EA9AF47E2B54D03D001B1BBE /* Engines.swift */,
-				EA9AF47C2B54BD3A001B1BBE /* Ollama.swift */,
 				EADE59B6232EB09A00E2F65A /* AboutViewController.swift */,
 				EA2DA1AB232EB1D600D31031 /* Accessibility.swift */,
 				EADE59B4232EB09A00E2F65A /* AppDelegate.swift */,
@@ -137,6 +137,8 @@
 				EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */,
 				EA688D442355BDC500F722C7 /* Bundle Extension.swift */,
 				EA8AD6402352B4A000D26871 /* Double Extension.swift */,
+				EA9AF47E2B54D03D001B1BBE /* Engines.swift */,
+				EAD0E5A82B57942F004E69AD /* FileLogger.swift */,
 				EA3F43702B476759005453C2 /* gpt.swift */,
 				EADE59BD232EB09A00E2F65A /* Info.plist */,
 				EA14F2DF2B50B30300011F82 /* LlamaCpp.swift */,
@@ -144,6 +146,7 @@
 				EA5C7ACB2351BB6D00D84042 /* Navigation.swift */,
 				EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */,
 				EA3F43722B4857F9005453C2 /* Observation.swift */,
+				EA9AF47C2B54BD3A001B1BBE /* Ollama.swift */,
 				EA1F642B2352503D0089C967 /* Player.swift */,
 				EA60A3B02B4D7FF0001F6EEA /* RealTime.swift */,
 				EAF9C3C72354A66200D4D77C /* Settings.swift */,
@@ -249,6 +252,7 @@
 				EADE59B5232EB09A00E2F65A /* AppDelegate.swift in Sources */,
 				EA688D452355BDC500F722C7 /* Bundle Extension.swift in Sources */,
 				EA3F43712B476759005453C2 /* gpt.swift in Sources */,
+				EAD0E5A92B57942F004E69AD /* FileLogger.swift in Sources */,
 				EA2DA1AF232EB22300D31031 /* NSRunningApplication Extension.swift in Sources */,
 				EA3F43732B4857F9005453C2 /* Observation.swift in Sources */,
 				EA1158CE2B51EBC000B2C716 /* Shortcuts.swift in Sources */,

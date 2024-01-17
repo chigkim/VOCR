@@ -62,7 +62,7 @@ class ShortcutsWindowController: NSWindowController, NSTableViewDelegate, NSTabl
 	
 	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
 		let shortcut = Shortcuts.shortcuts[row]
-//		debugPrint(tableColumn!.title, row)
+
 		switch tableColumn?.identifier {
 		case NSUserInterfaceItemIdentifier("NameColumn"):
 			let cellView = NSTableCellView(frame: NSRect(x: 0, y: 0, width: tableColumn!.width, height: tableView.rowHeight))
@@ -73,7 +73,7 @@ class ShortcutsWindowController: NSWindowController, NSTableViewDelegate, NSTabl
 			textField.drawsBackground = false
 			textField.autoresizingMask = [.width, .height] // Resize with the cell view
 			cellView.addSubview(textField)
-//			debugPrint("Cell Name:", shortcut.name)
+
 			return cellView
 
 		case NSUserInterfaceItemIdentifier("HotkeyColumn"):
@@ -84,7 +84,7 @@ class ShortcutsWindowController: NSWindowController, NSTableViewDelegate, NSTabl
 			button.target = self
 			button.action = #selector(reassignShortcut(_:))
 			cellView.addSubview(button)
-//			debugPrint("Cell Hotkey", shortcut.keyName)
+
 			return cellView
 
 		default:

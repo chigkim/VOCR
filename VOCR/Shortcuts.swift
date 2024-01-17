@@ -79,7 +79,7 @@ loadDefaults()
 			   let decodedShortcuts = try? JSONDecoder().decode([Shortcut].self, from: data) {
 			shortcuts = decodedShortcuts
 			for shortcut in shortcuts {
-				debugPrint(shortcut.name, shortcut.keyName, shortcut.modifiers, shortcut.key)
+				log("\(shortcut.name), \(shortcut.keyName), \(shortcut.modifiers), \(shortcut.key)")
 				if !allShortcuts.contains(shortcut.name) {
 					Accessibility.speakWithSynthesizer("Resetting shortcuts.")
 					loadDefaults()
