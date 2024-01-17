@@ -5,14 +5,14 @@ import UserNotifications
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUUpdaterDelegate, SPUStandardUserDriverDelegate, UNUserNotificationCenterDelegate {
-
+	
 	let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 	var updaterController: SPUStandardUpdaterController?
 	let UPDATE_NOTIFICATION_IDENTIFIER = "VOCRUpdateCheck"
 	var supportsGentleScheduledUpdateReminders: Bool {
 		return true
 	}
-
+	
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: self, userDriverDelegate: self)
 		updaterController?.updater.automaticallyChecksForUpdates = true
@@ -26,7 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUUpdaterDe
 		}
 		NSApp.setActivationPolicy(.accessory)
 		UNUserNotificationCenter.current().delegate = self
-
+		
 		let fileManager = FileManager.default
 		let home = fileManager.homeDirectoryForCurrentUser
 		let launchFolder = home.appendingPathComponent("Library/LaunchAgents")
@@ -42,8 +42,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUUpdaterDe
 			Settings.launchOnBoot = true
 			Settings.save()
 		}
-
-hide()
+		
+		hide()
+		NSSound(contentsOfFile: "/System/Library/Sounds/Blow.aiff", byReference: true)?.play()
+		Accessibility.speak("VOCR Ready!")
 	}
 	
 	@objc func click(_ sender: Any?) {
@@ -55,7 +57,7 @@ hide()
 		menu.delegate = self
 		statusItem.menu = menu
 	}
-
+	
 	func applicationWillTerminate(_ notification: Notification) {
 		Settings.removeMouseMonitor()
 	}
@@ -66,7 +68,7 @@ hide()
 			var rect = CGRect(origin: .zero, size: image.size)
 			if let cgImage = image.cgImage(forProposedRect: &rect, context: nil, hints: nil) {
 				ask(image:cgImage)
-
+				
 				return true  // Indicate success
 			} else {
 				return false
@@ -98,16 +100,16 @@ hide()
 		NSApp.dockTile.badgeLabel = ""
 		UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [UPDATE_NOTIFICATION_IDENTIFIER])
 	}
-
+	
 	func standardUserDriverWillFinishUpdateSession() {
 		NSApp.setActivationPolicy(.accessory)
 	}
-
+	
 	func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
 		if response.notification.request.identifier == UPDATE_NOTIFICATION_IDENTIFIER && response.actionIdentifier == UNNotificationDefaultActionIdentifier {
 			updaterController?.checkForUpdates(nil)
 		}
 		completionHandler()
 	}
-
+	
 }
