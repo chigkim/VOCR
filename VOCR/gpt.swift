@@ -70,14 +70,13 @@ enum GPT:EngineAsking {
 		request.setValue("Bearer \(Settings.GPTAPIKEY)", forHTTPHeaderField: "Authorization")
 		request.httpBody = jsonData
 		performRequest(&request, name:"GPT") { data in
-			//			debugPrint("GPT-4V: \(String(data: data, encoding: .utf8)!)")
+			log("GPT-4V: \(String(data: data, encoding: .utf8)!)")
 			do {
 				let response = try JSONDecoder().decode(Response.self, from: data)
 				let prompt_tokens = response.usage.prompt_tokens
 				let completion_tokens = response.usage.completion_tokens
 				let total_tokens = response.usage.total_tokens
 				let cost = Float(prompt_tokens)*(1.0/1000.0)+Float(completion_tokens)*(3.0/1000.0)
-				debugPrint("Prompt: \(prompt_tokens), Completion: \(completion_tokens), Cost: \(cost)")
 				if let firstChoice = response.choices.first {
 					var description = firstChoice.message.content
 					description += "\nPrompt tokens: \(prompt_tokens)"
@@ -88,7 +87,7 @@ enum GPT:EngineAsking {
 					completion(description)
 				}
 			} catch {
-				print("Error decoding JSON: \(error)")
+				Accessibility.speakWithSynthesizer("Error decoding JSON: \(error)")
 				completion("Error: Could not parse JSON.")
 			}
 		}

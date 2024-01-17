@@ -39,14 +39,14 @@ enum LlamaCpp:EngineAsking {
 		var request = URLRequest(url: url)
 		request.httpBody = jsonData
 		performRequest(&request, name:"Llama.Cpp") { data in
-//			debugPrint("Llama: \(String(data: data, encoding: .utf8)!)")
+			log("Llama: \(String(data: data, encoding: .utf8)!)")
 			do {
 				let response = try JSONDecoder().decode(Response.self, from: data)
 				let description = response.content
 				copyToClipboard(description)
 				completion(description)
 			} catch {
-				print("Error decoding JSON: \(error)")
+				Accessibility.speakWithSynthesizer("Error decoding JSON: \(error)")
 				completion("Error: Could not parse JSON.")
 			}
 		}

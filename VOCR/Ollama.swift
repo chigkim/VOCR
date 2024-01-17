@@ -25,7 +25,7 @@ static let ollamaAPIURL = "http://127.0.0.1:11434/api/generate"
 		let url = "http://127.0.0.1:11434/api/tags"
 		var request = URLRequest(url: URL(string: url)!)
 		performRequest(&request, method:"GET") { data in
-		do {
+			do {
 				let response = try JSONDecoder().decode(ModelsContainer.self, from: data)
 				var models = response.models
 			models = models.filter { $0.details.families.contains("clip") }
@@ -46,7 +46,7 @@ static let ollamaAPIURL = "http://127.0.0.1:11434/api/generate"
 				model = models[0].name
 			}
 			} catch {
-				print("Error decoding JSON: \(error)")
+				Accessibility.speakWithSynthesizer("Error decoding JSON: \(error)")
 			}
 		}
 	}
@@ -80,7 +80,7 @@ static let ollamaAPIURL = "http://127.0.0.1:11434/api/generate"
 				copyToClipboard(description)
 				completion(description)
 			} catch {
-				print("Error decoding JSON: \(error)")
+				Accessibility.speakWithSynthesizer("Error decoding JSON: \(error)")
 				completion("Error: Could not parse JSON.")
 			}
 		}

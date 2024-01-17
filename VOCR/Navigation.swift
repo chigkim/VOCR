@@ -84,9 +84,9 @@ enum Navigation {
 			window = windows![r]
 		}
 		
-		print("Window information")
 		// report(UIElement(window))
 		windowName = window.value(of: "AXTitle")
+		log("Window information: \(appName) - \(windowName)")
 		var position:CFTypeRef?
 		var size:CFTypeRef?
 		AXUIElementCopyAttributeValue(window, "AXPosition" as CFString, &position)
@@ -98,10 +98,10 @@ enum Navigation {
 			AXValueGetValue(position as! AXValue, AXValueType.cgPoint, &windowPosition)
 			AXValueGetValue(size as! AXValue, AXValueType.cgSize, &windowSize)
 let rect =  CGRect(origin: windowPosition, size: windowSize)
-			print(rect)
+			log(rect)
 			return rect
 		} else {
-			print("Failed to get position or size")
+			log("Failed to get position or size")
 		}
 		return nil
 	}
@@ -134,7 +134,7 @@ return nil
 	
 	static func prepare() {
 		if !Accessibility.isTrusted(ask:true) {
-			print("Accessibility not enabled.")
+			log("Accessibility not enabled.")
 			return
 		}
 		windowName = "Unknown Window"
@@ -183,7 +183,7 @@ cgImage  = image
 	static func explore() {
 		prepare()
 //		guard let  image = cgImage, let image = resizeCGImage(image, toWidth: Int(Navigation.cgSize.width), toHeight:Int(Navigation.cgSize.height)) else { return }
-//		   debugPrint("Resized:", image.width, image.height)
+//		   log("Resized:", image.width, image.height)
 		guard let image = cgImage else { return }
 		
 		let system = "You are a helpful assistant. Your response should be in JSON format."
@@ -219,11 +219,11 @@ cgImage  = image
 		do {
 			let elements = try JSONDecoder().decode([GPTObservation].self, from: jsonData)
 			for element in elements {
-				print("Label: \(element.label), UID: \(element.uid), Bounding Box: \(element.boundingBox)")
+				log("Label: \(element.label), UID: \(element.uid), Bounding Box: \(element.boundingBox)")
 			}
 			return elements
 		} catch {
-			print("Error decoding JSON: \(error)")
+			log("Error decoding JSON: \(error)")
 		}
 		return nil
 	}
@@ -233,7 +233,7 @@ cgImage  = image
 		var line:[Observation] = []
 		var y = sorted[0].boundingBox.midY
 		for r in sorted {
-			// logger.debug("\(r.value): \(r.boundingBox.debugDescription)")
+//			 log("\(r.value): \(r.boundingBox.debugDescription)")
 			if abs(r.boundingBox.midY-y)>0.01 {
 				displayResults.append(line)
 				line = []
@@ -246,18 +246,18 @@ cgImage  = image
 	
 	static func convert2coordinates(_ rect:CGRect) -> CGPoint {
 		if let image =  cgImage {
-			debugPrint("Box:", VNImageRectForNormalizedRect(rect, image.width, image.height))
+			log("Box: \(VNImageRectForNormalizedRect(rect, image.width, image.height).debugDescription)")
 		}
 		let box = CGRect(x:rect.minX, y:1-rect.maxY, width:rect.width, height:rect.height)
 		var center = CGPoint(x:box.midX, y:box.midY)
-		debugPrint(center)
+		log("\(center.debugDescription)")
 		if Settings.positionalAudio {
 			let frequency = 100+1000*(1-Float(center.y))
 			let pan = Float(Double(center.x).normalize(from: 0...1, into: -1...1))
 			Player.shared.play(frequency, pan)
 		}
 		center = VNImagePointForNormalizedPoint(center, Int(cgSize.width), Int(cgSize.height))
-		debugPrint(center)
+		log("\(center.debugDescription)")
 		center.x += cgPosition.x
 		center.y += cgPosition.y
 		return center
@@ -303,7 +303,7 @@ cgImage  = image
 				rect = CGRect(x:rect.minX, y:1-rect.maxY, width:rect.width, height:rect.height)
 				rect = VNImageRectForNormalizedRect(rect, image.width, image.height)
 
-				debugPrint(rect)
+				log("\(rect.debugDescription)")
 				if let croppedImage = image.cropping(to: rect) {
 					ask(image: croppedImage)
 					//					try! saveImage(croppedImage)
@@ -320,7 +320,7 @@ cgImage  = image
 		w += 1
 		c = -1
 		correctLimit()
-		print("\(l), \(w)")
+		log("\(l), \(w)")
 		if Settings.moveMouse {
 			CGWarpMouseCursorPosition(convert2coordinates(displayResults[l][w].boundingBox))
 		}
@@ -335,7 +335,7 @@ cgImage  = image
 		w -= 1
 		c = -1
 		correctLimit()
-		print("\(l), \(w)")
+		log("\(l), \(w)")
 		if Settings.moveMouse {
 			CGWarpMouseCursorPosition(convert2coordinates(displayResults[l][w].boundingBox))
 		}
@@ -351,7 +351,7 @@ cgImage  = image
 		w = 0
 		c = -1
 		correctLimit()
-		print("\(l), \(w)")
+		log("\(l), \(w)")
 		if Settings.moveMouse {
 			CGWarpMouseCursorPosition(convert2coordinates(displayResults[l][w].boundingBox))
 		}
@@ -370,7 +370,7 @@ cgImage  = image
 		w = 0
 		c = -1
 		correctLimit()
-		print("\(l), \(w)")
+		log("\(l), \(w)")
 		if Settings.moveMouse {
 			CGWarpMouseCursorPosition(convert2coordinates(displayResults[l][w].boundingBox))
 		}

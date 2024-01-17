@@ -6,17 +6,18 @@
 //  Copyright © 2022 Chi Kim. All rights reserved.
 //
 
-import Foundation
+
 import os
 import Vision
 import AVFoundation
 import Cocoa
 import AXSwift
 
-let logger = Logger()
-import Cocoa
-
+let logger = FileLogger.shared
 var task:URLSessionDataTask?
+func log<T>(_ object: T, _ level:OSLogType = .info) {
+	logger.log("\(String(describing: object))")
+}
 
 func performRequest(_ request:inout URLRequest, method:String="POST", name:String?=nil, completion: @escaping (Data) -> Void) {
 		request.httpMethod = method
@@ -45,7 +46,7 @@ func performRequest(_ request:inout URLRequest, method:String="POST", name:Strin
 			Accessibility.speakWithSynthesizer("No data received from server.")
 			return
 		}
-//		debugPrint(String(data: data, encoding: .utf8))
+		log(String(data: data, encoding: .utf8))
 		completion(data)
 	}
 	if let name = name {
@@ -178,33 +179,33 @@ func drawBoxes(_ cgImageInput : CGImage, boxes:[Observation], color:NSColor) -> 
 				ctx.setFillColor(color.cgColor)
 				ctx.setStrokeColor(color.cgColor)
 				ctx.setLineWidth(3.0)
-				debugPrint("Drawing boxes:")
+				log("Drawing boxes:")
 				let rects = boxes.map { VNImageRectForNormalizedRect($0.boundingBox, cgImageInput.width, cgImageInput.height) }
 				for box in rects {
-					debugPrint(box)
+					log("\(box.debugDescription)")
 					ctx.stroke(box, width: 3.0)
 				}
 				cgImageOutput = (ctx.makeImage())
 				if cgImageOutput == nil {
-					print("Failed to make image from CGContext.")
+					log("Failed to make image from CGContext.")
 				}
 			} else {
-				print("Could not create context. Try different image parameters.")
+				log("Could not create context. Try different image parameters.")
 			}
 			bytes.deallocate()
 		} else {
-			print("Could not get dataProvider.data")
+			log("Could not get dataProvider.data")
 		}
 	} else {
-		print ("Could not get cgImage.dataProvider")
+		log ("Could not get cgImage.dataProvider")
 	}
 	return cgImageOutput
 }
 
 func report(_ element:UIElement?) {
-	print("\(element!.label!)")
+	log("\(element!.label!)")
 	for atr in try! element!.attributesAsStrings() {
-		print(atr)
+		log(atr)
 		do {
 			if let value:AnyObject = try element!.attribute(atr) {
 				var valueStr = ""
@@ -216,10 +217,10 @@ func report(_ element:UIElement?) {
 					valueStr = "\(value)"
 				}
 				let text = "\(atr): \(valueStr)"
-				print(text)
+				log(text)
 			}
 		} catch let error {
-			print(error)
+			log("\(error)")
 		}
 	}
 }
@@ -243,7 +244,7 @@ func TakeScreensShots(rect:CGRect) -> CGImage? {
 	var displayCount: UInt32 = 0
 	var result = CGGetActiveDisplayList(0, nil, &displayCount)
 	if (result != CGError.success) {
-		print("error: \(result)")
+		log("error: \(result)")
 		return nil
 	}
 	let allocated = Int(displayCount)
@@ -251,11 +252,11 @@ func TakeScreensShots(rect:CGRect) -> CGImage? {
 	result = CGGetActiveDisplayList(displayCount, activeDisplays, &displayCount)
 	
 	if (result != CGError.success) {
-		print("error: \(result)")
+		log("error: \(result)")
 		return nil
 	}
 	if let cgImage = CGDisplayCreateImage(activeDisplays[0], rect:rect) {
-		debugPrint("Original:", cgImage.width, cgImage.height)
+		log("Original: \(cgImage.width), \(cgImage.height)")
 		Navigation.cgImage = cgImage
 		return cgImage
 	}
@@ -309,14 +310,14 @@ func performOCR(cgImage:CGImage) -> [Observation] {
 			}
 		}
 		
-		print("Box Count:", boxes.count)
-		print("Text Count:", texts.count)
-		print("boxesNoText Count:", boxesNoText.count)
-		print("boxesText count:", boxesText.count)
+		log("Box Count: \(boxes.count)")
+		log("Text Count: \(texts.count)")
+		log("boxesNoText Count: \(boxesNoText.count)")
+		log("boxesText count: \(boxesText.count)")
 		/*
 		 var pointBoxes: [CGRect] = []
 		 for point in texts {
-		 // print("point: ", point)
+		 // log("point: ", point)
 		 pointBoxes.append(CGRect(x: point.boundingBox.minX-0.1, y: point.boundingBox.minY-0.1, width: 0.2, height: 0.2))
 		 }
 		 */
@@ -341,7 +342,7 @@ func classify(cgImage:CGImage) -> String {
 		.filter { $0.hasMinimumRecall(0.1, forPrecision: 0.9) }
 		.reduce(into: [String: VNConfidence]()) { dict, observation in dict[observation.identifier] = observation.confidence }
 	let classes = categories.sorted(by: {($0.value>$1.value)})
-	print("Classes: \(classes)")
+	log("Classes: \(classes)")
 	var count = classes.count
 	if count>0 {
 		if count>5 {
@@ -361,15 +362,15 @@ func classify(cgImage:CGImage) -> String {
 func runAppleScript(file:String) -> String? {
 	let bundle = Bundle.main
 	let script = bundle.url(forResource: file, withExtension: "scpt")
-	debugPrint(script!)
+	log("\(script!)")
 	var error:NSDictionary?
 	if let scriptObject = NSAppleScript(contentsOf: script!, error: &error) {
 		var outputError:NSDictionary?
 		if let output = scriptObject.executeAndReturnError(&outputError).stringValue {
-			debugPrint(output)
+			log("\(output)")
 			return output
 		} else {
-			debugPrint("Output Error: \(String(describing: outputError))")
+			log("Output Error: \(String(describing: outputError))")
 		}
 	}
 	return nil

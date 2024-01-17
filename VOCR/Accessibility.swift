@@ -27,7 +27,7 @@ enum Accessibility {
 	}
 
 	static func speakWithSynthesizer(_ message:String) {
-		debugPrint("Speak with synthesizer: \(message)")
+		log("Speak with synthesizer: \(message)")
 		DispatchQueue.global().async {
 		speech.startSpeaking(message)
 		}
@@ -45,12 +45,12 @@ enum Accessibility {
 		if let scriptObject = NSAppleScript(contentsOf: url!, error: &error) {
 			var outputError:NSDictionary?
 			if let output = scriptObject.executeAppleEvent(event, error: &outputError).stringValue {
-				print("Speak: \(output)")
+				log("Speak: \(output)")
 			} else {
-				debugPrint("Output Error: \(String(describing: outputError))")
+				log("Output Error: \(String(describing: outputError))")
 			}
 		} else {
-			debugPrint(error!)
+			log("\(error!)")
 		}
 	}
 
