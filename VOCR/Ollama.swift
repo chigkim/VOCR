@@ -10,7 +10,7 @@ enum Ollama:EngineAsking {
 	struct ModelsContainer: Decodable {
 		struct Model: Decodable {
 			struct ModelDetails: Codable {
-				let families: [String]
+				let families: [String]?
 			}
 				let details: ModelDetails
 			let name:String
@@ -28,7 +28,13 @@ static let ollamaAPIURL = "http://127.0.0.1:11434/api/generate"
 			do {
 				let response = try JSONDecoder().decode(ModelsContainer.self, from: data)
 				var models = response.models
-			models = models.filter { $0.details.families.contains("clip") }
+			models = models.filter {
+				if let families = $0.details.families, families.contains("clip") {
+					return true
+				} else {
+					return false
+				}
+			}
 			if models.count > 1 {
 				DispatchQueue.main.async {
 					let alert = NSAlert()
