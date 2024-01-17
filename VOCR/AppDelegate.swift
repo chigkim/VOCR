@@ -1,14 +1,20 @@
 import Cocoa
 import Sparkle
+import UserNotifications
+
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUUpdaterDelegate, SPUStandardUserDriverDelegate, UNUserNotificationCenterDelegate {
 
 	let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 	var updaterController: SPUStandardUpdaterController?
+	let UPDATE_NOTIFICATION_IDENTIFIER = "VOCRUpdateCheck"
+	var supportsGentleScheduledUpdateReminders: Bool {
+		return true
+	}
 
 	func applicationDidFinishLaunching(_ notification: Notification) {
-		updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
+		updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: self, userDriverDelegate: self)
 		updaterController?.updater.automaticallyChecksForUpdates = true
 		updaterController?.updater.updateCheckInterval = 3600  // Check every hour
 		updaterController?.updater.automaticallyDownloadsUpdates = true
@@ -18,6 +24,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 			button.title = "VOCR"
 			button.action = #selector(click(_:))
 		}
+		NSApp.setActivationPolicy(.accessory)
+		UNUserNotificationCenter.current().delegate = self
 
 		let fileManager = FileManager.default
 		let home = fileManager.homeDirectoryForCurrentUser
@@ -67,5 +75,39 @@ hide()
 		return false
 	}
 	
+	func updater(_ updater: SPUUpdater, willScheduleUpdateCheckAfterDelay delay: TimeInterval) {
+		UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { granted, error in
+			// Examine granted outcome and error if desired...
+		}
+	}
+	
+	func standardUserDriverWillHandleShowingUpdate(_ handleShowingUpdate: Bool, forUpdate update: SUAppcastItem, state: SPUUserUpdateState) {
+		NSApp.setActivationPolicy(.regular)
+		if !state.userInitiated {
+			NSApp.dockTile.badgeLabel = "1"
+			do {
+				let content = UNMutableNotificationContent()
+				content.title = "A new update is available"
+				content.body = "Version \(update.displayVersionString) is now available"
+				let request = UNNotificationRequest(identifier: UPDATE_NOTIFICATION_IDENTIFIER, content: content, trigger: nil)
+				UNUserNotificationCenter.current().add(request)
+			}
+		}
+	}
+	func standardUserDriverDidReceiveUserAttention(forUpdate update: SUAppcastItem) {
+		NSApp.dockTile.badgeLabel = ""
+		UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [UPDATE_NOTIFICATION_IDENTIFIER])
+	}
+
+	func standardUserDriverWillFinishUpdateSession() {
+		NSApp.setActivationPolicy(.accessory)
+	}
+
+	func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+		if response.notification.request.identifier == UPDATE_NOTIFICATION_IDENTIFIER && response.actionIdentifier == UNNotificationDefaultActionIdentifier {
+			updaterController?.checkForUpdates(nil)
+		}
+		completionHandler()
+	}
 
 }

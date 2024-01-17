@@ -14,7 +14,7 @@ def getVersion(file):
 			return version_string_element.text
 gen = "~/Library/Developer/Xcode/DerivedData/VOCR-golvfhxedvwnjecsjhnzcnbmmchc/SourcePackages/artifacts/sparkle/bin/generate_appcast"
 archives = "archives"
-tag = getVersion(f"{archives}/{app}.app/Contents/Info.plist")
+tag = "v"+getVersion(f"{archives}/{app}.app/Contents/Info.plist")
 print(tag)
 zip = f"{archives}/{app}_{tag}.zip"
 cmd = f"ditto -c -k --sequesterRsrc --keepParent {archives}/{app}.app {zip}"
