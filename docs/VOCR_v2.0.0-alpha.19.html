@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Changelog</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Changelog</h1>
+</header>
+<h2 id="changelog">Changelog</h2>
+<ul>
+<li>Fixed error when encountering Ollama model with no families.</li>
+<li>Realtime OCR shortcut toggles the feature.</li>
+<li>Autoupdater</li>
+<li>Implemented logger</li>
+<li>Ask which model for Ollama to use if multiple clip models are
+found.</li>
+<li>You can also select a model for Ollama by just click Ollama in the
+model menu.</li>
+<li>Ask for a prompt after taking a screenshot.</li>
+<li>New prompt for explore</li>
+<li>Explore no longer generates images meant for debugging.</li>
+<li>Presents the same menu when launched by shortcut or clicking
+statusbar.</li>
+<li>Reports more errors when request fails.</li>
+<li>Cancels previous request when making new request</li>
+<li><a href="https://ollama.ai/">Ollama</a> support</li>
+<li>Use original screenshot resolution instead of window resolution
+point except explore mode.</li>
+<li>New Workflow: Use Command+Control+Shift+W/V to set the target to a
+window/VOCursor and perform the OCR scan. After that, the features such
+as real-time OCR, explore, and ask will use the target.</li>
+<li>Reset shortcut if there are different features after an update</li>
+<li>Bug fix: global shortcuts sometimes not active</li>
+<li>Customize shortcuts</li>
+<li>Token usage at the end of description</li>
+<li>Support system prompt for GPT</li>
+<li>Setting to toggle use last prompt without asking</li>
+<li>Save last screenshot</li>
+<li>Dismiss menu with command+Z instead of esc if realtime or navigation
+is active.</li>
+<li>You can just press return to ask GPT without editing.</li>
+<li>Changed diff algorithm for less verbose realtime OCR.</li>
+<li>Realtime OCR remains active at its initial location, allowing you to
+move the VOCursor during the process. To perform realtime OCR in a
+different location, stop the OCR, move the VOCursor, then restart
+realtime OCR.</li>
+<li>Realtime OCR of VOCursor: Command+Control+Shift+r</li>
+<li>Able to toggle obbject detection from the setings.</li>
+<li>OCR Window: Command+Control+Shift+w</li>
+<li>OCR VOCursor: Command+Control+Shift+v</li>
+<li>Ask GPT about VOCursor: Command+Control+Shift+a</li>
+<li>Settings: Command+Control+Shift+S</li>
+<li>Faster screenshot of VOCursor</li>
+<li>Open an image file in VOCR from finder to ask GPT</li>
+<li>Gpt response gets copied to the clipboard, so you can paste
+somewhere if you miss it.</li>
+<li>Object Detection through rectangles: Any boxes without text such as
+icons.</li>
+<li>Moved save OCR result to the menu.</li>
+<li>Moved target window to settings menu.</li>
+<li>auto Scan: Thanks <a
+href="https://github.com/chigkim/VOCR/issues?q=is%3Apr+author%3Avick08"><span
+class="citation" data-cites="vick08">@vick08</span></a></li>
+<li>Readme Improvement: Thanks <a
+href="https://github.com/chigkim/VOCR/issues?q=is%3Apr+author%3Assawczyn"><span
+class="citation" data-cites="ssawczyn">@ssawczyn</span></a></li>
+</ul>
+<p>The GPT features utilize GPT-4V, and they require your own <a
+href="https://platform.openai.com/account/api-keys">OpenAI API
+key.</a></p>
+<p>Explore feature only works with GPT, and location information from
+the model is extremely unreliable and inaccurate.</p>
+<h2 id="instruction-for-ollama">Instruction for Ollama</h2>
+<ul>
+<li>Download <a href="https://ollama.ai/">Ollama</a> and install.</li>
+<li>Open terminal, and type “ollama run llava” without the quotes.</li>
+<li>Wait until you get the prompt &gt;&gt;&gt; send a message</li>
+<li>Then type /bye and press return</li>
+<li>Quit terminal</li>
+<li>Go to VOCR menu &gt; Settings &gt; Models and select Ollama</li>
+</ul>
+<h2 id="experimental">Experimental</h2>
+<p>These features may not make into the public release.</p>
+<ul>
+<li>Identify object when navigation is active: Command+Control+I</li>
+<li>Explore window with GPT: Command+Control+Shift+e</li>
+<li>an option to switch to using a local model such as <a
+href="https://github.com/haotian-liu/LLaVA">Llava</a> using <a
+href="https://github.com/ggerganov/llama.cpp">llama.cpp</a> instead of
+GPT.</li>
+</ul>
+<p>Warning: It’s very complex to set your own Llama.cpp server.</p>
+</body>
+</html>
