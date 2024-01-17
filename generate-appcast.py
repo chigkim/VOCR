@@ -1,11 +1,21 @@
-tag = "v2.0.0-alpha.18"
 app = "VOCR"
 
 import os
 import codecs
+import xml.etree.ElementTree as ET
 
+def getVersion(file):
+	plist_xml = open(file).read()
+	root = ET.fromstring(plist_xml)
+	dict_element = root.find('dict')
+	for i, child in enumerate(dict_element):
+		if child.tag == 'key' and child.text == 'CFBundleShortVersionString':
+			version_string_element = dict_element[i+1]
+			return version_string_element.text
 gen = "~/Library/Developer/Xcode/DerivedData/VOCR-golvfhxedvwnjecsjhnzcnbmmchc/SourcePackages/artifacts/sparkle/bin/generate_appcast"
 archives = "archives"
+tag = getVersion(f"{archives}/{app}.app/Contents/Info.plist")
+print(tag)
 zip = f"{archives}/{app}_{tag}.zip"
 cmd = f"ditto -c -k --sequesterRsrc --keepParent {archives}/{app}.app {zip}"
 os.system(cmd)
