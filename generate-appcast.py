@@ -19,7 +19,7 @@ print(tag)
 zip = f"{archives}/{app}_{tag}.zip"
 cmd = f"ditto -c -k --sequesterRsrc --keepParent {archives}/{app}.app {zip}"
 os.system(cmd)
-
+os.remove(f"{archives}/{app}.app")
 release = f"https://github.com/chigkim/VOCR/releases/download/{tag}/"
 print(release)
 notes = f"{app}_{tag}.html"
@@ -31,5 +31,7 @@ xml = xml.replace('url="https://chigkim.github.io/VOCR/', 'url="'+release)
 file = codecs.open("docs/appcast.xml", "w", "utf-8")
 file.write(xml)
 file.close()
+for file in os.listdir("docs"):
+	if ".html" in file: os.remove(file)
 os.rename(f"{archives}/{notes}", f"docs/{notes}")
 os.remove(f"{archives}/appcast.xml")
