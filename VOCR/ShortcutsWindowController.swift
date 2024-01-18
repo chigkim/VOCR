@@ -10,7 +10,7 @@ import Foundation
 import Cocoa
 import HotKey
 
-class ShortcutsWindowController: NSWindowController, NSTableViewDelegate, NSTableViewDataSource {
+class ShortcutsWindowController: NSWindowController, NSWindowDelegate, NSTableViewDelegate, NSTableViewDataSource {
 
 	static let shared = ShortcutsWindowController()
 	var tableView: NSTableView!
@@ -34,8 +34,13 @@ class ShortcutsWindowController: NSWindowController, NSTableViewDelegate, NSTabl
 							  backing: .buffered, defer: false)
 		self.window = window
 		self.window?.title = "Customize Shortcuts"
+		self.window?.delegate = self
 	}
-	
+
+	func windowWillClose(_ notification: Notification) {
+		NSApplication.shared.hide(nil)
+	}
+
 	private func setupTableView() {
 		tableView = NSTableView(frame: self.window!.contentView!.bounds)
 		tableView.delegate = self

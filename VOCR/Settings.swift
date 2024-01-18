@@ -177,6 +177,7 @@ enum Settings {
 		inputTextField.stringValue = Settings.GPTAPIKEY
 		alert.accessoryView = inputTextField
 		let response = alert.runModal()
+		hide()
 		if response == .alertFirstButtonReturn { // OK button
 			let apiKey = inputTextField.stringValue
 			Settings.GPTAPIKEY = apiKey
@@ -321,6 +322,7 @@ class MenuHandler: NSObject {
 		}
 		
 		let modalResult = alert.runModal()
+		hide()
 		let n = modalResult.rawValue-1000
 		Player.shared.engine.stop()
 		try! Player.shared.engine.setDevice(AudioEngine.outputDevices[n])
@@ -367,8 +369,6 @@ class MenuHandler: NSObject {
 		ShortcutsWindowController.shared.showWindow(nil)
 		NSApp.activate(ignoringOtherApps: true)
 	}
-	
-	
 	
 	@objc func addShortcut(_ sender: NSMenuItem) {
 		let alert = NSAlert()
