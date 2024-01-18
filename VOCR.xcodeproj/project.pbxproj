@@ -30,6 +30,7 @@
 		EA9AF47F2B54D03D001B1BBE /* Engines.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9AF47E2B54D03D001B1BBE /* Engines.swift */; };
 		EA9EB89E28EA5B0A00FE6210 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9EB89D28EA5B0A00FE6210 /* Utils.swift */; };
 		EAAD42AE298596FB00BE5D98 /* com.chikim.VOCR.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAAD42AD298596FB00BE5D98 /* com.chikim.VOCR.plist */; };
+		EAC1C94B2B59D96200FBE97D /* AutoUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC1C94A2B59D96200FBE97D /* AutoUpdateManager.swift */; };
 		EAD0E5A92B57942F004E69AD /* FileLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD0E5A82B57942F004E69AD /* FileLogger.swift */; };
 		EAD9AAE62731075600473054 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = EAD9AAE52731075600473054 /* HotKey */; };
 		EAD9AAE927310A3900473054 /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = EAD9AAE827310A3900473054 /* SoundpipeAudioKit */; };
@@ -63,6 +64,7 @@
 		EA9AF47E2B54D03D001B1BBE /* Engines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Engines.swift; sourceTree = "<group>"; };
 		EA9EB89D28EA5B0A00FE6210 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EAAD42AD298596FB00BE5D98 /* com.chikim.VOCR.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = com.chikim.VOCR.plist; sourceTree = "<group>"; };
+		EAC1C94A2B59D96200FBE97D /* AutoUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoUpdateManager.swift; sourceTree = "<group>"; };
 		EAD0E5A82B57942F004E69AD /* FileLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLogger.swift; sourceTree = "<group>"; };
 		EAD9CFD12355E11600E7F594 /* say.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = say.scpt; sourceTree = "<group>"; };
 		EADE59B1232EB09A00E2F65A /* VOCR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VOCR.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,6 +157,7 @@
 				EA42F4502A2A05410010BC39 /* UIElement Extension.swift */,
 				EA9EB89D28EA5B0A00FE6210 /* Utils.swift */,
 				EADE59BE232EB09A00E2F65A /* VOCR.entitlements */,
+				EAC1C94A2B59D96200FBE97D /* AutoUpdateManager.swift */,
 			);
 			path = VOCR;
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 				EADE59B7232EB09A00E2F65A /* AboutViewController.swift in Sources */,
 				EA8AD6412352B4A000D26871 /* Double Extension.swift in Sources */,
 				EA5C7AD02351C8DE00D84042 /* AXUIElement Extension.swift in Sources */,
+				EAC1C94B2B59D96200FBE97D /* AutoUpdateManager.swift in Sources */,
 				EADE59B5232EB09A00E2F65A /* AppDelegate.swift in Sources */,
 				EA688D452355BDC500F722C7 /* Bundle Extension.swift in Sources */,
 				EA3F43712B476759005453C2 /* gpt.swift in Sources */,

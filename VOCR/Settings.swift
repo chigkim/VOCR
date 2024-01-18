@@ -396,9 +396,7 @@ class MenuHandler: NSObject {
 	}
 
 	@objc func checkForUpdates() {
-		if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
-			appDelegate.updaterController?.checkForUpdates(nil)
-		}
+		AutoUpdateManager.shared.checkForUpdates()
 	}
 
 }
