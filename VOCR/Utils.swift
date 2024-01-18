@@ -21,7 +21,7 @@ func log<T>(_ object: T, _ level:OSLogType = .info) {
 
 func performRequest(_ request:inout URLRequest, method:String="POST", name:String?=nil, completion: @escaping (Data) -> Void) {
 		request.httpMethod = method
-	request.timeoutInterval = 300
+	request.timeoutInterval = 600
 	request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 	task?.cancel()
 	task = URLSession.shared.dataTask(with: request) { data, response, error in

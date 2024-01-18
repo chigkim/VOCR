@@ -2,7 +2,6 @@ import Cocoa
 import Sparkle
 import UserNotifications
 
-
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUUpdaterDelegate, SPUStandardUserDriverDelegate, UNUserNotificationCenterDelegate {
 	
@@ -16,8 +15,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUUpdaterDe
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: self, userDriverDelegate: self)
 		updaterController?.updater.automaticallyChecksForUpdates = true
-		updaterController?.updater.updateCheckInterval = 3600  // Check every hour
 		updaterController?.updater.automaticallyDownloadsUpdates = true
+		updaterController?.updater.checkForUpdatesInBackground()
+		updaterController?.updater.updateCheckInterval = 3600  // Check every hour
 		menuNeedsUpdate(NSMenu())
 		Shortcuts.SetupShortcuts()
 		if let button = statusItem.button {
@@ -44,8 +44,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUUpdaterDe
 		}
 		
 		hide()
-		NSSound(contentsOfFile: "/System/Library/Sounds/Blow.aiff", byReference: true)?.play()
 		Accessibility.speak("VOCR Ready!")
+		NSSound(contentsOfFile: "/System/Library/Sounds/Blow.aiff", byReference: true)?.play()
 	}
 	
 	@objc func click(_ sender: Any?) {
@@ -96,6 +96,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUUpdaterDe
 			}
 		}
 	}
+
 	func standardUserDriverDidReceiveUserAttention(forUpdate update: SUAppcastItem) {
 		NSApp.dockTile.badgeLabel = ""
 		UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [UPDATE_NOTIFICATION_IDENTIFIER])
@@ -111,5 +112,5 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUUpdaterDe
 		}
 		completionHandler()
 	}
-	
+
 }

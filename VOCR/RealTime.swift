@@ -9,7 +9,6 @@
 import Foundation
 import Vision
 import Cocoa
-import HotKey
 
 enum RealTime {
 	
