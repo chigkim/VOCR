@@ -57,41 +57,41 @@ enum Settings {
 		if Settings.autoScan {
 			installMouseMonitor()
 		}
-
+		
 		let engineMenu = NSMenu()
-
+		
 		let gptItem = NSMenuItem(title: "GPT", action: #selector(target.selectModel(_:)), keyEquivalent: "")
 		gptItem.target = target
 		gptItem.tag = Engines.gpt.rawValue
 		engineMenu.addItem(gptItem)
-
+		
 		let ollamaItem = NSMenuItem(title: "Ollama", action: #selector(target.selectModel(_:)), keyEquivalent: "")
 		ollamaItem.target = target
 		ollamaItem.tag = Engines.ollama.rawValue
 		engineMenu.addItem(ollamaItem)
-
+		
 		let llamaCppItem = NSMenuItem(title: "LlamaCpp", action: #selector(target.selectModel(_:)), keyEquivalent: "")
 		llamaCppItem.target = target
 		llamaCppItem.tag = Engines.llamaCpp.rawValue
 		engineMenu.addItem(llamaCppItem)
-
+		
 		for item in engineMenu.items {
 			item.state = (item.tag == Settings.engine.rawValue) ? .on : .off
 		}
-
+		
 		let enterAPIKeyMenuItem = NSMenuItem(title: "OpenAI API Key...", action: #selector(target.presentApiKeyInputDialog(_:)), keyEquivalent: "")
 		enterAPIKeyMenuItem.target = target
 		engineMenu.addItem(enterAPIKeyMenuItem)
-
+		
 		let systemPromptMenuItem = NSMenuItem(title: "Set System Prompt...", action: #selector(target.presentSystemPromptDialog(_:)), keyEquivalent: "")
 		systemPromptMenuItem.target = target
 		engineMenu.addItem(systemPromptMenuItem)
 		
-
+		
 		let engineMenuItem = NSMenuItem(title: "Engine", action: nil, keyEquivalent: "")
 		engineMenuItem.submenu = engineMenu
 		settingsMenu.addItem(engineMenuItem)
-
+		
 		let soundOutputMenuItem = NSMenuItem(title: "Sound Output...", action: #selector(target.chooseOutput(_:)), keyEquivalent: "")
 		soundOutputMenuItem.target = target
 		settingsMenu.addItem(soundOutputMenuItem)
@@ -119,11 +119,11 @@ enum Settings {
 			saveMenuItem.target = target
 			menu.addItem(saveMenuItem)
 		}
-
+		
 		let checkForUpdatesItem = NSMenuItem(title: "Check for Updates", action: #selector(target.checkForUpdates), keyEquivalent: "")
 		checkForUpdatesItem.target = target
 		menu.addItem(checkForUpdatesItem)
-
+		
 		let aboutMenuItem = NSMenuItem(title: "About...", action: #selector(target.displayAboutWindow(_:)), keyEquivalent: "")
 		aboutMenuItem.target = target
 		menu.addItem(aboutMenuItem)
@@ -181,7 +181,15 @@ enum Settings {
 		if response == .alertFirstButtonReturn { // OK button
 			let apiKey = inputTextField.stringValue
 			Settings.GPTAPIKEY = apiKey
-			Settings.save()
+			if let data = apiKey.data(using: .utf8) {
+				let status = KeychainManager.store(key: "com.chikim.VOCR.OAIApiKey", data: data)
+				if status == noErr {
+					log("API key stored successfully.")
+				} else {
+					log("Failed to store API key with error: \(status)")
+				}
+			}
+			
 		}
 	}
 	
@@ -194,6 +202,7 @@ enum Settings {
 	
 	static func load() {
 		let defaults = UserDefaults.standard
+		let userDefaults = UserDefaults.standard
 		Settings.positionReset = defaults.bool(forKey:"positionReset")
 		Settings.positionalAudio = defaults.bool(forKey:"positionalAudio")
 		Settings.launchOnBoot = defaults.bool(forKey:"launchOnBoot")
@@ -202,8 +211,11 @@ enum Settings {
 		Settings.engine = Engines(rawValue: defaults.integer(forKey:"engine"))!
 		Settings.useLastPrompt = defaults.bool(forKey:"useLastPrompt")
 		Settings.targetWindow = defaults.bool(forKey:"targetWindow")
-		if let apikey = defaults.string(forKey: "GPTAPIKEY") {
-			Settings.GPTAPIKEY = apikey
+		if let retrievedData = KeychainManager.retrieve(key: "com.chikim.VOCR.OAIApiKey"),
+		   let retrievedApiKey = String(data: retrievedData, encoding: .utf8) {
+			Settings.GPTAPIKEY = retrievedApiKey
+		} else {
+			log("Failed to retrieve API key.")
 		}
 		if let mode = defaults.string(forKey: "mode") {
 			Settings.mode = mode
@@ -227,7 +239,6 @@ enum Settings {
 		defaults.set(Settings.engine.rawValue, forKey:"engine")
 		defaults.set(Settings.useLastPrompt, forKey:"useLastPrompt")
 		defaults.set(Settings.targetWindow, forKey:"targetWindow")
-		defaults.set(Settings.GPTAPIKEY, forKey:"GPTAPIKEY")
 		defaults.set(Settings.prompt, forKey:"prompt")
 		defaults.set(Settings.systemPrompt, forKey:"systemPrompt")
 		defaults.set(Settings.mode, forKey:"mode")
@@ -396,10 +407,10 @@ class MenuHandler: NSObject {
 		}
 		Settings.save()
 	}
-
+	
 	@objc func checkForUpdates() {
 		AutoUpdateManager.shared.checkForUpdates()
 	}
-
+	
 }
 

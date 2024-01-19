@@ -19,6 +19,7 @@
 		EA3F43732B4857F9005453C2 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3F43722B4857F9005453C2 /* Observation.swift */; };
 		EA42F44F2A2A04440010BC39 /* AXSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EA42F44E2A2A04440010BC39 /* AXSwift */; };
 		EA42F4512A2A05410010BC39 /* UIElement Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42F4502A2A05410010BC39 /* UIElement Extension.swift */; };
+		EA5581EF2B5AF6F800408F92 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5581EE2B5AF6F800408F92 /* KeychainManager.swift */; };
 		EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACB2351BB6D00D84042 /* Navigation.swift */; };
 		EA5C7AD02351C8DE00D84042 /* AXUIElement Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */; };
 		EA5C7AD92351D81100D84042 /* VOScreenshot.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EA5C7AD82351D81100D84042 /* VOScreenshot.scpt */; };
@@ -54,6 +55,7 @@
 		EA3F43702B476759005453C2 /* gpt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = gpt.swift; sourceTree = "<group>"; };
 		EA3F43722B4857F9005453C2 /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
 		EA42F4502A2A05410010BC39 /* UIElement Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIElement Extension.swift"; sourceTree = "<group>"; };
+		EA5581EE2B5AF6F800408F92 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		EA5C7ACB2351BB6D00D84042 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AXUIElement Extension.swift"; sourceTree = "<group>"; };
 		EA5C7AD82351D81100D84042 /* VOScreenshot.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = VOScreenshot.scpt; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				EA9EB89D28EA5B0A00FE6210 /* Utils.swift */,
 				EADE59BE232EB09A00E2F65A /* VOCR.entitlements */,
 				EAC1C94A2B59D96200FBE97D /* AutoUpdateManager.swift */,
+				EA5581EE2B5AF6F800408F92 /* KeychainManager.swift */,
 			);
 			path = VOCR;
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 				EA42F4512A2A05410010BC39 /* UIElement Extension.swift in Sources */,
 				EA60A3B12B4D7FF0001F6EEA /* RealTime.swift in Sources */,
 				EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */,
+				EA5581EF2B5AF6F800408F92 /* KeychainManager.swift in Sources */,
 				EA9AF47D2B54BD3A001B1BBE /* Ollama.swift in Sources */,
 				EAF9C3C82354A66200D4D77C /* Settings.swift in Sources */,
 				EA1F642C2352503D0089C967 /* Player.swift in Sources */,
@@ -415,7 +419,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 29;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -427,7 +431,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "2.0.0-alpha.22";
+				MARKETING_VERSION = "2.0.0-alpha.21";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chikim.VOCR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -442,7 +446,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 29;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -454,7 +458,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "2.0.0-alpha.22";
+				MARKETING_VERSION = "2.0.0-alpha.21";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chikim.VOCR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

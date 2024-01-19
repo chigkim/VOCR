@@ -1,4 +1,4 @@
-token = input("Token:")
+token = input("Github Token:")
 owner = 'chigkim'
 repo = "VOCR"
 archives = "archives"

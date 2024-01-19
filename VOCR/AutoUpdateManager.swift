@@ -24,14 +24,6 @@ class AutoUpdateManager: NSObject, SPUUpdaterDelegate, SPUStandardUserDriverDele
 		super.init()
 		self.updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: self, userDriverDelegate: self)
 		UNUserNotificationCenter.current().delegate = self
-		self.setupAutoUpdate()
-	}
-
-	private func setupAutoUpdate() {
-		updaterController?.updater.automaticallyChecksForUpdates = true
-		updaterController?.updater.automaticallyDownloadsUpdates = true
-		updaterController?.updater.checkForUpdatesInBackground()
-		updaterController?.updater.updateCheckInterval = 3600  // Check every hour
 	}
 
 	func checkForUpdates() {
