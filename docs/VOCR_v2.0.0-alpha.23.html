@@ -171,8 +171,13 @@
 <body>
 <h2 id="changelog">Changelog</h2>
 <ul>
-<li>Quit VOCR, remove VOCR from the notification center, run VOCR, and
-allow notification for update</li>
+<li>Store API key in Keychain
+<ul>
+<li>Quit VOCR</li>
+<li>Delete ~/Library/Preferences/com.chikim.VOCR.plist permanently with
+Command+Option+Delete</li>
+<li>Reboot.</li>
+</ul></li>
 <li>Added permission for notification center</li>
 <li>Fixed when menu is not working after closing a window</li>
 <li>Logger creates file when the file is deleted.</li>
@@ -240,6 +245,11 @@ class="citation" data-cites="ssawczyn">@ssawczyn</span></a></li>
 <p>The GPT features utilize GPT-4V, and they require your own <a
 href="https://platform.openai.com/account/api-keys">OpenAI API
 key.</a></p>
+<p>The usage cost from VOCR is an estimate. For the official usage and
+cost, please refer to the <a
+href="https://platform.openai.com/usage">Usage Dashboard</a> on OpenAI
+website. Also you can create an monthly limit and alert on the website
+as well.</p>
 <p>Explore feature only works with GPT, and location information from
 the model is extremely unreliable and inaccurate.</p>
 <h2 id="instruction-for-ollama">Instruction for Ollama</h2>
