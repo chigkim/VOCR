@@ -79,7 +79,7 @@ enum Navigation {
 				alert.addButton(withTitle: title)
 			}
 			let modalResult = alert.runModal()
-			NSApplication.shared.hide(NSApplication.shared)
+			hide()
 			let r = modalResult.rawValue-1000
 			window = windows![r]
 		}

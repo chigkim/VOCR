@@ -334,6 +334,7 @@ class MenuHandler: NSObject {
 		savePanel.allowedContentTypes = [.text]
 		savePanel.allowsOtherFileTypes = false
 		savePanel.begin { (result) in
+			hide()
 			if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
 				if let url = savePanel.url {
 					let text = Navigation.text()
@@ -379,6 +380,7 @@ class MenuHandler: NSObject {
 		inputTextField.placeholderString = "Shortcut Name"
 		alert.accessoryView = inputTextField
 		let response = alert.runModal()
+		hide()
 		if response == .alertFirstButtonReturn { // OK button
 			Shortcuts.shortcuts.append(Shortcut(name: inputTextField.stringValue, key: UInt32(0), modifiers: UInt32(0), keyName:"Unassigned"))
 			let data = try? JSONEncoder().encode(Shortcuts.shortcuts)

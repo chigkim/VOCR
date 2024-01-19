@@ -31,6 +31,7 @@ class FileLogger {
 	private func setupFileHandleIfNeeded() {
 		if !FileManager.default.fileExists(atPath: self.fileURL.path) {
 			FileManager.default.createFile(atPath: self.fileURL.path, contents: nil, attributes: nil)
+			fileHandle = try? FileHandle(forWritingTo: self.fileURL)
 		}
 		
 		if fileHandle == nil {

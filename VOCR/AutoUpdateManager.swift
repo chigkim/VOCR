@@ -52,6 +52,7 @@ class AutoUpdateManager: NSObject, SPUUpdaterDelegate, SPUStandardUserDriverDele
 				let content = UNMutableNotificationContent()
 				content.title = "A new update is available"
 				content.body = "Version \(update.displayVersionString) is now available"
+				content.sound = UNNotificationSound.default
 				let request = UNNotificationRequest(identifier: UPDATE_NOTIFICATION_IDENTIFIER, content: content, trigger: nil)
 				UNUserNotificationCenter.current().add(request)
 			}

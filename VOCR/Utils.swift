@@ -154,6 +154,7 @@ func saveImage(_ cgImage: CGImage) throws {
 	savePanel.allowedContentTypes = [.png]
 	savePanel.nameFieldStringValue = Navigation.appName+".png"
 	savePanel.begin { response in
+		hide()
 		if response == .OK {
 			if let selectedURL = savePanel.url {
 				let cicontext = CIContext()
