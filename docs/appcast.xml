@@ -3,13 +3,13 @@
     <channel>
         <title>VOCR</title>
         <item>
-            <title>2.0.0-alpha.21</title>
-            <pubDate>Thu, 18 Jan 2024 07:41:39 -0500</pubDate>
-            <sparkle:version>28</sparkle:version>
-            <sparkle:shortVersionString>2.0.0-alpha.21</sparkle:shortVersionString>
+            <title>2.0.0-alpha.22</title>
+            <pubDate>Fri, 19 Jan 2024 08:37:39 -0500</pubDate>
+            <sparkle:version>29</sparkle:version>
+            <sparkle:shortVersionString>2.0.0-alpha.22</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
-            <sparkle:releaseNotesLink>https://chigkim.github.io/VOCR/VOCR_v2.0.0-alpha.21.html</sparkle:releaseNotesLink>
-            <enclosure url="https://github.com/chigkim/VOCR/releases/download/v2.0.0-alpha.21/VOCR_v2.0.0-alpha.21.zip" length="3101284" type="application/octet-stream" sparkle:edSignature="FwCYh7BzZnLQnRZAoGZvklZB8Z9//SP2pzyP6DoWuKImHnSh6ImklZ97bT/AwTmetdt2Yg3xAb4QX5WSk35LBQ=="/>
+            <sparkle:releaseNotesLink>https://chigkim.github.io/VOCR/VOCR_v2.0.0-alpha.22.html</sparkle:releaseNotesLink>
+            <enclosure url="https://github.com/chigkim/VOCR/releases/download/v2.0.0-alpha.22/VOCR_v2.0.0-alpha.22.zip" length="3104415" type="application/octet-stream" sparkle:edSignature="Y/ba8QuEFBJt0pyW/eGRVWThXpRyP9UNHx5cuTH1/sXFV3ETkJ2WDHTxdUfYN1rTPzPbHkhnRh4u0drHkE9DCA=="/>
         </item>
     </channel>
 </rss>
