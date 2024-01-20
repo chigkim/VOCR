@@ -23,7 +23,11 @@ class AutoUpdateManager: NSObject, SPUUpdaterDelegate, SPUStandardUserDriverDele
 	private override init() {
 		super.init()
 		self.updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: self, userDriverDelegate: self)
+		if let automaticallyChecksForUpdates = self.updaterController?.updater.automaticallyChecksForUpdates, automaticallyChecksForUpdates {
+			self.updaterController?.updater.checkForUpdatesInBackground()
+		}
 		UNUserNotificationCenter.current().delegate = self
+		
 	}
 
 	func checkForUpdates() {
