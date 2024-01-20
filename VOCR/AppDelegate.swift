@@ -9,6 +9,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 	var autoUpdateManager:AutoUpdateManager?
 
 	func applicationDidFinishLaunching(_ notification: Notification) {
+		killInstance()
 		menuNeedsUpdate(NSMenu())
 		Shortcuts.SetupShortcuts()
 		if let button = statusItem.button {
@@ -21,6 +22,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 		Accessibility.speak("VOCR Ready!")
 		NSSound(contentsOfFile: "/System/Library/Sounds/Blow.aiff", byReference: true)?.play()
 		autoUpdateManager = AutoUpdateManager.shared
+	}
+
+	func killInstance() {
+		let appId = Bundle.main.bundleIdentifier!
+		let runningApps = NSWorkspace.shared.runningApplications
+		for app in runningApps {
+			if app.bundleIdentifier == appId && app != NSRunningApplication.current {
+				app.forceTerminate()
+			}
+		}
 	}
 
 	func setupAutoLaunch() {
