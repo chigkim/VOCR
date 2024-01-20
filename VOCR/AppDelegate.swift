@@ -6,7 +6,7 @@ import UserNotifications
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 	
 	let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-	let autoUpdateManager = AutoUpdateManager.shared
+	var autoUpdateManager:AutoUpdateManager?
 
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		menuNeedsUpdate(NSMenu())
@@ -16,8 +16,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 			button.action = #selector(click(_:))
 		}
 		NSApp.setActivationPolicy(.accessory)
+		setupAutoLaunch()
+		hide()
+		Accessibility.speak("VOCR Ready!")
+		NSSound(contentsOfFile: "/System/Library/Sounds/Blow.aiff", byReference: true)?.play()
+		autoUpdateManager = AutoUpdateManager.shared
+	}
 
-		
+	func setupAutoLaunch() {
 		let fileManager = FileManager.default
 		let home = fileManager.homeDirectoryForCurrentUser
 		let launchFolder = home.appendingPathComponent("Library/LaunchAgents")
@@ -33,12 +39,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 			Settings.launchOnBoot = true
 			Settings.save()
 		}
-		
-		hide()
-		Accessibility.speak("VOCR Ready!")
-		NSSound(contentsOfFile: "/System/Library/Sounds/Blow.aiff", byReference: true)?.play()
 	}
-	
+
 	@objc func click(_ sender: Any?) {
 		log("Menu Clicked")
 	}

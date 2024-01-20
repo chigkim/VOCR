@@ -28,6 +28,7 @@ enum Settings {
 	static let target = MenuHandler()
 	static var engine: Engines = .ollama
 	static var writeLog = false
+	static var preRelease = false
 	
 	static var allSettings: [(title: String, action: Selector, value: Bool)] {
 		return [
@@ -39,7 +40,8 @@ enum Settings {
 			("Positional Audio", #selector(MenuHandler.toggleSetting(_:)), positionalAudio),
 			("Move Mouse", #selector(MenuHandler.toggleSetting(_:)), moveMouse),
 			("Launch on Login", #selector(MenuHandler.toggleLaunch(_:)), launchOnBoot),
-			("Log", #selector(MenuHandler.toggleLaunch(_:)), writeLog)
+			("Log", #selector(MenuHandler.toggleLaunch(_:)), writeLog),
+			("Download Pre-release", #selector(MenuHandler.toggleLaunch(_:)), preRelease)
 		]
 	}
 	
@@ -202,7 +204,6 @@ enum Settings {
 	
 	static func load() {
 		let defaults = UserDefaults.standard
-		let userDefaults = UserDefaults.standard
 		Settings.positionReset = defaults.bool(forKey:"positionReset")
 		Settings.positionalAudio = defaults.bool(forKey:"positionalAudio")
 		Settings.launchOnBoot = defaults.bool(forKey:"launchOnBoot")
@@ -211,6 +212,7 @@ enum Settings {
 		Settings.engine = Engines(rawValue: defaults.integer(forKey:"engine"))!
 		Settings.useLastPrompt = defaults.bool(forKey:"useLastPrompt")
 		Settings.targetWindow = defaults.bool(forKey:"targetWindow")
+		Settings.preRelease = defaults.bool(forKey:"preRelease")
 		if let retrievedData = KeychainManager.retrieve(key: "com.chikim.VOCR.OAIApiKey"),
 		   let retrievedApiKey = String(data: retrievedData, encoding: .utf8) {
 			Settings.GPTAPIKEY = retrievedApiKey
@@ -236,6 +238,7 @@ enum Settings {
 		defaults.set(Settings.launchOnBoot, forKey:"launchOnBoot")
 		defaults.set(Settings.autoScan, forKey:"autoScan")
 		defaults.set(Settings.detectObject, forKey:"detectObject")
+		defaults.set(Settings.preRelease, forKey:"preRelease")
 		defaults.set(Settings.engine.rawValue, forKey:"engine")
 		defaults.set(Settings.useLastPrompt, forKey:"useLastPrompt")
 		defaults.set(Settings.targetWindow, forKey:"targetWindow")
@@ -262,6 +265,8 @@ class MenuHandler: NSObject {
 			Settings.positionReset = sender.state == .on
 		case "Positional Audio":
 			Settings.positionalAudio = sender.state == .on
+		case "Download Pre-release":
+			Settings.preRelease = sender.state == .on
 		case "Use Last Prompt":
 			Settings.useLastPrompt = sender.state == .on
 		case "Move Mouse":
