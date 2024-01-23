@@ -14,7 +14,7 @@ import UserNotifications
 class AutoUpdateManager: NSObject, SPUUpdaterDelegate, SPUStandardUserDriverDelegate, UNUserNotificationCenterDelegate {
 
 	static let shared = AutoUpdateManager()
-	private var updaterController: SPUStandardUpdaterController?
+	var updaterController: SPUStandardUpdaterController?
 	private let UPDATE_NOTIFICATION_IDENTIFIER = "VOCRUpdateCheck"
 		var supportsGentleScheduledUpdateReminders: Bool {
 		return true
@@ -36,9 +36,11 @@ class AutoUpdateManager: NSObject, SPUUpdaterDelegate, SPUStandardUserDriverDele
 	func allowedChannels(for updater: SPUUpdater) -> Set<String> {
 		if Settings.preRelease {
 			log("Download pre-release.")
+			updater.updateCheckInterval = 3600
 			return Set(["pre"])
 		} else {
 			log("No pre-release.")
+			updater.updateCheckInterval = 3600*24
 			return Set()
 		}
 	}

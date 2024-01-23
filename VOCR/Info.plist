@@ -2,21 +2,23 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>SUScheduledCheckInterval</key>
-	<integer>3600</integer>
-	<key>NSUserNotificationAlertStyle</key>
-	<string>alert</string>
-	<key>SUFeedURL</key>
-	<string>https://chigkim.github.io/VOCR/appcast.xml</string>
-	<key>SUPublicEDKey</key>
-	<string>mag38x5Zl6J5oFFwEeO4MfVY+4jJqEsDZPL6nHmbPg8=</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Image files</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.image</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIconFile</key>
@@ -39,6 +41,11 @@
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>LSUIElement</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSAppleEventsUsageDescription</key>
 	<string>Speak announcements and take Screenshot under VoiceOver cursor</string>
 	<key>NSHumanReadableCopyright</key>
@@ -51,20 +58,11 @@
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
-	<key>CFBundleDocumentTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeName</key>
-			<string>Image files</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSHandlerRank</key>
-			<string>Owner</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>public.image</string>
-			</array>
-		</dict>
-	</array>
+	<key>NSUserNotificationAlertStyle</key>
+	<string>alert</string>
+	<key>SUFeedURL</key>
+	<string>https://chigkim.github.io/VOCR/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>mag38x5Zl6J5oFFwEeO4MfVY+4jJqEsDZPL6nHmbPg8=</string>
 </dict>
 </plist>

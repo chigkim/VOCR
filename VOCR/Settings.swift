@@ -41,7 +41,6 @@ enum Settings {
 			("Move Mouse", #selector(MenuHandler.toggleSetting(_:)), moveMouse),
 			("Launch on Login", #selector(MenuHandler.toggleLaunch(_:)), launchOnBoot),
 			("Log", #selector(MenuHandler.toggleLaunch(_:)), writeLog),
-			("Download Pre-release", #selector(MenuHandler.toggleLaunch(_:)), preRelease)
 		]
 	}
 	
@@ -109,7 +108,7 @@ enum Settings {
 		let settingsMenuItem = NSMenuItem(title: "Settings", action: nil, keyEquivalent: "")
 		settingsMenuItem.submenu = settingsMenu
 		menu.addItem(settingsMenuItem)
-		
+
 		if Navigation.cgImage != nil {
 			let saveScreenshotMenuItem = NSMenuItem(title: "Save Screenschot", action: #selector(target.saveScreenShot(_:)), keyEquivalent: "s")
 			saveScreenshotMenuItem.target = target
@@ -121,15 +120,38 @@ enum Settings {
 			saveMenuItem.target = target
 			menu.addItem(saveMenuItem)
 		}
-		
-		let checkForUpdatesItem = NSMenuItem(title: "Check for Updates", action: #selector(target.checkForUpdates), keyEquivalent: "")
-		checkForUpdatesItem.target = target
-		menu.addItem(checkForUpdatesItem)
-		
+
+		let updateMenu = NSMenu()
 		let aboutMenuItem = NSMenuItem(title: "About...", action: #selector(target.displayAboutWindow(_:)), keyEquivalent: "")
 		aboutMenuItem.target = target
-		menu.addItem(aboutMenuItem)
-		
+		updateMenu.addItem(aboutMenuItem)
+
+		let checkForUpdatesItem = NSMenuItem(title: "Check for Updates", action: #selector(target.checkForUpdates), keyEquivalent: "")
+		checkForUpdatesItem.target = target
+		updateMenu.addItem(checkForUpdatesItem)
+
+		let autoCheckItem = NSMenuItem(title: "Automatically Chek for Updates", action: #selector(target.toggleSetting(_:)), keyEquivalent: "")
+		autoCheckItem.target = target
+		updateMenu.addItem(autoCheckItem)
+
+		let autoUpdateItem = NSMenuItem(title: "Automatically Install  Updates", action: #selector(target.toggleSetting(_:)), keyEquivalent: "")
+		autoUpdateItem.target = target
+		updateMenu.addItem(autoUpdateItem)
+
+		if let updater = AutoUpdateManager.shared.updaterController?.updater {
+			autoCheckItem.state = (updater.automaticallyChecksForUpdates) ? .on : .off
+			autoUpdateItem.state = (updater.automaticallyDownloadsUpdates) ? .on : .off
+		}
+
+		let preReleaseItem = NSMenuItem(title: "Download  Pre-release", action: #selector(target.toggleSetting(_:)), keyEquivalent: "")
+		preReleaseItem.target = target
+		updateMenu.addItem(preReleaseItem)
+		preReleaseItem.state = (Settings.preRelease) ? .on : .off
+
+		let updateMenuItem = NSMenuItem(title: "Updates", action: nil, keyEquivalent: "")
+		updateMenuItem.submenu = updateMenu
+		menu.addItem(updateMenuItem)
+
 		if Shortcuts.navigationActive {
 			let dismissMenuItem = NSMenuItem(title: "Dismiss Menu", action: #selector(target.dismiss(_:)), keyEquivalent: "z")
 			dismissMenuItem.target = target
@@ -265,8 +287,6 @@ class MenuHandler: NSObject {
 			Settings.positionReset = sender.state == .on
 		case "Positional Audio":
 			Settings.positionalAudio = sender.state == .on
-		case "Download Pre-release":
-			Settings.preRelease = sender.state == .on
 		case "Use Last Prompt":
 			Settings.useLastPrompt = sender.state == .on
 		case "Move Mouse":
@@ -275,6 +295,16 @@ class MenuHandler: NSObject {
 			Settings.launchOnBoot = sender.state == .on
 		case "Log":
 			Settings.writeLog = sender.state == .on
+		case "Download  Pre-release":
+			Settings.preRelease = sender.state == .on
+		case "Automatically Chek for Updates":
+			if let updater = AutoUpdateManager.shared.updaterController?.updater {
+				updater.automaticallyChecksForUpdates = sender.state == .on
+			}
+		case "Automatically Install  Updates":
+			if let updater = AutoUpdateManager.shared.updaterController?.updater {
+				updater.automaticallyDownloadsUpdates = sender.state == .on
+			}
 		default: break
 		}
 		
