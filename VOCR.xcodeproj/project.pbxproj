@@ -32,6 +32,7 @@
 		EA9EB89E28EA5B0A00FE6210 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9EB89D28EA5B0A00FE6210 /* Utils.swift */; };
 		EAAD42AE298596FB00BE5D98 /* com.chikim.VOCR.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAAD42AD298596FB00BE5D98 /* com.chikim.VOCR.plist */; };
 		EAC1C94B2B59D96200FBE97D /* AutoUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC1C94A2B59D96200FBE97D /* AutoUpdateManager.swift */; };
+		EAC9ECD92BFB8D6200D61F00 /* MacCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC9ECD82BFB8D6200D61F00 /* MacCamera.swift */; };
 		EAD0E5A92B57942F004E69AD /* FileLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD0E5A82B57942F004E69AD /* FileLogger.swift */; };
 		EAD9AAE62731075600473054 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = EAD9AAE52731075600473054 /* HotKey */; };
 		EAD9AAE927310A3900473054 /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = EAD9AAE827310A3900473054 /* SoundpipeAudioKit */; };
@@ -67,6 +68,7 @@
 		EA9EB89D28EA5B0A00FE6210 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EAAD42AD298596FB00BE5D98 /* com.chikim.VOCR.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = com.chikim.VOCR.plist; sourceTree = "<group>"; };
 		EAC1C94A2B59D96200FBE97D /* AutoUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoUpdateManager.swift; sourceTree = "<group>"; };
+		EAC9ECD82BFB8D6200D61F00 /* MacCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacCamera.swift; sourceTree = "<group>"; };
 		EAD0E5A82B57942F004E69AD /* FileLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLogger.swift; sourceTree = "<group>"; };
 		EAD9CFD12355E11600E7F594 /* say.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = say.scpt; sourceTree = "<group>"; };
 		EADE59B1232EB09A00E2F65A /* VOCR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VOCR.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,6 +136,7 @@
 		EADE59B3232EB09A00E2F65A /* VOCR */ = {
 			isa = PBXGroup;
 			children = (
+				EAC9ECD82BFB8D6200D61F00 /* MacCamera.swift */,
 				EADE59B6232EB09A00E2F65A /* AboutViewController.swift */,
 				EA2DA1AB232EB1D600D31031 /* Accessibility.swift */,
 				EADE59B4232EB09A00E2F65A /* AppDelegate.swift */,
@@ -272,6 +275,7 @@
 				EA5581EF2B5AF6F800408F92 /* KeychainManager.swift in Sources */,
 				EA9AF47D2B54BD3A001B1BBE /* Ollama.swift in Sources */,
 				EAF9C3C82354A66200D4D77C /* Settings.swift in Sources */,
+				EAC9ECD92BFB8D6200D61F00 /* MacCamera.swift in Sources */,
 				EA1F642C2352503D0089C967 /* Player.swift in Sources */,
 				EA0C88682B4F8F4B00F2E920 /* ShortcutsWindowController.swift in Sources */,
 				EA9AF47F2B54D03D001B1BBE /* Engines.swift in Sources */,
@@ -419,7 +423,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 33;
+				CURRENT_PROJECT_VERSION = 34;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -431,7 +435,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "2.0.0-beta.2";
+				MARKETING_VERSION = "2.0.0-beta.3";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chikim.VOCR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -446,7 +450,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 33;
+				CURRENT_PROJECT_VERSION = 34;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -458,7 +462,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = "2.0.0-beta.2";
+				MARKETING_VERSION = "2.0.0-beta.3";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chikim.VOCR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

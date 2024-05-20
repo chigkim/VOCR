@@ -22,10 +22,10 @@ enum Shortcuts {
 	static var hotkeys:[HotKey] = []
 	static var shortcuts: [Shortcut] = []
 	static var navigationActive = false
-	static let globalShortcuts = ["Settings", "OCR Window", "OCR VOCursor", "Realtime OCR", "Ask", "Explore"]
+	static let globalShortcuts = ["Settings", "OCR Window", "OCR VOCursor", "Capture Camera", "Realtime OCR", "Ask", "Explore"]
 	static let navigationShortcuts = ["Right", "Left", "Down", "Up", "Beginning", "End", "Top", "Bottom", "Next Character", "Previous Character", "Report Location", "Identify Object", "Exit Navigation"]
 	static let allShortcuts = globalShortcuts+navigationShortcuts
-
+	
 	static func SetupShortcuts() {
 		handlers["Settings"] = settingsHandler
 		handlers["OCR Window"] = {
@@ -35,6 +35,11 @@ enum Shortcuts {
 		handlers["OCR VOCursor"] = {
 			Navigation.mode = .VOCURSOR
 			Navigation.startOCR()
+		}
+		handlers["Capture Camera"] = {
+			if MacCamera.shared.isCameraAllowed() {
+				MacCamera.shared.takePicture()
+			}
 		}
 		handlers["Realtime OCR"] = realTimeHandler
 		handlers["Explore"] = Navigation.explore
@@ -57,17 +62,43 @@ enum Shortcuts {
 			Accessibility.speak("Exit VOCR navigation.")
 			deactivateNavigationShortcuts()
 		}
-
+		
 		loadShortcuts()
 	}
-
-	static func loadDefaults() {
+	
+	static func getDefaults() -> Data? {
+		var data:Data?
 		let bundle = Bundle.main
 		if let bundlePath = bundle.path(forResource: "Shortcuts", ofType: "json") {
-			let data = try! Data(contentsOf: URL(fileURLWithPath: bundlePath))
+			data = try! Data(contentsOf: URL(fileURLWithPath: bundlePath))
+		}
+		return data
+	}
+	
+	static func loadDefaults() {
+		if let data = getDefaults() {
 			UserDefaults.standard.removeObject(forKey: "userShortcuts")
 			UserDefaults.standard.set(data, forKey: "userShortcuts")
 		}
+	}
+	
+	static func merge() -> [Shortcut]? {
+		if let defaultData = getDefaults(),
+			let defaultShortcuts = try? JSONDecoder().decode([Shortcut].self, from: defaultData),
+			let userData = UserDefaults.standard.data(forKey: "userShortcuts"),
+			var userShortcuts = try? JSONDecoder().decode([Shortcut].self, from: userData) {
+			for shortcut in defaultShortcuts {
+				if !userShortcuts.contains(where: { $0.name == shortcut.name }) {
+					userShortcuts.append(shortcut)
+				   }
+			   }
+
+			   if let mergedData = try? JSONEncoder().encode(userShortcuts) {
+				   UserDefaults.standard.set(mergedData, forKey: "userShortcuts")
+			   }
+			   return userShortcuts
+		   }
+		return nil
 	}
 
 	static func loadShortcuts() {
@@ -76,16 +107,10 @@ loadDefaults()
 		}
 
 		if let data = UserDefaults.standard.data(forKey: "userShortcuts"),
-			   let decodedShortcuts = try? JSONDecoder().decode([Shortcut].self, from: data) {
-			shortcuts = decodedShortcuts
+			let mergedShortcuts = merge() {
+			shortcuts = mergedShortcuts
 			for shortcut in shortcuts {
 				log("\(shortcut.name), \(shortcut.keyName), \(shortcut.modifiers), \(shortcut.key)")
-				if !allShortcuts.contains(shortcut.name) {
-					Accessibility.speakWithSynthesizer("Resetting shortcuts.")
-					loadDefaults()
-					loadShortcuts()
-					break
-				}
 			}
 			registerAll()
 		}

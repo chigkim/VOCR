@@ -76,7 +76,7 @@ enum GPT:EngineAsking {
 				let prompt_tokens = response.usage.prompt_tokens
 				let completion_tokens = response.usage.completion_tokens
 				let total_tokens = response.usage.total_tokens
-				let cost = Float(prompt_tokens)*(1.0/1000.0)+Float(completion_tokens)*(3.0/1000.0)
+				let cost = Float(prompt_tokens)*(500.0/1000000.0)+Float(completion_tokens)*(1500.0/1000000.0)
 				if let firstChoice = response.choices.first {
 					var description = firstChoice.message.content
 					description += "\nPrompt tokens: \(prompt_tokens)"

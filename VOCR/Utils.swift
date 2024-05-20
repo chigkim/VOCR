@@ -78,16 +78,18 @@ func askPrompt(value:String) -> String? {
 	return nil
 }
 
-func grabScreenshot() -> CGImage? {
+func grabImage() -> CGImage? {
 	var rect:CGRect?
 	if Navigation.mode == .WINDOW {
 		rect = Navigation.getWindow()
-	} else {
+	} else if Navigation.mode == .VOCURSOR {
 		rect = Navigation.getVOCursor()
 	}
 	if let rect = rect,
-	let screenshot = TakeScreensShots(rect:rect) {
+	   let screenshot = TakeScreensShots(rect:rect) {
 		return screenshot
+	} else if Navigation.mode == .CAMERA {
+		return Navigation.cgImage
 	} else {
 		Accessibility.speakWithSynthesizer("Faild to access \(Navigation.appName), \(Navigation.windowName)")
 	}
@@ -99,7 +101,7 @@ func ask(image:CGImage?=nil) {
 		Ollama.setModel()
 		return
 	}
-	let cgImage = image ?? grabScreenshot()
+	let cgImage = image ?? grabImage()
 	guard let cgImage = cgImage else { return }
 	if !Settings.useLastPrompt {
 		if let prompt = askPrompt(value:Settings.prompt) {

@@ -27,20 +27,24 @@ class AutoUpdateManager: NSObject, SPUUpdaterDelegate, SPUStandardUserDriverDele
 		if let automaticallyChecksForUpdates = self.updaterController?.updater.automaticallyChecksForUpdates, automaticallyChecksForUpdates {
 			self.updaterController?.updater.checkForUpdatesInBackground()
 		}
-	}
+		}
 
 	func checkForUpdates() {
 		updaterController?.checkForUpdates(nil)
 	}
 
 	func allowedChannels(for updater: SPUUpdater) -> Set<String> {
+//		if Settings.preRelease {
+//			updater.updateCheckInterval = 3600
+//		} else {
+//			updater.updateCheckInterval = 3600*24
+//		}
+
 		if Settings.preRelease {
-			log("Download pre-release.")
-			updater.updateCheckInterval = 3600
+			 log("Download pre-release.")
 			return Set(["pre"])
 		} else {
 			log("No pre-release.")
-			updater.updateCheckInterval = 3600*24
 			return Set()
 		}
 	}

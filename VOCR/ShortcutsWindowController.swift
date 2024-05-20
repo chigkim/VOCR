@@ -116,25 +116,25 @@ class ShortcutsWindowController: NSWindowController, NSWindowDelegate, NSTableVi
 	}
 
 
-//	override func keyDown(with event: NSEvent) {
-//		super.keyDown(with: event)
-//
-//		if event.keyCode == 51 { // 51 is the key code for the Delete key
-//			deleteSelectedRow()
-//		}
-//	}
-//
-//	func deleteSelectedRow() {
-//		guard tableView.selectedRow >= 0 else { return }
-//		let row = tableView.selectedRow
-//
-//		// Remove the shortcut from the array and update UserDefaults
-//		Shortcuts.shortcuts.remove(at: row)
-//		let data = try? JSONEncoder().encode(Shortcuts.shortcuts)
-//		UserDefaults.standard.set(data, forKey: "userShortcuts")
-//		Shortcuts.registerAll()
-//		refreshTable()
-//	}
+	override func keyDown(with event: NSEvent) {
+		super.keyDown(with: event)
+
+		if event.keyCode == 51 { // 51 is the key code for the Delete key
+			deleteSelectedRow()
+		}
+	}
+
+	func deleteSelectedRow() {
+		guard tableView.selectedRow >= 0 else { return }
+		let row = tableView.selectedRow
+
+		// Remove the shortcut from the array and update UserDefaults
+		Shortcuts.shortcuts.remove(at: row)
+		let data = try? JSONEncoder().encode(Shortcuts.shortcuts)
+		UserDefaults.standard.set(data, forKey: "userShortcuts")
+		Shortcuts.registerAll()
+		refreshTable()
+	}
 
 }
 

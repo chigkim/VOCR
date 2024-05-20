@@ -2,6 +2,7 @@
 	{"keyName":"⌃⇧⌘S","key":1,"modifiers":4864,"name":"Settings"},
 	{"keyName":"⌃⇧⌘W","key":13,"modifiers":4864,"name":"OCR Window"},
 	{"keyName":"⌃⇧⌘V","key":9,"modifiers":4864,"name":"OCR VOCursor"},
+	{"keyName":"⌃⇧⌘C","key":8,"modifiers":4864,"name":"Capture Camera"},
 	{"keyName":"⌃⇧⌘E","key":14,"modifiers":4864,"name":"Explore"},
 	{"keyName":"⌃⇧⌘A","key":0,"modifiers":4864,"name":"Ask"},
 	{"keyName":"⌃⇧⌘R","key":15,"modifiers":4864,"name":"Realtime OCR"},

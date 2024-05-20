@@ -15,6 +15,7 @@ enum Navigation {
 	enum Mode: Int, CaseIterable {
 		case WINDOW = 0
 		case VOCURSOR = 1
+		case CAMERA = 2
 		func next() -> Mode {
 			let allCases = Mode.allCases
 			let nextIndex = (self.rawValue + 1) % allCases.count
@@ -27,6 +28,8 @@ enum Navigation {
 				return "Window"
 			case .VOCURSOR:
 				return "VOCursor"
+			case .CAMERA:
+				return "Camera"
 			}
 		}
 	}

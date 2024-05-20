@@ -8,6 +8,7 @@
 
 import Cocoa
 import AudioKit
+import AVFoundation
 
 enum Settings {
 	
@@ -29,6 +30,7 @@ enum Settings {
 	static var engine: Engines = .ollama
 	static var writeLog = false
 	static var preRelease = false
+	static var camera = "Unknown"
 	
 	static var allSettings: [(title: String, action: Selector, value: Bool)] {
 		return [
@@ -92,11 +94,15 @@ enum Settings {
 		let engineMenuItem = NSMenuItem(title: "Engine", action: nil, keyEquivalent: "")
 		engineMenuItem.submenu = engineMenu
 		settingsMenu.addItem(engineMenuItem)
-		
+
 		let soundOutputMenuItem = NSMenuItem(title: "Sound Output...", action: #selector(target.chooseOutput(_:)), keyEquivalent: "")
 		soundOutputMenuItem.target = target
 		settingsMenu.addItem(soundOutputMenuItem)
-		
+
+		let cameraMenuItem = NSMenuItem(title: "Choose Camera...", action: #selector(target.chooseCamera(_:)), keyEquivalent: "")
+		cameraMenuItem.target = target
+		settingsMenu.addItem(cameraMenuItem)
+
 		let shortcutsMenuItem = NSMenuItem(title: "Shortcuts...", action: #selector(target.openShortcutsWindow(_:)), keyEquivalent: "")
 		shortcutsMenuItem.target = target
 		settingsMenu.addItem(shortcutsMenuItem)
@@ -110,7 +116,7 @@ enum Settings {
 		menu.addItem(settingsMenuItem)
 
 		if Navigation.cgImage != nil {
-			let saveScreenshotMenuItem = NSMenuItem(title: "Save Screenschot", action: #selector(target.saveScreenShot(_:)), keyEquivalent: "s")
+			let saveScreenshotMenuItem = NSMenuItem(title: "Save Latest Image", action: #selector(target.saveLastImage(_:)), keyEquivalent: "s")
 			saveScreenshotMenuItem.target = target
 			menu.addItem(saveScreenshotMenuItem)
 		}
@@ -161,6 +167,7 @@ enum Settings {
 		menu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
 		return menu
 	}
+
 	static func installMouseMonitor() {
 		self.eventMonitor = NSEvent.addGlobalMonitorForEvents(
 			matching: [NSEvent.EventTypeMask.leftMouseDown],
@@ -244,6 +251,9 @@ enum Settings {
 		if let mode = defaults.string(forKey: "mode") {
 			Settings.mode = mode
 		}
+		if let camera = defaults.string(forKey: "camera") {
+			Settings.camera = camera
+		}
 		if let prompt = defaults.string(forKey: "prompt") {
 			Settings.prompt = prompt
 		}
@@ -267,6 +277,7 @@ enum Settings {
 		defaults.set(Settings.prompt, forKey:"prompt")
 		defaults.set(Settings.systemPrompt, forKey:"systemPrompt")
 		defaults.set(Settings.mode, forKey:"mode")
+		defaults.set(Settings.camera, forKey:"camera")
 	}
 	
 	
@@ -374,7 +385,25 @@ class MenuHandler: NSObject {
 		try! Player.shared.engine.setDevice(AudioEngine.outputDevices[n])
 		try! Player.shared.engine.start()
 	}
-	
+
+	@objc func chooseCamera(_ sender: Any?) {
+		let devices = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera,.externalUnknown], mediaType: .video, position: .unspecified).devices
+		if devices.count>1 {
+			let alert = NSAlert()
+			alert.alertStyle = .informational
+			alert.messageText = "Camera"
+			alert.informativeText = "Choose a camera for VOCR to use."
+			for device in devices {
+				alert.addButton(withTitle: device.localizedName)
+			}
+			let modalResult = alert.runModal()
+			hide()
+			let n = modalResult.rawValue-1000
+			Settings.camera = devices[n].localizedName
+			Settings.save()
+		}
+	}
+
 	@objc func saveResult(_ sender: NSMenuItem) {
 		let savePanel = NSSavePanel()
 		savePanel.allowedContentTypes = [.text]
@@ -406,7 +435,7 @@ class MenuHandler: NSObject {
 		
 	}
 	
-	@objc func saveScreenShot(_ sender: NSMenuItem) {
+	@objc func saveLastImage(_ sender: NSMenuItem) {
 		if let cgImage = Navigation.cgImage {
 			try! saveImage(cgImage)
 		}
