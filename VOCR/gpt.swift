@@ -37,7 +37,7 @@ enum GPT:EngineAsking {
 		let base64_image = imageToBase64(image: image)
 		
 		let jsonBody: [String: Any] = [
-			"model": "gpt-4-vision-preview",
+			"model": "gpt-4o",
 			"messages": [
 				[
 					"role": "system",
