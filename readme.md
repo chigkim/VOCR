@@ -1,78 +1,132 @@
 # Welcome to VOCR
+
+Discover the cutting-edge capabilities of VOCR, your ultimate OCR and AI-powered screen recognition tool designed to enhance your digital accessibility experience. Beyond simple OCR feature, VOCR seamlessly integrates with VoiceOver, enabling users to effortlessly capture and recognize screen content with intuitive and customizable shortcuts. With features like Real-Time OCR, users can continuously monitor and read live content, such as subtitles. The ASK AI functionality allows you to leverage advanced AI models, including OpenAI GPT to ask detailed questions about images and receive insightful answers. It also supports local vision language models via Ollama for your privacy. Explore with AI takes it a step further by analyzing images, identifying different areas, and providing comprehensive descriptions.
+
+VOCR's robust suite of features offers unparalleled control and precision, making it an indispensable tool for users seeking a seamless, efficient, and highly functional OCR solution. Whether you're navigating inaccessible applications or curious about images, VOCR empowers you to do more with ease and confidence.
+
 **WARNING**: USE AT YOUR OWN RISK!
 
 VOCR is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY, expressed or implied, of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Please see the [GNU General Public License](http://www.gnu.org/licenses/) for more details.
 
-This branch utilizes VisionKit on MacOS Catalina that takes advantage of machine learning for OCR.
-
-This is a standalone app, and it does not rely on Keyboard Maestro, Imagemagick, and Tesseract which the previous VOCR utilized.
-
-If you're using a Mac OS version earlier than Catalina 10.15, please use the older [VOCR with tesseract.](https://github.com/chigkim/VOCR/tree/tesseract)
-
 ## Download
-Here is the direct link to download [VOCR v1.0.0-beta.2.](https://github.com/chigkim/VOCR/releases/download/v1.0.0-beta.2/VOCR.v1.0.0-beta.2.zip)
 
-## Upgrade from Previous VOCR With Tesseract
-You can simply remove the VOCR group from Keyboard Maestro and follow the setup instructions found below.
-
-The following steps are only necessary if you wish to remove Imagemagick and Tesseract.
-
-* Download the [latest commit](https://github.com/chigkim/VOCR/archive/master.zip) from master branch.
-* Run the "uninstall.command" script.
+Here is the direct link to download [VOCR v2.0.0-beta.3.](https://github.com/chigkim/VOCR/releases/download/v2.0.0-beta.3/VOCR_v2.0.0-beta.3.zip)
 
 ## Setup
-* After uncompressing the downloaded zip, simply move the application to your applications folder and run it.
-* Make sure you can find VOCR running on the menu extra  by pressing vo+m twice.
-* Go to VoiceOver Utility, and check Allow VoiceOver to be controlled with AppleScript under the general category.
-* If active, turn off screen curtain with vo+shift+f11. Note, screen curtain must be turned off in order for this app to work properly.
-* If displayed, hide VoiceOver visuals with vo+command+f11. Note, if VoiceOver visuals are not hidden, they will get recognized along with other screen content.
-* Press command+shift+control+w, and you should get a notification asking you to grant accessibility permission. If VoiceOver doesn't focus on the window automatically, press vo+f1 twice which will display the list of currently running apps, the system dialog should be in this list.
-* After allowing accessibility permission, press command+shift+control+w, and you should get another notification asking you to allow VOCR to take a screenshot of the frontmost window. If you don't get the alert, locate the system dialog as described in the previous step.
-* * If you are unable to locate the system dialog, go to System Settings, security and privacy, unlock the setting, then go to choose screen recording under the privacy tab, and you should be able to find the VOCR app.
-* * After granting the accessibility permission, you should be prompted to restart the app.
-* * After restarting the app, verify that it can be found in the menu extras area which can be accessed by pressing vo+m twice.
-* As a test, go back to System Settings, press command+shift+control+w, and you should hear a beep and a Voice prompt saying finished.
-* At that point, you should be able to navigate the recognized results with command+control+arrows. Refer to the shortcuts section below for more information.
-** When navigating results for the first time, another alert should appear prompting for permission to allow VOCR to control VoiceOver for speaking announcements.
-* One further test: navigate to the Siri preference within the recognized System Settings screen Using the VOCR cursor, and then press vo+f5. VoiceOver should indicate that your mouse is  also on Siri. This is because as you navigate the recognized content, the mouse automatically follows the navigation.
-* Press vo+shift+space to open the Siri preference. Note, since the mouse has followed the navigation, we use this command to simulate a mouse click at the correct on-screen location.
-* Press escape to exit VOCR's navigation mode and free up navigation shortcuts.
 
-## Using Image Recognition under VoiceOver Cursor
-* Complete the setup above.
-* Move your VoiceOver cursor to the element that you want to recognize.
-* Press command+shift+control+v
-* * If running this feature for the first time, you will get a series of alerts asking you to allow VOCR to: 1. run AppleScript; 2. control VoiceOver to take screenshots; and 3. access the desktop folder which is where VoiceOVer saves screenshots.
-* After granting all permissions, press the shortcut command+shift+control+v again.
-If you want to verify that this feature is working properly, search for an image on Google and try recognizing a resulting image.
+To ensure VOCR works properly, it is crucial to follow every step precisely. Missing even one step could prevent VOCR from functioning correctly.
 
+1. After uncompressing the downloaded zip file, move the application to your Applications folder and run it.
+2. Confirm VOCR is running in the menu bar by pressing vo+m twice.
+3. In VoiceOver Utility, under the General category, check the box for "Allow VoiceOver to be controlled with AppleScript."
+4. If active, turn off the screen curtain with vo+shift+f11. Note that the screen curtain must be off for the app to work properly.
+5. Hide VoiceOver visuals with vo+command+f11 if they are displayed. If not hidden, elements like the VoiceOver caption panel will be recognized along with other screen content.
+6. Press command+shift+control+w. You should receive a notification asking for accessibility permission. If VoiceOver does not automatically focus on the window, press vo+f1 twice to display the list of currently running apps; the system dialog should be in this list.
+7. After granting accessibility permission, press command+shift+control+w again to receive a notification requesting permission for VOCR to take a screenshot. If you do not receive the alert, locate the system dialog as described previously.
+8. If you cannot locate the system dialog, go to System Settings, Privacy & Security, then choose Screen Recording, and find the VOCR app.
+9. After granting accessibility permission, restart the app as prompted.
+10. Verify the app is in the menu bar by pressing vo+m twice.
+11. Press command+shift+control+w. You should hear a beep and a voice prompt saying "finished."
+12. You can now navigate the recognized results using command+control+arrows. Refer to the shortcuts section below for more information.
+13. When navigating results for the first time, an alert will prompt you to allow VOCR to control VoiceOver for speaking announcements.
+14. Press Escape to exit VOCR's navigation mode and free up navigation shortcuts.
 
-If everything goes well, VOCR will report the top 5 image categories ranked by level of confidents. If VOCR categorizes the image as a document, it will apply OCR to the document text. You can review the OCR results in the same way as above, but in the image recognition mode, the mouse does not follow the VOCR cursor as it does with window recognition.
+## OCR VoiceOver Cursor
+
+This feature is useful for capturing specific portions of a screen, such as a video player on a webpage or images on social media.
+
+1. Move your VoiceOver cursor to the element you want to recognize.
+2. Press command+shift+control+v.
+   * The first time you use this feature, you will receive an alert to allow VOCR to run AppleScript.
+3. After granting permission, press command+shift+control+v again.
+
+## Real-Time OCR
+
+Press Command+Shift+Control+R after scanning a window or using VOCursor to start or stop real-time OCR. When activated, VOCR will continuously scan and report only new content. This is useful for reading live content such as subtitles.
+
+## ASK AI
+
+You can host your own vision language model using Ollama or utilize OpenAI GPT to ask questions about images captured with VOCR.
+
+To use the OpenAI GPT model:
+
+1. Choose GPT in VOCR Menu > Settings > Engine.
+2. Provide your API key in VOCR Menu > Settings > Engine > OpenAI API Key.
+
+To use a local model with Ollama:
+
+1. Download and set up Ollama.
+2. Choose Ollama in VOCR Menu > Settings > Engine.
+
+After scanning a window, using VOCR, or capturing an image from a camera, press Command+Shift+Control+A to ask the selected model a question about the image.
+
+## Explore with AI
+
+1. Choose GPT in the VOCR Menu > Settings > Engine.
+2. Provide your OpenAI API key in VOCR Menu > Settings > Engine > OpenAI API Key.
+3. Scan a window or use VOCursor.
+4. Press Command+Shift+Control+E.
+
+VOCR will ask GPT to analyze the image, identify different areas, and describe the contents of each area. You can then navigate the results using the navigation shortcuts,, Command+Control+Arrows.
+
+## Global Shortcuts
+
+These shortcuts work at all times:
+
+* VOCR Menu: Command+Shift+Control+S
+* OCR Window: Command+Shift+Control+W
+* OCR VoiceOver Cursor: Command+Shift+Control+V
+* Camera Capture: Command+Shift+Control+C
+* Toggle Real-Time OCR: Command+Shift+Control+R
+* Ask AI: Command+Shift+Control+A
+* Explore with AI: Command+Shift+Control+E
+
+## Navigation Shortcuts
+
+These shortcuts only work when navigation is active after a scan:
+
+* Move down/up: Command+Control+Down/Up Arrow
+* Move left/right: Command+Control+Left/Right Arrow
+* Previous/next character: Command+Shift+Control+Left/Right Arrow
+* Go to top/bottom: Command+Control+Page Up/Down
+* Go to beginning/end horizontally: Command+Control+Home/End
+* Exit navigation: Escape
+* Location: Command+Control+L (Reports current coordinates)
+* Identify Object: Command+Control+I (Identifies current object with AI when object detection is enabled in settings)
 
 ## Settings
-Positional audio (command+shift+control+p): As the mouse cursor moves you will hear hear audio feedback. Frequency changes correlate to vertical movement, and audio panning correlates to horizontal movement. This feature is useful for exploring the interface and discovering the location of on-screen elements. If you don't hear the audio feedback, choose sound output for VOCR from  the menu extra.
 
-Disable/enable reset position (command+shift+control+r): When disabled, the cursor will not reset to the top left corner after every new scan. This feature is useful when you rescan the same window in order to find any new changes without losing the previous cursor position.
+Access the VOCR Menu with Command+Control+Shift+S. This menu contains all settings and operations.
 
-## Shortcuts
-* OCR Frontmost Window: command+shift+control+w
-* Recognize image under VoiceOver cursor: command+shift+control+v
-* Toggle reset position after scan: command+shift+control+r
-* Toggle positional audio feedback: command+shift+control+p
+* Target Window: Allows you to scan a different window than the current one.
+* Autoscan: Automatically scans after clicking an item with VO+Shift+Space.
+* Detect Object: Locates objects with no text such as icons.
+* Use Last Prompt: Reuses the last prompt when asking AI with Command+Shift+Control+A.
+* Move Mouse: Moves the mouse cursor when you navigate.
+* Positional Audio: Provides audio feedback as the mouse cursor moves. Frequency changes correspond to vertical location, and audio panning corresponds to horizontal position. If you don't hear the audio feedback, go to Settings > Sound Output.
+* Reset Position: When disabled, the cursor will not reset to the top-left corner after every new scan.
+* Launch on Login: Automatically runs VOCR when you log in.
+* Log: Starts writing logs to VOCR.txt in your Documents folder.
+* Sound Output: Choose a sound device for audio positional feedback.
+* Choose Camera: Select the camera to use for capturing an image.
+* Shortcuts: Customize shortcuts.
+* Engine: Choose between GPT or Ollama.
 
-The following shortcuts only work after a scan, I.E. on resulting content.
+Note that Llama.cpp temporarily suspended support for the vision language model on their server.
 
-* Move down/up: command+control+down/up arrow
-* Move left/right: command+control+left/right arrow
-* Previous/next character: command+shift+control+left/right arrow
-* Go to top/bottom: command+control+page up/down
-* Go to beginning/end horizontally: command+control+left/right arrow
-* Exit navigation: escape
-* Save the OCR result to file: command+shift+control+s
+## Operation
+
+When you open the VOCR menu, few operations are available after a scan:
+
+* Save Last Image
+* Save OCR Result
+* Updates
 
 ## Troubleshooting
-* If you hear "nothing found" or just hear the word "the", most likely you need to turn off VoiceOver screen curtain with vo+shift+f11, or fix accessibility and screen recording  permissions in security and privacy preferences.
-* If you do not hear anything after using the recognize image under VoiceOver cursor feature, most likely you need to give   VOCR permissions to 1. send Apple Events, 2. control VoiceOver, and 3. access desktop folder. Usually relaunching VOCR and reissuing the command usually retriggers the alerts to reappear in the system dialogs as described above.
 
-Lastly, please enjoy and send me your feedback!
+* If you hear "nothing found" you likely need to turn off the VoiceOver screen curtain with vo+shift+f11 or adjust accessibility and screen recording permissions in System Settings > Privacy & Security.
+* If you do not hear anything after using the "Recognize Image Under VoiceOver Cursor" feature, you probably need to grant VOCR permissions to: send Apple Events.
 
+Usually, relaunching VOCR and reissuing the command retriggers the alerts to reappear in the system dialogs as described above.
+
+Lastly, please enjoy using VOCR!
