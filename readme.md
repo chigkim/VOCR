@@ -1,6 +1,8 @@
-# Welcome to VOCR
+Enhancing Accessibility with Seamless Screen Recognition
 
-Discover the cutting-edge capabilities of VOCR, your ultimate OCR and AI-powered screen recognition tool designed to enhance your digital accessibility experience. Beyond simple OCR feature, VOCR seamlessly integrates with VoiceOver, enabling users to effortlessly capture and recognize screen content with intuitive and customizable shortcuts. With features like Real-Time OCR, users can continuously monitor and read live content, such as subtitles. The ASK AI functionality allows you to leverage advanced AI models, including OpenAI GPT to ask detailed questions about images and receive insightful answers. It also supports local vision language models via Ollama for your privacy. Explore with AI takes it a step further by analyzing images, identifying different areas, and providing comprehensive descriptions.
+## Welcome to VOCR
+
+Discover the cutting-edge capabilities of VOCR, your ultimate OCR and AI-powered screen recognition tool designed to enhance your digital accessibility experience. Beyond the simple navigation feature with OCR, VOCR seamlessly integrates with VoiceOver, enabling users to effortlessly capture and recognize screen content with intuitive and customizable shortcuts. With features like Real-Time OCR, users can continuously monitor and read live content, such as subtitles. The ASK AI functionality allows you to leverage advanced AI models, including OpenAI GPT to ask detailed questions about images and receive insightful answers. It also supports local vision language models via Ollama for your privacy. Explore with AI takes it a step further by analyzing images, identifying different areas, and providing comprehensive descriptions.
 
 VOCR's robust suite of features offers unparalleled control and precision, making it an indispensable tool for users seeking a seamless, efficient, and highly functional OCR solution. Whether you're navigating inaccessible applications or curious about images, VOCR empowers you to do more with ease and confidence.
 
@@ -48,17 +50,32 @@ Press Command+Shift+Control+R after scanning a window or using VOCursor to start
 
 You can host your own vision language model using Ollama or utilize OpenAI GPT to ask questions about images captured with VOCR.
 
-To use the OpenAI GPT model:
+To use the OpenAI GPT model, provide your [OpenAI API key](https://platform.openai.com/account/api-keys) in VOCR Menu > Settings > Engine > OpenAI API Key.
 
-1. Choose GPT in VOCR Menu > Settings > Engine.
-2. Provide your API key in VOCR Menu > Settings > Engine > OpenAI API Key.
+The usage cost from VOCR is an estimate. For the official usage and cost, please refer to the [Usage Dashboard](https://platform.openai.com/usage) on OpenAI website.
 
-To use a local model with Ollama:
+To utilize a local vision language model with Ollama:
 
-1. Download and set up Ollama.
-2. Choose Ollama in VOCR Menu > Settings > Engine.
+1. Download and install [Ollama](https://ollama.ai/).
+2. Download a multimodal (vision-language) model by executing the following command in your terminal:
 
-After scanning a window, using VOCR, or capturing an image from a camera, press Command+Shift+Control+A to ask the selected model a question about the image.
+    ```
+    ollama pull llava
+    ```
+
+Note that there are also `llava:13b` and `llava:34b` models, which offer higher accuracy but require more storage, memory, and computing power.
+
+You may also want to try a related app called [VOLlama](https://chigkim.github.io/VOLlama/). It is an accessible chat client for Ollama, allowing you to easily interact with an open-source large language model that runs locally on your computer.
+
+After the setting up OpenAI and/or Ollama:
+
+1. Choose Ollama or GPT in VOCR Menu > Settings > Engine.
+2. Scan a window/VOCursor or capture an image from a camera.
+3. Press Command+Shift+Control+A to ask the selected model a question about the image.
+
+The response will be copied to the clipboard so you can review in case you miss it.
+
+Also you can select an image file in Finder, bring up the contextual menu with VO+Shift+M, go to 'Open in,' and choose VOCR to ask a question about the image.
 
 ## Explore with AI
 
@@ -67,7 +84,9 @@ After scanning a window, using VOCR, or capturing an image from a camera, press 
 3. Scan a window or use VOCursor.
 4. Press Command+Shift+Control+E.
 
-VOCR will ask GPT to analyze the image, identify different areas, and describe the contents of each area. You can then navigate the results using the navigation shortcuts,, Command+Control+Arrows.
+VOCR will ask GPT to analyze the image, identify various areas, and describe the contents of each. You can navigate the results using the shortcuts Command + Control + Arrows.
+
+Note: This feature is experimental and often produces inaccurate descriptions of locations and content.
 
 ## Global Shortcuts
 
@@ -125,7 +144,7 @@ When you open the VOCR menu, few operations are available after a scan:
 ## Troubleshooting
 
 * If you hear "nothing found" you likely need to turn off the VoiceOver screen curtain with vo+shift+f11 or adjust accessibility and screen recording permissions in System Settings > Privacy & Security.
-* If you do not hear anything after using the "Recognize Image Under VoiceOver Cursor" feature, you probably need to grant VOCR permissions to: send Apple Events.
+* If you do not hear anything after using the "OCR VoiceOver Cursor" feature, you probably need to grant VOCR permissions to: send Apple Events.
 
 Usually, relaunching VOCR and reissuing the command retriggers the alerts to reappear in the system dialogs as described above.
 
