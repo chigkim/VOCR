@@ -6,13 +6,15 @@ Discover the cutting-edge capabilities of VOCR, your ultimate OCR and AI-powered
 
 VOCR's robust suite of features offers unparalleled control and precision, making it an indispensable tool for users seeking a seamless, efficient, and highly functional OCR solution. Whether you're navigating inaccessible applications or curious about images, VOCR empowers you to do more with ease and confidence.
 
-**WARNING**: USE AT YOUR OWN RISK!
+[![Youtube Demo: VOCR 2.0 for Mac w/Chi Kim](https://img.youtube.com/vi/_9EIYUPyXao/maxresdefault.jpg)](https://www.youtube.com/watch?v=_9EIYUPyXao)
+
+## **WARNING**: USE AT YOUR OWN RISK!
 
 VOCR is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY, expressed or implied, of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Please see the [GNU General Public License](http://www.gnu.org/licenses/) for more details.
 
 ## Download
 
-Here is the direct link to download [VOCR v2.0.0-beta.3.](https://github.com/chigkim/VOCR/releases/download/v2.0.0-beta.3/VOCR_v2.0.0-beta.3.zip)
+Here is the direct link to download [VOCR v2.0.0](https://github.com/chigkim/VOCR/releases/download/v2.0.0/VOCR_v2.0.0.zip).
 
 ## Setup
 
