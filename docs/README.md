@@ -6,6 +6,8 @@ Discover the cutting-edge capabilities of VOCR, your ultimate OCR and AI-powered
 
 VOCR's robust suite of features offers unparalleled control and precision, making it an indispensable tool for users seeking a seamless, efficient, and highly functional OCR solution. Whether you're navigating inaccessible applications or curious about images, VOCR empowers you to do more with ease and confidence.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_9EIYUPyXao?si=QEHG581XEYx473t1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 **WARNING**: USE AT YOUR OWN RISK!
 
 VOCR is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY, expressed or implied, of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Please see the [GNU General Public License](http://www.gnu.org/licenses/) for more details.
