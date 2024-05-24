@@ -61,8 +61,7 @@ if response_release.status_code == 201:
 	os.system(cmd)
 	cmd = f"{gen} {archives}"
 	os.system(cmd)
-	shutil.rmtree("docs")
-	os.mkdir("docs")
+	[os.remove("docs/"+file) for file in os.listdir("docs") if ".html" in file]
 	os.rename(note, note.replace(archives, "docs"))
 	release_info = response_release.json()
 	upload_url = release_info['upload_url'].split('{')[0] + '?name=' + asset_name
