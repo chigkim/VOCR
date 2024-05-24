@@ -48,15 +48,23 @@ This feature is useful for capturing specific portions of a screen, such as a vi
 
 Press Command+Shift+Control+R after scanning a window or using VOCursor to start or stop real-time OCR. When activated, VOCR will continuously scan and report only new content. This is useful for reading live content such as subtitles.
 
-## ASK AI
+## Setup AI Model
 
 You can host your own vision language model using Ollama or utilize OpenAI GPT to ask questions about images captured with VOCR.
 
-To use the OpenAI GPT model, provide your [OpenAI API key](https://platform.openai.com/account/api-keys) in VOCR Menu > Settings > Engine > OpenAI API Key.
+### To use the OpenAI GPT model:
+
+1. [Purchase API credits](https://platform.openai.com/settings/organization/billing/overview) for your account.
+2. Create an [OpenAI API key](https://platform.openai.com/account/api-keys).
+3. Enter your OpenAI API key in the VOCR Menu: Settings > Engine > OpenAI API Key.
+
+Note: It may take several hours for your API to become active after purchasing credits.
 
 The usage cost from VOCR is an estimate. For the official usage and cost, please refer to the [Usage Dashboard](https://platform.openai.com/usage) on OpenAI website.
 
-To utilize a local vision language model with Ollama:
+### To utilize a local vision language model with Ollama:
+
+Ollama is free and private, but it is less accurate and requires a lot of computing power. I recommend M1 chip or later with minimum 16GB memory.
 
 1. Download and install [Ollama](https://ollama.ai/).
 2. Download a multimodal (vision-language) model by executing the following command in your terminal:
@@ -69,6 +77,8 @@ Note that there are also `llava:13b` and `llava:34b` models, which offer higher 
 
 You may also want to try a related app called [VOLlama](https://chigkim.github.io/VOLlama/). It is an accessible chat client for Ollama, allowing you to easily interact with an open-source large language model that runs locally on your computer.
 
+## ASK AI
+
 After the setting up OpenAI and/or Ollama:
 
 1. Choose Ollama or GPT in VOCR Menu > Settings > Engine.
@@ -77,7 +87,7 @@ After the setting up OpenAI and/or Ollama:
 
 The response will be copied to the clipboard so you can review in case you miss it.
 
-Also you can select an image file in Finder, bring up the contextual menu with VO+Shift+M, go to 'Open in,' and choose VOCR to ask a question about the image.
+Also you can select an image file in Finder, bring up the contextual menu with VO+Shift+M, go to 'Open with,' and choose VOCR to ask a question about the image.
 
 ## Explore with AI
 
