@@ -33,6 +33,9 @@ enum Shortcuts {
 			Navigation.startOCR()
 		}
 		handlers["OCR VOCursor"] = {
+			if !Accessibility.isVoiceOverRunning() {
+				return
+			}
 			Navigation.mode = .VOCURSOR
 			Navigation.startOCR()
 		}
