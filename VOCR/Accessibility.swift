@@ -33,7 +33,22 @@ enum Accessibility {
 		}
 	}
 
+	static func isVoiceOverRunning() -> Bool {
+		let runningApplications = NSWorkspace.shared.runningApplications
+		for app in runningApplications {
+			if app.localizedName == "VoiceOver" {
+				return true
+			}
+		}
+		return false
+	}
+
 	static func speak(_ message:String) {
+		if !isVoiceOverRunning() {
+			speakWithSynthesizer(message)
+			return
+		}
+		
 		let bundle = Bundle.main
 		let url = bundle.url(forResource: "say", withExtension: "scpt")
 		let parameters = NSAppleEventDescriptor.list()
@@ -45,6 +60,7 @@ enum Accessibility {
 		if let scriptObject = NSAppleScript(contentsOf: url!, error: &error) {
 			var outputError:NSDictionary?
 			if let output = scriptObject.executeAppleEvent(event, error: &outputError).stringValue {
+				debugPrint(outputError)
 				log("Speak: \(output)")
 			} else {
 				log("Output Error: \(String(describing: outputError))")
