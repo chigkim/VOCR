@@ -3,13 +3,13 @@
     <channel>
         <title>VOCR</title>
         <item>
-            <title>2.0.0</title>
-            <pubDate>Wed, 22 May 2024 14:15:54 -0400</pubDate>
-            <sparkle:version>36</sparkle:version>
-            <sparkle:shortVersionString>2.0.0</sparkle:shortVersionString>
+            <title>2.0.1</title>
+            <pubDate>Fri, 24 May 2024 10:52:05 -0400</pubDate>
+            <sparkle:version>38</sparkle:version>
+            <sparkle:shortVersionString>2.0.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
-            <sparkle:releaseNotesLink>https://chigkim.github.io/VOCR/VOCR_v2.0.0.html</sparkle:releaseNotesLink>
-            <enclosure url="https://github.com/chigkim/VOCR/releases/download/v2.0.0/VOCR_v2.0.0.zip" length="3138177" type="application/octet-stream" sparkle:edSignature="1FmT0kriuvRrzF2JzWlB2Xk9Ej8OJmJgzQN9Od1yHxxDyVP5MvwJRXiYAvEE3mOExAi9ddOLUyDneem8UGXKDw=="/>
+            <sparkle:releaseNotesLink>https://chigkim.github.io/VOCR/VOCR_v2.0.1.html</sparkle:releaseNotesLink>
+            <enclosure url="https://github.com/chigkim/VOCR/releases/download/v2.0.1/VOCR_v2.0.1.zip" length="3139252" type="application/octet-stream" sparkle:edSignature="VxMJ0wmNThYQ0Ok143PqSn/KleWJi4cz0U/tF9Zdnr4jmB1DeBPw2rHf/Q4Ha5qTd9Kjuzav+DiGxgpSkbc4BA=="/>
         </item>
     </channel>
 </rss>

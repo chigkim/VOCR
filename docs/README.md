@@ -16,7 +16,7 @@ VOCR is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
 ## Download
 
-Here is the direct link to download [VOCR v2.0.0](https://github.com/chigkim/VOCR/releases/download/v2.0.0/VOCR_v2.0.0.zip).
+Here is the direct link to download [VOCR v2.0.1](https://github.com/chigkim/VOCR/releases/download/v2.0.1/VOCR_v2.0.1.zip).
 
 ## Setup
 
