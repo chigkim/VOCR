@@ -101,27 +101,30 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 			let dataProvider = CGDataProvider(data: dataImage as CFData)
 			if let cgImage = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent) {
 				NSSound(contentsOfFile: "/System/Library/Components/CoreAudio.component/Contents/SharedSupport/SystemSounds/system/Shutter.aif", byReference: true)?.play()
-				// classify(cgImage:cgImage)
-                                
+
+				// Navigation.displayResults = []
+				Navigation.mode = .CAMERA
+				Navigation.appName = deviceName
+				Navigation.cgImage = cgImage
+
             // Present menu to the user
             let alert = NSAlert()
             alert.messageText = "Choose an action"
             alert.addButton(withTitle: "Recognize Image")
             alert.addButton(withTitle: "Recognize image with LLM")
+				alert.addButton(withTitle: "Recognize text in image")
             let response = alert.runModal()
 
-            switch response {
-            case .alertFirstButtonReturn: // Recognize Image
-                classify(cgImage: cgImage)
-            case .alertSecondButtonReturn: // Recognize image with LLM
-				ask(image: cgImage)
-            default:
+				switch response {
+				case .alertFirstButtonReturn: // Recognize Image
+					classify(cgImage: cgImage)
+				case .alertSecondButtonReturn: // Recognize image with LLM
+					ask(image: cgImage)
+				case .alertThirdButtonReturn: // Recognize text in the image
+					Navigation.startOCR()
+					            default:
                 print("Invalid menu choice")
             }
-
-				Navigation.mode = .CAMERA
-				Navigation.appName = deviceName
-				Navigation.cgImage = cgImage
 			}
 		} else {
 			print("some error here")
