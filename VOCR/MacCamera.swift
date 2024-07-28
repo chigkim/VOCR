@@ -83,7 +83,7 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 					cameraOutput.capturePhoto(with: settings, delegate: self)
 				}
 			} else {
-				print("issue here : captureSesssion.canAddInput")
+				print("issue here : captureSession.canAddInput")
 			}
 		} else {
 			print("some problem here")
@@ -101,7 +101,24 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 			let dataProvider = CGDataProvider(data: dataImage as CFData)
 			if let cgImage = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent) {
 				NSSound(contentsOfFile: "/System/Library/Components/CoreAudio.component/Contents/SharedSupport/SystemSounds/system/Shutter.aif", byReference: true)?.play()
-				classify(cgImage:cgImage)
+				// classify(cgImage:cgImage)
+                                
+            // Present menu to the user
+            let alert = NSAlert()
+            alert.messageText = "Choose an action"
+            alert.addButton(withTitle: "Recognize Image")
+            alert.addButton(withTitle: "Recognize image with LLM")
+            let response = alert.runModal()
+
+            switch response {
+            case .alertFirstButtonReturn: // Recognize Image
+                classify(cgImage: cgImage)
+            case .alertSecondButtonReturn: // Recognize image with LLM
+				ask(image: cgImage)
+            default:
+                print("Invalid menu choice")
+            }
+
 				Navigation.mode = .CAMERA
 				Navigation.appName = deviceName
 				Navigation.cgImage = cgImage
