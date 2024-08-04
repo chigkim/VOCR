@@ -9,6 +9,7 @@
 import AVFoundation
 import Cocoa
 import UniformTypeIdentifiers
+
 class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 	
 	static let shared = MacCamera()
@@ -83,7 +84,7 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 					cameraOutput.capturePhoto(with: settings, delegate: self)
 				}
 			} else {
-				print("issue here : captureSesssion.canAddInput")
+				print("issue here : captureSession.canAddInput")
 			}
 		} else {
 			print("some problem here")
@@ -101,10 +102,41 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 			let dataProvider = CGDataProvider(data: dataImage as CFData)
 			if let cgImage = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent) {
 				NSSound(contentsOfFile: "/System/Library/Components/CoreAudio.component/Contents/SharedSupport/SystemSounds/system/Shutter.aif", byReference: true)?.play()
-				classify(cgImage:cgImage)
+
 				Navigation.mode = .CAMERA
 				Navigation.appName = deviceName
 				Navigation.cgImage = cgImage
+
+            // Present menu to the user
+            let alert = NSAlert()
+            alert.messageText = "Choose an action"
+            alert.addButton(withTitle: "Recognize Image")
+            alert.addButton(withTitle: "Recognize image with LLM")
+				alert.addButton(withTitle: "Recognize text in image")
+            let response = alert.runModal()
+
+				switch response {
+				case .alertFirstButtonReturn: // Recognize Image
+					let message = classify(cgImage: cgImage)
+					sleep(1)
+					Accessibility.speak(message)
+				case .alertSecondButtonReturn: // Recognize image with LLM
+					ask(image: cgImage)
+				case .alertThirdButtonReturn: // Recognize text in the image
+					Navigation.displayResults = []
+					Navigation.cgImage = cgImage
+					Navigation.startOCR()
+					if Navigation.displayResults.count == 0 {
+						sleep(1)
+						Accessibility.speak("Nothing found!")
+					} else {
+						sleep(1)
+						Accessibility.speak("Recognition finished.")
+						NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
+					}
+					            default:
+                print("Invalid menu choice")
+           }
 			}
 		} else {
 			print("some error here")

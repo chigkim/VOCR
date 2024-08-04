@@ -170,7 +170,8 @@ cgImage  = image
 	}
 	
 	static func startOCR() {
-		prepare()
+		if (mode != .CAMERA) {
+			prepare() }
 		guard let  image = cgImage else { return }
 		let result = performOCR(cgImage:image)
 		if result.count == 0 {
