@@ -9,6 +9,7 @@
 import AVFoundation
 import Cocoa
 import UniformTypeIdentifiers
+
 class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 	
 	static let shared = MacCamera()
@@ -102,7 +103,6 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 			if let cgImage = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent) {
 				NSSound(contentsOfFile: "/System/Library/Components/CoreAudio.component/Contents/SharedSupport/SystemSounds/system/Shutter.aif", byReference: true)?.play()
 
-				// Navigation.displayResults = []
 				Navigation.mode = .CAMERA
 				Navigation.appName = deviceName
 				Navigation.cgImage = cgImage
@@ -117,14 +117,26 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 
 				switch response {
 				case .alertFirstButtonReturn: // Recognize Image
-					classify(cgImage: cgImage)
+					let message = classify(cgImage: cgImage)
+					sleep(1)
+					Accessibility.speak(message)
 				case .alertSecondButtonReturn: // Recognize image with LLM
 					ask(image: cgImage)
 				case .alertThirdButtonReturn: // Recognize text in the image
+					Navigation.displayResults = []
+					Navigation.cgImage = cgImage
 					Navigation.startOCR()
+					if Navigation.displayResults.count == 0 {
+						sleep(1)
+						Accessibility.speak("Nothing found!")
+					} else {
+						sleep(1)
+						Accessibility.speak("Recognition finished.")
+						NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
+					}
 					            default:
                 print("Invalid menu choice")
-            }
+           }
 			}
 		} else {
 			print("some error here")
