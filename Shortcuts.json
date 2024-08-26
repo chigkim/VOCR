@@ -18,5 +18,6 @@
 	{"keyName":"⌃⇧⌘","key":123,"modifiers":4864,"name":"Previous Character"},
 	{"keyName":"⌃⌘l","key":37,"modifiers":4352,"name":"Report Location"},
 	{"keyName":"⌃⌘i","key":34,"modifiers":4352,"name":"Identify Object"},
+	{"keyName":"⌃⌘f","key":3,"modifiers":4352,"name":"Find Text"},
 	{"keyName":"\u001b","key":53,"modifiers":0,"name":"Exit Navigation"}
 ]

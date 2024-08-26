@@ -23,7 +23,7 @@ enum Shortcuts {
 	static var shortcuts: [Shortcut] = []
 	static var navigationActive = false
 	static let globalShortcuts = ["Settings", "OCR Window", "OCR VOCursor", "Capture Camera", "Realtime OCR", "Ask", "Explore"]
-	static let navigationShortcuts = ["Right", "Left", "Down", "Up", "Beginning", "End", "Top", "Bottom", "Next Character", "Previous Character", "Report Location", "Identify Object", "Exit Navigation"]
+	static let navigationShortcuts = ["Right", "Left", "Down", "Up", "Beginning", "End", "Top", "Bottom", "Next Character", "Previous Character", "Report Location", "Identify Object", "Find Text", "Exit Navigation"]
 	static let allShortcuts = globalShortcuts+navigationShortcuts
 	
 	static func SetupShortcuts() {
@@ -61,6 +61,7 @@ enum Shortcuts {
 		handlers["End"] = Navigation.end
 		handlers["Next Character"] = Navigation.nextCharacter
 		handlers["Previous Character"] = Navigation.previousCharacter
+		handlers["Find Text"] = OCRTextSearch.shared.showSearchDialog
 		handlers["Exit Navigation"] = {
 			Accessibility.speak("Exit VOCR navigation.")
 			deactivateNavigationShortcuts()
@@ -130,7 +131,7 @@ loadDefaults()
 	static func register(names:[String]) {
 		for shortcut in shortcuts {
 			if names.contains(shortcut.name) {
-				let hotkey = HotKey(carbonKeyCode:shortcut.key, carbonModifiers:shortcut.modifiers)
+								let hotkey = HotKey(carbonKeyCode:shortcut.key, carbonModifiers:shortcut.modifiers)
 				hotkey.keyDownHandler = handlers[shortcut.name]
 				hotkeys.append(hotkey)
 			}
