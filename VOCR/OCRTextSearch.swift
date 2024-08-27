@@ -26,12 +26,12 @@ class OCRTextSearch {
 	    if lineText.localizedCaseInsensitiveContains(query) {
 		// Found the query! Probably OK to move VOCR cursor there!
 		Navigation.l = lineIndex
-		Accessibility.speak("Found query '\(query)' on line \(lineIndex + 1)")
+			Accessibility.speakWithSynthesizer("Found '\(query)' on line \(lineIndex + 1)")
 				return
 	    }
 	}
-
-				Accessibility.speak("Query '\(query)' not found in OCR results.")
+		
+				Accessibility.speakWithSynthesizer("Not found '\(query)'.")
     }
 
     func showSearchDialog() {
