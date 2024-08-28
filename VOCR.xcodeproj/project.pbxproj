@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D4816BE2C7EE946005E6C64 /* OCRTextSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4816BD2C7EE946005E6C64 /* OCRTextSearch.swift */; };
 		EA0C88682B4F8F4B00F2E920 /* ShortcutsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */; };
 		EA1158CE2B51EBC000B2C716 /* Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1158CD2B51EBC000B2C716 /* Shortcuts.swift */; };
 		EA14F2E02B50B30300011F82 /* LlamaCpp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14F2DF2B50B30300011F82 /* LlamaCpp.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6D4816BD2C7EE946005E6C64 /* OCRTextSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OCRTextSearch.swift; sourceTree = "<group>"; };
 		EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsWindowController.swift; sourceTree = "<group>"; };
 		EA1158CD2B51EBC000B2C716 /* Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
 		EA14F2DF2B50B30300011F82 /* LlamaCpp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LlamaCpp.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				EA5C7ACB2351BB6D00D84042 /* Navigation.swift */,
 				EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */,
 				EA3F43722B4857F9005453C2 /* Observation.swift */,
+				6D4816BD2C7EE946005E6C64 /* OCRTextSearch.swift */,
 				EA9AF47C2B54BD3A001B1BBE /* Ollama.swift */,
 				EA1F642B2352503D0089C967 /* Player.swift */,
 				EA60A3B02B4D7FF0001F6EEA /* RealTime.swift */,
@@ -274,6 +277,7 @@
 				EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */,
 				EA5581EF2B5AF6F800408F92 /* KeychainManager.swift in Sources */,
 				EA9AF47D2B54BD3A001B1BBE /* Ollama.swift in Sources */,
+				6D4816BE2C7EE946005E6C64 /* OCRTextSearch.swift in Sources */,
 				EAF9C3C82354A66200D4D77C /* Settings.swift in Sources */,
 				EAC9ECD92BFB8D6200D61F00 /* MacCamera.swift in Sources */,
 				EA1F642C2352503D0089C967 /* Player.swift in Sources */,
@@ -421,11 +425,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = VOCR/VOCR.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 39;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 9N598S2535;
+				DEVELOPMENT_TEAM = 6Q47GP4GKF;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = VOCR/Info.plist;
