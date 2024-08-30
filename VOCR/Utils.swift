@@ -69,6 +69,10 @@ func askPrompt(value:String) -> String? {
 	let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
 	inputTextField.stringValue = value
 		alert.accessoryView = inputTextField
+	DispatchQueue.main.async {
+		alert.window.makeFirstResponder(inputTextField)
+	}
+	
 	let response = alert.runModal()
 	hide()
 	if response == .alertFirstButtonReturn {
