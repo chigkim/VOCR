@@ -20,18 +20,26 @@ class OCRTextSearch {
 	    return 
 	}
 
-	for (lineIndex, line) in Navigation.displayResults.enumerated() {
-	    let lineText = line.map { $0.value }.joined(separator: " ")
+    for (lineIndex, line) in Navigation.displayResults.enumerated() {
+        let lineText = line.map { $0.value }.joined(separator: " ")
 
-	    if lineText.localizedCaseInsensitiveContains(query) {
-		// Found the query! Probably OK to move VOCR cursor there!
-		Navigation.l = lineIndex
-			Accessibility.speakWithSynthesizer("Found '\(query)' on line \(lineIndex + 1)")
-				return
-	    }
-	}
+        if lineText.localizedCaseInsensitiveContains(query) {
+            // Found the line containing the search text
+
+            // Now, find the specific item(s) within the line and move VOCR cursor there
+            for (wordIndex, word) in line.enumerated() {
+                if word.value.localizedCaseInsensitiveContains(query) { 
+                    Navigation.l = lineIndex
+                    Navigation.w = wordIndex
+                    print("Found '\(query)' at line \(lineIndex + 1), word \(wordIndex + 1)")
+					Accessibility.speakWithSynthesizer("Found")
+                }
+            }
+            return 
+        }
+    }        
 		
-				Accessibility.speakWithSynthesizer("Not found '\(query)'.")
+				Accessibility.speakWithSynthesizer("Text not found '\(query)'.")
     }
 
     func showSearchDialog() {
