@@ -3,13 +3,24 @@
     <channel>
         <title>VOCR</title>
         <item>
+            <title>2.1.0</title>
+            <pubDate>Sun, 29 Sep 2024 17:32:30 -0400</pubDate>
+            <sparkle:version>40</sparkle:version>
+            <sparkle:shortVersionString>2.1.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
+            <sparkle:releaseNotesLink>https://chigkim.github.io/VOCR/VOCR_v2.1.0.html</sparkle:releaseNotesLink>
+            <enclosure url="https://github.com/chigkim/VOCR/releases/download/v2.1.0/VOCR_v2.1.0.zip" length="3144204" type="application/octet-stream" sparkle:edSignature="xJisnUZNpaPo0Laa7xJ0yIi0sjuwdHjVi4XJ9Edul9wnzJaA6m3w5qC3SQN4tEpciZ3YH+P2W1TphziyoVjpAg=="/>
+            <sparkle:deltas>
+                <enclosure url="https://chigkim.github.io/VOCR/VOCR40-38.delta" sparkle:deltaFrom="38" length="236954" type="application/octet-stream" sparkle:deltaFromSparkleExecutableSize="863040" sparkle:deltaFromSparkleLocales="de,he,ar,el,ja,fa,en" sparkle:edSignature="rFd25QwkBnHcyRyO3xQypZpNuU2DPCe4Ovfb209LzDOuIq2mA5YLB2A6zlOPQWqUc2oclA3t4w+0fH4bfEnSBw=="/>
+            </sparkle:deltas>
+        </item>
+        <item>
             <title>2.0.1</title>
             <pubDate>Fri, 24 May 2024 10:52:05 -0400</pubDate>
             <sparkle:version>38</sparkle:version>
             <sparkle:shortVersionString>2.0.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
-            <sparkle:releaseNotesLink>https://chigkim.github.io/VOCR/VOCR_v2.0.1.html</sparkle:releaseNotesLink>
-            <enclosure url="https://github.com/chigkim/VOCR/releases/download/v2.0.1/VOCR_v2.0.1.zip" length="3139252" type="application/octet-stream" sparkle:edSignature="VxMJ0wmNThYQ0Ok143PqSn/KleWJi4cz0U/tF9Zdnr4jmB1DeBPw2rHf/Q4Ha5qTd9Kjuzav+DiGxgpSkbc4BA=="/>
+            <enclosure url="https://chigkim.github.io/VOCR/VOCR_v2.0.1.zip" length="3139252" type="application/octet-stream" sparkle:edSignature="VxMJ0wmNThYQ0Ok143PqSn/KleWJi4cz0U/tF9Zdnr4jmB1DeBPw2rHf/Q4Ha5qTd9Kjuzav+DiGxgpSkbc4BA=="/>
         </item>
     </channel>
 </rss>
