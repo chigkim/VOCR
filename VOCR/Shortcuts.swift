@@ -23,7 +23,7 @@ enum Shortcuts {
 	static var shortcuts: [Shortcut] = []
 	static var navigationActive = false
 	static let globalShortcuts = ["Settings", "OCR Window", "OCR VOCursor", "Capture Camera", "Realtime OCR", "Ask", "Explore"]
-	static let navigationShortcuts = ["Right", "Left", "Down", "Up", "Beginning", "End", "Top", "Bottom", "Next Character", "Previous Character", "Report Location", "Identify Object", "Find Text", "Exit Navigation"]
+	static let navigationShortcuts = ["Right", "Left", "Down", "Up", "Beginning", "End", "Top", "Bottom", "Next Character", "Previous Character", "Report Location", "Identify Object", "Find Text", "Find Next", "Find Previous", "Exit Navigation"]
 	static let allShortcuts = globalShortcuts+navigationShortcuts
 	
 	static func SetupShortcuts() {
@@ -62,6 +62,12 @@ enum Shortcuts {
 		handlers["Next Character"] = Navigation.nextCharacter
 		handlers["Previous Character"] = Navigation.previousCharacter
 		handlers["Find Text"] = OCRTextSearch.shared.showSearchDialog
+		handlers["Find Next"] = {
+			OCRTextSearch.shared.search(fromBeginning: false, backward: false)
+		}
+		handlers["Find Previous"] = {
+			OCRTextSearch.shared.search(fromBeginning: false, backward: true)
+		}
 		handlers["Exit Navigation"] = {
 			Accessibility.speak("Exit VOCR navigation.")
 			deactivateNavigationShortcuts()

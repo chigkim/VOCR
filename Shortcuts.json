@@ -19,5 +19,7 @@
 	{"keyName":"⌃⌘l","key":37,"modifiers":4352,"name":"Report Location"},
 	{"keyName":"⌃⌘i","key":34,"modifiers":4352,"name":"Identify Object"},
 	{"keyName":"⌃⌘f","key":3,"modifiers":4352,"name":"Find Text"},
+	{"keyName":"⌃⌘g","key":5,"modifiers":4352,"name":"Find Next"},
+	{"keyName":"⌃⇧⌘g","key":5,"modifiers":4864,"name":"Find Previous"},
 	{"keyName":"\u001b","key":53,"modifiers":0,"name":"Exit Navigation"}
 ]
