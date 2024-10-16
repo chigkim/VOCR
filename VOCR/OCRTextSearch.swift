@@ -21,8 +21,10 @@ class OCRTextSearch {
 		}
 		
 		let searchQuery = query.isEmpty ? self.getLastSearchQuery() : query
-		var startIndex = Navigation.l
-		var startWordIndex = Navigation.w
+		
+		// Ensure Navigation.l and Navigation.w have valid starting points
+		var startIndex = (Navigation.l >= 0 && Navigation.l < Navigation.displayResults.count) ? Navigation.l : 0
+		var startWordIndex = (startIndex >= 0 && startIndex < Navigation.displayResults.count && Navigation.w >= 0 && Navigation.w < Navigation.displayResults[startIndex].count) ? Navigation.w : 0
 		
 		if fromBeginning {
 			startIndex = backward ? Navigation.displayResults.count - 1 : 0
@@ -32,18 +34,20 @@ class OCRTextSearch {
 				startWordIndex -= 1
 				if startWordIndex < 0 {
 					startIndex -= 1
-					startWordIndex = startIndex >= 0 ? Navigation.displayResults[startIndex].count - 1 : 0
+					if startIndex >= 0 {
+						startWordIndex = Navigation.displayResults[startIndex].count - 1
+					} else {
+						startWordIndex = 0
+					}
 				}
 			} else {
 				startWordIndex += 1
-				if startWordIndex >= Navigation.displayResults[startIndex].count {
+				if startIndex < Navigation.displayResults.count && startWordIndex >= Navigation.displayResults[startIndex].count {
 					startIndex += 1
 					startWordIndex = 0
 				}
 			}
 		}
-		
-		let lineCount = Navigation.displayResults.count
 		
 		func isMatch(line: [Observation], wordIndex: Int) -> Bool {
 			return line[wordIndex].value.localizedCaseInsensitiveContains(searchQuery)
@@ -68,7 +72,7 @@ class OCRTextSearch {
 			}
 		} else {
 			var lineIndex = startIndex
-			while lineIndex < lineCount {
+			while lineIndex < Navigation.displayResults.count {
 				let line = Navigation.displayResults[lineIndex]
 				let wordCount = line.count
 				
