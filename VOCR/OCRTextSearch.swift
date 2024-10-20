@@ -63,6 +63,7 @@ class OCRTextSearch {
 					if isMatch(line: line, wordIndex: wordIndex) {
 						Navigation.l = lineIndex
 						Navigation.w = wordIndex
+						setMouseCoordinates(x: lineIndex, y: wordIndex)
 						print("Found '\(searchQuery)' at line \(lineIndex + 1), word \(wordIndex + 1)")
 						Accessibility.speak("Found \(searchQuery) in \(Navigation.displayResults[lineIndex][wordIndex].value)")
 						return
@@ -80,6 +81,7 @@ class OCRTextSearch {
 					if isMatch(line: line, wordIndex: wordIndex) {
 						Navigation.l = lineIndex
 						Navigation.w = wordIndex
+						setMouseCoordinates(x: lineIndex, y: wordIndex)
 						print("Found '\(searchQuery)' at line \(lineIndex + 1), word \(wordIndex + 1)")
 						Accessibility.speak("Found \(searchQuery) in \(Navigation.displayResults[lineIndex][wordIndex].value)")
 						return
@@ -128,4 +130,12 @@ class OCRTextSearch {
 	private func getLastSearchQuery() -> String {
 		return lastSearchQuery
 	}
+	
+	private func setMouseCoordinates(x:Int, y:Int) {
+		if Settings.moveMouse {
+			CGWarpMouseCursorPosition(Navigation.convert2coordinates(Navigation.displayResults[x][y].boundingBox))
+		}
+		
+	}
+	
 }
