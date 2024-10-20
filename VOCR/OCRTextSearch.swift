@@ -64,7 +64,7 @@ class OCRTextSearch {
 						Navigation.l = lineIndex
 						Navigation.w = wordIndex
 						print("Found '\(searchQuery)' at line \(lineIndex + 1), word \(wordIndex + 1)")
-						Accessibility.speakWithSynthesizer("Found \(searchQuery) in \(Navigation.displayResults[lineIndex][wordIndex].value)")
+						Accessibility.speak("Found \(searchQuery) in \(Navigation.displayResults[lineIndex][wordIndex].value)")
 						return
 					}
 				}
@@ -81,7 +81,7 @@ class OCRTextSearch {
 						Navigation.l = lineIndex
 						Navigation.w = wordIndex
 						print("Found '\(searchQuery)' at line \(lineIndex + 1), word \(wordIndex + 1)")
-						Accessibility.speakWithSynthesizer("Found \(searchQuery) in \(Navigation.displayResults[lineIndex][wordIndex].value)")
+						Accessibility.speak("Found \(searchQuery) in \(Navigation.displayResults[lineIndex][wordIndex].value)")
 						return
 					}
 				}
@@ -89,7 +89,7 @@ class OCRTextSearch {
 			}
 		}
 		
-		Accessibility.speakWithSynthesizer("Text not found '\(searchQuery)'.")
+		Accessibility.speak("Text not found '\(searchQuery)'.")
 	}
 	
 	func showSearchDialog() {
@@ -122,6 +122,7 @@ class OCRTextSearch {
 			lastSearchQuery = textField.stringValue
 			self.search(query: lastSearchQuery)
 		}
+		sleep(1)
 	}
 	
 	private func getLastSearchQuery() -> String {
