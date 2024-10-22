@@ -65,7 +65,7 @@ class OCRTextSearch {
 						Navigation.w = wordIndex
 						setMouseCoordinates(x: lineIndex, y: wordIndex)
 						print("Found '\(searchQuery)' at line \(lineIndex + 1), word \(wordIndex + 1)")
-						Accessibility.speak("Found \(searchQuery) in \(Navigation.displayResults[lineIndex][wordIndex].value)")
+						Accessibility.speak("\(Navigation.displayResults[lineIndex][wordIndex].value)")
 						return
 					}
 				}
@@ -83,7 +83,7 @@ class OCRTextSearch {
 						Navigation.w = wordIndex
 						setMouseCoordinates(x: lineIndex, y: wordIndex)
 						print("Found '\(searchQuery)' at line \(lineIndex + 1), word \(wordIndex + 1)")
-						Accessibility.speak("Found \(searchQuery) in \(Navigation.displayResults[lineIndex][wordIndex].value)")
+						Accessibility.speak("\(Navigation.displayResults[lineIndex][wordIndex].value)")
 						return
 					}
 				}
@@ -91,7 +91,7 @@ class OCRTextSearch {
 			}
 		}
 		
-		Accessibility.speak("Text not found '\(searchQuery)'.")
+		Accessibility.speak("Not found.")
 	}
 	
 	func showSearchDialog() {
