@@ -63,7 +63,7 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 			Accessibility.speakWithSynthesizer("No camera available.")
 			return
 		}
-
+		
 		for c in stride(from: 3, to: 1, by: -1) {
 			Accessibility.speak("\(c)")
 			sleep(1)
@@ -102,27 +102,31 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 			let dataProvider = CGDataProvider(data: dataImage as CFData)
 			if let cgImage = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent) {
 				NSSound(contentsOfFile: "/System/Library/Components/CoreAudio.component/Contents/SharedSupport/SystemSounds/system/Shutter.aif", byReference: true)?.play()
-
+				
 				Navigation.mode = .CAMERA
 				Navigation.appName = deviceName
 				Navigation.cgImage = cgImage
-
-            // Present menu to the user
-            let alert = NSAlert()
-            alert.messageText = "Choose an action"
-            alert.addButton(withTitle: "Recognize Image")
-            alert.addButton(withTitle: "Recognize image with LLM")
+				
+				// Present menu to the user
+				let alert = NSAlert()
+				alert.messageText = "Choose an action"
+				alert.addButton(withTitle: "Recognize Image")
+				alert.addButton(withTitle: "Recognize image with LLM")
 				alert.addButton(withTitle: "Recognize text in image")
-            let response = alert.runModal()
-
-				switch response {
-				case .alertFirstButtonReturn: // Recognize Image
+				alert.addButton(withTitle: "Close")
+				alert.window.defaultButtonCell = alert.buttons[0].cell as? NSButtonCell
+				let response = alert.runModal()
+				
+				if let clickedButton = alert.buttons.first(where: { $0.title == "Recognize Image" }) {
+					// Handle Recognize Image button
 					let message = classify(cgImage: cgImage)
 					sleep(1)
 					Accessibility.speak(message)
-				case .alertSecondButtonReturn: // Recognize image with LLM
+				} else if let clickedButton = alert.buttons.first(where: { $0.title == "Recognize image with LLM" }) {
+					// Handle Recognize image with LLM button
 					ask(image: cgImage)
-				case .alertThirdButtonReturn: // Recognize text in the image
+				} else if let clickedButton = alert.buttons.first(where: { $0.title == "Recognize text in image" }) {
+					// Handle Recognize text in image button
 					Navigation.displayResults = []
 					Navigation.cgImage = cgImage
 					Navigation.startOCR()
@@ -134,9 +138,12 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 						Accessibility.speak("Recognition finished.")
 						NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
 					}
-					            default:
-                print("Invalid menu choice")
-           }
+				} else if let clickedButton = alert.buttons.first(where: { $0.title == "Close" }) {
+					alert.window.close()
+					return
+				} else {
+					print("Invalid menu choice")
+				}
 			}
 		} else {
 			print("some error here")
