@@ -80,7 +80,8 @@ enum Navigation {
 				}
 				title += String(window.hashValue)
 				alert.addButton(withTitle: title)
-			}
+							}
+			alert.addButton(withTitle: "Close")
 			let modalResult = alert.runModal()
 			hide()
 			let r = modalResult.rawValue-1000

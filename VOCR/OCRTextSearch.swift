@@ -123,6 +123,9 @@ class OCRTextSearch {
 		} else if response == .alertSecondButtonReturn { // From Current
 			lastSearchQuery = textField.stringValue
 			self.search(query: lastSearchQuery)
+		} else {
+			Accessibility.speak("Cancelled.")
+			return
 		}
 		sleep(1)
 	}
