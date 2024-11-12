@@ -68,7 +68,7 @@ enum Navigation {
 		}
 		var window = windows![0]
 		
-		if Settings.targetWindow {
+		if Settings.targetWindow && windows!.count > 1 {
 			let alert = NSAlert()
 			alert.alertStyle = .informational
 			alert.messageText = "Target Window"
