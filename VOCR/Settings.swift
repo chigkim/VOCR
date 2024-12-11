@@ -94,15 +94,15 @@ enum Settings {
 		let engineMenuItem = NSMenuItem(title: "Engine", action: nil, keyEquivalent: "")
 		engineMenuItem.submenu = engineMenu
 		settingsMenu.addItem(engineMenuItem)
-
+		
 		let soundOutputMenuItem = NSMenuItem(title: "Sound Output...", action: #selector(target.chooseOutput(_:)), keyEquivalent: "")
 		soundOutputMenuItem.target = target
 		settingsMenu.addItem(soundOutputMenuItem)
-
+		
 		let cameraMenuItem = NSMenuItem(title: "Choose Camera...", action: #selector(target.chooseCamera(_:)), keyEquivalent: "")
 		cameraMenuItem.target = target
 		settingsMenu.addItem(cameraMenuItem)
-
+		
 		let shortcutsMenuItem = NSMenuItem(title: "Shortcuts...", action: #selector(target.openShortcutsWindow(_:)), keyEquivalent: "")
 		shortcutsMenuItem.target = target
 		settingsMenu.addItem(shortcutsMenuItem)
@@ -114,7 +114,7 @@ enum Settings {
 		let settingsMenuItem = NSMenuItem(title: "Settings", action: nil, keyEquivalent: "")
 		settingsMenuItem.submenu = settingsMenu
 		menu.addItem(settingsMenuItem)
-
+		
 		if Navigation.cgImage != nil {
 			let saveScreenshotMenuItem = NSMenuItem(title: "Save Latest Image", action: #selector(target.saveLastImage(_:)), keyEquivalent: "s")
 			saveScreenshotMenuItem.target = target
@@ -126,38 +126,38 @@ enum Settings {
 			saveMenuItem.target = target
 			menu.addItem(saveMenuItem)
 		}
-
+		
 		let updateMenu = NSMenu()
 		let aboutMenuItem = NSMenuItem(title: "About...", action: #selector(target.displayAboutWindow(_:)), keyEquivalent: "")
 		aboutMenuItem.target = target
 		updateMenu.addItem(aboutMenuItem)
-
+		
 		let checkForUpdatesItem = NSMenuItem(title: "Check for Updates", action: #selector(target.checkForUpdates), keyEquivalent: "")
 		checkForUpdatesItem.target = target
 		updateMenu.addItem(checkForUpdatesItem)
-
+		
 		let autoCheckItem = NSMenuItem(title: "Automatically Chek for Updates", action: #selector(target.toggleSetting(_:)), keyEquivalent: "")
 		autoCheckItem.target = target
 		updateMenu.addItem(autoCheckItem)
-
+		
 		let autoUpdateItem = NSMenuItem(title: "Automatically Install  Updates", action: #selector(target.toggleSetting(_:)), keyEquivalent: "")
 		autoUpdateItem.target = target
 		updateMenu.addItem(autoUpdateItem)
-
+		
 		if let updater = AutoUpdateManager.shared.updaterController?.updater {
 			autoCheckItem.state = (updater.automaticallyChecksForUpdates) ? .on : .off
 			autoUpdateItem.state = (updater.automaticallyDownloadsUpdates) ? .on : .off
 		}
-
+		
 		let preReleaseItem = NSMenuItem(title: "Download  Pre-release", action: #selector(target.toggleSetting(_:)), keyEquivalent: "")
 		preReleaseItem.target = target
 		updateMenu.addItem(preReleaseItem)
 		preReleaseItem.state = (Settings.preRelease) ? .on : .off
-
+		
 		let updateMenuItem = NSMenuItem(title: "Updates", action: nil, keyEquivalent: "")
 		updateMenuItem.submenu = updateMenu
 		menu.addItem(updateMenuItem)
-
+		
 		if Shortcuts.navigationActive {
 			let dismissMenuItem = NSMenuItem(title: "Dismiss Menu", action: #selector(target.dismiss(_:)), keyEquivalent: "z")
 			dismissMenuItem.target = target
@@ -167,10 +167,10 @@ enum Settings {
 		menu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
 		return menu
 	}
-
+	
 	static func installMouseMonitor() {
 		self.eventMonitor = NSEvent.addGlobalMonitorForEvents(
-			matching: [NSEvent.EventTypeMask.leftMouseDown],
+			matching: [NSEvent.EventTypeMask.leftMouseDown, NSEvent.EventTypeMask.rightMouseDown],
 			handler: { (event: NSEvent) in
 				switch event.type {
 				case .leftMouseDown:
@@ -385,7 +385,7 @@ class MenuHandler: NSObject {
 		try! Player.shared.engine.setDevice(AudioEngine.outputDevices[n])
 		try! Player.shared.engine.start()
 	}
-
+	
 	@objc func chooseCamera(_ sender: Any?) {
 		let devices = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera,.externalUnknown], mediaType: .video, position: .unspecified).devices
 		if devices.count>1 {
@@ -403,7 +403,7 @@ class MenuHandler: NSObject {
 			Settings.save()
 		}
 	}
-
+	
 	@objc func saveResult(_ sender: NSMenuItem) {
 		let savePanel = NSSavePanel()
 		savePanel.allowedContentTypes = [.text]
