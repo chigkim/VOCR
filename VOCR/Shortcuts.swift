@@ -69,7 +69,7 @@ enum Shortcuts {
 			OCRTextSearch.shared.search(fromBeginning: false, backward: true)
 		}
 		handlers["Exit Navigation"] = {
-			Accessibility.speak("Exit VOCR navigation.")
+			Accessibility.speak(String(localized: "exit_vocr_navigation"))
 			deactivateNavigationShortcuts()
 		}
 		
@@ -170,10 +170,10 @@ loadDefaults()
 	   }
 	static func realTimeHandler() {
 		if RealTime.run {
-			Accessibility.speakWithSynthesizer("Stopping RealTime OCR.")
+			Accessibility.speakWithSynthesizer(String(localized: "stopping_realtime_ocr"))
 			RealTime.run = false
 		} else {
-			Accessibility.speakWithSynthesizer("RealTime OCR started.")
+			Accessibility.speakWithSynthesizer(String(localized: "realtime_ocr_started"))
 			RealTime.run = true
 			RealTime.continuousOCR()
 		}

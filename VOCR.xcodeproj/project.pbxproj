@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6D4816BE2C7EE946005E6C64 /* OCRTextSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4816BD2C7EE946005E6C64 /* OCRTextSearch.swift */; };
+		6D5B68152D33275300284AA1 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6D5B68142D33275300284AA1 /* Localizable.xcstrings */; };
 		EA0C88682B4F8F4B00F2E920 /* ShortcutsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */; };
 		EA1158CE2B51EBC000B2C716 /* Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1158CD2B51EBC000B2C716 /* Shortcuts.swift */; };
 		EA14F2E02B50B30300011F82 /* LlamaCpp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14F2DF2B50B30300011F82 /* LlamaCpp.swift */; };
@@ -47,6 +48,7 @@
 
 /* Begin PBXFileReference section */
 		6D4816BD2C7EE946005E6C64 /* OCRTextSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OCRTextSearch.swift; sourceTree = "<group>"; };
+		6D5B68142D33275300284AA1 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsWindowController.swift; sourceTree = "<group>"; };
 		EA1158CD2B51EBC000B2C716 /* Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
 		EA14F2DF2B50B30300011F82 /* LlamaCpp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LlamaCpp.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 		EADE59A8232EB09A00E2F65A = {
 			isa = PBXGroup;
 			children = (
+				6D5B68142D33275300284AA1 /* Localizable.xcstrings */,
 				EA2D4F082B5215CD001D6D24 /* Shortcuts.json */,
 				EAAD42AD298596FB00BE5D98 /* com.chikim.VOCR.plist */,
 				EA5C7AD72351D81100D84042 /* Scripts */,
@@ -203,8 +206,9 @@
 		EADE59A9232EB09A00E2F65A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1620;
 				ORGANIZATIONNAME = "Chi Kim";
 				TargetAttributes = {
 					EADE59B0232EB09A00E2F65A = {
@@ -219,6 +223,7 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = EADE59A8232EB09A00E2F65A;
 			packageReferences = (
@@ -243,6 +248,7 @@
 			files = (
 				EADE59B9232EB09A00E2F65A /* Assets.xcassets in Resources */,
 				EAD9CFD22355E11600E7F594 /* say.scpt in Resources */,
+				6D5B68152D33275300284AA1 /* Localizable.xcstrings in Resources */,
 				EA1AC96A2B4C51FA00D3543F /* VOCursor.scpt in Resources */,
 				EA2D4F092B5215CD001D6D24 /* Shortcuts.json in Resources */,
 				EA5C7AD92351D81100D84042 /* VOScreenshot.scpt in Resources */,
@@ -338,6 +344,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -359,6 +366,7 @@
 				OTHER_LDFLAGS = "-lc++";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -401,6 +409,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -415,6 +424,7 @@
 				OTHER_LDFLAGS = "-lc++";
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
@@ -430,7 +440,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 45;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 9N598S2535;
+				DEVELOPMENT_TEAM = 6Q47GP4GKF;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = VOCR/Info.plist;

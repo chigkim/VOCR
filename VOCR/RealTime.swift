@@ -1,5 +1,5 @@
 //
-//  RealTime.swift
+//  Realtime.swift
 //  VOCR
 //
 //  Created by Chi Kim on 1/9/24.
@@ -33,8 +33,16 @@ enum RealTime {
 	}
 	
 	static func diff(old:String, new:String) -> String? {
-		let oldArray  = old.lowercased().components(separatedBy: .whitespaces)
-		let newArray = new.lowercased().components(separatedBy: .whitespaces)
+            let punctuationCharacters = CharacterSet.punctuationCharacters
+            
+            let oldArray  = old.lowercased().components(separatedBy: .whitespaces)
+                    .map { $0.trimmingCharacters(in: punctuationCharacters) }
+                    .filter { !$0.isEmpty }
+            
+	    let newArray = new.lowercased().components(separatedBy: .whitespaces)
+                    .map { $0.trimmingCharacters(in: punctuationCharacters) }
+                    .filter { !$0.isEmpty }
+            
 		let difference = newArray.difference(from: oldArray)
 		let insertedTexts = difference.compactMap {
 			if case .insert(_, let element, _) = $0 {

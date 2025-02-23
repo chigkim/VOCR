@@ -176,11 +176,11 @@ cgImage  = image
 		guard let  image = cgImage else { return }
 		let result = performOCR(cgImage:image)
 		if result.count == 0 {
-			Accessibility.speak("Nothing found")
+			Accessibility.speak(String(localized: "nothing_found"))
 			return
 		}
 		process(result)
-		Accessibility.speak("Finished scanning \(appName), \(windowName)")
+		Accessibility.speak(String(localized: "Finished scanning \(appName), \(windowName)"))
 		Shortcuts.activateNavigationShortcuts()
 	}
 	
@@ -198,14 +198,14 @@ cgImage  = image
 
 	static func exploreHandler(description:String) {
 		guard let json = extractString(text:description, startDelimiter: "```json\n", endDelimiter: "\n```") else {
-			Accessibility.speakWithSynthesizer("Cannot extract JSON string from the response. Try again.")
+			Accessibility.speakWithSynthesizer(String(localized: "cannot_extract_json_string_from_response"))
 			return
 		}
 		if let elements = self.decode(message:json) {
 			let result = elements.map {Observation($0)}
 			self.process(result)
 			Shortcuts.activateNavigationShortcuts()
-			Accessibility.speak("Finished scanning \(self.appName), \(self.windowName)")
+			Accessibility.speak(String(localized: "Finished scanning \(self.appName), \(self.windowName)"))
 
 //			DispatchQueue.main.async {
 //				if let cgImage = cgImage {
@@ -215,7 +215,7 @@ cgImage  = image
 //			}
 
 		} else {
-			Accessibility.speakWithSynthesizer("Cannot parse the JSON string. Try again.")
+			Accessibility.speakWithSynthesizer(String(localized: "cannot_parse_json_string"))
 		}
 	}
 	

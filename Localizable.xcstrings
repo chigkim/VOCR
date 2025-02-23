@@ -1,0 +1,160 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "cancelled" : {
+
+    },
+    "cannot_extract_json_string_from_response" : {
+
+    },
+    "cannot_parse_json_string" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cannot parse the JSON string. Try again."
+          }
+        }
+      }
+    },
+    "choose_action" : {
+      "comment" : "Choose an action",
+      "extractionState" : "manual"
+    },
+    "choose_ollama_model" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please choose a model for Ollama to use first."
+          }
+        }
+      }
+    },
+    "Connection error: %@" : {
+
+    },
+    "exit_vocr_navigation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exit VOCR navigation."
+          }
+        }
+      }
+    },
+    "Faild to access %@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Faild to access %1$@, %2$@"
+          }
+        }
+      }
+    },
+    "Finished scanning %@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Finished scanning %1$@, %2$@"
+          }
+        }
+      }
+    },
+    "Getting response from %@... Please wait..." : {
+
+    },
+    "HTTP Error: Status code %lld" : {
+
+    },
+    "invalid_response_from_server" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid response from the server."
+          }
+        }
+      }
+    },
+    "no_camera_available" : {
+      "comment" : "No camera available.",
+      "extractionState" : "manual"
+    },
+    "no_data_from_server" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No data received from the server."
+          }
+        }
+      }
+    },
+    "not_found" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not Found."
+          }
+        }
+      }
+    },
+    "nothing_found" : {
+      "comment" : "Nothing found.",
+      "extractionState" : "manual"
+    },
+    "realtime_ocr_started" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Realtime OCR started."
+          }
+        }
+      }
+    },
+    "recognition_finished" : {
+      "comment" : "Recognition finished!",
+      "extractionState" : "manual"
+    },
+    "stopping_realtime_ocr" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stopping Realtime OCR."
+          }
+        }
+      }
+    },
+    "unknown" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unknown"
+          }
+        }
+      }
+    },
+    "vocr_ready" : {
+      "comment" : "VOCR Ready!",
+      "extractionState" : "manual"
+    }
+  },
+  "version" : "1.0"
+}

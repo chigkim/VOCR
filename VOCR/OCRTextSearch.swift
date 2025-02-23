@@ -91,7 +91,7 @@ class OCRTextSearch {
 			}
 		}
 		
-		Accessibility.speak("Not found.")
+		Accessibility.speak(String(localized: "not_found"))
 	}
 	
 	func showSearchDialog() {
@@ -124,7 +124,7 @@ class OCRTextSearch {
 			lastSearchQuery = textField.stringValue
 			self.search(query: lastSearchQuery)
 		} else {
-			Accessibility.speak("Cancelled.")
+			Accessibility.speak(String(localized: "cancelled"))
 			return
 		}
 		sleep(1)

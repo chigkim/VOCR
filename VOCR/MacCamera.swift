@@ -60,7 +60,7 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 	
 	func takePicture() {
 		guard let device = getCamera() else {
-			Accessibility.speakWithSynthesizer("No camera available.")
+			Accessibility.speakWithSynthesizer(String(localized: "no_camera_available"))
 			return
 		}
 		
@@ -109,7 +109,7 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 				
 				// Present menu to the user
 				let alert = NSAlert()
-				alert.messageText = "Choose an action"
+				alert.messageText = String(localized: "choose_action")
 				alert.addButton(withTitle: "Recognize Image")
 				alert.addButton(withTitle: "Recognize image with LLM")
 				alert.addButton(withTitle: "Recognize text in image")
@@ -132,10 +132,10 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 					Navigation.startOCR()
 					if Navigation.displayResults.count == 0 {
 						sleep(1)
-						Accessibility.speak("Nothing found!")
+						Accessibility.speak(String(localized: "nothing_found"))
 					} else {
 						sleep(1)
-						Accessibility.speak("Recognition finished.")
+							Accessibility.speak(String(localized: "recognition_finished"))
 						NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
 					}
 				} else if let clickedButton = alert.buttons.first(where: { $0.title == "Close" }) {

@@ -65,7 +65,7 @@ static let ollamaAPIURL = "http://127.0.0.1:11434/api/generate"
 	
 	static func describe(image: CGImage, system: String, prompt: String, completion: @escaping (String) -> Void) {
 		guard let model = model else {
-			Accessibility.speakWithSynthesizer("Please choose a model for Ollama to use first.")
+			Accessibility.speakWithSynthesizer(String(localized: "choose_ollama_model"))
 			return
 		}
 		let base64Image = imageToBase64(image: image)

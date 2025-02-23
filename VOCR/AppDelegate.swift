@@ -19,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 		NSApp.setActivationPolicy(.accessory)
 		setupAutoLaunch()
 		hide()
-		Accessibility.speak("VOCR Ready!")
+		Accessibility.speak(String(localized: "vocr_ready"))
 		NSSound(contentsOfFile: "/System/Library/Sounds/Blow.aiff", byReference: true)?.play()
 		autoUpdateManager = AutoUpdateManager.shared
 	}

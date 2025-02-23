@@ -87,7 +87,7 @@ enum GPT:EngineAsking {
 					completion(description)
 				}
 			} catch {
-				Accessibility.speakWithSynthesizer("Error decoding JSON: \(error)")
+				Accessibility.speakWithSynthesizer("Error decoding JSON string: \(error)")
 				completion("Error: Could not parse JSON.")
 			}
 		}

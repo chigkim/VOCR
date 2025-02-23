@@ -27,30 +27,30 @@ func performRequest(_ request:inout URLRequest, method:String="POST", name:Strin
 	task = URLSession.shared.dataTask(with: request) { data, response, error in
 		if let error = error {
 			if error.localizedDescription != "cancelled" {
-				Accessibility.speakWithSynthesizer("Connection error: \(error.localizedDescription)")
+				Accessibility.speakWithSynthesizer(String(localized: "Connection error: \(error.localizedDescription)"))
 			}
 			return
 		}
 
 		guard let httpResponse = response as? HTTPURLResponse else {
-			Accessibility.speakWithSynthesizer("Invalid response from server.")
+			Accessibility.speakWithSynthesizer(String(localized: "invalid_response_from_server"))
 			return
 		}
 
 		guard httpResponse.statusCode == 200 else {
-			Accessibility.speakWithSynthesizer("HTTP Error: Status code \(httpResponse.statusCode)")
+			Accessibility.speakWithSynthesizer(String(localized: "HTTP Error: Status code \(httpResponse.statusCode)"))
 			return
 		}
 
 		guard let data = data else {
-			Accessibility.speakWithSynthesizer("No data received from server.")
+			Accessibility.speakWithSynthesizer(String(localized: "no_data_from_server"))
 			return
 		}
 		log(String(data: data, encoding: .utf8))
 		completion(data)
 	}
 	if let name = name {
-		Accessibility.speakWithSynthesizer("Getting response from \(name)... Please wait...")
+		Accessibility.speakWithSynthesizer(String(localized: "Getting response from \(name)... Please wait..."))
 	}
 		task?.resume()
 }
@@ -95,7 +95,7 @@ func grabImage() -> CGImage? {
 	} else if Navigation.mode == .CAMERA {
 		return Navigation.cgImage
 	} else {
-		Accessibility.speakWithSynthesizer("Faild to access \(Navigation.appName), \(Navigation.windowName)")
+		Accessibility.speakWithSynthesizer(String(localized: "Faild to access \(Navigation.appName), \(Navigation.windowName)"))
 	}
 return nil
 }
@@ -361,7 +361,7 @@ func classify(cgImage:CGImage) -> String {
 		}
 		Accessibility.speak(message)
 	}else {
-		Accessibility.speak("Unknown")
+		Accessibility.speak(String(localized: "unknown"))
 	}
 	return message
 }
