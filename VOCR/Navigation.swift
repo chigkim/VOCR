@@ -163,10 +163,10 @@ return nil
 			if let  image = TakeScreensShots(rect:CGRect(origin: cgPosition, size: cgSize)) {
 cgImage  = image
 			} else {
-				Accessibility.speak("Faild to take a screenshot of \(appName), \(windowName)")
+				Accessibility.speak(String(localized: "Faild to take a screenshot of \(appName), \(windowName)"))
 			}
 		} else {
-			Accessibility.speak("Faild to access \(appName), \(windowName)")
+			Accessibility.speak(String(localized: "Faild to access \(appName), \(windowName)"))
 		}
 	}
 	

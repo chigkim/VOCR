@@ -36,6 +36,12 @@
     "Connection error: %@" : {
 
     },
+    "Error decoding JSON string: %@" : {
+
+    },
+    "Error decoding JSON: %@" : {
+
+    },
     "exit_vocr_navigation" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -53,6 +59,16 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Faild to access %1$@, %2$@"
+          }
+        }
+      }
+    },
+    "Faild to take a screenshot of %@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Faild to take a screenshot of %1$@, %2$@"
           }
         }
       }

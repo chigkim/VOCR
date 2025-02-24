@@ -46,7 +46,7 @@ enum LlamaCpp:EngineAsking {
 				copyToClipboard(description)
 				completion(description)
 			} catch {
-				Accessibility.speakWithSynthesizer("Error decoding JSON: \(error)")
+				Accessibility.speakWithSynthesizer(String(localized: "Error decoding JSON: \(error.localizedDescription)"))
 				completion("Error: Could not parse JSON.")
 			}
 		}

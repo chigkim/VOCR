@@ -52,7 +52,7 @@ static let ollamaAPIURL = "http://127.0.0.1:11434/api/generate"
 				model = models[0].name
 			}
 			} catch {
-				Accessibility.speakWithSynthesizer("Error decoding JSON: \(error)")
+				Accessibility.speakWithSynthesizer(String(localized: "Error decoding JSON: \(error.localizedDescription)"))
 			}
 		}
 	}
@@ -86,7 +86,7 @@ static let ollamaAPIURL = "http://127.0.0.1:11434/api/generate"
 				copyToClipboard(description)
 				completion(description)
 			} catch {
-				Accessibility.speakWithSynthesizer("Error decoding JSON: \(error)")
+				Accessibility.speakWithSynthesizer(String(localized: "Error decoding JSON: \(error.localizedDescription)"))
 				completion("Error: Could not parse JSON.")
 			}
 		}
