@@ -28,8 +28,9 @@ static let ollamaAPIURL = "http://127.0.0.1:11434/api/generate"
 			do {
 				let response = try JSONDecoder().decode(ModelsContainer.self, from: data)
 				var models = response.models
+				// debugPrint(models)
 			models = models.filter {
-				if let families = $0.details.families, (families.contains("clip") || families.contains("mllama")) {
+				if let families = $0.details.families, (families.contains("clip") || families.contains("mllama") || families.contains("gemma3")) {
 					return true
 				} else {
 					return false
