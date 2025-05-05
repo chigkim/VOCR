@@ -117,36 +117,46 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 				alert.window.defaultButtonCell = alert.buttons[0].cell as? NSButtonCell
 				let response = alert.runModal()
 				
-				if let clickedButton = alert.buttons.first(where: { $0.title == "Recognize Image" }) {
-					// Handle Recognize Image button
+				switch response {
+				case .alertFirstButtonReturn:
+					print("Recognizing image using VisionKit")
 					let message = classify(cgImage: cgImage)
-					sleep(1)
-					Accessibility.speak(message)
-				} else if let clickedButton = alert.buttons.first(where: { $0.title == "Recognize image with LLM" }) {
-					// Handle Recognize image with LLM button
+					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+						Accessibility.speak(message)
+					}
+					
+				case .alertSecondButtonReturn:
+					print("Recognizing image with LLM")
 					ask(image: cgImage)
-				} else if let clickedButton = alert.buttons.first(where: { $0.title == "Recognize text in image" }) {
-					// Handle Recognize text in image button
+					
+				case .alertThirdButtonReturn:
+					print("Recognizing text in an image using VisionKit")
 					Navigation.displayResults = []
 					Navigation.cgImage = cgImage
 					Navigation.startOCR()
-					if Navigation.displayResults.count == 0 {
-						sleep(1)
-						Accessibility.speak("Nothing found!")
+					if Navigation.displayResults.isEmpty {
+						DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+							Accessibility.speak("Nothing found!") }
 					} else {
-						sleep(1)
-						Accessibility.speak("Recognition finished.")
-						NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
+						DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+							Accessibility.speak("Recognition finished.")
+							NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play() }
 					}
-				} else if let clickedButton = alert.buttons.first(where: { $0.title == "Close" }) {
-					alert.window.close()
+					
+				case NSApplication.ModalResponse(rawValue: 1003):
+					print("Close button selected")
 					return
-				} else {
-					print("Invalid menu choice")
+					
+				default:
+					print("Invalid or unexpected menu response: \(response.rawValue)")
 				}
+				
+			} else {
+				print("Error: could not create CGIImage from photo.")
 			}
+			
 		} else {
-			print("some error here")
+			print("Error getting file data representation from photo")
 		}
 	}
 	
