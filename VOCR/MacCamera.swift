@@ -78,10 +78,21 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 				if (captureSession.canAddOutput(cameraOutput)) {
 					captureSession.addOutput(cameraOutput)
 					captureSession.startRunning()
+					
+					let adjustmentDelay = 0.75
+					DispatchQueue.main.asyncAfter(deadline: .now() + adjustmentDelay) { [weak self] in
+						guard let self = self else { return } // Avoid retain cycles
+						
+						// capture the photo
+						if self.captureSession.isRunning {
+							let settings = AVCapturePhotoSettings()
+							self.cameraOutput.capturePhoto(with: settings, delegate: self)
+						}
+					}
+					
 					let settings = AVCapturePhotoSettings()
 					deviceName = device.localizedName
 					Accessibility.speak(deviceName)
-					cameraOutput.capturePhoto(with: settings, delegate: self)
 				}
 			} else {
 				print("issue here : captureSession.canAddInput")
