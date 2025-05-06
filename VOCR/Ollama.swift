@@ -60,6 +60,8 @@ static let ollamaAPIURL = "http://127.0.0.1:11434/api/generate"
 
 	static func ask(image:CGImage) {
 		describe(image:image, system:Settings.systemPrompt, prompt:Settings.prompt) { description in
+			NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
+			sleep(1)
 			Accessibility.speak(description)
 		}
 	}

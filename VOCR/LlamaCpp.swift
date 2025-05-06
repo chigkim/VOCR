@@ -16,9 +16,11 @@ enum LlamaCpp:EngineAsking {
 	}
 	
 	static func ask(image:CGImage) {
-			LlamaCpp.describe(image:image, system:Settings.systemPrompt, prompt:Settings.prompt) { description in
-				Accessibility.speak(description)
-			}
+		LlamaCpp.describe(image:image, system:Settings.systemPrompt, prompt:Settings.prompt) { description in
+			NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
+			sleep(1)
+			Accessibility.speak(description)
+		}
 	}
 	
 	static func describe(image: CGImage, system:String, prompt: String, completion: @escaping (String) -> Void) {

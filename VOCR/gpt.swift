@@ -23,8 +23,10 @@ enum GPT:EngineAsking {
 	
 	static func ask(image:CGImage) {
 		GPT.describe(image:image, system:Settings.systemPrompt, prompt:Settings.prompt) { description in
-				Accessibility.speak(description)
-			}
+			NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
+			sleep(1)
+			Accessibility.speak(description)
+		}
 	}
 
 	static func describe(image: CGImage, system:String, prompt:String, completion: @escaping (String) -> Void) {
