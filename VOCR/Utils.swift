@@ -274,6 +274,7 @@ func performOCR(cgImage:CGImage) -> [Observation] {
 	let textRecognitionRequest = VNRecognizeTextRequest()
 	textRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate
 	textRecognitionRequest.minimumTextHeight = 0
+	textRecognitionRequest.automaticallyDetectsLanguage = true
 	textRecognitionRequest.usesLanguageCorrection = true
 	textRecognitionRequest.customWords = []
 	textRecognitionRequest.usesCPUOnly = false
