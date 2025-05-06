@@ -63,12 +63,8 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 			Accessibility.speakWithSynthesizer("No camera available.")
 			return
 		}
-		
-		for c in stride(from: 3, to: 1, by: -1) {
-			Accessibility.speak("\(c)")
-			sleep(1)
-		}
-		Accessibility.speak("1")
+		deviceName = device.localizedName
+		Accessibility.speak("Using \(deviceName)")
 		captureSession = AVCaptureSession()
 		captureSession.sessionPreset = AVCaptureSession.Preset.photo
 		cameraOutput = AVCapturePhotoOutput()
@@ -78,21 +74,13 @@ class MacCamera:NSObject, AVCapturePhotoCaptureDelegate {
 				if (captureSession.canAddOutput(cameraOutput)) {
 					captureSession.addOutput(cameraOutput)
 					captureSession.startRunning()
-					
-					let adjustmentDelay = 0.75
-					DispatchQueue.main.asyncAfter(deadline: .now() + adjustmentDelay) { [weak self] in
-						guard let self = self else { return } // Avoid retain cycles
-						
-						// capture the photo
-						if self.captureSession.isRunning {
-							let settings = AVCapturePhotoSettings()
-							self.cameraOutput.capturePhoto(with: settings, delegate: self)
-						}
-					}
-					
 					let settings = AVCapturePhotoSettings()
-					deviceName = device.localizedName
-					Accessibility.speak(deviceName)
+					for c in stride(from: 3, to: 1, by: -1) {
+						Accessibility.speak("\(c)")
+						sleep(1)
+					}
+					Accessibility.speak("1")
+					cameraOutput.capturePhoto(with: settings, delegate: self)
 				}
 			} else {
 				print("issue here : captureSession.canAddInput")
