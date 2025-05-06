@@ -37,7 +37,7 @@ enum GPT:EngineAsking {
 		let base64_image = imageToBase64(image: image)
 		
 		let jsonBody: [String: Any] = [
-			"model": "gpt-4o",
+			"model": "gpt-4.1",
 			"messages": [
 				[
 					"role": "system",
@@ -76,7 +76,7 @@ enum GPT:EngineAsking {
 				let prompt_tokens = response.usage.prompt_tokens
 				let completion_tokens = response.usage.completion_tokens
 				let total_tokens = response.usage.total_tokens
-				let cost = Float(prompt_tokens)*(500.0/1000000.0)+Float(completion_tokens)*(1500.0/1000000.0)
+				let cost = Float(prompt_tokens)*(200.0/1000000.0)+Float(completion_tokens)*(800.0/1000000.0)
 				if let firstChoice = response.choices.first {
 					var description = firstChoice.message.content
 					description += "\nPrompt tokens: \(prompt_tokens)"
