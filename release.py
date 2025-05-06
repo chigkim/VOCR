@@ -2,7 +2,7 @@ token = input("Github Token:")
 owner = 'chigkim'
 repo = "VOCR"
 archives = "archives"
-gen = "~/Library/Developer/Xcode/DerivedData/VOCR-golvfhxedvwnjecsjhnzcnbmmchc/SourcePackages/artifacts/sparkle/bin/generate_appcast"
+gen = "~/Library/Developer/Xcode/DerivedData/VOCR-gjsqmtcgzvvuvfcpuxtfgxerxtyc/SourcePackages/artifacts/sparkle/Sparkle/bin/generate_appcast"
 
 import requests
 import os

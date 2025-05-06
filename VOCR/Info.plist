@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Capture a photo to VOCR to use.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDocumentTypes</key>
@@ -50,6 +48,8 @@
 	</dict>
 	<key>NSAppleEventsUsageDescription</key>
 	<string>Speak announcements and take Screenshot under VoiceOver cursor</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Capture a photo to VOCR to use.</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2019 Chi Kim. All rights reserved.</string>
 	<key>NSMainStoryboardFile</key>
@@ -65,6 +65,6 @@
 	<key>SUFeedURL</key>
 	<string>https://chigkim.github.io/VOCR/appcast.xml</string>
 	<key>SUPublicEDKey</key>
-	<string>mag38x5Zl6J5oFFwEeO4MfVY+4jJqEsDZPL6nHmbPg8=</string>
+	<string>ofVGoHbzXlM0JFWqISYkWokIdXAtq9gJu7hMnbKLY0E=</string>
 </dict>
 </plist>
