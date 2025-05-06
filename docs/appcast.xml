@@ -3,13 +3,13 @@
     <channel>
         <title>VOCR</title>
         <item>
-            <title>2.2.0</title>
-            <pubDate>Sat, 07 Dec 2024 14:11:48 -0500</pubDate>
-            <sparkle:version>42</sparkle:version>
-            <sparkle:shortVersionString>2.2.0</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
-            <sparkle:releaseNotesLink>https://chigkim.github.io/VOCR/VOCR_v2.2.0.html</sparkle:releaseNotesLink>
-            <enclosure url="https://github.com/chigkim/VOCR/releases/download/v2.2.0/VOCR_v2.2.0.zip" length="3148835" type="application/octet-stream" sparkle:edSignature="j0whjZlG3rfHDijLkCtuwfdD5JUR4uVYvzCo4wjuegHvpfw1/dLAhtRgmdInhouOnzsd7/WWXcJ6jpZxhy5WCw=="/>
+            <title>2.3.0</title>
+            <pubDate>Tue, 06 May 2025 14:21:17 -0400</pubDate>
+            <sparkle:version>47</sparkle:version>
+            <sparkle:shortVersionString>2.3.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/chigkim/VOCR/releases/download/v2.3.0/VOCR_v2.3.0.zip" length="2844705" type="application/octet-stream" sparkle:edSignature="V0Fcmn6EydrHdP6URGc8HbejUayxTJrf7nyXMkXETAFD7AtLT7mXSww2R0+Lty1NWTAoQr7B67bhLgSEoc65AQ=="/>
+            <sparkle:releaseNotesLink>https://chigkim.github.io/VOCR/VOCR_v2.3.0.html</sparkle:releaseNotesLink>
         </item>
     </channel>
 </rss>
