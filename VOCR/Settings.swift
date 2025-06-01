@@ -25,6 +25,7 @@ enum Settings {
 	static var prompt = "Analyze the image in a comprehensive and detailed manner."
 	static var systemPrompt = "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions."
 	static var GPTAPIKEY = ""
+	static var GeminiAPIKEY = ""
 	static var mode = "OCR"
 	static let target = MenuHandler()
 	static var engine: Engines = .ollama
@@ -78,6 +79,11 @@ enum Settings {
 		llamaCppItem.tag = Engines.llamaCpp.rawValue
 		engineMenu.addItem(llamaCppItem)
 		
+		let geminiItem = NSMenuItem(title: "Gemini", action: #selector(target.selectModel(_:)), keyEquivalent: "") // Added Gemini Item
+		geminiItem.target = target
+		geminiItem.tag = Engines.gemini.rawValue
+		engineMenu.addItem(geminiItem)
+
 		for item in engineMenu.items {
 			item.state = (item.tag == Settings.engine.rawValue) ? .on : .off
 		}
@@ -85,6 +91,10 @@ enum Settings {
 		let enterAPIKeyMenuItem = NSMenuItem(title: "OpenAI API Key...", action: #selector(target.presentApiKeyInputDialog(_:)), keyEquivalent: "")
 		enterAPIKeyMenuItem.target = target
 		engineMenu.addItem(enterAPIKeyMenuItem)
+		
+		let enterGeminiAPIKeyMenuItem = NSMenuItem(title: "Gemini API Key...", action: #selector(target.presentGeminiApiKeyInputDialog(_:)), keyEquivalent: "")
+		enterGeminiAPIKeyMenuItem.target = target
+		engineMenu.addItem(enterGeminiAPIKeyMenuItem)
 		
 		let systemPromptMenuItem = NSMenuItem(title: "Set System Prompt...", action: #selector(target.presentSystemPromptDialog(_:)), keyEquivalent: "")
 		systemPromptMenuItem.target = target
@@ -224,6 +234,32 @@ enum Settings {
 		}
 	}
 	
+	static func displayGeminiApiKeyDialog() { // New dialog for Gemini
+		let alert = NSAlert()
+		alert.messageText = "Gemini API Key"
+		alert.informativeText = "Type your Gemini API key below:"
+		alert.addButton(withTitle: "Save")
+		alert.addButton(withTitle: "Cancel")
+		let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+		inputTextField.placeholderString = "API Key"
+		inputTextField.stringValue = Settings.GeminiAPIKEY
+		alert.accessoryView = inputTextField
+		let response = alert.runModal()
+		hide()
+		if response == .alertFirstButtonReturn {
+			let apiKey = inputTextField.stringValue
+			Settings.GeminiAPIKEY = apiKey
+			if let data = apiKey.data(using: .utf8) {
+				let status = KeychainManager.store(key: "com.chikim.VOCR.GeminiApiKey", data: data)
+				if status == noErr {
+					log("Gemini API key stored successfully.")
+				} else {
+					log("Failed to store Gemini API key with error: \(status)")
+				}
+			}
+		}
+	}
+
 	static func displaySystemPromptDialog() {
 		if let prompt = askPrompt(value:Settings.systemPrompt) {
 			Settings.systemPrompt = prompt
@@ -245,10 +281,16 @@ enum Settings {
 		if let retrievedData = KeychainManager.retrieve(key: "com.chikim.VOCR.OAIApiKey"),
 		   let retrievedApiKey = String(data: retrievedData, encoding: .utf8) {
 			Settings.GPTAPIKEY = retrievedApiKey
-		} else {
-			log("Failed to retrieve API key.")
+					} else {
+			log("Failed to retrieve OpenAI API key.")
 		}
-		if let mode = defaults.string(forKey: "mode") {
+		if let retrievedData = KeychainManager.retrieve(key: "com.chikim.VOCR.GeminiApiKey"),
+		   let retrievedApiKey = String(data: retrievedData, encoding: .utf8) {
+			Settings.GeminiAPIKEY = retrievedApiKey
+					} else {
+			log("Failed to retrieve Gemini API key.")
+		}
+				if let mode = defaults.string(forKey: "mode") {
 			Settings.mode = mode
 		}
 		if let camera = defaults.string(forKey: "camera") {
@@ -351,9 +393,13 @@ class MenuHandler: NSObject {
 	}
 	
 	@objc func presentApiKeyInputDialog(_ sender: AnyObject?) {
-		Settings.displayApiKeyDialog()
+			Settings.displayApiKeyDialog()
 	}
-	
+
+	@objc func presentGeminiApiKeyInputDialog(_ sender: AnyObject?) {
+			Settings.displayGeminiApiKeyDialog()
+	}
+
 	@objc func presentSystemPromptDialog(_ sender: AnyObject?) {
 		Settings.displaySystemPromptDialog()
 	}
@@ -469,6 +515,11 @@ class MenuHandler: NSObject {
 		if Settings.engine == .ollama {
 			Ollama.setModel()
 		}
+		// Potentially add setup for Gemini here if needed, e.g., Ollama.setModel()
+		// if Settings.engine == .gemini {
+		// Gemini.setupModel() // if Gemini needs a similar setup step
+		// }
+
 		Settings.save()
 	}
 	

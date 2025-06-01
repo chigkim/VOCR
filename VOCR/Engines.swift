@@ -6,7 +6,7 @@ protocol EngineAsking {
 }
 
 enum Engines: Int {
-	case gpt = 0, ollama, llamaCpp
+	case gpt = 0, ollama, llamaCpp, gemini
 }
 
 func getEngine(for engine: Engines) -> EngineAsking.Type {
@@ -17,6 +17,8 @@ func getEngine(for engine: Engines) -> EngineAsking.Type {
 		return Ollama.self
 	case .llamaCpp:
 		return LlamaCpp.self
+	case .gemini:
+		return Gemini.self
 	}
 }
 

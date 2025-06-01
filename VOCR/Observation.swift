@@ -25,7 +25,6 @@ struct GPTObservation: Decodable {
 	}
 }
 
-
 struct Observation {
 
 	var boundingBox:CGRect

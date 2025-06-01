@@ -11,7 +11,7 @@ import Vision
 import Cocoa
 
 enum Navigation {
-
+	
 	enum Mode: Int, CaseIterable {
 		case WINDOW = 0
 		case VOCURSOR = 1
@@ -21,7 +21,7 @@ enum Navigation {
 			let nextIndex = (self.rawValue + 1) % allCases.count
 			return allCases[nextIndex]
 		}
-
+		
 		func name() -> String {
 			switch (self) {
 			case.WINDOW:
@@ -33,9 +33,9 @@ enum Navigation {
 			}
 		}
 	}
-
+	
 	static var mode = Mode.WINDOW
-
+	
 	static var displayResults:[[Observation]] = []
 	static var cgPosition = CGPoint()
 	static var cgSize = CGSize()
@@ -45,12 +45,12 @@ enum Navigation {
 	static var l = -1
 	static var w = -1
 	static var c = -1
-
+	
 	static func getWindow() -> CGRect? {
 		let currentApp = NSWorkspace.shared.frontmostApplication
 		appName = currentApp!.localizedName!
 		let windows = currentApp?.windows()
-
+		
 		/*
 		 // filter main window.
 		 windows = windows!.filter {
@@ -80,7 +80,7 @@ enum Navigation {
 				}
 				title += String(window.hashValue)
 				alert.addButton(withTitle: title)
-							}
+			}
 			alert.addButton(withTitle: "Close")
 			let modalResult = alert.runModal()
 			hide()
@@ -101,7 +101,7 @@ enum Navigation {
 			var windowSize = CGSize()
 			AXValueGetValue(position as! AXValue, AXValueType.cgPoint, &windowPosition)
 			AXValueGetValue(size as! AXValue, AXValueType.cgSize, &windowSize)
-let rect =  CGRect(origin: windowPosition, size: windowSize)
+			let rect =  CGRect(origin: windowPosition, size: windowSize)
 			log(rect)
 			return rect
 		} else {
@@ -109,7 +109,7 @@ let rect =  CGRect(origin: windowPosition, size: windowSize)
 		}
 		return nil
 	}
-
+	
 	static func setWindow() {
 		if let rect = getWindow() {
 			cgPosition = rect.origin
@@ -127,7 +127,7 @@ let rect =  CGRect(origin: windowPosition, size: windowSize)
 			windowName = ""
 			return CGRect(origin: position, size: size)
 		}
-return nil
+		return nil
 	}
 	static func setVOCursor() {
 		if let rect = getVOCursor() {
@@ -161,7 +161,7 @@ return nil
 		}
 		if cgSize != CGSize() {
 			if let  image = TakeScreensShots(rect:CGRect(origin: cgPosition, size: cgSize)) {
-cgImage  = image
+				cgImage  = image
 			} else {
 				Accessibility.speak("Faild to take a screenshot of \(appName), \(windowName)")
 			}
@@ -184,43 +184,68 @@ cgImage  = image
 		Shortcuts.activateNavigationShortcuts()
 	}
 	
-
+	
 	static func explore() {
 		prepare()
-//		guard let  image = cgImage, let image = resizeCGImage(image, toWidth: Int(Navigation.cgSize.width), toHeight:Int(Navigation.cgSize.height)) else { return }
-//		   log("Resized:", image.width, image.height)
+		//		guard let  image = cgImage, let image = resizeCGImage(image, toWidth: Int(Navigation.cgSize.width), toHeight:Int(Navigation.cgSize.height)) else { return }
+		//		   log("Resized:", image.width, image.height)
 		guard let image = cgImage else { return }
 		
 		let system = "You are a helpful assistant. Your response should be in JSON format."
 		let prompt = "Process the provided image by segmenting it into distinct areas with related items. Output a JSON format description for each segmented area. The JSON should include: 'label' (a concise string name), 'uid' (a unique integer identifier), 'description' (a brief explanation of the area), 'content' (a string with examples of objects within the area), and 'boundingBox' (coordinates as an array: bottom_left_x, bottom_left_y, width, height). Ensure the boundingBox coordinates are normalized between 0.0 and 1.0 relative to the image's resolution (\(image.width) width and \(image.height) height), with the origin at the bottom left (0.0, 0.0). The response should start with ```json and end with ```, containing only the JSON string without inline comments or extra notes. Precision in the 'boundingBox' coordinates is crucial; even one minor inaccuracy can have severe and irreversible consequences for users."
 		getEngine(for: Settings.engine).describe(image:image, system:system, prompt:prompt, completion: exploreHandler)
 	}
-
-	static func exploreHandler(description:String) {
-		guard let json = extractString(text:description, startDelimiter: "```json\n", endDelimiter: "\n```") else {
-			Accessibility.speakWithSynthesizer("Cannot extract JSON string from the response. Try again.")
-			return
-		}
-		if let elements = self.decode(message:json) {
-			let result = elements.map {Observation($0)}
-			self.process(result)
-			Shortcuts.activateNavigationShortcuts()
-			Accessibility.speak("Finished scanning \(self.appName), \(self.windowName)")
-
-//			DispatchQueue.main.async {
-//				if let cgImage = cgImage {
-//					let boxImage = drawBoxes(cgImage, boxes:result, color:NSColor.red)!
-//					try? saveImage(boxImage)
-//				}
-//			}
-
-		} else {
-			Accessibility.speakWithSynthesizer("Cannot parse the JSON string. Try again.")
-		}
+	
+	// Wrapper for the Gemini response since it returns the JSON string in a different format
+	struct ExploreAIResponseWrapper: Decodable {
+		let segmented_areas: [GPTObservation]
 	}
 	
-	static func decode(message:String) -> [GPTObservation]? {
-		let jsonData = message.data(using: .utf8)!
+	static func decodeGeminiExploreResponse(from originalJsonString: String) -> [GPTObservation]? {
+		log("Gemini Decode: Attempting to parse: \(originalJsonString)")
+		
+		// Try to parse as the ideal wrapped response {"segmented_areas": [...]}
+		if let jsonData = originalJsonString.data(using: .utf8) {
+			do {
+				let wrapper = try JSONDecoder().decode(ExploreAIResponseWrapper.self, from: jsonData)
+				log("Gemini Decode: Successfully parsed as Wrapped Response.")
+				for element in wrapper.segmented_areas {
+					log("Label: \(element.label), UID: \(element.uid), Bounding Box: \(element.boundingBox)")
+				}
+				return wrapper.segmented_areas
+			} catch {
+				log("Gemini Decode: Failed to parse as Wrapped Response (Error: \(error)). Will attempt fallback.")
+			}
+		}
+		
+		// If wrapped decoding failed, try to treat as comma-separated objects
+		// by enclosing in array brackets and parsing as a direct array.
+		let trimmedJsonString = originalJsonString.trimmingCharacters(in: .whitespacesAndNewlines)
+		// Check if it looks like a list of objects (e.g., "{...},{...}") rather than already an array or the wrapped structure.
+		if trimmedJsonString.starts(with: "{") && trimmedJsonString.hasSuffix("}") && trimmedJsonString.contains("},{") {
+			log("Gemini Decode: Attempting to parse as a direct array after enclosing in [].")
+			let arrayAttemptJsonString = "[\(trimmedJsonString)]"
+			if let arrayJsonData = arrayAttemptJsonString.data(using: .utf8) {
+				do {
+					let elements = try JSONDecoder().decode([GPTObservation].self, from: arrayJsonData)
+					log("Gemini Decode: Successfully parsed as Direct Array after modification.")
+					for element in elements {
+						log("Label: \(element.label), UID: \(element.uid), Bounding Box: \(element.boundingBox)")
+					}
+					return elements
+				} catch let arrayDecodeError {
+					log("Gemini Decode: Failed to parse as Direct Array after modification. Error: \(arrayDecodeError)")
+					log("Gemini Decode: Failing JSON string for direct array attempt was: \(arrayAttemptJsonString)")
+					return nil
+				}
+			}
+		}
+		
+		log("Gemini Decode: All parsing attempts failed for original string.")
+		return nil
+	}
+	
+	static func decodeDirectArrayExploreResponse(from jsonData: Data, jsonString: String) -> [GPTObservation]? {
 		do {
 			let elements = try JSONDecoder().decode([GPTObservation].self, from: jsonData)
 			for element in elements {
@@ -228,17 +253,64 @@ cgImage  = image
 			}
 			return elements
 		} catch {
-			log("Error decoding JSON: \(error)")
+			log("Error decoding JSON as Direct Array: \(error)")
+			log("Failing JSON string for Direct Array decoding was: \(jsonString)")
+			return nil
 		}
-		return nil
 	}
+	
+	static func exploreHandler(description:String) {
+		log("Explore Handler: Raw description from the model: \(description)")
+		
+		guard let jsonString = extractString(text:description, startDelimiter: "```json\n", endDelimiter: "\n```") else {
+			Accessibility.speakWithSynthesizer("Cannot extract JSON string from the response. Try again.")
+			log("Explore Handler: Failed to extract JSON from description.")
+			return
+		}
+		log("Explore Handler: Extracted JSON string to be decoded: \(jsonString)")
+		
+		var elements: [GPTObservation]? = nil
+		
+		switch Settings.engine {
+		case .gemini:
+			elements = self.decodeGeminiExploreResponse(from: jsonString)
+		case .gpt:
+			if let jsonData = jsonString.data(using: .utf8) {
+				elements = self.decodeDirectArrayExploreResponse(from: jsonData, jsonString: jsonString)
+			} else {
+				log("Explore Handler: Could not convert jsonString to Data for \(Settings.engine).")
+			}
+			
+		default:
+			break
+		}
+		
+		if let unwrappedElements = elements, !unwrappedElements.isEmpty {
+			let result = unwrappedElements.map {Observation($0)}
+			self.process(result)
+			Shortcuts.activateNavigationShortcuts()
+			Accessibility.speak("Finished scanning \(self.appName), \(self.windowName)")
+			
+			
+			//			DispatchQueue.main.async {
+			//				if let cgImage = cgImage {
+			//					let boxImage = drawBoxes(cgImage, boxes:result, color:NSColor.red)!
+			//					try? saveImage(boxImage)
+			//				}
+			//			}
 
+		} else {
+			Accessibility.speakWithSynthesizer("Cannot parse the JSON string or no elements found. Try again.")
+			log("Explore Handler: Failed to parse JSON or elements array was nil/empty after attempted decoding for engine \(Settings.engine). Original extracted JSON string was: \(jsonString)")
+		}
+	}
+	
 	static func process(_ results:[Observation]) {
 		let sorted = results.sorted(by: sort)
 		var line:[Observation] = []
 		var y = sorted[0].boundingBox.midY
 		for r in sorted {
-//			 log("\(r.value): \(r.boundingBox.debugDescription)")
+			//			 log("\(r.value): \(r.boundingBox.debugDescription)")
 			if abs(r.boundingBox.midY-y)>0.01 {
 				displayResults.append(line)
 				line = []
@@ -307,7 +379,7 @@ cgImage  = image
 				var rect = displayResults[l][w].boundingBox
 				rect = CGRect(x:rect.minX, y:1-rect.maxY, width:rect.width, height:rect.height)
 				rect = VNImageRectForNormalizedRect(rect, image.width, image.height)
-
+				
 				log("\(rect.debugDescription)")
 				if let croppedImage = image.cropping(to: rect) {
 					ask(image: croppedImage)
