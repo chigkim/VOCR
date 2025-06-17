@@ -101,10 +101,19 @@ return nil
 }
 
 func ask(image:CGImage?=nil) {
-	if Settings.engine == .ollama && Ollama.model == nil {
-		Ollama.setModel()
+	if Settings.engine == .ollama && Settings.ollamaModel.isEmpty {
+		Ollama.selectModel { selectedModelName in
+			guard let modelName = selectedModelName else {
+				log("Ollama model selection was cancelled.")
+				return
+			}
+			Settings.ollamaModel = modelName
+			Settings.save()
+			Accessibility.speak("\(modelName) selected. Please perform your action again.")
+		}
 		return
 	}
+
 	let cgImage = image ?? grabImage()
 	guard let cgImage = cgImage else { return }
 	if !Settings.useLastPrompt {
@@ -115,7 +124,11 @@ func ask(image:CGImage?=nil) {
 		}
 	}
 
-	getEngine(for: Settings.engine).ask(image: cgImage)
+	OpenAIClient.describe(engine: Settings.engine, image: cgImage, system: Settings.systemPrompt, prompt: Settings.prompt) { description in
+		NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
+		sleep(1)
+		Accessibility.speak(description)
+	}
 }
 
 func imageToBase64(image: CGImage) -> String {

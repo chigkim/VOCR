@@ -10,6 +10,12 @@ import Foundation
 import Vision
 import Cocoa
 
+struct ExploreAIResponseWrapper: Decodable {
+	let segmented_areas: [GPTObservation]
+}
+
+
+
 enum Navigation {
 
 	enum Mode: Int, CaseIterable {
@@ -192,16 +198,44 @@ cgImage  = image
 		guard let image = cgImage else { return }
 		
 		let system = "You are a helpful assistant. Your response should be in JSON format."
-		let prompt = "Process the provided image by segmenting it into distinct areas with related items. Output a JSON format description for each segmented area. The JSON should include: 'label' (a concise string name), 'uid' (a unique integer identifier), 'description' (a brief explanation of the area), 'content' (a string with examples of objects within the area), and 'boundingBox' (coordinates as an array: bottom_left_x, bottom_left_y, width, height). Ensure the boundingBox coordinates are normalized between 0.0 and 1.0 relative to the image's resolution (\(image.width) width and \(image.height) height), with the origin at the bottom left (0.0, 0.0). The response should start with ```json and end with ```, containing only the JSON string without inline comments or extra notes. Precision in the 'boundingBox' coordinates is crucial; even one minor inaccuracy can have severe and irreversible consequences for users."
-		getEngine(for: Settings.engine).describe(image:image, system:system, prompt:prompt, completion: exploreHandler)
+		let prompt = """
+Process the provided image by segmenting it into distinct areas with related items.
+Output a description for each segmented area using valid JSON format.
+The JSON should include:
+'label' (a concise string name),
+'uid' (a unique integer identifier),
+'description' (a brief explanation of the area),
+'content' (a string with examples of objects within the area), and
+'boundingBox' (coordinates as an array: bottom_left_x, bottom_left_y, width, height).
+Ensure the boundingBox coordinates are normalized between 0.0 and 1.0 relative to the image's resolution (\(image.width) width and \(image.height) height), with the origin at the bottom left (0.0, 0.0).
+The response should start with ```json and end with ```, containing only the JSON string without inline comments or extra notes.
+Precision in the 'boundingBox' coordinates is crucial; even one minor inaccuracy can have severe and irreversible consequences for users.
+"""
+		if Settings.engine == .ollama && Settings.ollamaModel.isEmpty {
+			Ollama.selectModel { selectedModelName in
+				guard let modelName = selectedModelName else {
+					log("Ollama model selection was cancelled.")
+					return
+				}
+				Settings.ollamaModel = modelName
+				Settings.save()
+				Accessibility.speak("\(modelName) selected. Please perform your action again.")
+			}
+			return
+		}
+
+		
+		
+		OpenAIClient.describe(engine: Settings.engine, image: image, system: system, prompt: prompt, completion: exploreHandler)
 	}
 
 	static func exploreHandler(description:String) {
 		guard let json = extractString(text:description, startDelimiter: "```json\n", endDelimiter: "\n```") else {
+			log("ExploreHandler: Could not extract JSON string")
 			Accessibility.speakWithSynthesizer("Cannot extract JSON string from the response. Try again.")
 			return
 		}
-		if let elements = self.decode(message:json) {
+		if let elements = self.decode(message: json) {
 			let result = elements.map {Observation($0)}
 			self.process(result)
 			Shortcuts.activateNavigationShortcuts()
@@ -215,21 +249,36 @@ cgImage  = image
 //			}
 
 		} else {
+			log("ExploreHandler: JSON string could not be decoded.")
 			Accessibility.speakWithSynthesizer("Cannot parse the JSON string. Try again.")
 		}
 	}
-	
-	static func decode(message:String) -> [GPTObservation]? {
-		let jsonData = message.data(using: .utf8)!
+
+	static func decode(message: String) -> [GPTObservation]? {
+		guard let jsonData = message.data(using: .utf8) else {
+			log("Explore Decode: Could not convert JSON string to Data.")
+			return nil
+		}
+
+		// This handles models that return proper JSON object
+		do {
+			let wrapper = try JSONDecoder().decode(ExploreAIResponseWrapper.self, from: jsonData)
+			log("Explore Decode: Successfully parsed as Wrapped Response.")
+			return wrapper.segmented_areas
+		} catch {
+			log("Explore Decode: Could not parse as Wrapped Response. Will try other formats. Error: \(error)")
+		}
+
+		// This handles models that might return a raw array.
 		do {
 			let elements = try JSONDecoder().decode([GPTObservation].self, from: jsonData)
-			for element in elements {
-				log("Label: \(element.label), UID: \(element.uid), Bounding Box: \(element.boundingBox)")
-			}
+			log("Explore Decode: Successfully parsed as Direct Array.")
 			return elements
 		} catch {
-			log("Error decoding JSON: \(error)")
+			log("Explore Decode: Could not parse as Direct Array. Error: \(error)")
 		}
+
+		log("Explore Decode: All parsing attempts failed.")
 		return nil
 	}
 

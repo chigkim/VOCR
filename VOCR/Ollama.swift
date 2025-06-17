@@ -1,99 +1,76 @@
+// In Ollama.swift
 
+import Foundation
 import Cocoa
 
-enum Ollama:EngineAsking {
-	
-	struct Response: Decodable {
-		let response: String
-	}
-	
-	struct ModelsContainer: Decodable {
+class Ollama {
+
+	private struct OllamaTagResponse: Decodable {
 		struct Model: Decodable {
 			struct ModelDetails: Codable {
 				let families: [String]?
 			}
-				let details: ModelDetails
-			let name:String
+			let details: ModelDetails
+			let name: String
 		}
-		let models:[Model]
+		let models: [Model]
 	}
 
+	static func selectModel(completion: @escaping (String?) -> Void) {
+		guard let url = URL(string: "http://127.0.0.1:11434/api/tags") else {
+			completion(nil)
+			return
+		}
+		var request = URLRequest(url: url)
+		request.httpMethod = "GET"
 
-static let ollamaAPIURL = "http://127.0.0.1:11434/api/generate"
-	static var model:String?
-	static func setModel() {
-		let url = "http://127.0.0.1:11434/api/tags"
-		var request = URLRequest(url: URL(string: url)!)
-		performRequest(&request, method:"GET") { data in
-			do {
-				let response = try JSONDecoder().decode(ModelsContainer.self, from: data)
-				var models = response.models
-				// debugPrint(models)
-			models = models.filter {
-				if let families = $0.details.families, (families.contains("clip") || families.contains("mllama") || families.contains("gemma3")) {
-					return true
-				} else {
-					return false
-				}
+		URLSession.shared.dataTask(with: request) { data, response, error in
+			guard let data = data, error == nil else {
+				Accessibility.speakWithSynthesizer("Could not connect to Ollama server.")
+				completion(nil)
+				return
 			}
-			if models.count > 1 {
+			
+			do {
+				var models = try JSONDecoder().decode(OllamaTagResponse.self, from: data).models
+				// Filter for compatible vision models
+				models = models.filter {
+					if let families = $0.details.families, (families.contains("clip") || families.contains("mllama") || families.contains("gemma3")) {
+						return true
+					} else {
+						return false
+					}
+				}
+
+				if models.isEmpty {
+					Accessibility.speakWithSynthesizer("No compatible vision models found on the Ollama server.")
+					completion(nil)
+					return
+				}
+
 				DispatchQueue.main.async {
 					let alert = NSAlert()
 					alert.alertStyle = .informational
-					alert.messageText = "Choose a Model"
+					alert.messageText = "Choose an Ollama Vision Model"
 					for model in models {
 						alert.addButton(withTitle: model.name)
 					}
+					alert.addButton(withTitle: "Cancel")
+					
 					let modalResult = alert.runModal()
-					hide()
-					let n = modalResult.rawValue-1000
-					Ollama.model = models[n].name
+					
+					if modalResult.rawValue < 1000 + models.count { // A model button was clicked
+						let selectedModelName = models[modalResult.rawValue - 1000].name
+						completion(selectedModelName)
+					} else { // Cancel was clicked
+						completion(nil)
+					}
 				}
-			} else if models.count == 1 {
-				model = models[0].name
-			}
 			} catch {
-				Accessibility.speakWithSynthesizer("Error decoding JSON: \(error)")
+				Accessibility.speakWithSynthesizer("Error parsing model list from Ollama.")
+				log("Error decoding Ollama tags JSON: \(error)")
+				completion(nil)
 			}
-		}
+		}.resume()
 	}
-
-	static func ask(image:CGImage) {
-		describe(image:image, system:Settings.systemPrompt, prompt:Settings.prompt) { description in
-			NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
-			sleep(1)
-			Accessibility.speak(description)
-		}
-	}
-	
-	static func describe(image: CGImage, system: String, prompt: String, completion: @escaping (String) -> Void) {
-		guard let model = model else {
-			Accessibility.speakWithSynthesizer("Please choose a model for Ollama to use first.")
-			return
-		}
-		let base64Image = imageToBase64(image: image)
-		let jsonBody: [String: Any] = [
-			"model": model,
-			"prompt": prompt,
-			"stream": false,
-			"images": [base64Image]
-		]
-		
-		let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody, options: [])
-		var request = URLRequest(url: URL(string: ollamaAPIURL)!)
-		request.httpBody = jsonData
-		performRequest(&request, name:model) { data in
-			do {
-				let response = try JSONDecoder().decode(Response.self, from: data)
-				let description = response.response
-				copyToClipboard(description)
-				completion(description)
-			} catch {
-				Accessibility.speakWithSynthesizer("Error decoding JSON: \(error)")
-				completion("Error: Could not parse JSON.")
-			}
-		}
-	}
-
 }
-

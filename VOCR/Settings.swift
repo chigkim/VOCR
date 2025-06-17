@@ -10,8 +10,30 @@ import Cocoa
 import AudioKit
 import AVFoundation
 
+func getEngineCredentials(for engine: Engines) -> (url: String, apiKey: String, model: String)? {
+	switch engine {
+	case .gpt:
+		if Settings.GPTAPIKEY.isEmpty {
+			Settings.displayOpenAIKeyDialog()
+			return nil
+		}
+		return (Settings.gptEndpoint, Settings.GPTAPIKEY, Settings.gptModel)
+	case .gemini:
+		if Settings.GeminiAPIKEY.isEmpty {
+			Settings.displayGeminiApiKeyDialog()
+			return nil
+		}
+		return (Settings.geminiEndpoint, Settings.GeminiAPIKEY, Settings.geminiModel)
+	case .ollama:
+		return (Settings.ollamaEndpoint, "ollama", Settings.ollamaModel)
+	case .llamaCpp:
+		return (Settings.llamaCppEndpoint, "llama.cpp", Settings.llamaCppModel)
+	}
+}
+
+
 enum Settings {
-	
+
 	static private var eventMonitor: Any?
 	static var positionReset = true
 	static var positionalAudio = false
@@ -24,14 +46,26 @@ enum Settings {
 	static var useLastPrompt = false
 	static var prompt = "Analyze the image in a comprehensive and detailed manner."
 	static var systemPrompt = "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions."
-	static var GPTAPIKEY = ""
 	static var mode = "OCR"
 	static let target = MenuHandler()
 	static var engine: Engines = .ollama
 	static var writeLog = false
 	static var preRelease = false
 	static var camera = "Unknown"
+
+	static var GPTAPIKEY = ""
+	static var GeminiAPIKEY = ""
+
+	static var gptEndpoint = "https://api.openai.com/v1/chat/completions"
+	static var geminiEndpoint = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
+	static var ollamaEndpoint = "http://127.0.0.1:11434/v1/chat/completions"
+	static var llamaCppEndpoint = "http://127.0.0.1:8080/v1/chat/completions"
 	
+	static var gptModel = "gpt-4.1"
+	static var geminiModel = "gemini-2.0-flash"
+	static var ollamaModel = "" // Will be chosen by the user
+	static var llamaCppModel = "ggml-model" // Depends on the model loaded by the Llama.cpp server
+
 	static var allSettings: [(title: String, action: Selector, value: Bool)] {
 		return [
 			("Target Window", #selector(MenuHandler.toggleSetting(_:)), targetWindow),
@@ -67,6 +101,11 @@ enum Settings {
 		gptItem.target = target
 		gptItem.tag = Engines.gpt.rawValue
 		engineMenu.addItem(gptItem)
+
+		let geminiItem = NSMenuItem(title: "Gemini", action: #selector(target.selectModel(_:)), keyEquivalent: "")
+		geminiItem.target = target
+		geminiItem.tag = Engines.gemini.rawValue
+		engineMenu.addItem(geminiItem)
 		
 		let ollamaItem = NSMenuItem(title: "Ollama", action: #selector(target.selectModel(_:)), keyEquivalent: "")
 		ollamaItem.target = target
@@ -79,13 +118,23 @@ enum Settings {
 		engineMenu.addItem(llamaCppItem)
 		
 		for item in engineMenu.items {
-			item.state = (item.tag == Settings.engine.rawValue) ? .on : .off
+			 if let engineTag = Engines(rawValue: item.tag) {
+				  item.state = (engineTag == Settings.engine) ? .on : .off
+			 }
 		}
 		
-		let enterAPIKeyMenuItem = NSMenuItem(title: "OpenAI API Key...", action: #selector(target.presentApiKeyInputDialog(_:)), keyEquivalent: "")
-		enterAPIKeyMenuItem.target = target
-		engineMenu.addItem(enterAPIKeyMenuItem)
+		engineMenu.addItem(NSMenuItem.separator())
 		
+		let enterOpenAIAPIKeyMenuItem = NSMenuItem(title: "OpenAI API Key...", action: #selector(target.presentOpenAIKeyInputDialog(_:)), keyEquivalent: "")
+		enterOpenAIAPIKeyMenuItem.target = target
+		engineMenu.addItem(enterOpenAIAPIKeyMenuItem)
+
+		let enterGeminiAPIKeyMenuItem = NSMenuItem(title: "Gemini API Key...", action: #selector(target.presentGeminiApiKeyInputDialog(_:)), keyEquivalent: "")
+		enterGeminiAPIKeyMenuItem.target = target
+		engineMenu.addItem(enterGeminiAPIKeyMenuItem)
+		
+		engineMenu.addItem(NSMenuItem.separator())
+
 		let systemPromptMenuItem = NSMenuItem(title: "Set System Prompt...", action: #selector(target.presentSystemPromptDialog(_:)), keyEquivalent: "")
 		systemPromptMenuItem.target = target
 		engineMenu.addItem(systemPromptMenuItem)
@@ -109,7 +158,6 @@ enum Settings {
 		
 		let newShortcutMenuItem = NSMenuItem(title: "New Shortcuts", action: #selector(target.addShortcut(_:)), keyEquivalent: "")
 		newShortcutMenuItem.target = target
-		//		settingsMenu.addItem(newShortcutMenuItem)
 		
 		let settingsMenuItem = NSMenuItem(title: "Settings", action: nil, keyEquivalent: "")
 		settingsMenuItem.submenu = settingsMenu
@@ -197,7 +245,8 @@ enum Settings {
 		}
 	}
 	
-	static func displayApiKeyDialog() {
+	// MARK: - API Key Dialogs
+	static func displayOpenAIKeyDialog() {
 		let alert = NSAlert()
 		alert.messageText = "OpenAI API Key"
 		alert.informativeText = "Type your OpenAI API key below:"
@@ -209,18 +258,43 @@ enum Settings {
 		alert.accessoryView = inputTextField
 		let response = alert.runModal()
 		hide()
-		if response == .alertFirstButtonReturn { // OK button
+		if response == .alertFirstButtonReturn {
 			let apiKey = inputTextField.stringValue
 			Settings.GPTAPIKEY = apiKey
 			if let data = apiKey.data(using: .utf8) {
 				let status = KeychainManager.store(key: "com.chikim.VOCR.OAIApiKey", data: data)
 				if status == noErr {
-					log("API key stored successfully.")
+					log("OpenAI API key stored successfully.")
 				} else {
-					log("Failed to store API key with error: \(status)")
+					log("Failed to store OpenAI API key with error: \(status)")
 				}
 			}
-			
+		}
+	}
+	
+	static func displayGeminiApiKeyDialog() {
+		let alert = NSAlert()
+		alert.messageText = "Gemini API Key"
+		alert.informativeText = "Type your Gemini API key below:"
+		alert.addButton(withTitle: "Save")
+		alert.addButton(withTitle: "Cancel")
+		let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+		inputTextField.placeholderString = "API Key"
+		inputTextField.stringValue = Settings.GeminiAPIKEY
+		alert.accessoryView = inputTextField
+		let response = alert.runModal()
+		hide()
+		if response == .alertFirstButtonReturn {
+			let apiKey = inputTextField.stringValue
+			Settings.GeminiAPIKEY = apiKey
+			if let data = apiKey.data(using: .utf8) {
+				let status = KeychainManager.store(key: "com.chikim.VOCR.GeminiApiKey", data: data)
+				if status == noErr {
+					log("Gemini API key stored successfully.")
+				} else {
+					log("Failed to store Gemini API key with error: \(status)")
+				}
+			}
 		}
 	}
 	
@@ -231,6 +305,7 @@ enum Settings {
 		}
 	}
 	
+	// MARK: - Load/Save
 	static func load() {
 		let defaults = UserDefaults.standard
 		Settings.positionReset = defaults.bool(forKey:"positionReset")
@@ -238,16 +313,26 @@ enum Settings {
 		Settings.launchOnBoot = defaults.bool(forKey:"launchOnBoot")
 		Settings.autoScan = defaults.bool(forKey:"autoScan")
 		Settings.detectObject = defaults.bool(forKey:"detectObject")
-		Settings.engine = Engines(rawValue: defaults.integer(forKey:"engine"))!
+		Settings.engine = Engines(rawValue: defaults.integer(forKey:"engine")) ?? .ollama
 		Settings.useLastPrompt = defaults.bool(forKey:"useLastPrompt")
 		Settings.targetWindow = defaults.bool(forKey:"targetWindow")
 		Settings.preRelease = defaults.bool(forKey:"preRelease")
+		Settings.writeLog = defaults.bool(forKey:"writeLog")
+
 		if let retrievedData = KeychainManager.retrieve(key: "com.chikim.VOCR.OAIApiKey"),
 		   let retrievedApiKey = String(data: retrievedData, encoding: .utf8) {
 			Settings.GPTAPIKEY = retrievedApiKey
 		} else {
-			log("Failed to retrieve API key.")
+			log("Failed to retrieve OpenAI API key.")
 		}
+		
+		if let retrievedData = KeychainManager.retrieve(key: "com.chikim.VOCR.GeminiApiKey"),
+		   let retrievedApiKey = String(data: retrievedData, encoding: .utf8) {
+			Settings.GeminiAPIKEY = retrievedApiKey
+		} else {
+			log("Failed to retrieve Gemini API key.")
+		}
+		
 		if let mode = defaults.string(forKey: "mode") {
 			Settings.mode = mode
 		}
@@ -260,7 +345,6 @@ enum Settings {
 		if let systemPrompt = defaults.string(forKey: "systemPrompt") {
 			Settings.systemPrompt = systemPrompt
 		}
-		
 	}
 	
 	static func save() {
@@ -278,10 +362,10 @@ enum Settings {
 		defaults.set(Settings.systemPrompt, forKey:"systemPrompt")
 		defaults.set(Settings.mode, forKey:"mode")
 		defaults.set(Settings.camera, forKey:"camera")
+		defaults.set(Settings.writeLog, forKey:"writeLog")
 	}
-	
-	
 }
+
 
 class MenuHandler: NSObject {
 	@objc func toggleSetting(_ sender: NSMenuItem) {
@@ -322,7 +406,6 @@ class MenuHandler: NSObject {
 		Settings.save()
 	}
 	
-	
 	@objc func toggleAutoScan(_ sender: NSMenuItem) {
 		toggleSetting(sender)
 		if Settings.autoScan {
@@ -331,7 +414,6 @@ class MenuHandler: NSObject {
 			Settings.removeMouseMonitor()
 		}
 	}
-	
 	
 	@objc func toggleLaunch(_ sender: NSMenuItem) {
 		toggleSetting(sender)
@@ -350,10 +432,28 @@ class MenuHandler: NSObject {
 		}
 	}
 	
-	@objc func presentApiKeyInputDialog(_ sender: AnyObject?) {
-		Settings.displayApiKeyDialog()
+	@objc func presentOpenAIKeyInputDialog(_ sender: AnyObject?) {
+		Settings.displayOpenAIKeyDialog()
+	}
+
+	@objc func presentGeminiApiKeyInputDialog(_ sender: AnyObject?) {
+		Settings.displayGeminiApiKeyDialog()
 	}
 	
+	@objc func selectOllamaModel() {
+		Ollama.selectModel { selectedModelName in
+			guard let modelName = selectedModelName else {
+				log("Ollama model selection was cancelled.")
+				return
+			}
+			
+			Settings.ollamaModel = modelName
+			Settings.save()
+			log("Selected Ollama model: \(modelName)")
+			Accessibility.speak("\(modelName) selected.")
+		}
+	}
+		
 	@objc func presentSystemPromptDialog(_ sender: AnyObject?) {
 		Settings.displaySystemPromptDialog()
 	}
@@ -456,7 +556,7 @@ class MenuHandler: NSObject {
 		alert.accessoryView = inputTextField
 		let response = alert.runModal()
 		hide()
-		if response == .alertFirstButtonReturn { // OK button
+		if response == .alertFirstButtonReturn {
 			Shortcuts.shortcuts.append(Shortcut(name: inputTextField.stringValue, key: UInt32(0), modifiers: UInt32(0), keyName:"Unassigned"))
 			let data = try? JSONEncoder().encode(Shortcuts.shortcuts)
 			UserDefaults.standard.set(data, forKey: "userShortcuts")
@@ -465,16 +565,21 @@ class MenuHandler: NSObject {
 	}
 	
 	@objc func selectModel(_ sender: NSMenuItem) {
-		Settings.engine = Engines(rawValue: sender.tag)!
-		if Settings.engine == .ollama {
-			Ollama.setModel()
+		if let selectedEngine = Engines(rawValue: sender.tag) {
+			Settings.engine = selectedEngine
+			Settings.save()
+			// Update the checkmarks in the menu
+			if let menu = sender.menu {
+				for item in menu.items {
+					if item.action == #selector(selectModel(_:)) {
+						 item.state = (item.tag == sender.tag) ? .on : .off
+					}
+				}
+			}
 		}
-		Settings.save()
 	}
 	
 	@objc func checkForUpdates() {
 		AutoUpdateManager.shared.checkForUpdates()
 	}
-	
 }
-
