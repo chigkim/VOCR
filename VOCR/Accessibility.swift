@@ -8,10 +8,11 @@
 
 import Cocoa
 import Carbon
+import AVFoundation
 
 enum Accessibility {
 
-	static let speech:NSSpeechSynthesizer = NSSpeechSynthesizer()
+	static let speech:AVSpeechSynthesizer = AVSpeechSynthesizer()
 
 	
 	static func isTrusted(ask:Bool) -> Bool {
@@ -28,9 +29,8 @@ enum Accessibility {
 
 	static func speakWithSynthesizer(_ message:String) {
 		log("Speak with synthesizer: \(message)")
-		DispatchQueue.global().async {
-		speech.startSpeaking(message)
-		}
+		let utterance = AVSpeechUtterance(string: message)
+		speech.speak(utterance)
 	}
 
 	static func isVoiceOverRunning() -> Bool {
