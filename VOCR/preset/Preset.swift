@@ -1,0 +1,40 @@
+import Foundation
+
+/// A saved configuration describing how to talk to a model endpoint.
+///
+/// NOTE: The API key is NOT stored in plaintext. It's stored in
+/// `encryptedKeyCombinedBase64`, which is the AES.GCM sealed box
+/// (nonce + ciphertext + tag), Base64-encoded.
+struct Preset: Codable, Equatable, Identifiable {
+	let id: UUID
+
+	// Display / routing
+	var name: String  // User-visible label, e.g. "OpenAI GPT-4"
+	var url: String  // API endpoint / base URL
+	var model: String  // Model identifier on that endpoint
+
+	// Prompts
+	var systemPrompt: String  // System / role / behavior prompt
+	var prompt: String  // Default user / instruction prompt
+
+	// Credentials (encrypted)
+	var encryptedKeyCombinedBase64: String
+
+	init(
+		id: UUID = UUID(),
+		name: String,
+		url: String,
+		model: String,
+		systemPrompt: String,
+		prompt: String,
+		encryptedKeyCombinedBase64: String
+	) {
+		self.id = id
+		self.name = name
+		self.url = url
+		self.model = model
+		self.systemPrompt = systemPrompt
+		self.prompt = prompt
+		self.encryptedKeyCombinedBase64 = encryptedKeyCombinedBase64
+	}
+}

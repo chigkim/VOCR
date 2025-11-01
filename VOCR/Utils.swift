@@ -101,21 +101,9 @@ return nil
 }
 
 func ask(image:CGImage?=nil) {
-	if Settings.engine == .ollama && Ollama.model == nil {
-		Ollama.setModel()
-		return
-	}
 	let cgImage = image ?? grabImage()
 	guard let cgImage = cgImage else { return }
-	if !Settings.useLastPrompt {
-		if let prompt = askPrompt(value:Settings.prompt) {
-			Settings.prompt = prompt
-		} else {
-			return
-		}
-	}
-
-	getEngine(for: Settings.engine).ask(image: cgImage)
+	OpenAIAPI.ask(image: cgImage)
 }
 
 func imageToBase64(image: CGImage) -> String {

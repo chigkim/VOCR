@@ -1,7 +1,7 @@
 import Foundation
 import Cocoa
 
-enum GPT:EngineAsking {
+enum OpenAIAPI {
 
 	struct Response: Decodable {
 		struct Usage:Decodable {
@@ -22,28 +22,31 @@ enum GPT:EngineAsking {
 	}
 	
 	static func ask(image:CGImage) {
-		GPT.describe(image:image, system:Settings.systemPrompt, prompt:Settings.prompt) { description in
+		describe(image:image) { description in
 			NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
 			sleep(1)
 			Accessibility.speak(description)
 		}
 	}
 
-	static func describe(image: CGImage, system:String, prompt:String, completion: @escaping (String) -> Void) {
-		if Settings.GPTAPIKEY == "" {
-				Settings.displayApiKeyDialog()
-		}
-		if Settings.GPTAPIKEY == "" {
+	static func describe(image: CGImage, completion: @escaping (String) -> Void) {
+		guard let preset = Settings.activePreset() else {
 			return
 		}
+		let apiURL = preset.url
+		let apiKey = preset.apiKey         // decrypted right now
+		let modelName = preset.model
+		let prompt = preset.presetPrompt
+		let systemPrompt = preset.systemPrompt
+
 		let base64_image = imageToBase64(image: image)
 		
 		let jsonBody: [String: Any] = [
-			"model": "gpt-4.1",
+			"model": modelName,
 			"messages": [
 				[
 					"role": "system",
-					"content": system
+					"content": systemPrompt
 				],
 				[
 					"role": "user",
@@ -67,24 +70,22 @@ enum GPT:EngineAsking {
 		let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody, options: [])
 		
 		
-		let url = URL(string: "https://api.openai.com/v1/chat/completions")!
+		let url = URL(string: "\(apiURL)/chat/completions")!
 		var request = URLRequest(url: url)
-		request.setValue("Bearer \(Settings.GPTAPIKEY)", forHTTPHeaderField: "Authorization")
+		request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
 		request.httpBody = jsonData
-		performRequest(&request, name:"GPT") { data in
-			log("GPT-4V: \(String(data: data, encoding: .utf8)!)")
+		performRequest(&request, name:modelName) { data in
+			log("\(modelName): \(String(data: data, encoding: .utf8)!)")
 			do {
 				let response = try JSONDecoder().decode(Response.self, from: data)
 				let prompt_tokens = response.usage.prompt_tokens
 				let completion_tokens = response.usage.completion_tokens
 				let total_tokens = response.usage.total_tokens
-				let cost = Float(prompt_tokens)*(200.0/1000000.0)+Float(completion_tokens)*(800.0/1000000.0)
 				if let firstChoice = response.choices.first {
 					var description = firstChoice.message.content
 					description += "\nPrompt tokens: \(prompt_tokens)"
 					description += "\nCompletion tokens: \(completion_tokens)"
 					description += "\nTotal tokens: \(total_tokens)"
-					description += "\nCost: \(cost) cents"
 					copyToClipboard(description)
 					completion(description)
 				}
