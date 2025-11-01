@@ -9,10 +9,13 @@ final class PresetManagerViewController: NSViewController {
     private let addButton = NSButton(title: "Add", target: nil, action: nil)
     private let editButton = NSButton(title: "Edit", target: nil, action: nil)
     private let deleteButton = NSButton(title: "Delete", target: nil, action: nil)
-    private let selectButton = NSButton(title: "Select", target: nil, action: nil)
 
     // Keep strong ref while sheet is visible
     private var editorWC: PresetEditorWindowController?
+    private enum ColumnID {
+        static let name  = NSUserInterfaceItemIdentifier("NameColumn")
+        static let model = NSUserInterfaceItemIdentifier("ModelColumn")
+    }
 
     override func loadView() {
         self.view = NSView()
@@ -23,16 +26,19 @@ final class PresetManagerViewController: NSViewController {
 
     private func setupUI() {
         // Table / column
-        let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("PresetColumn"))
-        column.title = "Presets"
-        tableView.addTableColumn(column)
+        let presetColumn = NSTableColumn(identifier: ColumnID.name)
+        presetColumn.title = "Name"
+        tableView.addTableColumn(presetColumn)
+        let modelColumn = NSTableColumn(identifier: ColumnID.model)
+        modelColumn.title = "Model"
+        tableView.addTableColumn(modelColumn)
 
-        tableView.headerView = nil
         tableView.delegate = self
         tableView.dataSource = self
         tableView.usesAlternatingRowBackgroundColors = true
-        tableView.allowsEmptySelection = true
+        tableView.allowsEmptySelection = false
         tableView.allowsMultipleSelection = false
+        tableView.selectionHighlightStyle = .regular
 
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.documentView = tableView
@@ -40,7 +46,7 @@ final class PresetManagerViewController: NSViewController {
         scrollView.hasHorizontalScroller = false
         view.addSubview(scrollView)
 
-        let buttonsStack = NSStackView(views: [addButton, editButton, deleteButton, selectButton])
+        let buttonsStack = NSStackView(views: [addButton, editButton, deleteButton])
         buttonsStack.translatesAutoresizingMaskIntoConstraints = false
         buttonsStack.orientation = .horizontal
         buttonsStack.spacing = 8
@@ -54,9 +60,6 @@ final class PresetManagerViewController: NSViewController {
 
         deleteButton.target = self
         deleteButton.action = #selector(deletePressed)
-
-        selectButton.target = self
-        selectButton.action = #selector(selectPressed)
 
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
@@ -74,13 +77,23 @@ final class PresetManagerViewController: NSViewController {
 
     private func reloadUI() {
         tableView.reloadData()
+        if tableView.selectedRow < 0 && PresetManager.shared.presets.count > 0 {
+            tableView.selectRowIndexes(IndexSet(integer: 0), byExtendingSelection: false)
+            if let first = PresetManager.shared.presets.first {
+                PresetManager.shared.selectPreset(id: first.id)
+            }
+        }
 
         let row = tableView.selectedRow
         let valid = row >= 0 && row < PresetManager.shared.presets.count
 
         editButton.isEnabled = valid
         deleteButton.isEnabled = valid
-        selectButton.isEnabled = valid
+    }
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        self.view.window?.makeFirstResponder(tableView)
     }
 
     private func selectedIndex() -> Int? {
@@ -109,14 +122,6 @@ final class PresetManagerViewController: NSViewController {
         reloadUI()
     }
 
-    @objc private func selectPressed() {
-        guard let idx = selectedIndex() else { return }
-        let preset = PresetManager.shared.presets[idx]
-
-        PresetManager.shared.selectPreset(id: preset.id)
-        reloadUI()
-    }
-
     // MARK: - Editor presentation
 
     private func presentEditor(for presetID: UUID?) {
@@ -136,64 +141,47 @@ final class PresetManagerViewController: NSViewController {
     }
 }
 
-// MARK: - NSTableViewDataSource
-
-extension PresetManagerViewController: NSTableViewDataSource {
+// MARK: - NSTableViewDelegate
+extension PresetManagerViewController: NSTableViewDataSource, NSTableViewDelegate {
     func numberOfRows(in tableView: NSTableView) -> Int {
         return PresetManager.shared.presets.count
     }
-}
 
-// MARK: - NSTableViewDelegate
+    // Cell-based table: return strings for each column
+    func tableView(_ tableView: NSTableView,
+                   objectValueFor tableColumn: NSTableColumn?,
+                   row: Int) -> Any? {
+        let preset = PresetManager.shared.presets[row]
+        guard let colID = tableColumn?.identifier else {
+            return nil
+        }
 
-extension PresetManagerViewController: NSTableViewDelegate {
-    func tableViewSelectionDidChange(_ notification: Notification) {
-        reloadUI()
+        switch colID {
+        case ColumnID.name:
+            return preset.name
+
+        case ColumnID.model:
+            return preset.model
+
+        default:
+            return nil
+        }
     }
 
-    func tableView(_ tableView: NSTableView,
-                   viewFor tableColumn: NSTableColumn?,
-                   row: Int) -> NSView? {
-
-        let reuseID = NSUserInterfaceItemIdentifier("PresetCell")
-
-        let cell: NSTableCellView
-        if let existing = tableView.makeView(withIdentifier: reuseID, owner: self) as? NSTableCellView {
-            cell = existing
-        } else {
-            cell = NSTableCellView(frame: .zero)
-            cell.identifier = reuseID
-
-            let tf = NSTextField(labelWithString: "")
-            tf.translatesAutoresizingMaskIntoConstraints = false
-            tf.lineBreakMode = .byTruncatingTail
-            cell.textField = tf
-            cell.addSubview(tf)
-
-            NSLayoutConstraint.activate([
-                tf.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 8),
-                tf.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -8),
-                tf.topAnchor.constraint(equalTo: cell.topAnchor, constant: 4),
-                tf.bottomAnchor.constraint(equalTo: cell.bottomAnchor, constant: -4),
-            ])
+    func tableViewSelectionDidChange(_ notification: Notification) {
+        let idx = tableView.selectedRow
+        guard idx >= 0 && idx < PresetManager.shared.presets.count else {
+            reloadUI()
+            return
         }
 
-        let preset = PresetManager.shared.presets[row]
-        let activeID = PresetManager.shared.selectedPresetID
-
-        // We'll show name and model. Checkmark if it's the active preset.
-        if activeID == preset.id {
-            cell.textField?.stringValue = "✔︎ \(preset.name) (\(preset.model))"
-        } else {
-            cell.textField?.stringValue = "\(preset.name) (\(preset.model))"
-        }
-
-        return cell
+        let preset = PresetManager.shared.presets[idx]
+        PresetManager.shared.selectPreset(id: preset.id)
+        reloadUI()
     }
 }
 
 // MARK: - PresetEditorWindowControllerDelegate
-
 extension PresetManagerViewController: PresetEditorWindowControllerDelegate {
     func presetEditorDidFinish(_ controller: PresetEditorWindowController) {
         if let w = controller.window,
