@@ -29,11 +29,13 @@ enum OpenAIAPI {
 	}
 	
 	static func getModels(_ apiURL:String, _ apiKey:String, completion: @escaping ([String]) -> Void) {
-		guard let url = URL(string: "\(apiURL)/models") else {
+		guard let base = URL(string: apiURL) else {
 			alert("Invalid URL", apiURL)
 			completion([])
 			return
 		}
+
+		let url = base.appendingPathComponent("models")
 		
 		var request = URLRequest(url: url)
 		request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
@@ -112,8 +114,17 @@ enum OpenAIAPI {
 		
 		let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody, options: [])
 		
-		
-		let url = URL(string: "\(apiURL)/chat/completions")!
+		guard let base = URL(string: apiURL) else {
+			alert("Invalid URL", apiURL)
+			completion("")
+			return
+		}
+
+
+		let url = base
+			.appendingPathComponent("chat")
+			.appendingPathComponent("completions")
+
 		var request = URLRequest(url: url)
 		request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
 		request.httpBody = jsonData
