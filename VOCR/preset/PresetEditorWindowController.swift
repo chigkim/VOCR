@@ -438,7 +438,7 @@ final class PresetEditorWindowController: NSWindowController {
     /// User tapped "Choose…" next to Model.
     @objc private func chooseModelPressed() {
         // Fetch models from API and then present menu.
-        OpenAIAPI.getModels { [weak self] ids in
+		OpenAIAPI.getModels(urlField.stringValue, apiKeyField.stringValue) { [weak self] ids in
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 self.showModelMenu(ids)

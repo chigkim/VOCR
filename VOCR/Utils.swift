@@ -33,17 +33,23 @@ func performRequest(_ request:inout URLRequest, method:String="POST", name:Strin
 		}
 
 		guard let httpResponse = response as? HTTPURLResponse else {
-			Accessibility.speakWithSynthesizer("Invalid response from server.")
-			return
+			if let name = name {
+				Accessibility.speakWithSynthesizer("Invalid response from server.")
+			}
+				return
 		}
 
 		guard httpResponse.statusCode == 200 else {
-			Accessibility.speakWithSynthesizer("HTTP Error: Status code \(httpResponse.statusCode)")
+			if let name = name {
+				Accessibility.speakWithSynthesizer("HTTP Error: Status code \(httpResponse.statusCode)")
+			}
 			return
 		}
 
 		guard let data = data else {
-			Accessibility.speakWithSynthesizer("No data received from server.")
+			if let name = name {
+				Accessibility.speakWithSynthesizer("No data received from server.")
+			}
 			return
 		}
 		log(String(data: data, encoding: .utf8))

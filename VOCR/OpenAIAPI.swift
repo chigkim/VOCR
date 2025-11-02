@@ -28,15 +28,8 @@ enum OpenAIAPI {
 		let choices: [Choice]
 	}
 
-	static func getModels(completion: @escaping ([String]) -> Void) {
-		guard let preset = Settings.activePreset() else {
-			Accessibility.speakWithSynthesizer("No active preset. Cannot load models.")
-			completion([])
-			return
-		}
+	static func getModels(_ apiURL:String, _ apiKey:String, completion: @escaping ([String]) -> Void) {
 
-		let apiURL = preset.url
-		let apiKey = preset.apiKey	   // decrypted API key string
 
 		guard let url = URL(string: "\(apiURL)/models") else {
 			Accessibility.speakWithSynthesizer("Invalid models URL.")
