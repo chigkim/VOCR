@@ -2,21 +2,21 @@ import Foundation
 import Cocoa
 
 enum OpenAIAPI {
-
+	
 	struct ModelsResponse: Decodable {
 		struct Model: Decodable {
 			let id: String
 		}
 		let data: [Model]
 	}
-
+	
 	struct Response: Decodable {
 		struct Usage:Decodable {
 			let prompt_tokens:Int
 			let completion_tokens:Int
 			let total_tokens:Int
 		}
-
+		
 		struct Choice: Decodable {
 			struct Message: Decodable {
 				let content: String
@@ -27,26 +27,24 @@ enum OpenAIAPI {
 		let usage:Usage
 		let choices: [Choice]
 	}
-
+	
 	static func getModels(_ apiURL:String, _ apiKey:String, completion: @escaping ([String]) -> Void) {
-
-
 		guard let url = URL(string: "\(apiURL)/models") else {
-			Accessibility.speakWithSynthesizer("Invalid models URL.")
+			alert("Invalid URL", apiURL)
 			completion([])
 			return
 		}
-
+		
 		var request = URLRequest(url: url)
 		request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-
-		performRequest(&request, method: "GET", name: "model list") { data in
+		
+		performRequest(&request, method: "GET") { data in
 			do {
 				let decoded = try JSONDecoder().decode(ModelsResponse.self, from: data)
 				let ids = decoded.data.map { $0.id }
 				completion(ids)
 			} catch {
-				Accessibility.speakWithSynthesizer("Error decoding models JSON: \(error)")
+				alert("Error decoding models JSON", "\(error)")
 				completion([])
 			}
 		}
@@ -59,7 +57,7 @@ enum OpenAIAPI {
 			Accessibility.speak(description)
 		}
 	}
-
+	
 	static func describe(image: CGImage, completion: @escaping (String) -> Void) {
 		guard let preset = Settings.activePreset() else {
 			return
@@ -69,7 +67,7 @@ enum OpenAIAPI {
 		let modelName = preset.model
 		let prompt = preset.presetPrompt
 		let systemPrompt = preset.systemPrompt
-
+		
 		let base64_image = imageToBase64(image: image)
 		
 		let jsonBody: [String: Any] = [
@@ -121,7 +119,7 @@ enum OpenAIAPI {
 					completion(description)
 				}
 			} catch {
-				Accessibility.speakWithSynthesizer("Error decoding JSON: \(error)")
+				alert("Error decoding JSON", "\(error)")
 				completion("Error: Could not parse JSON.")
 			}
 		}

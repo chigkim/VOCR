@@ -20,36 +20,30 @@ func log<T>(_ object: T, _ level:OSLogType = .info) {
 }
 
 func performRequest(_ request:inout URLRequest, method:String="POST", name:String?=nil, completion: @escaping (Data) -> Void) {
-		request.httpMethod = method
+	request.httpMethod = method
 	request.timeoutInterval = 600
 	request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 	task?.cancel()
 	task = URLSession.shared.dataTask(with: request) { data, response, error in
 		if let error = error {
 			if error.localizedDescription != "cancelled" {
-				Accessibility.speakWithSynthesizer("Connection error: \(error.localizedDescription)")
+				alert("Connection error", "\(error.localizedDescription)")
 			}
 			return
 		}
-
+		
 		guard let httpResponse = response as? HTTPURLResponse else {
-			if let name = name {
-				Accessibility.speakWithSynthesizer("Invalid response from server.")
-			}
-				return
-		}
-
-		guard httpResponse.statusCode == 200 else {
-			if let name = name {
-				Accessibility.speakWithSynthesizer("HTTP Error: Status code \(httpResponse.statusCode)")
-			}
+			alert("Invalid response from server", "No valid HTTP response object")
 			return
 		}
-
+		
+		guard httpResponse.statusCode == 200 else {
+			alert("HTTP Error", "Status code \(httpResponse.statusCode)")
+			return
+		}
+		
 		guard let data = data else {
-			if let name = name {
-				Accessibility.speakWithSynthesizer("No data received from server.")
-			}
+			Accessibility.speakWithSynthesizer("No data received from server.")
 			return
 		}
 		log(String(data: data, encoding: .utf8))
@@ -58,13 +52,24 @@ func performRequest(_ request:inout URLRequest, method:String="POST", name:Strin
 	if let name = name {
 		Accessibility.speakWithSynthesizer("Getting response from \(name)... Please wait...")
 	}
-		task?.resume()
+	task?.resume()
 }
 
 func hide() {
 	let windows = NSApplication.shared.windows
 	NSApplication.shared.hide(nil)
 	windows[1].close()
+}
+
+func alert(_ title:String, _ message:String) {
+	DispatchQueue.main.async {
+		let alert = NSAlert()
+		alert.alertStyle = .informational
+		alert.messageText = title
+		alert.informativeText = message
+		alert.runModal()
+		return
+	}
 }
 
 func askPrompt(value:String) -> String? {
@@ -74,7 +79,7 @@ func askPrompt(value:String) -> String? {
 	alert.addButton(withTitle: "Cancel")
 	let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
 	inputTextField.stringValue = value
-		alert.accessoryView = inputTextField
+	alert.accessoryView = inputTextField
 	DispatchQueue.main.async {
 		alert.window.makeFirstResponder(inputTextField)
 	}
@@ -103,7 +108,7 @@ func grabImage() -> CGImage? {
 	} else {
 		Accessibility.speakWithSynthesizer("Faild to access \(Navigation.appName), \(Navigation.windowName)")
 	}
-return nil
+	return nil
 }
 
 func ask(image:CGImage?=nil) {
@@ -329,9 +334,9 @@ func performOCR(cgImage:CGImage) -> [Observation] {
 		 }
 		 */
 		
-//		var boxImage = drawBoxes(cgImage, boxes:boxesText, color:NSColor.green)!
-//		 var boxImage = drawBoxes(cgImage, boxes:boxesNoText, color:NSColor.red)!
-//		 try? saveImage(boxImage)
+		//		var boxImage = drawBoxes(cgImage, boxes:boxesText, color:NSColor.green)!
+		//		 var boxImage = drawBoxes(cgImage, boxes:boxesNoText, color:NSColor.red)!
+		//		 try? saveImage(boxImage)
 	}
 	return result
 }

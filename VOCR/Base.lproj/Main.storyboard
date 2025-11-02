@@ -710,7 +710,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="200" height="100"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="scf-V2-cas">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="scf-V2-cas">
                                 <rect key="frame" x="87" y="84" width="27" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Info" id="kqf-ZV-fse">
                                     <font key="font" metaFont="system"/>
@@ -718,7 +718,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bI7-kE-P2d">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bI7-kE-P2d">
                                 <rect key="frame" x="32" y="68" width="137" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Developed by Chi Kim" id="3g9-wm-4YH">
                                     <font key="font" metaFont="system"/>

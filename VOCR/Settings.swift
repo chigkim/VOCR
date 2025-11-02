@@ -26,11 +26,11 @@ enum Settings {
 	static var writeLog = false
 	static var preRelease = false
 	static var camera = "Unknown"
-
+	
 	static func activePreset() -> (url: String,
-	                               model: String,
-	                               apiKey: String,
-	                               presetPrompt: String,
+								   model: String,
+								   apiKey: String,
+								   presetPrompt: String,
 								   systemPrompt: String)? {
 		guard let p = PresetManager.shared.activePresetDecrypted() else {
 			return nil
@@ -43,7 +43,7 @@ enum Settings {
 			systemPrompt: p.systemPrompt
 		)
 	}
-
+	
 	static var allSettings: [(title: String, action: Selector, value: Bool)] {
 		return [
 			("Target Window", #selector(MenuHandler.toggleSetting(_:)), targetWindow),
@@ -66,7 +66,7 @@ enum Settings {
 		let presetsMenuItem = NSMenuItem(title: "Presets", action: nil, keyEquivalent: "")
 		presetsMenuItem.submenu = presetsMenu
 		menu.addItem(presetsMenuItem)
-
+		
 		let settingsMenu = NSMenu()
 		for setting in allSettings {
 			let menuItem = NSMenuItem(title: setting.title, action: setting.action, keyEquivalent: "")
@@ -151,7 +151,7 @@ enum Settings {
 		menu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
 		return menu
 	}
-
+	
 	private static func buildPresetsSubmenu(into submenu: NSMenu) {
 		submenu.removeAllItems()
 		let editItem = NSMenuItem(
@@ -161,12 +161,12 @@ enum Settings {
 		)
 		editItem.target = target
 		submenu.addItem(editItem)
-
+		
 		submenu.addItem(NSMenuItem.separator())
-
+		
 		let allPresets = PresetManager.shared.presets
 		let active = PresetManager.shared.selectedPresetID
-
+		
 		for p in allPresets {
 			let chooseItem = NSMenuItem(
 				title: p.name,
@@ -179,7 +179,7 @@ enum Settings {
 			submenu.addItem(chooseItem)
 		}
 	}
-
+	
 	static func installMouseMonitor() {
 		self.eventMonitor = NSEvent.addGlobalMonitorForEvents(
 			matching: [NSEvent.EventTypeMask.leftMouseDown, NSEvent.EventTypeMask.rightMouseDown],
@@ -412,19 +412,19 @@ class MenuHandler: NSObject {
 	@objc func selectPresetFromMenu(_ sender: NSMenuItem) {
 		guard let presetID = sender.representedObject as? UUID else { return }
 		PresetManager.shared.selectPreset(id: presetID)
-
+		
 		if let appDelegate = NSApp.delegate as? AppDelegate {
 			let newMenu = Settings.setupMenu()
 			appDelegate.statusItem.menu = newMenu
 		}
 	}
-
+	
 	@objc func openPresetManagerWindow(_ sender: NSMenuItem) {
 		if let appDelegate = NSApp.delegate as? AppDelegate {
 			appDelegate.openPresetWindow()
 			NSApp.activate(ignoringOtherApps: true)
 		}
 	}
-
+	
 }
 

@@ -119,6 +119,31 @@ final class PresetManager {
 	}
 
 	// MARK: - Selection
+	/// Clone an existing preset (including encrypted key) under a new UUID and " Copy" name.
+	/// Returns the new preset's ID, or nil if original not found.
+	func duplicatePreset(originalID: UUID) -> UUID? {
+		guard let src = presets.first(where: { $0.id == originalID }) else {
+			return nil
+		}
+
+		let newPreset = Preset(
+			id: UUID(),
+			name: src.name + " Copy",
+			url: src.url,
+			model: src.model,
+			systemPrompt: src.systemPrompt,
+			prompt: src.prompt,
+			encryptedKeyCombinedBase64: src.encryptedKeyCombinedBase64
+		)
+
+		presets.append(newPreset)
+
+		// make the duplicate the selected preset in memory
+		selectedPresetID = newPreset.id
+
+		saveToDisk()
+		return newPreset.id
+	}
 
 	func selectPreset(id: UUID) {
 		guard presets.contains(where: { $0.id == id }) else { return }

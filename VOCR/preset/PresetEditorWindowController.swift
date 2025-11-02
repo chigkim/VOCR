@@ -21,7 +21,7 @@ final class PresetEditorWindowController: NSWindowController {
     private let nameField = NSTextField()
     private let urlField = NSTextField()
     private let modelField = NSTextField()
-    private let apiKeyField = NSSecureTextField()
+    private let apiKeyField = NSTextField()
 
     private let systemPromptTextView = NSTextView()
     private let promptTextView = NSTextView()
