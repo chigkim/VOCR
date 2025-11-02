@@ -3,6 +3,13 @@ import Cocoa
 
 enum OpenAIAPI {
 
+	struct ModelsResponse: Decodable {
+		struct Model: Decodable {
+			let id: String
+		}
+		let data: [Model]
+	}
+
 	struct Response: Decodable {
 		struct Usage:Decodable {
 			let prompt_tokens:Int
@@ -20,6 +27,37 @@ enum OpenAIAPI {
 		let usage:Usage
 		let choices: [Choice]
 	}
+
+	static func getModels(completion: @escaping ([String]) -> Void) {
+		guard let preset = Settings.activePreset() else {
+			Accessibility.speakWithSynthesizer("No active preset. Cannot load models.")
+			completion([])
+			return
+		}
+
+		let apiURL = preset.url
+		let apiKey = preset.apiKey	   // decrypted API key string
+
+		guard let url = URL(string: "\(apiURL)/models") else {
+			Accessibility.speakWithSynthesizer("Invalid models URL.")
+			completion([])
+			return
+		}
+
+		var request = URLRequest(url: url)
+		request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+
+		performRequest(&request, method: "GET", name: "model list") { data in
+			do {
+				let decoded = try JSONDecoder().decode(ModelsResponse.self, from: data)
+				let ids = decoded.data.map { $0.id }
+				completion(ids)
+			} catch {
+				Accessibility.speakWithSynthesizer("Error decoding models JSON: \(error)")
+				completion([])
+			}
+		}
+	}
 	
 	static func ask(image:CGImage) {
 		describe(image:image) { description in
@@ -34,7 +72,7 @@ enum OpenAIAPI {
 			return
 		}
 		let apiURL = preset.url
-		let apiKey = preset.apiKey         // decrypted right now
+		let apiKey = preset.apiKey		 // decrypted right now
 		let modelName = preset.model
 		let prompt = preset.presetPrompt
 		let systemPrompt = preset.systemPrompt
@@ -96,4 +134,3 @@ enum OpenAIAPI {
 		}
 	}
 }
-
