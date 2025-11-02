@@ -11,7 +11,7 @@ import Vision
 import Cocoa
 
 enum Navigation {
-
+	
 	enum Mode: Int, CaseIterable {
 		case WINDOW = 0
 		case VOCURSOR = 1
@@ -21,7 +21,7 @@ enum Navigation {
 			let nextIndex = (self.rawValue + 1) % allCases.count
 			return allCases[nextIndex]
 		}
-
+		
 		func name() -> String {
 			switch (self) {
 			case.WINDOW:
@@ -33,9 +33,9 @@ enum Navigation {
 			}
 		}
 	}
-
+	
 	static var mode = Mode.WINDOW
-
+	
 	static var displayResults:[[Observation]] = []
 	static var cgPosition = CGPoint()
 	static var cgSize = CGSize()
@@ -45,12 +45,12 @@ enum Navigation {
 	static var l = -1
 	static var w = -1
 	static var c = -1
-
+	
 	static func getWindow() -> CGRect? {
 		let currentApp = NSWorkspace.shared.frontmostApplication
 		appName = currentApp!.localizedName!
 		let windows = currentApp?.windows()
-
+		
 		/*
 		 // filter main window.
 		 windows = windows!.filter {
@@ -80,7 +80,7 @@ enum Navigation {
 				}
 				title += String(window.hashValue)
 				alert.addButton(withTitle: title)
-							}
+			}
 			alert.addButton(withTitle: "Close")
 			let modalResult = alert.runModal()
 			hide()
@@ -101,7 +101,7 @@ enum Navigation {
 			var windowSize = CGSize()
 			AXValueGetValue(position as! AXValue, AXValueType.cgPoint, &windowPosition)
 			AXValueGetValue(size as! AXValue, AXValueType.cgSize, &windowSize)
-let rect =  CGRect(origin: windowPosition, size: windowSize)
+			let rect =  CGRect(origin: windowPosition, size: windowSize)
 			log(rect)
 			return rect
 		} else {
@@ -109,7 +109,7 @@ let rect =  CGRect(origin: windowPosition, size: windowSize)
 		}
 		return nil
 	}
-
+	
 	static func setWindow() {
 		if let rect = getWindow() {
 			cgPosition = rect.origin
@@ -127,7 +127,7 @@ let rect =  CGRect(origin: windowPosition, size: windowSize)
 			windowName = ""
 			return CGRect(origin: position, size: size)
 		}
-return nil
+		return nil
 	}
 	static func setVOCursor() {
 		if let rect = getVOCursor() {
@@ -161,7 +161,7 @@ return nil
 		}
 		if cgSize != CGSize() {
 			if let  image = TakeScreensShots(rect:CGRect(origin: cgPosition, size: cgSize)) {
-cgImage  = image
+				cgImage  = image
 			} else {
 				Accessibility.speak("Faild to take a screenshot of \(appName), \(windowName)")
 			}
@@ -184,18 +184,18 @@ cgImage  = image
 		Shortcuts.activateNavigationShortcuts()
 	}
 	
-
+	
 	static func explore() {
 		prepare()
-//		guard let  image = cgImage, let image = resizeCGImage(image, toWidth: Int(Navigation.cgSize.width), toHeight:Int(Navigation.cgSize.height)) else { return }
-//		   log("Resized:", image.width, image.height)
+		//		guard let  image = cgImage, let image = resizeCGImage(image, toWidth: Int(Navigation.cgSize.width), toHeight:Int(Navigation.cgSize.height)) else { return }
+		//		   log("Resized:", image.width, image.height)
 		guard let image = cgImage else { return }
 		
 		let system = "You are a helpful assistant. Your response should be in JSON format."
 		let prompt = "Process the provided image by segmenting it into distinct areas with related items. Output a JSON format description for each segmented area. The JSON should include: 'label' (a concise string name), 'uid' (a unique integer identifier), 'description' (a brief explanation of the area), 'content' (a string with examples of objects within the area), and 'boundingBox' (coordinates as an array: bottom_left_x, bottom_left_y, width, height). Ensure the boundingBox coordinates are normalized between 0.0 and 1.0 relative to the image's resolution (\(image.width) width and \(image.height) height), with the origin at the bottom left (0.0, 0.0). The response should start with ```json and end with ```, containing only the JSON string without inline comments or extra notes. Precision in the 'boundingBox' coordinates is crucial; even one minor inaccuracy can have severe and irreversible consequences for users."
-		getEngine(for: Settings.engine).describe(image:image, system:system, prompt:prompt, completion: exploreHandler)
+		OpenAIAPI.describe(image:image, system:system, prompt:prompt, completion: exploreHandler)
 	}
-
+	
 	static func exploreHandler(description:String) {
 		guard let json = extractString(text:description, startDelimiter: "```json\n", endDelimiter: "\n```") else {
 			Accessibility.speakWithSynthesizer("Cannot extract JSON string from the response. Try again.")
@@ -206,14 +206,14 @@ cgImage  = image
 			self.process(result)
 			Shortcuts.activateNavigationShortcuts()
 			Accessibility.speak("Finished scanning \(self.appName), \(self.windowName)")
-
-//			DispatchQueue.main.async {
-//				if let cgImage = cgImage {
-//					let boxImage = drawBoxes(cgImage, boxes:result, color:NSColor.red)!
-//					try? saveImage(boxImage)
-//				}
-//			}
-
+			
+			//			DispatchQueue.main.async {
+			//				if let cgImage = cgImage {
+			//					let boxImage = drawBoxes(cgImage, boxes:result, color:NSColor.red)!
+			//					try? saveImage(boxImage)
+			//				}
+			//			}
+			
 		} else {
 			Accessibility.speakWithSynthesizer("Cannot parse the JSON string. Try again.")
 		}
@@ -232,13 +232,13 @@ cgImage  = image
 		}
 		return nil
 	}
-
+	
 	static func process(_ results:[Observation]) {
 		let sorted = results.sorted(by: sort)
 		var line:[Observation] = []
 		var y = sorted[0].boundingBox.midY
 		for r in sorted {
-//			 log("\(r.value): \(r.boundingBox.debugDescription)")
+			//			 log("\(r.value): \(r.boundingBox.debugDescription)")
 			if abs(r.boundingBox.midY-y)>0.01 {
 				displayResults.append(line)
 				line = []
@@ -307,7 +307,7 @@ cgImage  = image
 				var rect = displayResults[l][w].boundingBox
 				rect = CGRect(x:rect.minX, y:1-rect.maxY, width:rect.width, height:rect.height)
 				rect = VNImageRectForNormalizedRect(rect, image.width, image.height)
-
+				
 				log("\(rect.debugDescription)")
 				if let croppedImage = image.cropping(to: rect) {
 					ask(image: croppedImage)

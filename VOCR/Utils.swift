@@ -20,28 +20,28 @@ func log<T>(_ object: T, _ level:OSLogType = .info) {
 }
 
 func performRequest(_ request:inout URLRequest, method:String="POST", name:String?=nil, completion: @escaping (Data) -> Void) {
-		request.httpMethod = method
+	request.httpMethod = method
 	request.timeoutInterval = 600
 	request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 	task?.cancel()
 	task = URLSession.shared.dataTask(with: request) { data, response, error in
 		if let error = error {
 			if error.localizedDescription != "cancelled" {
-				Accessibility.speakWithSynthesizer("Connection error: \(error.localizedDescription)")
+				alert("Connection error", "\(error.localizedDescription)")
 			}
 			return
 		}
-
+		
 		guard let httpResponse = response as? HTTPURLResponse else {
-			Accessibility.speakWithSynthesizer("Invalid response from server.")
+			alert("Invalid response from server", "No valid HTTP response object")
 			return
 		}
-
+		
 		guard httpResponse.statusCode == 200 else {
-			Accessibility.speakWithSynthesizer("HTTP Error: Status code \(httpResponse.statusCode)")
+			alert("HTTP Error", "Status code \(httpResponse.statusCode)")
 			return
 		}
-
+		
 		guard let data = data else {
 			Accessibility.speakWithSynthesizer("No data received from server.")
 			return
@@ -52,7 +52,7 @@ func performRequest(_ request:inout URLRequest, method:String="POST", name:Strin
 	if let name = name {
 		Accessibility.speakWithSynthesizer("Getting response from \(name)... Please wait...")
 	}
-		task?.resume()
+	task?.resume()
 }
 
 func hide() {
@@ -61,22 +61,49 @@ func hide() {
 	windows[1].close()
 }
 
-func askPrompt(value:String) -> String? {
+func alert(_ title:String, _ message:String) {
+	DispatchQueue.main.async {
+		let alert = NSAlert()
+		alert.alertStyle = .informational
+		alert.messageText = title
+		alert.informativeText = message
+		alert.runModal()
+		return
+	}
+}
+
+func askPrompt(value: String) -> String? {
 	let alert = NSAlert()
 	alert.messageText = "Prompt"
-	alert.addButton(withTitle: "Ok")
+	alert.addButton(withTitle: "Ask")
 	alert.addButton(withTitle: "Cancel")
+
+	// Create a vertical stack view to hold text field + checkbox
+	let stackView = NSStackView()
+	stackView.orientation = .vertical
+	stackView.spacing = 8
+	stackView.translatesAutoresizingMaskIntoConstraints = false
+
+	// Text field
 	let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
 	inputTextField.stringValue = value
-		alert.accessoryView = inputTextField
+	stackView.addArrangedSubview(inputTextField)
+
+	// Checkbox
+	let followUpButton = NSButton(checkboxWithTitle: "Follow up", target: nil, action: nil)
+	stackView.addArrangedSubview(followUpButton)
+
+	alert.accessoryView = stackView
+
 	DispatchQueue.main.async {
 		alert.window.makeFirstResponder(inputTextField)
 	}
-	
+
 	let response = alert.runModal()
 	hide()
 	if response == .alertFirstButtonReturn {
 		let prompt = inputTextField.stringValue
+		Settings.followUp = (followUpButton.state == .on)
 		return prompt
 	}
 	return nil
@@ -97,25 +124,30 @@ func grabImage() -> CGImage? {
 	} else {
 		Accessibility.speakWithSynthesizer("Faild to access \(Navigation.appName), \(Navigation.windowName)")
 	}
-return nil
+	return nil
 }
 
 func ask(image:CGImage?=nil) {
-	if Settings.engine == .ollama && Ollama.model == nil {
-		Ollama.setModel()
-		return
-	}
 	let cgImage = image ?? grabImage()
 	guard let cgImage = cgImage else { return }
-	if !Settings.useLastPrompt {
-		if let prompt = askPrompt(value:Settings.prompt) {
+	guard let preset = Settings.activePreset() else {
+		return
+	}
+	let presetPrompt = preset.presetPrompt
+	let system = preset.systemPrompt
+	var prompt = ""
+	if Settings.usePresetPrompt {
+		prompt = presetPrompt
+	} else {
+		if let customPrompt = askPrompt(value:Settings.prompt) {
+			prompt = customPrompt
 			Settings.prompt = prompt
 		} else {
 			return
 		}
 	}
 
-	getEngine(for: Settings.engine).ask(image: cgImage)
+	OpenAIAPI.ask(image: cgImage, system:system, prompt:prompt)
 }
 
 func imageToBase64(image: CGImage) -> String {
@@ -335,9 +367,9 @@ func performOCR(cgImage:CGImage) -> [Observation] {
 		 }
 		 */
 		
-//		var boxImage = drawBoxes(cgImage, boxes:boxesText, color:NSColor.green)!
-//		 var boxImage = drawBoxes(cgImage, boxes:boxesNoText, color:NSColor.red)!
-//		 try? saveImage(boxImage)
+		//		var boxImage = drawBoxes(cgImage, boxes:boxesText, color:NSColor.green)!
+		//		 var boxImage = drawBoxes(cgImage, boxes:boxesNoText, color:NSColor.red)!
+		//		 try? saveImage(boxImage)
 	}
 	return result
 }

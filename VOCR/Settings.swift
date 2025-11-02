@@ -21,23 +21,38 @@ enum Settings {
 	static var targetWindow = false
 	static var detectObject = true
 	static var windowRealtime = true
-	static var useLastPrompt = false
+	static var usePresetPrompt = false
 	static var prompt = "Analyze the image in a comprehensive and detailed manner."
-	static var systemPrompt = "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions."
-	static var GPTAPIKEY = ""
-	static var mode = "OCR"
+	static var messages: [[String: Any]] = []
+	static var followUp = false
 	static let target = MenuHandler()
-	static var engine: Engines = .ollama
 	static var writeLog = false
 	static var preRelease = false
 	static var camera = "Unknown"
+	
+	static func activePreset() -> (url: String,
+								   model: String,
+								   apiKey: String,
+								   presetPrompt: String,
+								   systemPrompt: String)? {
+		guard let p = PresetManager.shared.activePresetDecrypted() else {
+			return nil
+		}
+		return (
+			url: p.url,
+			model: p.model,
+			apiKey: p.apiKey,
+			presetPrompt: p.prompt,
+			systemPrompt: p.systemPrompt
+		)
+	}
 	
 	static var allSettings: [(title: String, action: Selector, value: Bool)] {
 		return [
 			("Target Window", #selector(MenuHandler.toggleSetting(_:)), targetWindow),
 			("Auto Scan", #selector(MenuHandler.toggleAutoScan(_:)), autoScan),
 			("Detect Objects", #selector(MenuHandler.toggleSetting(_:)), detectObject),
-			("Use Last Prompt", #selector(MenuHandler.toggleSetting(_:)), useLastPrompt),
+			("Use Preset Prompt", #selector(MenuHandler.toggleSetting(_:)), usePresetPrompt),
 			("Reset Position on Scan", #selector(MenuHandler.toggleSetting(_:)), positionReset),
 			("Positional Audio", #selector(MenuHandler.toggleSetting(_:)), positionalAudio),
 			("Move Mouse", #selector(MenuHandler.toggleSetting(_:)), moveMouse),
@@ -49,6 +64,12 @@ enum Settings {
 	static func setupMenu() -> NSMenu {
 		load()
 		let menu = NSMenu()
+		let presetsMenu = NSMenu()
+		buildPresetsSubmenu(into: presetsMenu)
+		let presetsMenuItem = NSMenuItem(title: "Presets", action: nil, keyEquivalent: "")
+		presetsMenuItem.submenu = presetsMenu
+		menu.addItem(presetsMenuItem)
+		
 		let settingsMenu = NSMenu()
 		for setting in allSettings {
 			let menuItem = NSMenuItem(title: setting.title, action: setting.action, keyEquivalent: "")
@@ -60,40 +81,6 @@ enum Settings {
 		if Settings.autoScan {
 			installMouseMonitor()
 		}
-		
-		let engineMenu = NSMenu()
-		
-		let gptItem = NSMenuItem(title: "GPT", action: #selector(target.selectModel(_:)), keyEquivalent: "")
-		gptItem.target = target
-		gptItem.tag = Engines.gpt.rawValue
-		engineMenu.addItem(gptItem)
-		
-		let ollamaItem = NSMenuItem(title: "Ollama", action: #selector(target.selectModel(_:)), keyEquivalent: "")
-		ollamaItem.target = target
-		ollamaItem.tag = Engines.ollama.rawValue
-		engineMenu.addItem(ollamaItem)
-		
-		let llamaCppItem = NSMenuItem(title: "LlamaCpp", action: #selector(target.selectModel(_:)), keyEquivalent: "")
-		llamaCppItem.target = target
-		llamaCppItem.tag = Engines.llamaCpp.rawValue
-		engineMenu.addItem(llamaCppItem)
-		
-		for item in engineMenu.items {
-			item.state = (item.tag == Settings.engine.rawValue) ? .on : .off
-		}
-		
-		let enterAPIKeyMenuItem = NSMenuItem(title: "OpenAI API Key...", action: #selector(target.presentApiKeyInputDialog(_:)), keyEquivalent: "")
-		enterAPIKeyMenuItem.target = target
-		engineMenu.addItem(enterAPIKeyMenuItem)
-		
-		let systemPromptMenuItem = NSMenuItem(title: "Set System Prompt...", action: #selector(target.presentSystemPromptDialog(_:)), keyEquivalent: "")
-		systemPromptMenuItem.target = target
-		engineMenu.addItem(systemPromptMenuItem)
-		
-		
-		let engineMenuItem = NSMenuItem(title: "Engine", action: nil, keyEquivalent: "")
-		engineMenuItem.submenu = engineMenu
-		settingsMenu.addItem(engineMenuItem)
 		
 		let soundOutputMenuItem = NSMenuItem(title: "Sound Output...", action: #selector(target.chooseOutput(_:)), keyEquivalent: "")
 		soundOutputMenuItem.target = target
@@ -136,11 +123,11 @@ enum Settings {
 		checkForUpdatesItem.target = target
 		updateMenu.addItem(checkForUpdatesItem)
 		
-		let autoCheckItem = NSMenuItem(title: "Automatically Chek for Updates", action: #selector(target.toggleSetting(_:)), keyEquivalent: "")
+		let autoCheckItem = NSMenuItem(title: "Automatically Check for Updates", action: #selector(target.toggleSetting(_:)), keyEquivalent: "")
 		autoCheckItem.target = target
 		updateMenu.addItem(autoCheckItem)
 		
-		let autoUpdateItem = NSMenuItem(title: "Automatically Install  Updates", action: #selector(target.toggleSetting(_:)), keyEquivalent: "")
+		let autoUpdateItem = NSMenuItem(title: "Automatically Install Updates", action: #selector(target.toggleSetting(_:)), keyEquivalent: "")
 		autoUpdateItem.target = target
 		updateMenu.addItem(autoUpdateItem)
 		
@@ -166,6 +153,34 @@ enum Settings {
 		
 		menu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
 		return menu
+	}
+	
+	private static func buildPresetsSubmenu(into submenu: NSMenu) {
+		submenu.removeAllItems()
+		let editItem = NSMenuItem(
+			title: "Edit…",
+			action: #selector(MenuHandler.openPresetManagerWindow(_:)),
+			keyEquivalent: ""
+		)
+		editItem.target = target
+		submenu.addItem(editItem)
+		
+		submenu.addItem(NSMenuItem.separator())
+		
+		let allPresets = PresetManager.shared.presets
+		let active = PresetManager.shared.selectedPresetID
+		
+		for p in allPresets {
+			let chooseItem = NSMenuItem(
+				title: p.name,
+				action: #selector(MenuHandler.selectPresetFromMenu(_:)),
+				keyEquivalent: ""
+			)
+			chooseItem.target = target
+			chooseItem.representedObject = p.id
+			chooseItem.state = (p.id == active) ? .on : .off
+			submenu.addItem(chooseItem)
+		}
 	}
 	
 	static func installMouseMonitor() {
@@ -197,40 +212,6 @@ enum Settings {
 		}
 	}
 	
-	static func displayApiKeyDialog() {
-		let alert = NSAlert()
-		alert.messageText = "OpenAI API Key"
-		alert.informativeText = "Type your OpenAI API key below:"
-		alert.addButton(withTitle: "Save")
-		alert.addButton(withTitle: "Cancel")
-		let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
-		inputTextField.placeholderString = "API Key"
-		inputTextField.stringValue = Settings.GPTAPIKEY
-		alert.accessoryView = inputTextField
-		let response = alert.runModal()
-		hide()
-		if response == .alertFirstButtonReturn { // OK button
-			let apiKey = inputTextField.stringValue
-			Settings.GPTAPIKEY = apiKey
-			if let data = apiKey.data(using: .utf8) {
-				let status = KeychainManager.store(key: "com.chikim.VOCR.OAIApiKey", data: data)
-				if status == noErr {
-					log("API key stored successfully.")
-				} else {
-					log("Failed to store API key with error: \(status)")
-				}
-			}
-			
-		}
-	}
-	
-	static func displaySystemPromptDialog() {
-		if let prompt = askPrompt(value:Settings.systemPrompt) {
-			Settings.systemPrompt = prompt
-			Settings.save()
-		}
-	}
-	
 	static func load() {
 		let defaults = UserDefaults.standard
 		Settings.positionReset = defaults.bool(forKey:"positionReset")
@@ -238,29 +219,12 @@ enum Settings {
 		Settings.launchOnBoot = defaults.bool(forKey:"launchOnBoot")
 		Settings.autoScan = defaults.bool(forKey:"autoScan")
 		Settings.detectObject = defaults.bool(forKey:"detectObject")
-		Settings.engine = Engines(rawValue: defaults.integer(forKey:"engine"))!
-		Settings.useLastPrompt = defaults.bool(forKey:"useLastPrompt")
+		Settings.usePresetPrompt = defaults.bool(forKey:"usePresetPrompt")
 		Settings.targetWindow = defaults.bool(forKey:"targetWindow")
 		Settings.preRelease = defaults.bool(forKey:"preRelease")
-		if let retrievedData = KeychainManager.retrieve(key: "com.chikim.VOCR.OAIApiKey"),
-		   let retrievedApiKey = String(data: retrievedData, encoding: .utf8) {
-			Settings.GPTAPIKEY = retrievedApiKey
-		} else {
-			log("Failed to retrieve API key.")
-		}
-		if let mode = defaults.string(forKey: "mode") {
-			Settings.mode = mode
-		}
 		if let camera = defaults.string(forKey: "camera") {
 			Settings.camera = camera
 		}
-		if let prompt = defaults.string(forKey: "prompt") {
-			Settings.prompt = prompt
-		}
-		if let systemPrompt = defaults.string(forKey: "systemPrompt") {
-			Settings.systemPrompt = systemPrompt
-		}
-		
 	}
 	
 	static func save() {
@@ -271,12 +235,8 @@ enum Settings {
 		defaults.set(Settings.autoScan, forKey:"autoScan")
 		defaults.set(Settings.detectObject, forKey:"detectObject")
 		defaults.set(Settings.preRelease, forKey:"preRelease")
-		defaults.set(Settings.engine.rawValue, forKey:"engine")
-		defaults.set(Settings.useLastPrompt, forKey:"useLastPrompt")
+		defaults.set(Settings.usePresetPrompt, forKey:"usePresetPrompt")
 		defaults.set(Settings.targetWindow, forKey:"targetWindow")
-		defaults.set(Settings.prompt, forKey:"prompt")
-		defaults.set(Settings.systemPrompt, forKey:"systemPrompt")
-		defaults.set(Settings.mode, forKey:"mode")
 		defaults.set(Settings.camera, forKey:"camera")
 	}
 	
@@ -298,8 +258,8 @@ class MenuHandler: NSObject {
 			Settings.positionReset = sender.state == .on
 		case "Positional Audio":
 			Settings.positionalAudio = sender.state == .on
-		case "Use Last Prompt":
-			Settings.useLastPrompt = sender.state == .on
+		case "Use Preset Prompt":
+			Settings.usePresetPrompt = sender.state == .on
 		case "Move Mouse":
 			Settings.moveMouse = sender.state == .on
 		case "Launch on Login":
@@ -350,13 +310,6 @@ class MenuHandler: NSObject {
 		}
 	}
 	
-	@objc func presentApiKeyInputDialog(_ sender: AnyObject?) {
-		Settings.displayApiKeyDialog()
-	}
-	
-	@objc func presentSystemPromptDialog(_ sender: AnyObject?) {
-		Settings.displaySystemPromptDialog()
-	}
 	
 	@objc func displayAboutWindow(_ sender: Any?) {
 		let storyboardName = NSStoryboard.Name(stringLiteral: "Main")
@@ -422,15 +375,6 @@ class MenuHandler: NSObject {
 		}
 	}
 	
-	@objc func selectMode(_ sender: NSMenuItem) {
-		guard let menu = sender.menu else { return }
-		for item in menu.items {
-			item.state = (item.title == sender.title) ? .on : .off
-		}
-		Settings.mode = sender.title
-		Settings.save()
-	}
-	
 	@objc func dismiss(_ sender: NSMenuItem) {
 		
 	}
@@ -464,16 +408,25 @@ class MenuHandler: NSObject {
 		}
 	}
 	
-	@objc func selectModel(_ sender: NSMenuItem) {
-		Settings.engine = Engines(rawValue: sender.tag)!
-		if Settings.engine == .ollama {
-			Ollama.setModel()
-		}
-		Settings.save()
-	}
-	
 	@objc func checkForUpdates() {
 		AutoUpdateManager.shared.checkForUpdates()
+	}
+	
+	@objc func selectPresetFromMenu(_ sender: NSMenuItem) {
+		guard let presetID = sender.representedObject as? UUID else { return }
+		PresetManager.shared.selectPreset(id: presetID)
+		
+		if let appDelegate = NSApp.delegate as? AppDelegate {
+			let newMenu = Settings.setupMenu()
+			appDelegate.statusItem.menu = newMenu
+		}
+	}
+	
+	@objc func openPresetManagerWindow(_ sender: NSMenuItem) {
+		if let appDelegate = NSApp.delegate as? AppDelegate {
+			appDelegate.openPresetWindow()
+			NSApp.activate(ignoringOtherApps: true)
+		}
 	}
 	
 }
