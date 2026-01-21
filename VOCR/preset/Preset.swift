@@ -1,5 +1,18 @@
 import Foundation
 
+/// Predefined model provider configurations for quick preset creation.
+struct ModelProvider {
+	let name: String
+	let apiURL: String
+	
+	static let predefinedProviders: [ModelProvider] = [
+		ModelProvider(name: "Gemini", apiURL: "https://generativelanguage.googleapis.com/v1beta/openai/"),
+		ModelProvider(name: "Open AI", apiURL: "https://api.openai.com/v1"),
+		ModelProvider(name: "Open Router", apiURL: "https://openrouter.ai/api/v1"),
+		ModelProvider(name: "Ollama", apiURL: "http://localhost:11434/v1")
+	]
+}
+
 /// A saved configuration describing how to talk to a model endpoint.
 ///
 /// NOTE: The API key is NOT stored in plaintext. It's stored in

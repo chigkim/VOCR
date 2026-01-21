@@ -19,6 +19,7 @@ final class PresetEditorWindowController: NSWindowController {
     private let contentViewContainer = NSView()
 
     private let nameField = NSTextField()
+    private let providerComboBox = NSComboBox()
     private let urlField = NSTextField()
     private let modelField = NSTextField()
     private let apiKeyField = NSTextField()
@@ -135,6 +136,7 @@ final class PresetEditorWindowController: NSWindowController {
 
         // Labels
         let nameLabel = makeLabel("Name:")
+        let providerLabel = makeLabel("Model Provider:")
         let urlLabel = makeLabel("URL:")
         let modelLabel = makeLabel("Model:")
         let apiKeyLabel = makeLabel("API Key:")
@@ -145,6 +147,16 @@ final class PresetEditorWindowController: NSWindowController {
         [nameField, urlField, modelField, apiKeyField].forEach { tf in
             tf.translatesAutoresizingMaskIntoConstraints = false
         }
+
+        // Configure provider combo box (only for new presets)
+        providerComboBox.translatesAutoresizingMaskIntoConstraints = false
+        providerComboBox.usesDataSource = false
+        providerComboBox.completes = true
+        providerComboBox.addItems(withObjectValues: ModelProvider.predefinedProviders.map { $0.name })
+        providerComboBox.delegate = self
+        
+        // Configure URL field delegate to detect manual changes
+        urlField.delegate = self
 
         // Choose model button
         chooseModelButton.translatesAutoresizingMaskIntoConstraints = false
@@ -172,22 +184,31 @@ final class PresetEditorWindowController: NSWindowController {
         saveButton.action = #selector(savePressed)
 
         // Add subviews
-        let views: [NSView] = [
+        var views: [NSView] = [
             nameLabel, nameField,
+        ]
+        
+        // Only add provider combo box for new presets
+        if editingPresetID == nil {
+            views.append(contentsOf: [providerLabel, providerComboBox])
+        }
+        
+        views.append(contentsOf: [
             urlLabel, urlField,
             modelLabel, modelField, chooseModelButton,
             apiKeyLabel, apiKeyField,
             systemPromptLabel, systemPromptScrollView,
             promptLabel, promptScrollView,
             cancelButton, saveButton,
-        ]
+        ])
+        
         views.forEach { contentViewContainer.addSubview($0) }
 
         // Layout
         let pad: CGFloat = 8
         let labelWidth: CGFloat = 110
 
-        NSLayoutConstraint.activate([
+        var constraints: [NSLayoutConstraint] = [
             // Row: Name
             nameLabel.leadingAnchor.constraint(
                 equalTo: contentViewContainer.leadingAnchor,
@@ -210,11 +231,40 @@ final class PresetEditorWindowController: NSWindowController {
             nameField.centerYAnchor.constraint(
                 equalTo: nameLabel.centerYAnchor
             ),
-
+        ]
+        
+        // Row: Model Provider (only for new presets)
+        let urlTopAnchor: NSLayoutYAxisAnchor
+        if editingPresetID == nil {
+            constraints.append(contentsOf: [
+                providerLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+                providerLabel.topAnchor.constraint(
+                    equalTo: nameLabel.bottomAnchor,
+                    constant: pad
+                ),
+                providerLabel.widthAnchor.constraint(equalToConstant: labelWidth),
+                
+                providerComboBox.leadingAnchor.constraint(
+                    equalTo: providerLabel.trailingAnchor,
+                    constant: 8
+                ),
+                providerComboBox.trailingAnchor.constraint(
+                    equalTo: nameField.trailingAnchor
+                ),
+                providerComboBox.centerYAnchor.constraint(
+                    equalTo: providerLabel.centerYAnchor
+                ),
+            ])
+            urlTopAnchor = providerLabel.bottomAnchor
+        } else {
+            urlTopAnchor = nameLabel.bottomAnchor
+        }
+        
+        constraints.append(contentsOf: [
             // Row: URL
             urlLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             urlLabel.topAnchor.constraint(
-                equalTo: nameLabel.bottomAnchor,
+                equalTo: urlTopAnchor,
                 constant: pad
             ),
             urlLabel.widthAnchor.constraint(equalToConstant: labelWidth),
@@ -350,6 +400,8 @@ final class PresetEditorWindowController: NSWindowController {
                 equalTo: saveButton.centerYAnchor
             ),
         ])
+        
+        NSLayoutConstraint.activate(constraints)
     }
 
     private func populateFieldsFromExistingPreset() {
@@ -482,5 +534,42 @@ final class PresetEditorWindowController: NSWindowController {
     /// Called when user picks a model from the popup menu.
     @objc private func modelPicked(_ sender: NSMenuItem) {
         modelField.stringValue = sender.title
+    }
+}
+
+// MARK: - NSComboBoxDelegate
+
+extension PresetEditorWindowController: NSComboBoxDelegate {
+    func comboBoxSelectionDidChange(_ notification: Notification) {
+        guard let comboBox = notification.object as? NSComboBox else { return }
+        
+        // Only handle our provider combo box
+        guard comboBox == providerComboBox else { return }
+        
+        // Get the selected provider name
+        let selectedIndex = comboBox.indexOfSelectedItem
+        guard selectedIndex >= 0 && selectedIndex < ModelProvider.predefinedProviders.count else {
+            return
+        }
+        
+        let selectedProvider = ModelProvider.predefinedProviders[selectedIndex]
+        
+        // Populate the URL field
+        urlField.stringValue = selectedProvider.apiURL
+    }
+}
+
+// MARK: - NSTextFieldDelegate
+
+extension PresetEditorWindowController: NSTextFieldDelegate {
+    func controlTextDidChange(_ obj: Notification) {
+        guard let textField = obj.object as? NSTextField else { return }
+        
+        // Only handle URL field changes
+        guard textField == urlField else { return }
+        
+        // Clear provider selection when URL is manually edited
+        providerComboBox.stringValue = ""
+        providerComboBox.deselectItem(at: providerComboBox.indexOfSelectedItem)
     }
 }
