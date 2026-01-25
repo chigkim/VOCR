@@ -19,10 +19,12 @@ final class PresetEditorWindowController: NSWindowController {
     private let contentViewContainer = NSView()
 
     private let nameField = NSTextField()
-    private let providerComboBox = NSComboBox()
+    private let providerPopUpButton = NSPopUpButton(frame: .zero)
     private let urlField = NSTextField()
-    private let modelField = NSTextField()
     private let apiKeyField = NSTextField()
+    private let modelField = NSTextField()
+    private let modelPickerPopUpButton = NSPopUpButton(frame: .zero)
+
 
     private let systemPromptTextView = NSTextView()
     private let promptTextView = NSTextView()
@@ -36,9 +38,6 @@ final class PresetEditorWindowController: NSWindowController {
         action: nil
     )
     private let saveButton = NSButton(title: "Save", target: nil, action: nil)
-
-    // NEW: button to choose from available models
-    private let chooseModelButton = NSButton(title: "Choose…", target: nil, action: nil)
 
     // MARK: - Init
 
@@ -136,9 +135,6 @@ final class PresetEditorWindowController: NSWindowController {
 
         // Labels
         let nameLabel = makeLabel("Name:")
-        let providerLabel = makeLabel("Model Provider:")
-        let urlLabel = makeLabel("URL:")
-        let modelLabel = makeLabel("Model:")
         let apiKeyLabel = makeLabel("API Key:")
         let systemPromptLabel = makeLabel("System Prompt:")
         let promptLabel = makeLabel("User Prompt:")
@@ -147,21 +143,33 @@ final class PresetEditorWindowController: NSWindowController {
         [nameField, urlField, modelField, apiKeyField].forEach { tf in
             tf.translatesAutoresizingMaskIntoConstraints = false
         }
+        urlField.placeholderString = "https://"
 
-        // Configure provider combo box (only for new presets)
-        providerComboBox.translatesAutoresizingMaskIntoConstraints = false
-        providerComboBox.usesDataSource = false
-        providerComboBox.completes = true
-        providerComboBox.addItems(withObjectValues: ModelProvider.predefinedProviders.map { $0.name })
-        providerComboBox.delegate = self
+        // Configure provider pop up button (only for new presets)
+        providerPopUpButton.translatesAutoresizingMaskIntoConstraints = false
+        providerPopUpButton.title = "Provider"
+        providerPopUpButton.removeAllItems()
+        providerPopUpButton.addItem(withTitle: "Provider")
+        providerPopUpButton.item(at: 0)?.isHidden = true
+        providerPopUpButton.addItems(withTitles: ModelProvider.predefinedProviders.map { $0.name })
+        providerPopUpButton.target = self
+        providerPopUpButton.action = #selector(providerDidChange)
+        providerPopUpButton.menu?.delegate = self
+        providerPopUpButton.selectItem(at: 0)
+        providerPopUpButton.title = "Provider"
+        
+        // Configure model picker pop up button
+        modelPickerPopUpButton.translatesAutoresizingMaskIntoConstraints = false
+        modelPickerPopUpButton.title = "Model"
+        let modelMenu = NSMenu()
+        modelMenu.delegate = self
+        modelPickerPopUpButton.menu = modelMenu
+        modelMenu.addItem(withTitle: "Model", action: nil, keyEquivalent: "")
+        modelMenu.item(at: 0)?.isHidden = true
+        modelPickerPopUpButton.selectItem(at: 0)
         
         // Configure URL field delegate to detect manual changes
         urlField.delegate = self
-
-        // Choose model button
-        chooseModelButton.translatesAutoresizingMaskIntoConstraints = false
-        chooseModelButton.target = self
-        chooseModelButton.action = #selector(chooseModelPressed)
 
         // Scroll text views
         setupScrollTextView(
@@ -188,15 +196,13 @@ final class PresetEditorWindowController: NSWindowController {
             nameLabel, nameField,
         ]
         
-        // Only add provider combo box for new presets
-        if editingPresetID == nil {
-            views.append(contentsOf: [providerLabel, providerComboBox])
-        }
+        // Only add provider pop up button for new presets
+        views.append(providerPopUpButton)
         
         views.append(contentsOf: [
-            urlLabel, urlField,
-            modelLabel, modelField, chooseModelButton,
+            urlField,
             apiKeyLabel, apiKeyField,
+            modelPickerPopUpButton, modelField,
             systemPromptLabel, systemPromptScrollView,
             promptLabel, promptScrollView,
             cancelButton, saveButton,
@@ -235,77 +241,31 @@ final class PresetEditorWindowController: NSWindowController {
         
         // Row: Model Provider (only for new presets)
         let urlTopAnchor: NSLayoutYAxisAnchor
-        if editingPresetID == nil {
-            constraints.append(contentsOf: [
-                providerLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-                providerLabel.topAnchor.constraint(
-                    equalTo: nameLabel.bottomAnchor,
-                    constant: pad
-                ),
-                providerLabel.widthAnchor.constraint(equalToConstant: labelWidth),
-                
-                providerComboBox.leadingAnchor.constraint(
-                    equalTo: providerLabel.trailingAnchor,
-                    constant: 8
-                ),
-                providerComboBox.trailingAnchor.constraint(
-                    equalTo: nameField.trailingAnchor
-                ),
-                providerComboBox.centerYAnchor.constraint(
-                    equalTo: providerLabel.centerYAnchor
-                ),
-            ])
-            urlTopAnchor = providerLabel.bottomAnchor
-        } else {
-            urlTopAnchor = nameLabel.bottomAnchor
-        }
+        constraints.append(contentsOf: [
+            providerPopUpButton.leadingAnchor.constraint(
+                equalTo: nameField.leadingAnchor
+            ),
+            providerPopUpButton.topAnchor.constraint(
+                equalTo: nameField.bottomAnchor,
+                constant: pad
+            ),
+            providerPopUpButton.trailingAnchor.constraint(
+                equalTo: nameField.trailingAnchor
+            ),
+        ])
+        urlTopAnchor = providerPopUpButton.bottomAnchor
         
         constraints.append(contentsOf: [
             // Row: URL
-            urlLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-            urlLabel.topAnchor.constraint(
-                equalTo: urlTopAnchor,
-                constant: pad
-            ),
-            urlLabel.widthAnchor.constraint(equalToConstant: labelWidth),
-
             urlField.leadingAnchor.constraint(
-                equalTo: urlLabel.trailingAnchor,
-                constant: 8
+                equalTo: nameField.leadingAnchor
             ),
             urlField.trailingAnchor.constraint(
                 equalTo: nameField.trailingAnchor
             ),
-            urlField.centerYAnchor.constraint(equalTo: urlLabel.centerYAnchor),
-
-            // Row: Model
-            modelLabel.leadingAnchor.constraint(
-                equalTo: nameLabel.leadingAnchor
-            ),
-            modelLabel.topAnchor.constraint(
-                equalTo: urlLabel.bottomAnchor,
+            urlField.topAnchor.constraint(
+                equalTo: urlTopAnchor,
                 constant: pad
-            ),
-            modelLabel.widthAnchor.constraint(equalToConstant: labelWidth),
-
-            modelField.leadingAnchor.constraint(
-                equalTo: modelLabel.trailingAnchor,
-                constant: 8
-            ),
-            // modelField now ends before the choose button
-            modelField.trailingAnchor.constraint(
-                equalTo: chooseModelButton.leadingAnchor,
-                constant: -8
-            ),
-            modelField.centerYAnchor.constraint(
-                equalTo: modelLabel.centerYAnchor
-            ),
-
-            chooseModelButton.centerYAnchor.constraint(
-                equalTo: modelField.centerYAnchor
-            ),
-            chooseModelButton.trailingAnchor.constraint(
-                equalTo: nameField.trailingAnchor
             ),
 
             // Row: API Key
@@ -313,7 +273,7 @@ final class PresetEditorWindowController: NSWindowController {
                 equalTo: nameLabel.leadingAnchor
             ),
             apiKeyLabel.topAnchor.constraint(
-                equalTo: modelLabel.bottomAnchor,
+                equalTo: urlField.bottomAnchor,
                 constant: pad
             ),
             apiKeyLabel.widthAnchor.constraint(equalToConstant: labelWidth),
@@ -329,12 +289,32 @@ final class PresetEditorWindowController: NSWindowController {
                 equalTo: apiKeyLabel.centerYAnchor
             ),
 
+            // Row: Model
+            modelPickerPopUpButton.leadingAnchor.constraint(
+                equalTo: nameField.leadingAnchor
+            ),
+            modelPickerPopUpButton.topAnchor.constraint(
+                equalTo: apiKeyField.bottomAnchor,
+                constant: pad
+            ),
+            
+            modelField.leadingAnchor.constraint(
+                equalTo: modelPickerPopUpButton.trailingAnchor,
+                constant: 8
+            ),
+            modelField.trailingAnchor.constraint(
+                equalTo: nameField.trailingAnchor
+            ),
+            modelField.centerYAnchor.constraint(
+                equalTo: modelPickerPopUpButton.centerYAnchor
+            ),
+
             // Row: System Prompt
             systemPromptLabel.leadingAnchor.constraint(
                 equalTo: nameLabel.leadingAnchor
             ),
             systemPromptLabel.topAnchor.constraint(
-                equalTo: apiKeyLabel.bottomAnchor,
+                equalTo: modelPickerPopUpButton.bottomAnchor,
                 constant: pad
             ),
             systemPromptLabel.widthAnchor.constraint(
@@ -430,6 +410,23 @@ final class PresetEditorWindowController: NSWindowController {
     @objc private func cancelPressed() {
         delegate?.presetEditorDidCancel(self)
     }
+    
+    @objc private func providerDidChange(_ sender: NSPopUpButton) {
+        let selectedIndex = sender.indexOfSelectedItem
+        let providerIndex = selectedIndex - 1
+        guard providerIndex >= 0 && providerIndex < ModelProvider.predefinedProviders.count else {
+            return
+        }
+        
+        let selectedProvider = ModelProvider.predefinedProviders[providerIndex]
+        
+        // Populate the URL field
+        urlField.stringValue = selectedProvider.apiURL
+        
+        // Reset the button's selection to the title item
+        sender.selectItem(at: 0)
+        sender.title = "Provider"
+    }
 
     @objc private func savePressed() {
         let name = nameField.stringValue.trimmingCharacters(
@@ -486,30 +483,21 @@ final class PresetEditorWindowController: NSWindowController {
     }
 
     // MARK: - Model picker logic
-
-    /// User tapped "Choose…" next to Model.
-    @objc private func chooseModelPressed() {
-        // Fetch models from API and then present menu.
-		OpenAIAPI.getModels(urlField.stringValue, apiKeyField.stringValue) { [weak self] ids in
-            DispatchQueue.main.async {
-                guard let self = self else { return }
-                self.showModelMenu(ids)
-            }
-        }
-    }
-
+    
     /// Build an NSMenu of models and pop it anchored to the Choose… button.
     private func showModelMenu(_ modelIDs: [String]) {
+        guard let menu = modelPickerPopUpButton.menu else { return }
+        menu.removeAllItems()
+        
+        modelPickerPopUpButton.title = "Model"
+        menu.addItem(withTitle: "Model", action: nil, keyEquivalent: "")
+        menu.item(at: 0)?.isHidden = true
+                
         guard !modelIDs.isEmpty else {
-            let alert = NSAlert()
-            alert.alertStyle = .informational
-            alert.messageText = "No models available."
-            alert.informativeText = "Could not retrieve any models from the API."
-            alert.runModal()
+            menu.addItem(withTitle: "No models found", action: nil, keyEquivalent: "")
             return
         }
 
-        let menu = NSMenu()
         for id in modelIDs {
             let item = NSMenuItem(
                 title: id,
@@ -519,48 +507,74 @@ final class PresetEditorWindowController: NSWindowController {
             item.target = self
             menu.addItem(item)
         }
+        
+        let currentModel = modelField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !currentModel.isEmpty,
+           let matchingItem = menu.items.first(where: { $0.title == currentModel }) {
+            modelPickerPopUpButton.select(matchingItem)
+        } else {
+            modelPickerPopUpButton.selectItem(at: 0)
+        }
+    }
 
-        // Position menu so it drops down from the button.
-        let buttonBounds = chooseModelButton.bounds
-        let menuOrigin = NSPoint(x: 0, y: buttonBounds.height)
-
-        menu.popUp(
-            positioning: nil,
-            at: menuOrigin,
-            in: chooseModelButton
-        )
+    private func showModelLoadingMenu() {
+        guard let menu = modelPickerPopUpButton.menu else { return }
+        menu.removeAllItems()
+        modelPickerPopUpButton.title = "Model"
+        menu.addItem(withTitle: "Model", action: nil, keyEquivalent: "")
+        menu.item(at: 0)?.isHidden = true
+        let loadingItem = NSMenuItem(title: "Loading…", action: nil, keyEquivalent: "")
+        loadingItem.isEnabled = false
+        menu.addItem(loadingItem)
+        modelPickerPopUpButton.selectItem(at: 0)
     }
 
     /// Called when user picks a model from the popup menu.
-    @objc private func modelPicked(_ sender: NSMenuItem) {
+    @objc private func modelPicked(_ sender: NSMenuItem?) {
+        guard let sender = sender else {
+            return
+        }
+        if sender.title == "Model" {
+            return
+        }
         modelField.stringValue = sender.title
+        modelPickerPopUpButton.selectItem(at: 0)
+        modelPickerPopUpButton.title = "Model"
     }
 }
 
-// MARK: - NSComboBoxDelegate
-
-extension PresetEditorWindowController: NSComboBoxDelegate {
-    func comboBoxSelectionDidChange(_ notification: Notification) {
-        guard let comboBox = notification.object as? NSComboBox else { return }
-        
-        // Only handle our provider combo box
-        guard comboBox == providerComboBox else { return }
-        
-        // Get the selected provider name
-        let selectedIndex = comboBox.indexOfSelectedItem
-        guard selectedIndex >= 0 && selectedIndex < ModelProvider.predefinedProviders.count else {
-            return
+// MARK: - NSMenuDelegate
+extension PresetEditorWindowController: NSMenuDelegate {
+    func menuWillOpen(_ menu: NSMenu) {
+        if menu == modelPickerPopUpButton.menu {
+            showModelLoadingMenu()
+            OpenAIAPI.getModels(urlField.stringValue, apiKeyField.stringValue) { [weak self] ids in
+                DispatchQueue.main.async {
+                    self?.showModelMenu(ids)
+                }
+            }
+        } else if menu == providerPopUpButton.menu {
+            let currentURL = urlField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+            if let index = ModelProvider.predefinedProviders.firstIndex(where: { $0.apiURL == currentURL }) {
+                providerPopUpButton.selectItem(at: index + 1)
+            } else {
+                providerPopUpButton.selectItem(at: 0)
+            }
         }
-        
-        let selectedProvider = ModelProvider.predefinedProviders[selectedIndex]
-        
-        // Populate the URL field
-        urlField.stringValue = selectedProvider.apiURL
+    }
+
+    func menuDidClose(_ menu: NSMenu) {
+        if menu == modelPickerPopUpButton.menu {
+            modelPickerPopUpButton.selectItem(at: 0)
+            modelPickerPopUpButton.title = "Model"
+        } else if menu == providerPopUpButton.menu {
+            providerPopUpButton.selectItem(at: 0)
+            providerPopUpButton.title = "Provider"
+        }
     }
 }
 
 // MARK: - NSTextFieldDelegate
-
 extension PresetEditorWindowController: NSTextFieldDelegate {
     func controlTextDidChange(_ obj: Notification) {
         guard let textField = obj.object as? NSTextField else { return }
@@ -569,7 +583,7 @@ extension PresetEditorWindowController: NSTextFieldDelegate {
         guard textField == urlField else { return }
         
         // Clear provider selection when URL is manually edited
-        providerComboBox.stringValue = ""
-        providerComboBox.deselectItem(at: providerComboBox.indexOfSelectedItem)
+        providerPopUpButton.selectItem(at: 0)
+        providerPopUpButton.title = "Provider"
     }
 }
