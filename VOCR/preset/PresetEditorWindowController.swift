@@ -143,8 +143,14 @@ final class PresetEditorWindowController: NSWindowController {
         [nameField, urlField, modelField, apiKeyField].forEach { tf in
             tf.translatesAutoresizingMaskIntoConstraints = false
         }
+        nameField.setAccessibilityLabel("Name")
         urlField.placeholderString = "https://"
-
+        urlField.setAccessibilityLabel("Provider URL")
+        apiKeyField.setAccessibilityLabel("API Key")
+        modelField.setAccessibilityLabel("Model Name")
+        systemPromptTextView.setAccessibilityLabel("System Prompt")
+        promptTextView.setAccessibilityLabel("User Prompt")
+        
         // Configure provider pop up button (only for new presets)
         providerPopUpButton.translatesAutoresizingMaskIntoConstraints = false
         providerPopUpButton.title = "Provider"
