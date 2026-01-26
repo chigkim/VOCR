@@ -1,5 +1,5 @@
-import Foundation
 import CryptoKit
+import Foundation
 
 enum SecureCrypto {
     /// Where we persist our master symmetric key in Keychain

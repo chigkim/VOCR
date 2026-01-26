@@ -8,63 +8,62 @@
 
 import Foundation
 import Vision
+
 struct GPTObservation: Decodable {
-	let label: String
-	let uid: Int
-	let description: String
-	let content: String
-	let boundingBox: [Float]
-	
-	// Coding keys to match the JSON property names
-	enum CodingKeys: String, CodingKey {
-		case label
-		case uid
-		case description
-		case content
-		case boundingBox
-	}
+    let label: String
+    let uid: Int
+    let description: String
+    let content: String
+    let boundingBox: [Float]
+
+    // Coding keys to match the JSON property names
+    enum CodingKeys: String, CodingKey {
+        case label
+        case uid
+        case description
+        case content
+        case boundingBox
+    }
 }
 
 struct GPTObservations: Decodable {
-	let elements: [GPTObservation]
-	
-	// Coding keys to match the JSON property names
-	enum CodingKeys: String, CodingKey {
-		case elements
-	}
+    let elements: [GPTObservation]
+
+    // Coding keys to match the JSON property names
+    enum CodingKeys: String, CodingKey {
+        case elements
+    }
 }
 
 struct Observation {
 
-	var boundingBox:CGRect
-	var value:String
-	var vnObservation:VNRecognizedTextObservation?
-	var gptObservation:GPTObservation?
+    var boundingBox: CGRect
+    var value: String
+    var vnObservation: VNRecognizedTextObservation?
+    var gptObservation: GPTObservation?
 
-	init(_ obs:GPTObservation) {
-		self.gptObservation = obs
-		self.value = obs.label+"\n"+obs.content+"\n"+obs.description
-		let x = CGFloat(obs.boundingBox[0])
-		let y = CGFloat(obs.boundingBox[1])
-		let width = CGFloat(obs.boundingBox[2])
-		let height = CGFloat(obs.boundingBox[3])
-		var rect = CGRect(x:x, y:y, width:width, height:height)
-//		rect = VNNormalizedRectForImageRect(rect, Int(Navigation.cgSize.width), Int(Navigation.cgSize.height))
-//		rect = CGRect(x:rect.minX, y:1-rect.maxY, width:rect.width, height:rect.height)
-		self.boundingBox = rect
-	}
+    init(_ obs: GPTObservation) {
+        self.gptObservation = obs
+        self.value = obs.label + "\n" + obs.content + "\n" + obs.description
+        let x = CGFloat(obs.boundingBox[0])
+        let y = CGFloat(obs.boundingBox[1])
+        let width = CGFloat(obs.boundingBox[2])
+        let height = CGFloat(obs.boundingBox[3])
+        var rect = CGRect(x: x, y: y, width: width, height: height)
+        //		rect = VNNormalizedRectForImageRect(rect, Int(Navigation.cgSize.width), Int(Navigation.cgSize.height))
+        //		rect = CGRect(x:rect.minX, y:1-rect.maxY, width:rect.width, height:rect.height)
+        self.boundingBox = rect
+    }
 
-	init(_ obs:VNRecognizedTextObservation) {
-		self.vnObservation = obs
-		self.value = obs.topCandidates(1)[0].string
-		self.boundingBox = obs.boundingBox
-	}
+    init(_ obs: VNRecognizedTextObservation) {
+        self.vnObservation = obs
+        self.value = obs.topCandidates(1)[0].string
+        self.boundingBox = obs.boundingBox
+    }
 
-	init(_ obs:VNRectangleObservation, value:String) {
-		self.boundingBox = obs.boundingBox
-		self.value = value
-	}
-	
+    init(_ obs: VNRectangleObservation, value: String) {
+        self.boundingBox = obs.boundingBox
+        self.value = value
+    }
+
 }
-
-
