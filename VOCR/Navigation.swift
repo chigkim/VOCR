@@ -202,6 +202,8 @@ enum Navigation {
 			let result = elements.map {Observation($0)}
 			self.process(result)
 			Shortcuts.activateNavigationShortcuts()
+			NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
+			sleep(1)
 			Accessibility.speak("Finished scanning \(self.appName), \(self.windowName)")
 			
 			//			DispatchQueue.main.async {
