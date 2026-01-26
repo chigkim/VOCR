@@ -43,7 +43,8 @@ enum OpenAIAPI {
 		performRequest(&request, method: "GET") { data in
 			do {
 				let decoded = try JSONDecoder().decode(ModelsResponse.self, from: data)
-				let ids = decoded.data.map { $0.id }
+				var ids = decoded.data.map { $0.id }
+				ids.sort()
 				completion(ids)
 			} catch {
 				alert("Error decoding models JSON", "\(error)")
