@@ -67,7 +67,6 @@ enum OpenAIAPI {
 		let apiURL = preset.url
 		let apiKey = preset.apiKey		 // decrypted right now
 		let modelName = preset.model
-		
 		let base64_image = imageToBase64(image: image)
 		if !Settings.messages.isEmpty && Settings.followUp {
 			let message:[String : Any] = [
@@ -109,7 +108,7 @@ enum OpenAIAPI {
 		let jsonBody: [String: Any] = [
 			"model": modelName,
 			"messages": Settings.messages,
-			"max_tokens": 4096
+			"response_format": ["type": "json_object"]
 		]
 		
 		let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody, options: [])
@@ -136,11 +135,11 @@ enum OpenAIAPI {
 				let completion_tokens = response.usage.completion_tokens
 				let total_tokens = response.usage.total_tokens
 				if let firstChoice = response.choices.first {
-					var description = firstChoice.message.content
-					description += "\nPrompt tokens: \(prompt_tokens)"
-					description += "\nCompletion tokens: \(completion_tokens)"
-					description += "\nTotal tokens: \(total_tokens)"
-					copyToClipboard(description)
+					let description = firstChoice.message.content
+					var usage = "Prompt tokens: \(prompt_tokens)"
+					usage += "\nCompletion tokens: \(completion_tokens)"
+					usage += "\nTotal tokens: \(total_tokens)"
+					copyToClipboard("\(description)\n\(usage)")
 					completion(description)
 				}
 			} catch {

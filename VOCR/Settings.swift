@@ -30,7 +30,8 @@ enum Settings {
 	static var preRelease = false
 	static var camera = "Unknown"
 	
-	static func activePreset() -> (url: String,
+	static func activePreset() -> (name: String,
+								   url: String,
 								   model: String,
 								   apiKey: String,
 								   presetPrompt: String,
@@ -39,6 +40,7 @@ enum Settings {
 			return nil
 		}
 		return (
+			name:p.name,
 			url: p.url,
 			model: p.model,
 			apiKey: p.apiKey,

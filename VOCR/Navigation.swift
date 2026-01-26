@@ -190,18 +190,15 @@ enum Navigation {
 		//		guard let  image = cgImage, let image = resizeCGImage(image, toWidth: Int(Navigation.cgSize.width), toHeight:Int(Navigation.cgSize.height)) else { return }
 		//		   log("Resized:", image.width, image.height)
 		guard let image = cgImage else { return }
-		
-		let system = "You are a helpful assistant. Your response should be in JSON format."
-		let prompt = "Process the provided image by segmenting it into distinct areas with related items. Output a JSON format description for each segmented area. The JSON should include: 'label' (a concise string name), 'uid' (a unique integer identifier), 'description' (a brief explanation of the area), 'content' (a string with examples of objects within the area), and 'boundingBox' (coordinates as an array: bottom_left_x, bottom_left_y, width, height). Ensure the boundingBox coordinates are normalized between 0.0 and 1.0 relative to the image's resolution (\(image.width) width and \(image.height) height), with the origin at the bottom left (0.0, 0.0). The response should start with ```json and end with ```, containing only the JSON string without inline comments or extra notes. Precision in the 'boundingBox' coordinates is crucial; even one minor inaccuracy can have severe and irreversible consequences for users."
-		OpenAIAPI.describe(image:image, system:system, prompt:prompt, completion: exploreHandler)
+		if let preset = PresetManager.shared.presets.first(where: { $0.name == "Explore" }) {
+			let system = preset.systemPrompt
+			var prompt = preset.prompt.replacingOccurrences(of: "{image.width}", with: String(image.width)).replacingOccurrences(of: "{image.height}", with: String(image.height))
+			OpenAIAPI.describe(image:image, system:system, prompt:prompt, completion: exploreHandler)
+		}
 	}
 	
 	static func exploreHandler(description:String) {
-		guard let json = extractString(text:description, startDelimiter: "```json\n", endDelimiter: "\n```") else {
-			Accessibility.speakWithSynthesizer("Cannot extract JSON string from the response. Try again.")
-			return
-		}
-		if let elements = self.decode(message:json) {
+		if let elements = self.decode(message:description) {
 			let result = elements.map {Observation($0)}
 			self.process(result)
 			Shortcuts.activateNavigationShortcuts()
@@ -222,13 +219,13 @@ enum Navigation {
 	static func decode(message:String) -> [GPTObservation]? {
 		let jsonData = message.data(using: .utf8)!
 		do {
-			let elements = try JSONDecoder().decode([GPTObservation].self, from: jsonData)
+			let elements = try JSONDecoder().decode(GPTObservations.self, from: jsonData).elements
 			for element in elements {
 				log("Label: \(element.label), UID: \(element.uid), Bounding Box: \(element.boundingBox)")
 			}
 			return elements
 		} catch {
-			log("Error decoding JSON: \(error)")
+			log("Error decoding JSON: \(error), ```json\(message)```")
 		}
 		return nil
 	}

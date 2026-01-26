@@ -25,6 +25,14 @@ struct GPTObservation: Decodable {
 	}
 }
 
+struct GPTObservations: Decodable {
+	let elements: [GPTObservation]
+	
+	// Coding keys to match the JSON property names
+	enum CodingKeys: String, CodingKey {
+		case elements
+	}
+}
 
 struct Observation {
 

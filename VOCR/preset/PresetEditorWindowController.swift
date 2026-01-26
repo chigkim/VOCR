@@ -406,9 +406,8 @@ final class PresetEditorWindowController: NSWindowController {
         modelField.stringValue = preset.model
         systemPromptTextView.string = preset.systemPrompt
         promptTextView.string = preset.prompt
-
-        // For security, we DO NOT auto-fill decrypted API key here.
         apiKeyField.stringValue = ""
+        apiKeyField.placeholderString = "Will Not be shown After saving."
     }
 
     // MARK: - Actions
@@ -593,3 +592,4 @@ extension PresetEditorWindowController: NSTextFieldDelegate {
         providerPopUpButton.title = "Provider"
     }
 }
+

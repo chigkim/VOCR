@@ -19,6 +19,20 @@ final class PresetManager {
 
 	// MARK: - Persistence
 
+	private func makeDefaultPresets() {
+		do {
+			try addPreset(name: "Default", url: "https://api.openai.com/v1", model: "gpt-5.2", systemPrompt: "You are a helpful assistant.", prompt: "Analyze the image in a comprehensive and detailed manner.", apiKeyPlaintext: "your-api-key")
+			if let lastID = presets.last?.id {
+				selectPreset(id: lastID)
+			}
+			let explorePrompt = "Process the provided image by segmenting it into distinct areas with related items. Output a JSON format description for each segmented area. The JSON should include: 'label' (a concise string name), 'uid' (a unique integer identifier), 'description' (a brief explanation of the area), 'content' (a string with examples of objects within the area), and 'boundingBox' (coordinates as an array: bottom_left_x, bottom_left_y, width, height). Ensure the boundingBox coordinates are normalized between 0.0 and 1.0 relative to the image's resolution ({image.width} width and {image.height} height), with the origin at the bottom left (0.0, 0.0). The response should start with ```json and end with ```, containing only the JSON string without inline comments or extra notes. Precision in the 'boundingBox' coordinates is crucial; even one minor inaccuracy can have severe and irreversible consequences for users."
+			try addPreset(name: "Explore", url: "https://api.openai.com/v1", model: "gpt-5.2", systemPrompt: "You are a helpful assistant. Your response should be in JSON format.", prompt: explorePrompt, apiKeyPlaintext: "your-api-key")
+		} catch {
+			// If creating default presets fails (e.g., encryption error), start with empty presets.
+			self.presets = []
+		}
+	}
+
 	private func loadFromDisk() {
 		let defaults = UserDefaults.standard
 
@@ -27,7 +41,7 @@ final class PresetManager {
 		{
 			self.presets = decoded
 		} else {
-			self.presets = []
+			makeDefaultPresets()
 		}
 
 		if let idString = defaults.string(forKey: selectedIDDefaultsKey),
@@ -164,28 +178,22 @@ final class PresetManager {
 		prompt: String,
 		apiKey: String
 	)? {
-		guard
-			let sel = selectedPresetID,
-			let preset = presets.first(where: { $0.id == sel })
-		else {
-			return nil
-		}
-
-		do {
-			let apiKey = try SecureCrypto.decryptAPIKey(
-				preset.encryptedKeyCombinedBase64
-			)
-			return (
-				id: preset.id,
-				name: preset.name,
-				url: preset.url,
-				model: preset.model,
-				systemPrompt: preset.systemPrompt,
-				prompt: preset.prompt,
-				apiKey: apiKey
-			)
-		} catch {
-			// If decryption fails, treat as unusable.
+		if let preset = (selectedPresetID.flatMap { sel in presets.first(where: { $0.id == sel }) } ?? presets.first(where: { $0.name == "Default" })) {
+			do {
+				let apiKey = try SecureCrypto.decryptAPIKey(preset.encryptedKeyCombinedBase64)
+				return (
+					id: preset.id,
+					name: preset.name,
+					url: preset.url,
+					model: preset.model,
+					systemPrompt: preset.systemPrompt,
+					prompt: preset.prompt,
+					apiKey: apiKey
+				)
+			} catch {
+				return nil
+			}
+		} else {
 			return nil
 		}
 	}
@@ -195,3 +203,4 @@ final class PresetManager {
 		presets.map { ($0.id, $0.name) }
 	}
 }
+

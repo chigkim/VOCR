@@ -38,7 +38,7 @@ func performRequest(_ request:inout URLRequest, method:String="POST", name:Strin
 		}
 		
 		guard httpResponse.statusCode == 200 else {
-			alert("HTTP Error", "Status code \(httpResponse.statusCode)")
+			alert("HTTP Error", "Status code \(httpResponse.statusCode): \(String(data: data!, encoding: .utf8))")
 			return
 		}
 		
