@@ -106,12 +106,14 @@ enum OpenAIAPI {
 			]
 		}
 
-		let jsonBody: [String: Any] = [
+		var jsonBody: [String: Any] = [
 			"model": modelName,
-			"messages": Settings.messages,
-			"response_format": ["type": "json_object"]
+			"messages": Settings.messages
 		]
 		
+		if system.contains("JSON") {
+			jsonBody["response_format"] = ["type": "json_object"]
+		}
 		let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody, options: [])
 		
 		guard let base = URL(string: apiURL) else {
