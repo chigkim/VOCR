@@ -46,12 +46,11 @@ struct Observation {
         self.gptObservation = obs
         self.value = obs.label + "\n" + obs.content + "\n" + obs.description
         let x = CGFloat(obs.boundingBox[0])
-        let y = CGFloat(obs.boundingBox[1])
+        let y_topLeft = CGFloat(obs.boundingBox[1])
         let width = CGFloat(obs.boundingBox[2])
         let height = CGFloat(obs.boundingBox[3])
-        var rect = CGRect(x: x, y: y, width: width, height: height)
-        //		rect = VNNormalizedRectForImageRect(rect, Int(Navigation.cgSize.width), Int(Navigation.cgSize.height))
-        //		rect = CGRect(x:rect.minX, y:1-rect.maxY, width:rect.width, height:rect.height)
+        let y_bottomLeft = 1 - y_topLeft - height
+        let rect = CGRect(x: x, y: y_bottomLeft, width: width, height: height)
         self.boundingBox = rect
     }
 
