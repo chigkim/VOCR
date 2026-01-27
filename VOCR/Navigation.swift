@@ -191,14 +191,12 @@ enum Navigation {
         //		guard let  image = cgImage, let image = resizeCGImage(image, toWidth: Int(Navigation.cgSize.width), toHeight:Int(Navigation.cgSize.height)) else { return }
         //		   log("Resized:", image.width, image.height)
         guard let image = cgImage else { return }
-        if let preset = PresetManager.shared.presets.first(where: { $0.name == "Explore" }) {
-            let system = preset.systemPrompt
-            var prompt = preset.prompt.replacingOccurrences(
+        let prompt = Settings.exploreUserPrompt.replacingOccurrences(
                 of: "{image.width}", with: String(image.width)
             ).replacingOccurrences(of: "{image.height}", with: String(image.height))
-            OpenAIAPI.describe(
-                image: image, system: system, prompt: prompt, completion: exploreHandler)
-        }
+            Settings.followUp = false
+        OpenAIAPI.describe(
+                image: image, system: Settings.exploreSystemPrompt, prompt: prompt, completion: exploreHandler)
     }
 
     static func exploreHandler(description: String) {

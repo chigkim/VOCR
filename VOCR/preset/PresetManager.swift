@@ -29,13 +29,6 @@ final class PresetManager {
             if let lastID = presets.last?.id {
                 selectPreset(id: lastID)
             }
-            let explorePrompt =
-                "Process the provided image by segmenting it into distinct areas with related items. Output a JSON format description for each segmented area. The top json should start with `{“elements”:[]}`. The each element should include: 'label' (a concise string name), 'uid' (a unique integer identifier), 'description' (a brief explanation of the area), 'content' (a string with examples of objects within the area), and 'boundingBox' (coordinates as an array: top_left_x, top_left_y, width, height). Ensure the boundingBox coordinates are normalized between 0.0 and 1.0 relative to the image's resolution ({image.width} width and {image.height} height), with the origin at the top left (0.0, 0.0). For example, an object in the top-left corner should have a boundingBox with a y-coordinate close to 0.0 (e.g., [0.05, 0.05, 0.1, 0.1]), not 1.0. The response must contain only the JSON string without inline comments or extra notes. Precision in the 'boundingBox' coordinates is crucial; even one minor inaccuracy can have severe and irreversible consequences for users."
-            try addPreset(
-                name: "Explore", url: "https://api.openai.com/v1", model: "gpt-5.2",
-                systemPrompt:
-                    "You are a helpful assistant. Your response should be in JSON format.",
-                prompt: explorePrompt, apiKeyPlaintext: "your-api-key")
         } catch {
             // If creating default presets fails (e.g., encryption error), start with empty presets.
             self.presets = []

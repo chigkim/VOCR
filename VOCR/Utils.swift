@@ -54,7 +54,7 @@ func performRequest(
         completion(data)
     }
     if let name = name {
-        Accessibility.speakWithSynthesizer("Getting response from \(name)... Please wait...")
+        Accessibility.speakWithSynthesizer("Asking \(name)... Please wait...")
     }
     task?.resume()
 }

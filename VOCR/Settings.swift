@@ -23,6 +23,8 @@ enum Settings {
     static var windowRealtime = true
     static var usePresetPrompt = false
     static var prompt = "Analyze the image in a comprehensive and detailed manner."
+    static var exploreSystemPrompt = "You are a helpful assistant. Your response should be in JSON format. Your task is to process the image from users by segmenting it into distinct areas with related items. Output a JSON format description for each segmented area. The top json should start with `{“elements”:[]}`. The each element should include: 'label' (a concise string name), 'uid' (a unique integer identifier), 'description' (a brief explanation of the area), 'content' (a string with examples of objects within the area), and 'boundingBox' (coordinates as an array: top_left_x, top_left_y, width, height). Ensure the boundingBox coordinates are normalized between 0.0 and 1.0 relative to the image's resolution with the origin at the top left (0.0, 0.0). For example, an object in the top-left corner should have a boundingBox with a y-coordinate close to 0.0 (e.g., [0.05, 0.05, 0.1, 0.1]), not 1.0. The response must contain only the JSON string without inline comments or extra notes. Precision in the 'boundingBox' coordinates is crucial; even one minor inaccuracy can have severe and irreversible consequences for users."
+    static var exploreUserPrompt = "The resolution of the following image has {image.width} width and {image.height} height."
     static var messages: [[String: Any]] = []
     static var followUp = false
     static let target = MenuHandler()
@@ -191,16 +193,6 @@ enum Settings {
 
     private static func buildPresetsSubmenu(into submenu: NSMenu) {
         submenu.removeAllItems()
-        let editItem = NSMenuItem(
-            title: "Edit…",
-            action: #selector(MenuHandler.openPresetManagerWindow(_:)),
-            keyEquivalent: ""
-        )
-        editItem.target = target
-        submenu.addItem(editItem)
-
-        submenu.addItem(NSMenuItem.separator())
-
         let allPresets = PresetManager.shared.presets
         let active = PresetManager.shared.selectedPresetID
 
@@ -215,6 +207,24 @@ enum Settings {
             chooseItem.state = (p.id == active) ? .on : .off
             submenu.addItem(chooseItem)
         }
+
+        submenu.addItem(NSMenuItem.separator())
+        let presetManagerItem = NSMenuItem(
+            title: "Preset Manager…",
+            action: #selector(MenuHandler.openPresetManagerWindow(_:)),
+            keyEquivalent: ""
+        )
+        presetManagerItem.target = target
+        submenu.addItem(presetManagerItem)
+
+        let editExplorePromptsItem = NSMenuItem(
+            title: "Edit Explore Prompts…",
+            action: #selector(MenuHandler.openEditExplorePrompts(_:)),
+            keyEquivalent: ""
+        )
+        editExplorePromptsItem.target = target
+        submenu.addItem(editExplorePromptsItem)
+
     }
 
     static func installMouseMonitor() {
@@ -259,8 +269,14 @@ enum Settings {
         if let camera = defaults.string(forKey: "camera") {
             Settings.camera = camera
         }
-    }
-
+        if let exploreSystemPrompt = defaults.string(forKey: "exploreSystemPrompt") {
+            Settings.exploreSystemPrompt = exploreSystemPrompt
+        }
+        if let exploreUserPrompt = defaults.string(forKey: "exploreUserPrompt") {
+            Settings.exploreUserPrompt = exploreUserPrompt
+        }
+        }
+    
     static func save() {
         let defaults = UserDefaults.standard
         defaults.set(Settings.positionReset, forKey: "positionReset")
@@ -272,6 +288,8 @@ enum Settings {
         defaults.set(Settings.usePresetPrompt, forKey: "usePresetPrompt")
         defaults.set(Settings.targetWindow, forKey: "targetWindow")
         defaults.set(Settings.camera, forKey: "camera")
+        defaults.set(Settings.exploreSystemPrompt, forKey: "exploreSystemPrompt")
+        defaults.set(Settings.exploreUserPrompt, forKey: "exploreUserPrompt")
     }
 
 }
@@ -449,6 +467,77 @@ class MenuHandler: NSObject {
 
     @objc func checkForUpdates() {
         AutoUpdateManager.shared.checkForUpdates()
+    }
+    
+
+    @objc func openEditExplorePrompts(_ sender: NSMenuItem) {
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.messageText = "Edit Explore Prompts"
+        alert.informativeText = "Update the system and user prompts used for the Explore Mode."
+        alert.addButton(withTitle: "Save")
+        alert.addButton(withTitle: "Cancel")
+        // Avoid Return triggering the default button; keep Return for newline in text views.
+        alert.buttons.first?.keyEquivalent = ""
+        alert.buttons.last?.keyEquivalent = "\u{1b}"
+
+        let systemLabel = NSTextField(labelWithString: "System Prompt")
+        let systemScrollView = NSScrollView(frame: NSRect(x: 0, y: 0, width: 420, height: 140))
+        systemScrollView.hasVerticalScroller = true
+        systemScrollView.drawsBackground = true
+        systemScrollView.translatesAutoresizingMaskIntoConstraints = false
+        let systemField = NSTextView(frame: NSRect(x: 0, y: 0, width: 420, height: 140))
+        systemField.isEditable = true
+        systemField.isRichText = false
+        systemField.isVerticallyResizable = true
+        systemField.isHorizontallyResizable = false
+        systemField.textContainer?.widthTracksTextView = true
+        systemField.textContainer?.containerSize = NSSize(width: 420, height: CGFloat.greatestFiniteMagnitude)
+        systemField.string = Settings.exploreSystemPrompt
+        systemScrollView.documentView = systemField
+
+        let userLabel = NSTextField(labelWithString: "User Prompt")
+        let userScrollView = NSScrollView(frame: NSRect(x: 0, y: 0, width: 420, height: 120))
+        userScrollView.hasVerticalScroller = true
+        userScrollView.drawsBackground = true
+        userScrollView.translatesAutoresizingMaskIntoConstraints = false
+        let userField = NSTextView(frame: NSRect(x: 0, y: 0, width: 420, height: 120))
+        userField.isEditable = true
+        userField.isRichText = false
+        userField.isVerticallyResizable = true
+        userField.isHorizontallyResizable = false
+        userField.textContainer?.widthTracksTextView = true
+        userField.textContainer?.containerSize = NSSize(width: 420, height: CGFloat.greatestFiniteMagnitude)
+        userField.string = Settings.exploreUserPrompt
+        userScrollView.documentView = userField
+
+        let stack = NSStackView(views: [systemLabel, systemScrollView, userLabel, userScrollView])
+        stack.orientation = .vertical
+        stack.alignment = .leading
+        stack.spacing = 8
+        stack.translatesAutoresizingMaskIntoConstraints = false
+
+        let container = NSView(frame: NSRect(x: 0, y: 0, width: 440, height: 300))
+        container.addSubview(stack)
+        NSLayoutConstraint.activate([
+            stack.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            stack.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            stack.topAnchor.constraint(equalTo: container.topAnchor),
+            stack.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+            systemScrollView.heightAnchor.constraint(equalToConstant: 140),
+            userScrollView.heightAnchor.constraint(equalToConstant: 120),
+            systemScrollView.widthAnchor.constraint(equalTo: stack.widthAnchor),
+            userScrollView.widthAnchor.constraint(equalTo: stack.widthAnchor),
+        ])
+        alert.accessoryView = container
+
+        let response = alert.runModal()
+        hide()
+        if response == .alertFirstButtonReturn {
+            Settings.exploreSystemPrompt = systemField.string
+            Settings.exploreUserPrompt = userField.string
+            Settings.save()
+        }
     }
 
     @objc func selectPresetFromMenu(_ sender: NSMenuItem) {
