@@ -112,7 +112,7 @@ enum Settings {
         //		settingsMenu.addItem(newShortcutMenuItem)
 
         let resetMenuItem = NSMenuItem(
-            title: "Reset", action: #selector(target.reset(_:)), keyEquivalent: ""
+            title: "Reset...", action: #selector(target.reset(_:)), keyEquivalent: ""
         )
         resetMenuItem.target = target
         settingsMenu.addItem(resetMenuItem)
@@ -559,9 +559,9 @@ class MenuHandler: NSObject {
 
     @objc func reset(_ sender: NSMenuItem) {
         let alert = NSAlert()
-        alert.messageText = "Reset and Relaunch?"
+        alert.messageText = "Reset?"
         alert.informativeText =
-            "This will erase this app’s settings and preferences on this Mac, then relaunch the app. This cannot be undone."
+            "This will erase all the settings and presets. This cannot be undone."
         alert.alertStyle = .warning
 
         alert.addButton(withTitle: "Reset and Relaunch")  // first button is return value .alertFirstButtonReturn
