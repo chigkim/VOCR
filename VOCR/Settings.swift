@@ -109,6 +109,12 @@ enum Settings {
         newShortcutMenuItem.target = target
         //		settingsMenu.addItem(newShortcutMenuItem)
 
+        let resetMenuItem = NSMenuItem(
+            title: "Reset", action: #selector(target.reset(_:)), keyEquivalent: ""
+        )
+        resetMenuItem.target = target
+        settingsMenu.addItem(resetMenuItem)
+
         let settingsMenuItem = NSMenuItem(title: "Settings", action: nil, keyEquivalent: "")
         settingsMenuItem.submenu = settingsMenu
         menu.addItem(settingsMenuItem)
@@ -459,6 +465,39 @@ class MenuHandler: NSObject {
         if let appDelegate = NSApp.delegate as? AppDelegate {
             appDelegate.openPresetWindow()
             NSApp.activate(ignoringOtherApps: true)
+        }
+    }
+
+    @objc func reset(_ sender: NSMenuItem) {
+        let alert = NSAlert()
+        alert.messageText = "Reset and Relaunch?"
+        alert.informativeText =
+            "This will erase this app’s settings and preferences on this Mac, then relaunch the app. This cannot be undone."
+        alert.alertStyle = .warning
+
+        alert.addButton(withTitle: "Reset and Relaunch")  // first button is return value .alertFirstButtonReturn
+        alert.addButton(withTitle: "Cancel")
+
+        // Make the destructive action the default and make Cancel respond to Escape
+        alert.buttons.first?.hasDestructiveAction = true
+        alert.buttons.first?.keyEquivalent = "\r"
+        alert.buttons.last?.keyEquivalent = "\u{1b}"
+
+        let response = alert.runModal()
+        guard response == .alertFirstButtonReturn else { return }
+
+        // Reset defaults
+        if let bundleID = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: bundleID)
+        }
+
+        // Relaunch
+        let appURL = Bundle.main.bundleURL
+        NSWorkspace.shared.openApplication(
+            at: appURL,
+            configuration: NSWorkspace.OpenConfiguration()
+        ) { _, _ in
+            DispatchQueue.main.async { NSApp.terminate(nil) }
         }
     }
 

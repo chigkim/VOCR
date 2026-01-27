@@ -147,6 +147,7 @@ final class PresetEditorWindowController: NSWindowController {
         urlField.placeholderString = "https://"
         urlField.setAccessibilityLabel("Provider URL")
         apiKeyField.setAccessibilityLabel("API Key")
+        apiKeyField.placeholderString = "Will Not be shown After saving."
         modelField.setAccessibilityLabel("Model Name")
         systemPromptTextView.setAccessibilityLabel("System Prompt")
         promptTextView.setAccessibilityLabel("User Prompt")
@@ -407,7 +408,6 @@ final class PresetEditorWindowController: NSWindowController {
         systemPromptTextView.string = preset.systemPrompt
         promptTextView.string = preset.prompt
         apiKeyField.stringValue = ""
-        apiKeyField.placeholderString = "Will Not be shown After saving."
     }
 
     // MARK: - Actions
