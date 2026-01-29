@@ -32,7 +32,7 @@ enum OpenAIAPI {
         _ apiURL: String, _ apiKey: String, completion: @escaping ([String]) -> Void
     ) {
         guard let base = URL(string: apiURL) else {
-            alert("Invalid URL", apiURL)
+            alert(NSLocalizedString("error.invalid_url", value: "Invalid URL", comment: "Error message for invalid URL"), apiURL)
             completion([])
             return
         }
@@ -49,7 +49,7 @@ enum OpenAIAPI {
                 ids.sort()
                 completion(ids)
             } catch {
-                alert("Error decoding models JSON", "\(error)")
+                alert(NSLocalizedString("error.decoding_models", value: "Error decoding models JSON", comment: "Error message when JSON decoding fails for models"), "\(error)")
                 completion([])
             }
         }
@@ -121,7 +121,7 @@ enum OpenAIAPI {
         let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody, options: [])
 
         guard let base = URL(string: apiURL) else {
-            alert("Invalid URL", apiURL)
+            alert(NSLocalizedString("error.invalid_url", value: "Invalid URL", comment: "Error message for invalid URL"), apiURL)
             completion("")
             return
         }
@@ -150,8 +150,8 @@ enum OpenAIAPI {
                     completion(description)
                 }
             } catch {
-                alert("Error decoding JSON", "\(error)")
-                completion("Error: Could not parse JSON.")
+                alert(NSLocalizedString("error.decoding_json", value: "Error decoding JSON", comment: "Error message when JSON decoding fails"), "\(error)")
+                completion(NSLocalizedString("error.parse_json", value: "Error: Could not parse JSON.", comment: "Error message when JSON cannot be parsed"))
             }
         }
     }

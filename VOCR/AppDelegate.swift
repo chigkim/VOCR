@@ -21,7 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         NSApp.setActivationPolicy(.accessory)
         setupAutoLaunch()
         hide()
-        Accessibility.speak("VOCR Ready!")
+        Accessibility.speak(NSLocalizedString("app.ready", value: "VOCR Ready!", comment: "Message when app is ready"))
         NSSound(
             contentsOfFile: "/System/Library/Sounds/Blow.aiff",
             byReference: true
@@ -113,7 +113,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             backing: .buffered,
             defer: false
         )
-        window.title = "Presets"
+        window.title = NSLocalizedString("app.presets.window.title", value: "Presets", comment: "Title for presets window")
         window.contentViewController = vc
         let wc = NSWindowController(window: window)
         wc.showWindow(self)

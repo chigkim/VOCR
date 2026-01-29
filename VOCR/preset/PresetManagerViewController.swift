@@ -6,10 +6,26 @@ final class PresetManagerViewController: NSViewController {
     private let tableView = NSTableView()
     private let scrollView = NSScrollView()
 
-    private let addButton = NSButton(title: "Add", target: nil, action: nil)
-    private let editButton = NSButton(title: "Edit", target: nil, action: nil)
-    private let deleteButton = NSButton(title: "Delete", target: nil, action: nil)
-    private let duplicateButton = NSButton(title: "Duplicate", target: nil, action: nil)
+    private let addButton = NSButton(
+        title: NSLocalizedString("button.add", value: "Add", comment: "Button to add a new preset"),
+        target: nil,
+        action: nil
+    )
+    private let editButton = NSButton(
+        title: NSLocalizedString("button.edit", value: "Edit", comment: "Button to edit selected preset"),
+        target: nil,
+        action: nil
+    )
+    private let deleteButton = NSButton(
+        title: NSLocalizedString("button.delete", value: "Delete", comment: "Button to delete selected preset"),
+        target: nil,
+        action: nil
+    )
+    private let duplicateButton = NSButton(
+        title: NSLocalizedString("button.duplicate", value: "Duplicate", comment: "Button to duplicate selected preset"),
+        target: nil,
+        action: nil
+    )
 
     // Keep strong ref while sheet is visible
     private var editorWC: PresetEditorWindowController?
@@ -28,10 +44,10 @@ final class PresetManagerViewController: NSViewController {
     private func setupUI() {
         // Table / column
         let presetColumn = NSTableColumn(identifier: ColumnID.name)
-        presetColumn.title = "Name"
+        presetColumn.title = NSLocalizedString("column.name", value: "Name", comment: "Table column header for preset name")
         tableView.addTableColumn(presetColumn)
         let modelColumn = NSTableColumn(identifier: ColumnID.model)
-        modelColumn.title = "Model"
+        modelColumn.title = NSLocalizedString("column.model", value: "Model", comment: "Table column header for model name")
         tableView.addTableColumn(modelColumn)
 
         tableView.delegate = self
