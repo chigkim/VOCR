@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D29B5302F2C97DF00297D25 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6D29B52F2F2C97DF00297D25 /* Localizable.xcstrings */; };
+		6D29B5312F2C97DF00297D25 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6D29B52E2F2C97DF00297D25 /* InfoPlist.xcstrings */; };
 		6D4816BE2C7EE946005E6C64 /* OCRTextSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4816BD2C7EE946005E6C64 /* OCRTextSearch.swift */; };
 		EA0C88682B4F8F4B00F2E920 /* ShortcutsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */; };
 		EA1158CE2B51EBC000B2C716 /* Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1158CD2B51EBC000B2C716 /* Shortcuts.swift */; };
@@ -49,6 +51,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6D29B52E2F2C97DF00297D25 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		6D29B52F2F2C97DF00297D25 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		6D4816BD2C7EE946005E6C64 /* OCRTextSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OCRTextSearch.swift; sourceTree = "<group>"; };
 		EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsWindowController.swift; sourceTree = "<group>"; };
 		EA1158CD2B51EBC000B2C716 /* Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
@@ -159,6 +163,8 @@
 			children = (
 				EA6427272EB6798C00EDCC0C /* preset */,
 				EA64271F2EB6798100EDCC0C /* OpenAIAPI.swift */,
+				6D29B52E2F2C97DF00297D25 /* InfoPlist.xcstrings */,
+				6D29B52F2F2C97DF00297D25 /* Localizable.xcstrings */,
 				EAC9ECD82BFB8D6200D61F00 /* MacCamera.swift */,
 				EADE59B6232EB09A00E2F65A /* AboutViewController.swift */,
 				EA2DA1AB232EB1D600D31031 /* Accessibility.swift */,
@@ -259,6 +265,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D29B5302F2C97DF00297D25 /* Localizable.xcstrings in Resources */,
+				6D29B5312F2C97DF00297D25 /* InfoPlist.xcstrings in Resources */,
 				EADE59B9232EB09A00E2F65A /* Assets.xcassets in Resources */,
 				EAD9CFD22355E11600E7F594 /* say.scpt in Resources */,
 				EA1AC96A2B4C51FA00D3543F /* VOCursor.scpt in Resources */,
@@ -458,6 +466,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 51;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 6Q47GP4GKF;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
