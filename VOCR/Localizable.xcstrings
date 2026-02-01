@@ -121,6 +121,66 @@
         }
       }
     },
+    "preset.default.systemPrompt": {
+      "comment": "Default system prompt for new presets",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du bist ein hilfreicher Assistent."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You are a helpful assistant."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous êtes un assistant utile."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eres un asistente útil."
+          }
+        }
+      }
+    },
+    "preset.default.userPrompt": {
+      "comment": "Default user prompt for new presets",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analysiere das Bild umfassend und detailliert."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analyze the image in a comprehensive and detailed manner."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analysez l'image de manière complète et détaillée."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analiza la imagen de manera completa y detallada."
+          }
+        }
+      }
+    },
     "button.cancel": {
       "comment": "Button to cancel an action",
       "extractionState": "manual",

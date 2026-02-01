@@ -69,6 +69,7 @@ final class PresetEditorWindowController: NSWindowController {
         super.init(window: win)
 
         setupUI()
+        populateDefaultPromptsForNewPreset()
         populateFieldsFromExistingPreset()
     }
 
@@ -457,6 +458,12 @@ final class PresetEditorWindowController: NSWindowController {
         systemPromptTextView.string = preset.systemPrompt
         promptTextView.string = preset.prompt
         apiKeyField.stringValue = ""
+    }
+
+    private func populateDefaultPromptsForNewPreset() {
+        guard editingPresetID == nil else { return }
+        systemPromptTextView.string = DefaultPrompts.system
+        promptTextView.string = DefaultPrompts.user
     }
 
     // MARK: - Actions

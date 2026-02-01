@@ -1,5 +1,23 @@
 import Foundation
 
+enum DefaultPrompts {
+    static var system: String {
+        NSLocalizedString(
+            "preset.default.systemPrompt",
+            value: "You are a helpful assistant.",
+            comment: "Default system prompt for new presets"
+        )
+    }
+
+    static var user: String {
+        NSLocalizedString(
+            "preset.default.userPrompt",
+            value: "Analyze the image in a comprehensive and detailed manner.",
+            comment: "Default user prompt for new presets"
+        )
+    }
+}
+
 /// Predefined model provider configurations for quick preset creation.
 struct ModelProvider {
     let name: String

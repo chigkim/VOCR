@@ -23,8 +23,8 @@ final class PresetManager {
         do {
             try addPreset(
                 name: "Default", url: "https://api.openai.com/v1", model: "gpt-5.2",
-                systemPrompt: "You are a helpful assistant.",
-                prompt: "Analyze the image in a comprehensive and detailed manner.",
+                systemPrompt: DefaultPrompts.system,
+                prompt: DefaultPrompts.user,
                 apiKeyPlaintext: "your-api-key")
             if let lastID = presets.last?.id {
                 selectPreset(id: lastID)

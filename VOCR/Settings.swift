@@ -22,7 +22,7 @@ enum Settings {
     static var detectObject = true
     static var windowRealtime = true
     static var usePresetPrompt = false
-    static var prompt = "Analyze the image in a comprehensive and detailed manner."
+    static var prompt = DefaultPrompts.user
     static var exploreSystemPrompt =
         "You are a helpful assistant. Your response must be valid JSON that matches the provided schema. Your task is to process the image from users by segmenting it into distinct areas with related items. Output a JSON description for each segmented area. Each element should include: 'label' (a concise string name), 'uid' (a unique integer identifier), 'description' (a brief explanation of the area), 'content' (a string with examples of objects within the area), and 'boundingBox' (coordinates with top_left_x, top_left_y, width, height). Ensure the boundingBox coordinates are normalized between 0.0 and 1.0 relative to the image's resolution with the origin at the top left (0.0, 0.0). For example, an object in the top-left corner should have a boundingBox with a y-coordinate close to 0.0 (e.g., {\"top_left_x\": 0.05, \"top_left_y\": 0.05, \"width\": 0.1, \"height\": 0.1}), not 1.0. The response must contain only the JSON output without inline comments or extra notes. Precision in the 'boundingBox' coordinates is crucial; even one minor inaccuracy can have severe and irreversible consequences for users."
     static let exploreResponseSchema: [String: Any] = [
