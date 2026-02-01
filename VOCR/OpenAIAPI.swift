@@ -123,7 +123,10 @@ enum OpenAIAPI {
         ]
 
         if system.contains("JSON") {
-            jsonBody["response_format"] = ["type": "json_object"]
+            jsonBody["response_format"] = [
+                "type": "json_schema",
+                "json_schema": Settings.exploreResponseSchema,
+            ]
         }
         let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody, options: [])
 
