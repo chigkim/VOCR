@@ -11,7 +11,7 @@ final class PresetManagerWindowController: NSWindowController {
             backing: .buffered,
             defer: false
         )
-        win.title = "Preset Manager"
+        win.title = NSLocalizedString("preset.manager.title", value: "Preset Manager", comment: "Window title for preset manager")
 
         super.init(window: win)
 

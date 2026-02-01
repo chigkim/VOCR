@@ -35,7 +35,7 @@ class ShortcutsWindowController: NSWindowController, NSWindowDelegate, NSTableVi
             styleMask: [.titled, .closable],
             backing: .buffered, defer: false)
         self.window = window
-        self.window?.title = "Customize Shortcuts"
+        self.window?.title = NSLocalizedString("shortcuts.window.title", value: "Customize Shortcuts", comment: "Title for the shortcuts customization window")
         self.window?.delegate = self
     }
 
@@ -48,10 +48,10 @@ class ShortcutsWindowController: NSWindowController, NSWindowDelegate, NSTableVi
         tableView.delegate = self
         tableView.dataSource = self
         let nameColumn = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("NameColumn"))
-        nameColumn.title = "Name"
+        nameColumn.title = NSLocalizedString("column.name", value: "Name", comment: "Name column header in shortcuts table")
         tableView.addTableColumn(nameColumn)
         let hotkeyColumn = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("HotkeyColumn"))
-        hotkeyColumn.title = "Hotkey"
+        hotkeyColumn.title = NSLocalizedString("column.hotkey", value: "Hotkey", comment: "Hotkey column header in shortcuts table")
         tableView.addTableColumn(hotkeyColumn)
         self.window?.contentView?.addSubview(tableView)
         refreshTable()
