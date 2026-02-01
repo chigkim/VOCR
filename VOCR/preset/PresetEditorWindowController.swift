@@ -32,12 +32,14 @@ final class PresetEditorWindowController: NSWindowController {
     private let promptScrollView = NSScrollView()
 
     private let cancelButton = NSButton(
-        title: NSLocalizedString("button.cancel", value: "Cancel", comment: "Cancel button in preset editor"),
+        title: NSLocalizedString(
+            "button.cancel", value: "Cancel", comment: "Cancel button in preset editor"),
         target: nil,
         action: nil
     )
     private let saveButton = NSButton(
-        title: NSLocalizedString("button.save", value: "Save", comment: "Save button in preset editor"),
+        title: NSLocalizedString(
+            "button.save", value: "Save", comment: "Save button in preset editor"),
         target: nil,
         action: nil
     )
@@ -55,9 +57,13 @@ final class PresetEditorWindowController: NSWindowController {
         )
 
         if editPresetID == nil {
-            win.title = NSLocalizedString("preset.editor.title.new", value: "New Preset", comment: "Window title for creating a new preset")
+            win.title = NSLocalizedString(
+                "preset.editor.title.new", value: "New Preset",
+                comment: "Window title for creating a new preset")
         } else {
-            win.title = NSLocalizedString("preset.editor.title.edit", value: "Edit Preset", comment: "Window title for editing an existing preset")
+            win.title = NSLocalizedString(
+                "preset.editor.title.edit", value: "Edit Preset",
+                comment: "Window title for editing an existing preset")
         }
 
         super.init(window: win)
@@ -138,44 +144,83 @@ final class PresetEditorWindowController: NSWindowController {
         }
 
         // Labels
-        let nameLabel = makeLabel(NSLocalizedString("label.name", value: "Name:", comment: "Label for preset name field"))
-        let apiKeyLabel = makeLabel(NSLocalizedString("label.apiKey", value: "API Key:", comment: "Label for API key field"))
-        let systemPromptLabel = makeLabel(NSLocalizedString("label.systemPrompt", value: "System Prompt:", comment: "Label for system prompt field"))
-        let promptLabel = makeLabel(NSLocalizedString("label.userPrompt", value: "User Prompt:", comment: "Label for user prompt field"))
+        let nameLabel = makeLabel(
+            NSLocalizedString("label.name", value: "Name:", comment: "Label for preset name field"))
+        let apiKeyLabel = makeLabel(
+            NSLocalizedString("label.apiKey", value: "API Key:", comment: "Label for API key field")
+        )
+        let systemPromptLabel = makeLabel(
+            NSLocalizedString(
+                "label.systemPrompt", value: "System Prompt:",
+                comment: "Label for system prompt field"))
+        let promptLabel = makeLabel(
+            NSLocalizedString(
+                "label.userPrompt", value: "User Prompt:", comment: "Label for user prompt field"))
 
         // Text fields
         [nameField, urlField, modelField, apiKeyField].forEach { tf in
             tf.translatesAutoresizingMaskIntoConstraints = false
         }
-        nameField.setAccessibilityLabel(NSLocalizedString("label.name.accessibility", value: "Name", comment: "Accessibility label for preset name field"))
-        urlField.placeholderString = NSLocalizedString("placeholder.url", value: "https://", comment: "Placeholder text for provider URL field")
-        urlField.setAccessibilityLabel(NSLocalizedString("label.url.accessibility", value: "Provider URL", comment: "Accessibility label for provider URL field"))
-        apiKeyField.setAccessibilityLabel(NSLocalizedString("label.apiKey.accessibility", value: "API Key", comment: "Accessibility label for API key field"))
-        apiKeyField.placeholderString = NSLocalizedString("placeholder.apiKey", value: "Will Not be shown After saving.", comment: "Placeholder text for API key field indicating it won't be shown after saving")
-        modelField.setAccessibilityLabel(NSLocalizedString("label.model.accessibility", value: "Model Name", comment: "Accessibility label for model name field"))
-        systemPromptTextView.setAccessibilityLabel(NSLocalizedString("label.systemPrompt.accessibility", value: "System Prompt", comment: "Accessibility label for system prompt field"))
-        promptTextView.setAccessibilityLabel(NSLocalizedString("label.userPrompt.accessibility", value: "User Prompt", comment: "Accessibility label for user prompt field"))
+        nameField.setAccessibilityLabel(
+            NSLocalizedString(
+                "label.name.accessibility", value: "Name",
+                comment: "Accessibility label for preset name field"))
+        urlField.placeholderString = NSLocalizedString(
+            "placeholder.url", value: "https://", comment: "Placeholder text for provider URL field"
+        )
+        urlField.setAccessibilityLabel(
+            NSLocalizedString(
+                "label.url.accessibility", value: "Provider URL",
+                comment: "Accessibility label for provider URL field"))
+        apiKeyField.setAccessibilityLabel(
+            NSLocalizedString(
+                "label.apiKey.accessibility", value: "API Key",
+                comment: "Accessibility label for API key field"))
+        apiKeyField.placeholderString = NSLocalizedString(
+            "placeholder.apiKey", value: "Will Not be shown After saving.",
+            comment: "Placeholder text for API key field indicating it won't be shown after saving")
+        modelField.setAccessibilityLabel(
+            NSLocalizedString(
+                "label.model.accessibility", value: "Model Name",
+                comment: "Accessibility label for model name field"))
+        systemPromptTextView.setAccessibilityLabel(
+            NSLocalizedString(
+                "label.systemPrompt.accessibility", value: "System Prompt",
+                comment: "Accessibility label for system prompt field"))
+        promptTextView.setAccessibilityLabel(
+            NSLocalizedString(
+                "label.userPrompt.accessibility", value: "User Prompt",
+                comment: "Accessibility label for user prompt field"))
 
         // Configure provider pop up button (only for new presets)
         providerPopUpButton.translatesAutoresizingMaskIntoConstraints = false
-        providerPopUpButton.title = NSLocalizedString("preset.editor.provider", value: "Provider", comment: "Title for provider popup button")
+        providerPopUpButton.title = NSLocalizedString(
+            "preset.editor.provider", value: "Provider", comment: "Title for provider popup button")
         providerPopUpButton.removeAllItems()
-        providerPopUpButton.addItem(withTitle: NSLocalizedString("preset.editor.provider", value: "Provider", comment: "Title for provider popup button"))
+        providerPopUpButton.addItem(
+            withTitle: NSLocalizedString(
+                "preset.editor.provider", value: "Provider",
+                comment: "Title for provider popup button"))
         providerPopUpButton.item(at: 0)?.isHidden = true
         providerPopUpButton.addItems(withTitles: ModelProvider.predefinedProviders.map { $0.name })
         providerPopUpButton.target = self
         providerPopUpButton.action = #selector(providerDidChange)
         providerPopUpButton.menu?.delegate = self
         providerPopUpButton.selectItem(at: 0)
-        providerPopUpButton.title = NSLocalizedString("preset.editor.provider", value: "Provider", comment: "Title for provider popup button")
+        providerPopUpButton.title = NSLocalizedString(
+            "preset.editor.provider", value: "Provider", comment: "Title for provider popup button")
 
         // Configure model picker pop up button
         modelPickerPopUpButton.translatesAutoresizingMaskIntoConstraints = false
-        modelPickerPopUpButton.title = NSLocalizedString("preset.editor.model", value: "Model", comment: "Title for model picker popup button")
+        modelPickerPopUpButton.title = NSLocalizedString(
+            "preset.editor.model", value: "Model", comment: "Title for model picker popup button")
         let modelMenu = NSMenu()
         modelMenu.delegate = self
         modelPickerPopUpButton.menu = modelMenu
-        modelMenu.addItem(withTitle: NSLocalizedString("preset.editor.model", value: "Model", comment: "Title for model picker popup button"), action: nil, keyEquivalent: "")
+        modelMenu.addItem(
+            withTitle: NSLocalizedString(
+                "preset.editor.model", value: "Model",
+                comment: "Title for model picker popup button"), action: nil, keyEquivalent: "")
         modelMenu.item(at: 0)?.isHidden = true
         modelPickerPopUpButton.selectItem(at: 0)
 
@@ -434,7 +479,8 @@ final class PresetEditorWindowController: NSWindowController {
 
         // Reset the button's selection to the title item
         sender.selectItem(at: 0)
-        sender.title = NSLocalizedString("preset.editor.provider", value: "Provider", comment: "Title for provider popup button")
+        sender.title = NSLocalizedString(
+            "preset.editor.provider", value: "Provider", comment: "Title for provider popup button")
     }
 
     @objc private func savePressed() {
@@ -485,7 +531,9 @@ final class PresetEditorWindowController: NSWindowController {
         } catch {
             let alert = NSAlert()
             alert.alertStyle = .warning
-            alert.messageText = NSLocalizedString("error.preset.saveFailed", value: "Failed to save preset.", comment: "Error message when preset save fails")
+            alert.messageText = NSLocalizedString(
+                "error.preset.saveFailed", value: "Failed to save preset.",
+                comment: "Error message when preset save fails")
             alert.informativeText = "\(error)"
             alert.runModal()
         }
@@ -498,14 +546,13 @@ final class PresetEditorWindowController: NSWindowController {
         guard let menu = modelPickerPopUpButton.menu else { return }
         menu.removeAllItems()
 
-        modelPickerPopUpButton.title = NSLocalizedString("preset.editor.model", value: "Model", comment: "Title for model picker popup button")
-        menu.addItem(withTitle: NSLocalizedString("preset.editor.model", value: "Model", comment: "Title for model picker popup button"), action: nil, keyEquivalent: "")
+        modelPickerPopUpButton.title = NSLocalizedString(
+            "preset.editor.model", value: "Model", comment: "Title for model picker popup button")
+        menu.addItem(
+            withTitle: NSLocalizedString(
+                "preset.editor.model", value: "Model",
+                comment: "Title for model picker popup button"), action: nil, keyEquivalent: "")
         menu.item(at: 0)?.isHidden = true
-
-        guard !modelIDs.isEmpty else {
-            menu.addItem(withTitle: NSLocalizedString("preset.editor.noModelsFound", value: "No models found", comment: "Message when no models are available"), action: nil, keyEquivalent: "")
-            return
-        }
 
         for id in modelIDs {
             let item = NSMenuItem(
@@ -530,10 +577,17 @@ final class PresetEditorWindowController: NSWindowController {
     private func showModelLoadingMenu() {
         guard let menu = modelPickerPopUpButton.menu else { return }
         menu.removeAllItems()
-        modelPickerPopUpButton.title = NSLocalizedString("preset.editor.model", value: "Model", comment: "Title for model picker popup button")
-        menu.addItem(withTitle: NSLocalizedString("preset.editor.model", value: "Model", comment: "Title for model picker popup button"), action: nil, keyEquivalent: "")
+        modelPickerPopUpButton.title = NSLocalizedString(
+            "preset.editor.model", value: "Model", comment: "Title for model picker popup button")
+        menu.addItem(
+            withTitle: NSLocalizedString(
+                "preset.editor.model", value: "Model",
+                comment: "Title for model picker popup button"), action: nil, keyEquivalent: "")
         menu.item(at: 0)?.isHidden = true
-        let loadingItem = NSMenuItem(title: NSLocalizedString("preset.editor.loading", value: "Loading…", comment: "Loading indicator for model list"), action: nil, keyEquivalent: "")
+        let loadingItem = NSMenuItem(
+            title: NSLocalizedString(
+                "preset.editor.loading", value: "Loading…",
+                comment: "Loading indicator for model list"), action: nil, keyEquivalent: "")
         loadingItem.isEnabled = false
         menu.addItem(loadingItem)
         modelPickerPopUpButton.selectItem(at: 0)
@@ -544,12 +598,17 @@ final class PresetEditorWindowController: NSWindowController {
         guard let sender = sender else {
             return
         }
-        if sender.title == NSLocalizedString("preset.editor.model", value: "Model", comment: "Title for model picker popup button") {
+        if sender.title
+            == NSLocalizedString(
+                "preset.editor.model", value: "Model",
+                comment: "Title for model picker popup button")
+        {
             return
         }
         modelField.stringValue = sender.title
         modelPickerPopUpButton.selectItem(at: 0)
-        modelPickerPopUpButton.title = NSLocalizedString("preset.editor.model", value: "Model", comment: "Title for model picker popup button")
+        modelPickerPopUpButton.title = NSLocalizedString(
+            "preset.editor.model", value: "Model", comment: "Title for model picker popup button")
     }
 }
 
@@ -558,9 +617,27 @@ extension PresetEditorWindowController: NSMenuDelegate {
     func menuWillOpen(_ menu: NSMenu) {
         if menu == modelPickerPopUpButton.menu {
             showModelLoadingMenu()
-            OpenAIAPI.getModels(urlField.stringValue, apiKeyField.stringValue) { [weak self] ids in
+            OpenAIAPI.getModels(urlField.stringValue, apiKeyField.stringValue) {
+                [weak self] result in
                 DispatchQueue.main.async {
-                    self?.showModelMenu(ids)
+                    switch result {
+                    case .success(let ids):
+                        self?.showModelMenu(ids)
+                    case .failure:
+                        menu.cancelTracking()  // Dismiss the menu
+                        let alert = NSAlert()
+                        alert.alertStyle = .warning
+                        alert.messageText = NSLocalizedString(
+                            "error.preset.fetchModelsFailed.title",
+                            value: "Failed to fetch models.",
+                            comment: "Error message when fetching models fails in preset editor")
+                        alert.informativeText = NSLocalizedString(
+                            "error.preset.fetchModelsFailed.message",
+                            value:
+                                "Cannot retrieve the list of models from the server. Please manually type the model name to use.",
+                            comment: "Informative text for fetch models failure")
+                        alert.runModal()
+                    }
                 }
             }
         } else if menu == providerPopUpButton.menu {
@@ -579,10 +656,14 @@ extension PresetEditorWindowController: NSMenuDelegate {
     func menuDidClose(_ menu: NSMenu) {
         if menu == modelPickerPopUpButton.menu {
             modelPickerPopUpButton.selectItem(at: 0)
-            modelPickerPopUpButton.title = NSLocalizedString("preset.editor.model", value: "Model", comment: "Title for model picker popup button")
+            modelPickerPopUpButton.title = NSLocalizedString(
+                "preset.editor.model", value: "Model",
+                comment: "Title for model picker popup button")
         } else if menu == providerPopUpButton.menu {
             providerPopUpButton.selectItem(at: 0)
-            providerPopUpButton.title = NSLocalizedString("preset.editor.provider", value: "Provider", comment: "Title for provider popup button")
+            providerPopUpButton.title = NSLocalizedString(
+                "preset.editor.provider", value: "Provider",
+                comment: "Title for provider popup button")
         }
     }
 }
@@ -597,6 +678,7 @@ extension PresetEditorWindowController: NSTextFieldDelegate {
 
         // Clear provider selection when URL is manually edited
         providerPopUpButton.selectItem(at: 0)
-        providerPopUpButton.title = NSLocalizedString("preset.editor.provider", value: "Provider", comment: "Title for provider popup button")
+        providerPopUpButton.title = NSLocalizedString(
+            "preset.editor.provider", value: "Provider", comment: "Title for provider popup button")
     }
 }

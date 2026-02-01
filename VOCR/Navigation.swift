@@ -25,11 +25,14 @@ enum Navigation {
         func name() -> String {
             switch self {
             case .WINDOW:
-                return NSLocalizedString("mode.window", value: "Window", comment: "Window mode name")
+                return NSLocalizedString(
+                    "mode.window", value: "Window", comment: "Window mode name")
             case .VOCURSOR:
-                return NSLocalizedString("mode.vocursor", value: "VOCursor", comment: "VOCursor mode name")
+                return NSLocalizedString(
+                    "mode.vocursor", value: "VOCursor", comment: "VOCursor mode name")
             case .CAMERA:
-                return NSLocalizedString("mode.camera", value: "Camera", comment: "Camera mode name")
+                return NSLocalizedString(
+                    "mode.camera", value: "Camera", comment: "Camera mode name")
             }
         }
     }
@@ -40,8 +43,11 @@ enum Navigation {
     static var cgPosition = CGPoint()
     static var cgSize = CGSize()
     static var cgImage: CGImage?
-    static var windowName = NSLocalizedString("navigation.unknown_window", value: "Unknown Window", comment: "Default window name when unknown")
-    static var appName = NSLocalizedString("navigation.unknown_app", value: "Unknown App", comment: "Default app name when unknown")
+    static var windowName = NSLocalizedString(
+        "navigation.unknown_window", value: "Unknown Window",
+        comment: "Default window name when unknown")
+    static var appName = NSLocalizedString(
+        "navigation.unknown_app", value: "Unknown App", comment: "Default app name when unknown")
     static var l = -1
     static var w = -1
     static var c = -1
@@ -71,17 +77,25 @@ enum Navigation {
         if Settings.targetWindow && windows!.count > 1 {
             let alert = NSAlert()
             alert.alertStyle = .informational
-            alert.messageText = NSLocalizedString("navigation.target_window", value: "Target Window", comment: "Alert title for choosing target window")
-            alert.informativeText = NSLocalizedString("navigation.choose_window", value: "Choose an window to scan.", comment: "Alert message for choosing target window")
+            alert.messageText = NSLocalizedString(
+                "navigation.target_window", value: "Target Window",
+                comment: "Alert title for choosing target window")
+            alert.informativeText = NSLocalizedString(
+                "navigation.choose_window", value: "Choose an window to scan.",
+                comment: "Alert message for choosing target window")
             for window in windows! {
                 var title = window.value(of: "AXTitle")
                 if title == "" {
-                    title = NSLocalizedString("navigation.untitled", value: "Untitled", comment: "Default title for untitled window")
+                    title = NSLocalizedString(
+                        "navigation.untitled", value: "Untitled",
+                        comment: "Default title for untitled window")
                 }
                 title += String(window.hashValue)
                 alert.addButton(withTitle: title)
             }
-            alert.addButton(withTitle: NSLocalizedString("navigation.close", value: "Close", comment: "Close button"))
+            alert.addButton(
+                withTitle: NSLocalizedString(
+                    "navigation.close", value: "Close", comment: "Close button"))
             let modalResult = alert.runModal()
             hide()
             let r = modalResult.rawValue - 1000
@@ -142,8 +156,12 @@ enum Navigation {
             log("Accessibility not enabled.")
             return
         }
-        windowName = NSLocalizedString("navigation.unknown_window", value: "Unknown Window", comment: "Default window name when unknown")
-        appName = NSLocalizedString("navigation.unknown_app", value: "Unknown App", comment: "Default app name when unknown")
+        windowName = NSLocalizedString(
+            "navigation.unknown_window", value: "Unknown Window",
+            comment: "Default window name when unknown")
+        appName = NSLocalizedString(
+            "navigation.unknown_app", value: "Unknown App", comment: "Default app name when unknown"
+        )
         cgPosition = CGPoint()
         cgSize = CGSize()
         cgImage = nil
@@ -164,10 +182,20 @@ enum Navigation {
             if let image = TakeScreensShots(rect: CGRect(origin: cgPosition, size: cgSize)) {
                 cgImage = image
             } else {
-                Accessibility.speak(String(format: NSLocalizedString("error.screenshot_failed", value: "Faild to take a screenshot of %@, %@", comment: "Error message when screenshot fails"), appName, windowName))
+                Accessibility.speak(
+                    String(
+                        format: NSLocalizedString(
+                            "error.screenshot_failed",
+                            value: "Faild to take a screenshot of %@, %@",
+                            comment: "Error message when screenshot fails"), appName, windowName))
             }
         } else {
-            Accessibility.speak(String(format: NSLocalizedString("error.access_failed", value: "Faild to access %@, %@", comment: "Error message when cannot access app or window"), appName, windowName))
+            Accessibility.speak(
+                String(
+                    format: NSLocalizedString(
+                        "error.access_failed", value: "Faild to access %@, %@",
+                        comment: "Error message when cannot access app or window"), appName,
+                    windowName))
         }
     }
 
@@ -178,11 +206,18 @@ enum Navigation {
         guard let image = cgImage else { return }
         let result = performOCR(cgImage: image)
         if result.count == 0 {
-            Accessibility.speak(NSLocalizedString("navigation.nothing_found", value: "Nothing found", comment: "Message when no text is found during OCR"))
+            Accessibility.speak(
+                NSLocalizedString(
+                    "navigation.nothing_found", value: "Nothing found",
+                    comment: "Message when no text is found during OCR"))
             return
         }
         process(result)
-        Accessibility.speak(String(format: NSLocalizedString("navigation.finished_scanning", value: "Finished scanning %@, %@", comment: "Message when scanning is complete"), appName, windowName))
+        Accessibility.speak(
+            String(
+                format: NSLocalizedString(
+                    "navigation.finished_scanning", value: "Finished scanning %@, %@",
+                    comment: "Message when scanning is complete"), appName, windowName))
         Shortcuts.activateNavigationShortcuts()
     }
 
@@ -192,11 +227,12 @@ enum Navigation {
         //		   log("Resized:", image.width, image.height)
         guard let image = cgImage else { return }
         let prompt = Settings.exploreUserPrompt.replacingOccurrences(
-                of: "{image.width}", with: String(image.width)
-            ).replacingOccurrences(of: "{image.height}", with: String(image.height))
-            Settings.followUp = false
+            of: "{image.width}", with: String(image.width)
+        ).replacingOccurrences(of: "{image.height}", with: String(image.height))
+        Settings.followUp = false
         OpenAIAPI.describe(
-                image: image, system: Settings.exploreSystemPrompt, prompt: prompt, completion: exploreHandler)
+            image: image, system: Settings.exploreSystemPrompt, prompt: prompt,
+            completion: exploreHandler)
     }
 
     static func exploreHandler(description: String) {
@@ -206,7 +242,12 @@ enum Navigation {
             Shortcuts.activateNavigationShortcuts()
             NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
             sleep(1)
-            Accessibility.speak(String(format: NSLocalizedString("navigation.finished_scanning", value: "Finished scanning %@, %@", comment: "Message when scanning is complete"), self.appName, self.windowName))
+            Accessibility.speak(
+                String(
+                    format: NSLocalizedString(
+                        "navigation.finished_scanning", value: "Finished scanning %@, %@",
+                        comment: "Message when scanning is complete"), self.appName, self.windowName
+                ))
 
             //			DispatchQueue.main.async {
             //				if let cgImage = cgImage {
@@ -216,7 +257,10 @@ enum Navigation {
             //			}
 
         } else {
-            Accessibility.speakWithSynthesizer(NSLocalizedString("error.json_parse_failed", value: "Cannot parse the JSON string. Try again.", comment: "Error message when JSON parsing fails"))
+            Accessibility.speakWithSynthesizer(
+                NSLocalizedString(
+                    "error.json_parse_failed", value: "Cannot parse the JSON string. Try again.",
+                    comment: "Error message when JSON parsing fails"))
         }
     }
 
@@ -290,7 +334,11 @@ enum Navigation {
         var center = convert2coordinates(displayResults[l][w].boundingBox)
         center.x -= cgPosition.x
         center.y -= cgPosition.y
-        Accessibility.speak(String(format: NSLocalizedString("navigation.coordinates", value: "%d, %d", comment: "Coordinate position format"), Int(center.x), Int(center.y)))
+        Accessibility.speak(
+            String(
+                format: NSLocalizedString(
+                    "navigation.coordinates", value: "%d, %d", comment: "Coordinate position format"
+                ), Int(center.x), Int(center.y)))
     }
 
     static func correctLimit() {

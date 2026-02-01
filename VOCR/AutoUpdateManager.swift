@@ -69,8 +69,13 @@ class AutoUpdateManager: NSObject, SPUUpdaterDelegate, SPUStandardUserDriverDele
             NSApp.dockTile.badgeLabel = "1"
             do {
                 let content = UNMutableNotificationContent()
-                content.title = NSLocalizedString("update.available.title", value: "A new update is available", comment: "Title for update notification")
-                content.body = String(format: NSLocalizedString("update.available.body", value: "Version %@ is now available", comment: "Body text for update notification"), update.displayVersionString)
+                content.title = NSLocalizedString(
+                    "update.available.title", value: "A new update is available",
+                    comment: "Title for update notification")
+                content.body = String(
+                    format: NSLocalizedString(
+                        "update.available.body", value: "Version %@ is now available",
+                        comment: "Body text for update notification"), update.displayVersionString)
                 content.sound = UNNotificationSound.default
                 let request = UNNotificationRequest(
                     identifier: UPDATE_NOTIFICATION_IDENTIFIER, content: content, trigger: nil)

@@ -29,11 +29,14 @@ enum OpenAIAPI {
     }
 
     static func getModels(
-        _ apiURL: String, _ apiKey: String, completion: @escaping ([String]) -> Void
+        _ apiURL: String, _ apiKey: String, completion: @escaping (Result<[String], Error>) -> Void
     ) {
         guard let base = URL(string: apiURL) else {
-            alert(NSLocalizedString("error.invalid_url", value: "Invalid URL", comment: "Error message for invalid URL"), apiURL)
-            completion([])
+            alert(
+                NSLocalizedString(
+                    "error.invalid_url", value: "Invalid URL",
+                    comment: "Error message for invalid URL"), apiURL)
+            completion(.failure(NetworkError.invalidURL))
             return
         }
 
@@ -42,15 +45,19 @@ enum OpenAIAPI {
         var request = URLRequest(url: url)
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
 
-        performRequest(&request, method: "GET") { data in
-            do {
-                let decoded = try JSONDecoder().decode(ModelsResponse.self, from: data)
-                var ids = decoded.data.map { $0.id }
-                ids.sort()
-                completion(ids)
-            } catch {
-                alert(NSLocalizedString("error.decoding_models", value: "Error decoding models JSON", comment: "Error message when JSON decoding fails for models"), "\(error)")
-                completion([])
+        performRequestModels(&request, method: "GET") { result in
+            switch result {
+            case .success(let data):
+                do {
+                    let decoded = try JSONDecoder().decode(ModelsResponse.self, from: data)
+                    var ids = decoded.data.map { $0.id }
+                    ids.sort()
+                    completion(.success(ids))
+                } catch {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
@@ -121,7 +128,10 @@ enum OpenAIAPI {
         let jsonData = try! JSONSerialization.data(withJSONObject: jsonBody, options: [])
 
         guard let base = URL(string: apiURL) else {
-            alert(NSLocalizedString("error.invalid_url", value: "Invalid URL", comment: "Error message for invalid URL"), apiURL)
+            alert(
+                NSLocalizedString(
+                    "error.invalid_url", value: "Invalid URL",
+                    comment: "Error message for invalid URL"), apiURL)
             completion("")
             return
         }
@@ -150,8 +160,14 @@ enum OpenAIAPI {
                     completion(description)
                 }
             } catch {
-                alert(NSLocalizedString("error.decoding_json", value: "Error decoding JSON", comment: "Error message when JSON decoding fails"), "\(error)")
-                completion(NSLocalizedString("error.parse_json", value: "Error: Could not parse JSON.", comment: "Error message when JSON cannot be parsed"))
+                alert(
+                    NSLocalizedString(
+                        "error.decoding_json", value: "Error decoding JSON",
+                        comment: "Error message when JSON decoding fails"), "\(error)")
+                completion(
+                    NSLocalizedString(
+                        "error.parse_json", value: "Error: Could not parse JSON.",
+                        comment: "Error message when JSON cannot be parsed"))
             }
         }
     }

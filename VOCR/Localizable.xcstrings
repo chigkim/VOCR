@@ -1381,6 +1381,66 @@
         }
       }
     },
+    "error.preset.fetchModelsFailed.message": {
+      "comment": "Informative text for fetch models failure",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Liste der Modelle konnte nicht vom Server abgerufen werden. Bitte geben Sie den Modellnamen manuell ein."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cannot retrieve the list of models from the server. Please manually type the model name to use."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de récupérer la liste des modèles depuis le serveur. Veuillez saisir manuellement le nom du modèle à utiliser."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se puede recuperar la lista de modelos del servidor. Por favor, escriba manualmente el nombre del modelo a utilizar."
+          }
+        }
+      }
+    },
+    "error.preset.fetchModelsFailed.title": {
+      "comment": "Error message when fetching models fails in preset editor",
+      "extractionState": "manual",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modelle konnten nicht abgerufen werden."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Failed to fetch models."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Échec de la récupération des modèles."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Error al obtener los modelos."
+          }
+        }
+      }
+    },
     "error.preset.saveFailed": {
       "comment": "Error message when preset save fails",
       "extractionState": "manual",
@@ -3207,36 +3267,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Modelo"
-          }
-        }
-      }
-    },
-    "preset.editor.noModelsFound": {
-      "comment": "Message when no models are available",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Keine Modelle gefunden"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No models found"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aucun modèle trouvé"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No se encontraron modelos"
           }
         }
       }

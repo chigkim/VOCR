@@ -6,11 +6,12 @@ struct ModelProvider {
     let apiURL: String
 
     static let predefinedProviders: [ModelProvider] = [
+        ModelProvider(name: "Claude", apiURL: "https://api.anthropic.com/v1"),
         ModelProvider(
             name: "Gemini", apiURL: "https://generativelanguage.googleapis.com/v1beta/openai/"),
+        ModelProvider(name: "Ollama", apiURL: "http://localhost:11434/v1"),
         ModelProvider(name: "Open AI", apiURL: "https://api.openai.com/v1"),
         ModelProvider(name: "Open Router", apiURL: "https://openrouter.ai/api/v1"),
-        ModelProvider(name: "Ollama", apiURL: "http://localhost:11434/v1"),
     ]
 }
 

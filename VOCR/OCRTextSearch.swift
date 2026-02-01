@@ -105,7 +105,10 @@ class OCRTextSearch {
             }
         }
 
-        Accessibility.speak(NSLocalizedString("search.not_found", value: "Not found.", comment: "Message when search text is not found"))
+        Accessibility.speak(
+            NSLocalizedString(
+                "search.not_found", value: "Not found.",
+                comment: "Message when search text is not found"))
     }
 
     func showSearchDialog() {
@@ -114,7 +117,8 @@ class OCRTextSearch {
         }
 
         let alert = NSAlert()
-        alert.messageText = NSLocalizedString("search.dialog.title", value: "Search OCR Text", comment: "Title for the search dialog")
+        alert.messageText = NSLocalizedString(
+            "search.dialog.title", value: "Search OCR Text", comment: "Title for the search dialog")
 
         let textField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
         textField.stringValue = lastSearchQuery  // Recall last search term
@@ -123,9 +127,17 @@ class OCRTextSearch {
             alert.window.makeFirstResponder(textField)
         }
 
-        alert.addButton(withTitle: NSLocalizedString("button.from_beginning", value: "From Beginning", comment: "Button to search from the beginning"))
-        alert.addButton(withTitle: NSLocalizedString("button.from_current", value: "From Current", comment: "Button to search from current position"))
-        alert.addButton(withTitle: NSLocalizedString("button.cancel", value: "Cancel", comment: "Button to cancel the search"))
+        alert.addButton(
+            withTitle: NSLocalizedString(
+                "button.from_beginning", value: "From Beginning",
+                comment: "Button to search from the beginning"))
+        alert.addButton(
+            withTitle: NSLocalizedString(
+                "button.from_current", value: "From Current",
+                comment: "Button to search from current position"))
+        alert.addButton(
+            withTitle: NSLocalizedString(
+                "button.cancel", value: "Cancel", comment: "Button to cancel the search"))
         // Set "From Current" as the default button
         alert.window.defaultButtonCell = alert.buttons[1].cell as? NSButtonCell
 
@@ -138,7 +150,10 @@ class OCRTextSearch {
             lastSearchQuery = textField.stringValue
             self.search(query: lastSearchQuery)
         } else {
-            Accessibility.speak(NSLocalizedString("search.cancelled", value: "Cancelled.", comment: "Message when search is cancelled"))
+            Accessibility.speak(
+                NSLocalizedString(
+                    "search.cancelled", value: "Cancelled.",
+                    comment: "Message when search is cancelled"))
             return
         }
         sleep(1)

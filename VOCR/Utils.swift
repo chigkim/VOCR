@@ -12,6 +12,14 @@ import Cocoa
 import Vision
 import os
 
+enum NetworkError: Error {
+    case invalidURL
+    case connectionError(Error)
+    case invalidResponse
+    case httpError(Int, String)
+    case noData
+}
+
 let logger = FileLogger.shared
 var task: URLSessionDataTask?
 func log<T>(_ object: T, _ level: OSLogType = .info) {
@@ -30,7 +38,9 @@ func performRequest(
         if let error = error {
             if error.localizedDescription != "cancelled" {
                 alert(
-                    NSLocalizedString("error.connection.title", value: "Connection error", comment: "Alert title for connection errors"),
+                    NSLocalizedString(
+                        "error.connection.title", value: "Connection error",
+                        comment: "Alert title for connection errors"),
                     "\(error.localizedDescription)")
             }
             return
@@ -38,27 +48,79 @@ func performRequest(
 
         guard let httpResponse = response as? HTTPURLResponse else {
             alert(
-                NSLocalizedString("error.response.invalid.title", value: "Invalid response from server", comment: "Alert title for invalid server response"),
-                NSLocalizedString("error.response.invalid.message", value: "No valid HTTP response object", comment: "Alert message when no valid HTTP response is received"))
+                NSLocalizedString(
+                    "error.response.invalid.title", value: "Invalid response from server",
+                    comment: "Alert title for invalid server response"),
+                NSLocalizedString(
+                    "error.response.invalid.message", value: "No valid HTTP response object",
+                    comment: "Alert message when no valid HTTP response is received"))
             return
         }
 
         guard httpResponse.statusCode == 200 else {
             alert(
-                NSLocalizedString("error.http.title", value: "HTTP Error", comment: "Alert title for HTTP errors"),
-                String(format: NSLocalizedString("error.http.message", value: "Status code %d: %@", comment: "Alert message for HTTP error with status code and details"), httpResponse.statusCode, String(data: data!, encoding: .utf8) ?? ""))
+                NSLocalizedString(
+                    "error.http.title", value: "HTTP Error", comment: "Alert title for HTTP errors"),
+                String(
+                    format: NSLocalizedString(
+                        "error.http.message", value: "Status code %d: %@",
+                        comment: "Alert message for HTTP error with status code and details"),
+                    httpResponse.statusCode, String(data: data!, encoding: .utf8) ?? ""))
             return
         }
 
         guard let data = data else {
-            Accessibility.speakWithSynthesizer(NSLocalizedString("error.nodata.message", value: "No data received from server.", comment: "Speech message when no data is received from server"))
+            Accessibility.speakWithSynthesizer(
+                NSLocalizedString(
+                    "error.nodata.message", value: "No data received from server.",
+                    comment: "Speech message when no data is received from server"))
             return
         }
         log(String(data: data, encoding: .utf8))
         completion(data)
     }
     if let name = name {
-        Accessibility.speakWithSynthesizer(String(format: NSLocalizedString("dialog.asking.message", value: "Asking %@... Please wait...", comment: "Speech message when making a request to an AI service"), name))
+        Accessibility.speakWithSynthesizer(
+            String(
+                format: NSLocalizedString(
+                    "dialog.asking.message", value: "Asking %@... Please wait...",
+                    comment: "Speech message when making a request to an AI service"), name))
+    }
+    task?.resume()
+}
+
+func performRequestModels(
+    _ request: inout URLRequest, method: String = "GET",
+    completion: @escaping (Result<Data, NetworkError>) -> Void
+) {
+    request.httpMethod = method
+    request.timeoutInterval = 60
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    task?.cancel()
+    task = URLSession.shared.dataTask(with: request) { data, response, error in
+        if let error = error {
+            if error.localizedDescription != "cancelled" {
+                completion(.failure(.connectionError(error)))
+            }
+            return
+        }
+
+        guard let httpResponse = response as? HTTPURLResponse else {
+            completion(.failure(.invalidResponse))
+            return
+        }
+
+        guard httpResponse.statusCode == 200 else {
+            let errorDetails = String(data: data ?? Data(), encoding: .utf8) ?? ""
+            completion(.failure(.httpError(httpResponse.statusCode, errorDetails)))
+            return
+        }
+
+        guard let data = data else {
+            completion(.failure(.noData))
+            return
+        }
+        completion(.success(data))
     }
     task?.resume()
 }
@@ -82,9 +144,14 @@ func alert(_ title: String, _ message: String) {
 
 func askPrompt(value: String) -> String? {
     let alert = NSAlert()
-    alert.messageText = NSLocalizedString("dialog.prompt.title", value: "Prompt", comment: "Title for prompt dialog")
-    alert.addButton(withTitle: NSLocalizedString("button.ask", value: "Ask", comment: "Button title to submit a prompt"))
-    alert.addButton(withTitle: NSLocalizedString("button.cancel", value: "Cancel", comment: "Button title to cancel an action"))
+    alert.messageText = NSLocalizedString(
+        "dialog.prompt.title", value: "Prompt", comment: "Title for prompt dialog")
+    alert.addButton(
+        withTitle: NSLocalizedString(
+            "button.ask", value: "Ask", comment: "Button title to submit a prompt"))
+    alert.addButton(
+        withTitle: NSLocalizedString(
+            "button.cancel", value: "Cancel", comment: "Button title to cancel an action"))
 
     // Create a vertical stack view to hold text field + checkbox
     let stackView = NSStackView()
@@ -98,7 +165,10 @@ func askPrompt(value: String) -> String? {
     stackView.addArrangedSubview(inputTextField)
 
     // Checkbox
-    let followUpButton = NSButton(checkboxWithTitle: NSLocalizedString("dialog.followup.checkbox", value: "Follow up", comment: "Checkbox label for enabling follow-up mode"), target: nil, action: nil)
+    let followUpButton = NSButton(
+        checkboxWithTitle: NSLocalizedString(
+            "dialog.followup.checkbox", value: "Follow up",
+            comment: "Checkbox label for enabling follow-up mode"), target: nil, action: nil)
     stackView.addArrangedSubview(followUpButton)
 
     alert.accessoryView = stackView
@@ -132,7 +202,11 @@ func grabImage() -> CGImage? {
         return Navigation.cgImage
     } else {
         Accessibility.speakWithSynthesizer(
-            String(format: NSLocalizedString("error.access.message", value: "Failed to access %@, %@", comment: "Speech message when failing to access application or window"), Navigation.appName, Navigation.windowName))
+            String(
+                format: NSLocalizedString(
+                    "error.access.message", value: "Failed to access %@, %@",
+                    comment: "Speech message when failing to access application or window"),
+                Navigation.appName, Navigation.windowName))
     }
     return nil
 }
@@ -197,8 +271,11 @@ func extractString(text: String, startDelimiter: String, endDelimiter: String) -
 
 func saveImage(_ cgImage: CGImage) throws {
     let savePanel = NSSavePanel()
-    savePanel.title = NSLocalizedString("dialog.save.title", value: "Save Your File", comment: "Title for save file dialog")
-    savePanel.message = NSLocalizedString("dialog.save.message", value: "Choose a destination and save your file.", comment: "Message for save file dialog")
+    savePanel.title = NSLocalizedString(
+        "dialog.save.title", value: "Save Your File", comment: "Title for save file dialog")
+    savePanel.message = NSLocalizedString(
+        "dialog.save.message", value: "Choose a destination and save your file.",
+        comment: "Message for save file dialog")
     savePanel.allowedContentTypes = [.png]
     savePanel.nameFieldStringValue = Navigation.appName + ".png"
     savePanel.begin { response in
@@ -424,7 +501,10 @@ func classify(cgImage: CGImage) -> String {
         }
         Accessibility.speak(message)
     } else {
-        Accessibility.speak(NSLocalizedString("dialog.classification.unknown", value: "Unknown", comment: "Speech message when image classification returns no results"))
+        Accessibility.speak(
+            NSLocalizedString(
+                "dialog.classification.unknown", value: "Unknown",
+                comment: "Speech message when image classification returns no results"))
     }
     return message
 }

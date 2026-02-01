@@ -12,17 +12,20 @@ final class PresetManagerViewController: NSViewController {
         action: nil
     )
     private let editButton = NSButton(
-        title: NSLocalizedString("button.edit", value: "Edit", comment: "Button to edit selected preset"),
+        title: NSLocalizedString(
+            "button.edit", value: "Edit", comment: "Button to edit selected preset"),
         target: nil,
         action: nil
     )
     private let deleteButton = NSButton(
-        title: NSLocalizedString("button.delete", value: "Delete", comment: "Button to delete selected preset"),
+        title: NSLocalizedString(
+            "button.delete", value: "Delete", comment: "Button to delete selected preset"),
         target: nil,
         action: nil
     )
     private let duplicateButton = NSButton(
-        title: NSLocalizedString("button.duplicate", value: "Duplicate", comment: "Button to duplicate selected preset"),
+        title: NSLocalizedString(
+            "button.duplicate", value: "Duplicate", comment: "Button to duplicate selected preset"),
         target: nil,
         action: nil
     )
@@ -44,10 +47,12 @@ final class PresetManagerViewController: NSViewController {
     private func setupUI() {
         // Table / column
         let presetColumn = NSTableColumn(identifier: ColumnID.name)
-        presetColumn.title = NSLocalizedString("column.name", value: "Name", comment: "Table column header for preset name")
+        presetColumn.title = NSLocalizedString(
+            "column.name", value: "Name", comment: "Table column header for preset name")
         tableView.addTableColumn(presetColumn)
         let modelColumn = NSTableColumn(identifier: ColumnID.model)
-        modelColumn.title = NSLocalizedString("column.model", value: "Model", comment: "Table column header for model name")
+        modelColumn.title = NSLocalizedString(
+            "column.model", value: "Model", comment: "Table column header for model name")
         tableView.addTableColumn(modelColumn)
 
         tableView.delegate = self
