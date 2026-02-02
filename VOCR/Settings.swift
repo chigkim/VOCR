@@ -613,6 +613,25 @@ class MenuHandler: NSObject {
     }
 
     @objc func addShortcut(_ sender: NSMenuItem) {
+        let existingIDs = Set(Shortcuts.shortcuts.map { $0.name })
+        let available = Shortcuts.definitions.filter { !existingIDs.contains($0.id) }
+        if available.isEmpty {
+            let alert = NSAlert()
+            alert.alertStyle = .informational
+            alert.messageText = NSLocalizedString(
+                "dialog.newShortcut.title", value: "New Shortcut",
+                comment: "Title for new shortcut creation dialog")
+            alert.informativeText = NSLocalizedString(
+                "dialog.newShortcut.none", value: "All shortcuts have already been added.",
+                comment: "Message when no shortcuts are available to add")
+            alert.addButton(
+                withTitle: NSLocalizedString(
+                    "button.ok", value: "OK", comment: "OK button title"))
+            alert.runModal()
+            hide()
+            return
+        }
+
         let alert = NSAlert()
         alert.messageText = NSLocalizedString(
             "dialog.newShortcut.title", value: "New Shortcut",
@@ -623,17 +642,22 @@ class MenuHandler: NSObject {
         alert.addButton(
             withTitle: NSLocalizedString(
                 "button.cancel", value: "Cancel", comment: "Button to cancel an action"))
-        let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
-        inputTextField.placeholderString = NSLocalizedString(
-            "dialog.newShortcut.placeholder", value: "Shortcut Name",
-            comment: "Placeholder text for shortcut name input field")
-        alert.accessoryView = inputTextField
+        let popup = NSPopUpButton(frame: NSRect(x: 0, y: 0, width: 260, height: 26))
+        for def in available {
+            popup.addItem(withTitle: Shortcuts.localizedName(for: def.id))
+        }
+        alert.accessoryView = popup
         let response = alert.runModal()
         hide()
         if response == .alertFirstButtonReturn {  // OK button
+            let selectedIndex = popup.indexOfSelectedItem
+            if selectedIndex < 0 || selectedIndex >= available.count {
+                return
+            }
+            let selectedID = available[selectedIndex].id
             Shortcuts.shortcuts.append(
                 Shortcut(
-                    name: inputTextField.stringValue, key: UInt32(0), modifiers: UInt32(0),
+                    name: selectedID, key: UInt32(0), modifiers: UInt32(0),
                     keyName: NSLocalizedString(
                         "dialog.newShortcut.unassigned", value: "Unassigned",
                         comment: "Status text for unassigned keyboard shortcut")))

@@ -1,25 +1,140 @@
 [
-	{"keyName":"⌃⇧⌘S","key":1,"modifiers":4864,"name":"Settings"},
-	{"keyName":"⌃⇧⌘W","key":13,"modifiers":4864,"name":"OCR Window"},
-	{"keyName":"⌃⇧⌘V","key":9,"modifiers":4864,"name":"OCR VOCursor"},
-	{"keyName":"⌃⇧⌘C","key":8,"modifiers":4864,"name":"Capture Camera"},
-	{"keyName":"⌃⇧⌘E","key":14,"modifiers":4864,"name":"Explore"},
-	{"keyName":"⌃⇧⌘A","key":0,"modifiers":4864,"name":"Ask"},
-	{"keyName":"⌃⇧⌘R","key":15,"modifiers":4864,"name":"Realtime OCR"},
-	{"keyName":"⌃⌘","key":124,"modifiers":4352,"name":"Right"},
-	{"keyName":"⌃⌘","key":123,"modifiers":4352,"name":"Left"},
-	{"keyName":"⌃⌘","key":125,"modifiers":4352,"name":"Down"},
-	{"keyName":"⌃⌘","key":126,"modifiers":4352,"name":"Up"},
-	{"keyName":"⌃⌘","key":115,"modifiers":4352,"name":"Beginning"},
-	{"keyName":"⌃⌘","key":119,"modifiers":4352,"name":"End"},
-	{"keyName":"⌃⌘","key":116,"modifiers":4352,"name":"Top"},
-	{"keyName":"⌃⌘","key":121,"modifiers":4352,"name":"Bottom"},
-	{"keyName":"⌃⇧⌘","key":124,"modifiers":4864,"name":"Next Character"},
-	{"keyName":"⌃⇧⌘","key":123,"modifiers":4864,"name":"Previous Character"},
-	{"keyName":"⌃⌘l","key":37,"modifiers":4352,"name":"Report Location"},
-	{"keyName":"⌃⌘i","key":34,"modifiers":4352,"name":"Identify Object"},
-	{"keyName":"⌃⌘f","key":3,"modifiers":4352,"name":"Find Text"},
-	{"keyName":"⌃⌘g","key":5,"modifiers":4352,"name":"Find Next"},
-	{"keyName":"⌃⇧⌘g","key":5,"modifiers":4864,"name":"Find Previous"},
-	{"keyName":"\u001b","key":53,"modifiers":0,"name":"Exit Navigation"}
+	{
+		"keyName": "\u2303\u21e7\u2318S",
+		"key": 1,
+		"modifiers": 4864,
+		"name": "shortcut.settings"
+	},
+	{
+		"keyName": "\u2303\u21e7\u2318W",
+		"key": 13,
+		"modifiers": 4864,
+		"name": "shortcut.ocr_window"
+	},
+	{
+		"keyName": "\u2303\u21e7\u2318V",
+		"key": 9,
+		"modifiers": 4864,
+		"name": "shortcut.ocr_vocursor"
+	},
+	{
+		"keyName": "\u2303\u21e7\u2318C",
+		"key": 8,
+		"modifiers": 4864,
+		"name": "shortcut.capture_camera"
+	},
+	{
+		"keyName": "\u2303\u21e7\u2318E",
+		"key": 14,
+		"modifiers": 4864,
+		"name": "shortcut.explore"
+	},
+	{
+		"keyName": "\u2303\u21e7\u2318A",
+		"key": 0,
+		"modifiers": 4864,
+		"name": "shortcut.ask"
+	},
+	{
+		"keyName": "\u2303\u21e7\u2318R",
+		"key": 15,
+		"modifiers": 4864,
+		"name": "shortcut.realtime_ocr"
+	},
+	{
+		"keyName": "\u2303\u2318\uf703",
+		"key": 124,
+		"modifiers": 4352,
+		"name": "shortcut.right"
+	},
+	{
+		"keyName": "\u2303\u2318\uf702",
+		"key": 123,
+		"modifiers": 4352,
+		"name": "shortcut.left"
+	},
+	{
+		"keyName": "\u2303\u2318\uf701",
+		"key": 125,
+		"modifiers": 4352,
+		"name": "shortcut.down"
+	},
+	{
+		"keyName": "\u2303\u2318\uf700",
+		"key": 126,
+		"modifiers": 4352,
+		"name": "shortcut.up"
+	},
+	{
+		"keyName": "\u2303\u2318\uf729",
+		"key": 115,
+		"modifiers": 4352,
+		"name": "shortcut.beginning"
+	},
+	{
+		"keyName": "\u2303\u2318\uf72b",
+		"key": 119,
+		"modifiers": 4352,
+		"name": "shortcut.end"
+	},
+	{
+		"keyName": "\u2303\u2318\uf72c",
+		"key": 116,
+		"modifiers": 4352,
+		"name": "shortcut.top"
+	},
+	{
+		"keyName": "\u2303\u2318\uf72d",
+		"key": 121,
+		"modifiers": 4352,
+		"name": "shortcut.bottom"
+	},
+	{
+		"keyName": "\u2303\u21e7\u2318\uf703",
+		"key": 124,
+		"modifiers": 4864,
+		"name": "shortcut.next_character"
+	},
+	{
+		"keyName": "\u2303\u21e7\u2318\uf702",
+		"key": 123,
+		"modifiers": 4864,
+		"name": "shortcut.previous_character"
+	},
+	{
+		"keyName": "\u2303\u2318l",
+		"key": 37,
+		"modifiers": 4352,
+		"name": "shortcut.report_location"
+	},
+	{
+		"keyName": "\u2303\u2318i",
+		"key": 34,
+		"modifiers": 4352,
+		"name": "shortcut.identify_object"
+	},
+	{
+		"keyName": "\u2303\u2318f",
+		"key": 3,
+		"modifiers": 4352,
+		"name": "shortcut.find_text"
+	},
+	{
+		"keyName": "\u2303\u2318g",
+		"key": 5,
+		"modifiers": 4352,
+		"name": "shortcut.find_next"
+	},
+	{
+		"keyName": "\u2303\u21e7\u2318g",
+		"key": 5,
+		"modifiers": 4864,
+		"name": "shortcut.find_previous"
+	},
+	{
+		"keyName": "\u001b",
+		"key": 53,
+		"modifiers": 0,
+		"name": "shortcut.exit_navigation"
+	}
 ]

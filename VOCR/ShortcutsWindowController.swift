@@ -81,7 +81,7 @@ class ShortcutsWindowController: NSWindowController, NSWindowDelegate, NSTableVi
             let cellView = NSTableCellView(
                 frame: NSRect(x: 0, y: 0, width: tableColumn!.width, height: tableView.rowHeight))
             let textField = NSTextField(frame: cellView.bounds)
-            textField.stringValue = shortcut.name
+            textField.stringValue = Shortcuts.localizedName(for: shortcut.name)
             textField.isEditable = false
             textField.isBezeled = false
             textField.drawsBackground = false

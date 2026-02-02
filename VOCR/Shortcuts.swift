@@ -10,6 +10,7 @@ import Cocoa
 import HotKey
 
 struct Shortcut: Codable {
+    // "name" stores the stable shortcut id (e.g., "shortcut.settings"), not the localized label.
     var name: String
     var key: UInt32
     var modifiers: UInt32
@@ -22,192 +23,179 @@ enum Shortcuts {
     static var hotkeys: [HotKey] = []
     static var shortcuts: [Shortcut] = []
     static var navigationActive = false
-    static let globalShortcuts = [
-        NSLocalizedString(
-            "shortcut.settings", value: "Settings",
+    struct Definition {
+        let id: String
+        let defaultName: String
+        let isNavigation: Bool
+        let comment: String
+    }
+
+    static let definitions: [Definition] = [
+        Definition(
+            id: "shortcut.settings", defaultName: "Settings", isNavigation: false,
             comment: "Shortcut name for opening settings menu"),
-        NSLocalizedString(
-            "shortcut.ocr_window", value: "OCR Window",
+        Definition(
+            id: "shortcut.ocr_window", defaultName: "OCR Window", isNavigation: false,
             comment: "Shortcut name for OCR window capture"),
-        NSLocalizedString(
-            "shortcut.ocr_vocursor", value: "OCR VOCursor",
+        Definition(
+            id: "shortcut.ocr_vocursor", defaultName: "OCR VOCursor", isNavigation: false,
             comment: "Shortcut name for OCR at VoiceOver cursor"),
-        NSLocalizedString(
-            "shortcut.capture_camera", value: "Capture Camera",
+        Definition(
+            id: "shortcut.capture_camera", defaultName: "Capture Camera", isNavigation: false,
             comment: "Shortcut name for capturing from camera"),
-        NSLocalizedString(
-            "shortcut.realtime_ocr", value: "Realtime OCR",
+        Definition(
+            id: "shortcut.realtime_ocr", defaultName: "Realtime OCR", isNavigation: false,
             comment: "Shortcut name for starting/stopping realtime OCR"),
-        NSLocalizedString(
-            "shortcut.ask", value: "Ask", comment: "Shortcut name for asking questions"),
-        NSLocalizedString(
-            "shortcut.explore", value: "Explore", comment: "Shortcut name for exploring content"),
-    ]
-    static let navigationShortcuts = [
-        NSLocalizedString(
-            "shortcut.right", value: "Right",
+        Definition(
+            id: "shortcut.ask", defaultName: "Ask", isNavigation: false,
+            comment: "Shortcut name for asking questions"),
+        Definition(
+            id: "shortcut.explore", defaultName: "Explore", isNavigation: false,
+            comment: "Shortcut name for exploring content"),
+        Definition(
+            id: "shortcut.right", defaultName: "Right", isNavigation: true,
             comment: "Shortcut name for moving right in navigation"),
-        NSLocalizedString(
-            "shortcut.left", value: "Left", comment: "Shortcut name for moving left in navigation"),
-        NSLocalizedString(
-            "shortcut.down", value: "Down", comment: "Shortcut name for moving down in navigation"),
-        NSLocalizedString(
-            "shortcut.up", value: "Up", comment: "Shortcut name for moving up in navigation"),
-        NSLocalizedString(
-            "shortcut.beginning", value: "Beginning",
+        Definition(
+            id: "shortcut.left", defaultName: "Left", isNavigation: true,
+            comment: "Shortcut name for moving left in navigation"),
+        Definition(
+            id: "shortcut.down", defaultName: "Down", isNavigation: true,
+            comment: "Shortcut name for moving down in navigation"),
+        Definition(
+            id: "shortcut.up", defaultName: "Up", isNavigation: true,
+            comment: "Shortcut name for moving up in navigation"),
+        Definition(
+            id: "shortcut.beginning", defaultName: "Beginning", isNavigation: true,
             comment: "Shortcut name for jumping to beginning"),
-        NSLocalizedString(
-            "shortcut.end", value: "End", comment: "Shortcut name for jumping to end"),
-        NSLocalizedString(
-            "shortcut.top", value: "Top", comment: "Shortcut name for jumping to top"),
-        NSLocalizedString(
-            "shortcut.bottom", value: "Bottom", comment: "Shortcut name for jumping to bottom"),
-        NSLocalizedString(
-            "shortcut.next_character", value: "Next Character",
+        Definition(
+            id: "shortcut.end", defaultName: "End", isNavigation: true,
+            comment: "Shortcut name for jumping to end"),
+        Definition(
+            id: "shortcut.top", defaultName: "Top", isNavigation: true,
+            comment: "Shortcut name for jumping to top"),
+        Definition(
+            id: "shortcut.bottom", defaultName: "Bottom", isNavigation: true,
+            comment: "Shortcut name for jumping to bottom"),
+        Definition(
+            id: "shortcut.next_character", defaultName: "Next Character", isNavigation: true,
             comment: "Shortcut name for moving to next character"),
-        NSLocalizedString(
-            "shortcut.previous_character", value: "Previous Character",
-            comment: "Shortcut name for moving to previous character"),
-        NSLocalizedString(
-            "shortcut.report_location", value: "Report Location",
+        Definition(
+            id: "shortcut.previous_character", defaultName: "Previous Character",
+            isNavigation: true, comment: "Shortcut name for moving to previous character"),
+        Definition(
+            id: "shortcut.report_location", defaultName: "Report Location", isNavigation: true,
             comment: "Shortcut name for reporting current location"),
-        NSLocalizedString(
-            "shortcut.identify_object", value: "Identify Object",
+        Definition(
+            id: "shortcut.identify_object", defaultName: "Identify Object", isNavigation: true,
             comment: "Shortcut name for identifying object"),
-        NSLocalizedString(
-            "shortcut.find_text", value: "Find Text", comment: "Shortcut name for finding text"),
-        NSLocalizedString(
-            "shortcut.find_next", value: "Find Next",
+        Definition(
+            id: "shortcut.find_text", defaultName: "Find Text", isNavigation: true,
+            comment: "Shortcut name for finding text"),
+        Definition(
+            id: "shortcut.find_next", defaultName: "Find Next", isNavigation: true,
             comment: "Shortcut name for finding next occurrence"),
-        NSLocalizedString(
-            "shortcut.find_previous", value: "Find Previous",
+        Definition(
+            id: "shortcut.find_previous", defaultName: "Find Previous", isNavigation: true,
             comment: "Shortcut name for finding previous occurrence"),
-        NSLocalizedString(
-            "shortcut.exit_navigation", value: "Exit Navigation",
+        Definition(
+            id: "shortcut.exit_navigation", defaultName: "Exit Navigation", isNavigation: true,
             comment: "Shortcut name for exiting navigation mode"),
     ]
+
+    static let globalShortcuts = definitions.filter { !$0.isNavigation }.map { $0.id }
+    static let navigationShortcuts = definitions.filter { $0.isNavigation }.map { $0.id }
     static let allShortcuts = globalShortcuts + navigationShortcuts
 
     static func SetupShortcuts() {
-        handlers[
-            NSLocalizedString(
-                "shortcut.settings", value: "Settings",
-                comment: "Shortcut name for opening settings menu")] = settingsHandler
-        handlers[
-            NSLocalizedString(
-                "shortcut.ocr_window", value: "OCR Window",
-                comment: "Shortcut name for OCR window capture")] = {
-                Navigation.mode = .WINDOW
-                Navigation.startOCR()
+        handlers["shortcut.settings"] = settingsHandler
+        handlers["shortcut.ocr_window"] = {
+            Navigation.mode = .WINDOW
+            Navigation.startOCR()
+        }
+        handlers["shortcut.ocr_vocursor"] = {
+            if !Accessibility.isVoiceOverRunning() {
+                return
             }
-        handlers[
-            NSLocalizedString(
-                "shortcut.ocr_vocursor", value: "OCR VOCursor",
-                comment: "Shortcut name for OCR at VoiceOver cursor")] = {
-                if !Accessibility.isVoiceOverRunning() {
-                    return
-                }
-                Navigation.mode = .VOCURSOR
-                Navigation.startOCR()
+            Navigation.mode = .VOCURSOR
+            Navigation.startOCR()
+        }
+        handlers["shortcut.capture_camera"] = {
+            if MacCamera.shared.isCameraAllowed() {
+                MacCamera.shared.takePicture()
             }
-        handlers[
-            NSLocalizedString(
-                "shortcut.capture_camera", value: "Capture Camera",
-                comment: "Shortcut name for capturing from camera")] = {
-                if MacCamera.shared.isCameraAllowed() {
-                    MacCamera.shared.takePicture()
-                }
-            }
-        handlers[
-            NSLocalizedString(
-                "shortcut.realtime_ocr", value: "Realtime OCR",
-                comment: "Shortcut name for starting/stopping realtime OCR")] = realTimeHandler
-        handlers[
-            NSLocalizedString(
-                "shortcut.explore", value: "Explore", comment: "Shortcut name for exploring content"
-            )] = Navigation.explore
-        handlers[
-            NSLocalizedString(
-                "shortcut.ask", value: "Ask", comment: "Shortcut name for asking questions")] = {
-                ask()
-            }
-        handlers[
-            NSLocalizedString(
-                "shortcut.report_location", value: "Report Location",
-                comment: "Shortcut name for reporting current location")] = Navigation.location
-        handlers[
-            NSLocalizedString(
-                "shortcut.identify_object", value: "Identify Object",
-                comment: "Shortcut name for identifying object")] = Navigation.identifyObject
-        handlers[
-            NSLocalizedString(
-                "shortcut.right", value: "Right",
-                comment: "Shortcut name for moving right in navigation")] = Navigation.right
-        handlers[
-            NSLocalizedString(
-                "shortcut.left", value: "Left",
-                comment: "Shortcut name for moving left in navigation")] = Navigation.left
-        handlers[
-            NSLocalizedString(
-                "shortcut.up", value: "Up", comment: "Shortcut name for moving up in navigation")] =
-            Navigation.up
-        handlers[
-            NSLocalizedString(
-                "shortcut.down", value: "Down",
-                comment: "Shortcut name for moving down in navigation")] = Navigation.down
-        handlers[
-            NSLocalizedString(
-                "shortcut.top", value: "Top", comment: "Shortcut name for jumping to top")] =
-            Navigation.top
-        handlers[
-            NSLocalizedString(
-                "shortcut.bottom", value: "Bottom", comment: "Shortcut name for jumping to bottom")] =
-            Navigation.bottom
-        handlers[
-            NSLocalizedString(
-                "shortcut.beginning", value: "Beginning",
-                comment: "Shortcut name for jumping to beginning")] = Navigation.beginning
-        handlers[
-            NSLocalizedString(
-                "shortcut.end", value: "End", comment: "Shortcut name for jumping to end")] =
-            Navigation.end
-        handlers[
-            NSLocalizedString(
-                "shortcut.next_character", value: "Next Character",
-                comment: "Shortcut name for moving to next character")] = Navigation.nextCharacter
-        handlers[
-            NSLocalizedString(
-                "shortcut.previous_character", value: "Previous Character",
-                comment: "Shortcut name for moving to previous character")] =
-            Navigation.previousCharacter
-        handlers[
-            NSLocalizedString(
-                "shortcut.find_text", value: "Find Text", comment: "Shortcut name for finding text")
-        ] = OCRTextSearch.shared.showSearchDialog
-        handlers[
-            NSLocalizedString(
-                "shortcut.find_next", value: "Find Next",
-                comment: "Shortcut name for finding next occurrence")] = {
-                OCRTextSearch.shared.search(fromBeginning: false, backward: false)
-            }
-        handlers[
-            NSLocalizedString(
-                "shortcut.find_previous", value: "Find Previous",
-                comment: "Shortcut name for finding previous occurrence")] = {
-                OCRTextSearch.shared.search(fromBeginning: false, backward: true)
-            }
-        handlers[
-            NSLocalizedString(
-                "shortcut.exit_navigation", value: "Exit Navigation",
-                comment: "Shortcut name for exiting navigation mode")] = {
-                Accessibility.speak(
-                    NSLocalizedString(
-                        "navigation.exit", value: "Exit VOCR navigation.",
-                        comment: "Message announced when exiting navigation mode"))
-                deactivateNavigationShortcuts()
-            }
+        }
+        handlers["shortcut.realtime_ocr"] = realTimeHandler
+        handlers["shortcut.explore"] = Navigation.explore
+        handlers["shortcut.ask"] = {
+            ask()
+        }
+        handlers["shortcut.report_location"] = Navigation.location
+        handlers["shortcut.identify_object"] = Navigation.identifyObject
+        handlers["shortcut.right"] = Navigation.right
+        handlers["shortcut.left"] = Navigation.left
+        handlers["shortcut.up"] = Navigation.up
+        handlers["shortcut.down"] = Navigation.down
+        handlers["shortcut.top"] = Navigation.top
+        handlers["shortcut.bottom"] = Navigation.bottom
+        handlers["shortcut.beginning"] = Navigation.beginning
+        handlers["shortcut.end"] = Navigation.end
+        handlers["shortcut.next_character"] = Navigation.nextCharacter
+        handlers["shortcut.previous_character"] = Navigation.previousCharacter
+        handlers["shortcut.find_text"] = OCRTextSearch.shared.showSearchDialog
+        handlers["shortcut.find_next"] = {
+            OCRTextSearch.shared.search(fromBeginning: false, backward: false)
+        }
+        handlers["shortcut.find_previous"] = {
+            OCRTextSearch.shared.search(fromBeginning: false, backward: true)
+        }
+        handlers["shortcut.exit_navigation"] = {
+            Accessibility.speak(
+                NSLocalizedString(
+                    "navigation.exit", value: "Exit VOCR navigation.",
+                    comment: "Message announced when exiting navigation mode"))
+            deactivateNavigationShortcuts()
+        }
 
         loadShortcuts()
+    }
+
+    static func localizedName(for id: String) -> String {
+        if let def = definitions.first(where: { $0.id == id }) {
+            return NSLocalizedString(def.id, value: def.defaultName, comment: def.comment)
+        }
+        return id
+    }
+
+    private static func nameToIDMap() -> [String: String] {
+        var map: [String: String] = [:]
+        var bundles: [Bundle] = [Bundle.main]
+
+        for localization in Bundle.main.localizations {
+            if let path = Bundle.main.path(forResource: localization, ofType: "lproj"),
+                let bundle = Bundle(path: path)
+            {
+                bundles.append(bundle)
+            }
+        }
+
+        for def in definitions {
+            map[def.id] = def.id
+            map[def.defaultName] = def.id
+            for bundle in bundles {
+                let localized = bundle.localizedString(
+                    forKey: def.id, value: def.defaultName, table: nil)
+                map[localized] = def.id
+            }
+        }
+        return map
+    }
+
+    private static func normalize(_ shortcut: Shortcut, nameMap: [String: String]) -> Shortcut {
+        var updated = shortcut
+        if let mapped = nameMap[shortcut.name] {
+            updated.name = mapped
+        }
+        return updated
     }
 
     static func getDefaults() -> Data? {
@@ -232,7 +220,11 @@ enum Shortcuts {
             let userData = UserDefaults.standard.data(forKey: "userShortcuts"),
             var userShortcuts = try? JSONDecoder().decode([Shortcut].self, from: userData)
         {
-            for shortcut in defaultShortcuts {
+            let nameMap = nameToIDMap()
+            let normalizedDefaults = defaultShortcuts.map { normalize($0, nameMap: nameMap) }
+            userShortcuts = userShortcuts.map { normalize($0, nameMap: nameMap) }
+
+            for shortcut in normalizedDefaults {
                 if !userShortcuts.contains(where: { $0.name == shortcut.name }) {
                     userShortcuts.append(shortcut)
                 }
@@ -251,10 +243,12 @@ enum Shortcuts {
             loadDefaults()
         }
 
-        if let data = UserDefaults.standard.data(forKey: "userShortcuts"),
-            let mergedShortcuts = merge()
-        {
-            shortcuts = mergedShortcuts
+        if let mergedShortcuts = merge() {
+            let nameMap = nameToIDMap()
+            shortcuts = mergedShortcuts.map { normalize($0, nameMap: nameMap) }
+            if let normalizedData = try? JSONEncoder().encode(shortcuts) {
+                UserDefaults.standard.set(normalizedData, forKey: "userShortcuts")
+            }
             for shortcut in shortcuts {
                 log("\(shortcut.name), \(shortcut.keyName), \(shortcut.modifiers), \(shortcut.key)")
             }
