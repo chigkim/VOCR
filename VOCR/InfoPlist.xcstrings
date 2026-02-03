@@ -52,6 +52,24 @@
             "state": "translated",
             "value": "VOCR"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VOCR"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VOCR"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VOCR"
+          }
         }
       }
     },
@@ -105,6 +123,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "이미지 파일"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Файли зображень"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pliki obrazów"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Файлы изображений"
           }
         }
       }
@@ -160,6 +196,24 @@
             "state": "translated",
             "value": "VoiceOver 커서 아래에서 알림을 읽고 스크린샷을 촬영합니다"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Озвучувати повідомлення та робити знімок екрана під курсором VoiceOver"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odczytuj ogłoszenia i wykonuj zrzut ekranu pod kursorem VoiceOver"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Озвучивать объявления и делать снимок экрана под курсором VoiceOver"
+          }
         }
       }
     },
@@ -214,6 +268,24 @@
             "state": "translated",
             "value": "VOCR에서 사용할 사진을 촬영합니다."
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зробіть фото для використання в VOCR."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zrób zdjęcie do użycia w VOCR."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сделайте фото для использования в VOCR."
+          }
         }
       }
     },
@@ -267,6 +339,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "Copyright © 2019 Chi Kim. Todos los derechos reservados."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "© 2019 Chi Kim. Усі права захищено."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copyright © 2019 Chi Kim. Wszelkie prawa zastrzeżone."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "© 2019 Chi Kim. Все права защищены."
           }
         }
       }

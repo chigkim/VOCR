@@ -52,6 +52,24 @@
             "state": "translated",
             "value": "预设"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пресети"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ustawienia wstępne"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пресеты"
+          }
         }
       }
     },
@@ -105,6 +123,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "VOCR 已就绪！"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VOCR готовий!"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VOCR gotowy!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VOCR готов!"
           }
         }
       }
@@ -160,6 +196,24 @@
             "state": "translated",
             "value": "添加"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Додати"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dodaj"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить"
+          }
         }
       }
     },
@@ -213,6 +267,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "询问"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запитати"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapytaj"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спросить"
           }
         }
       }
@@ -268,6 +340,24 @@
             "state": "translated",
             "value": "取消"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скасувати"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anuluj"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отменить"
+          }
         }
       }
     },
@@ -321,6 +411,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "创建"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Створити"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utwórz"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Создать"
           }
         }
       }
@@ -376,6 +484,24 @@
             "state": "translated",
             "value": "确定"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
         }
       }
     },
@@ -429,6 +555,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "删除"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Видалити"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuń"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить"
           }
         }
       }
@@ -484,6 +628,24 @@
             "state": "translated",
             "value": "复制"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дублювати"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duplikuj"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дублировать"
+          }
         }
       }
     },
@@ -537,6 +699,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "编辑"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Редагувати"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edytuj"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Редактировать"
           }
         }
       }
@@ -592,6 +772,24 @@
             "state": "translated",
             "value": "从开头"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "З початку"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Od początku"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "С начала"
+          }
         }
       }
     },
@@ -645,6 +843,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "从当前位置"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "З поточного"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Od bieżącego"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "С текущего"
           }
         }
       }
@@ -700,6 +916,24 @@
             "state": "translated",
             "value": "重置并重新启动"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скинути і перезапустити"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zresetuj i uruchom ponownie"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сбросить и перезапустить"
+          }
         }
       }
     },
@@ -753,6 +987,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "保存"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зберегти"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapisz"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохранить"
           }
         }
       }
@@ -808,6 +1060,24 @@
             "state": "translated",
             "value": "快捷键"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Гаряча клавіша"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skrót klawiszowy"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Горячая клавиша"
+          }
         }
       }
     },
@@ -861,6 +1131,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "模型"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Модель"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Model"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Модель"
           }
         }
       }
@@ -916,6 +1204,24 @@
             "state": "translated",
             "value": "名称"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Назва"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nazwa"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Имя"
+          }
         }
       }
     },
@@ -969,6 +1275,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "正在询问 %@... 请稍候..."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запит до %@... Зачекайте..."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pytanie %@... Proszę czekać..."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запрос %@... Пожалуйста, подождите..."
           }
         }
       }
@@ -1024,6 +1348,24 @@
             "state": "translated",
             "value": "选择要给 VOCR 使用的相机。"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Виберіть камеру для VOCR."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz kamerę dla VOCR."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите камеру для VOCR."
+          }
         }
       }
     },
@@ -1077,6 +1419,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "相机"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Камера"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kamera"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Камера"
           }
         }
       }
@@ -1132,6 +1492,24 @@
             "state": "translated",
             "value": "未知"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Невідомо"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieznany"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неизвестно"
+          }
         }
       }
     },
@@ -1185,6 +1563,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "更新探索模式使用的系统和用户提示词。"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оновіть системні та користувацькі підказки для режиму дослідження."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaktualizuj monity systemowe i użytkownika używane w trybie eksploracji."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обновите системные и пользовательские подсказки для режима исследования."
           }
         }
       }
@@ -1240,6 +1636,24 @@
             "state": "translated",
             "value": "系统提示词"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Системна підказка"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monit systemowy"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Системная подсказка"
+          }
         }
       }
     },
@@ -1293,6 +1707,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "编辑探索提示词"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Редагувати підказки дослідження"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edytuj monity eksploracji"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Редактировать подсказки исследования"
           }
         }
       }
@@ -1348,6 +1780,24 @@
             "state": "translated",
             "value": "用户提示词"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Підказка користувача"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monit użytkownika"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пользовательская подсказка"
+          }
         }
       }
     },
@@ -1401,6 +1851,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "跟进"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продовження"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kontynuacja"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжение"
           }
         }
       }
@@ -1456,6 +1924,24 @@
             "state": "translated",
             "value": "所有快捷方式都已添加。"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Усі комбінації клавіш уже додано."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wszystkie skróty zostały już dodane."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все горячие клавиши уже добавлены."
+          }
         }
       }
     },
@@ -1509,6 +1995,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "快捷键名称"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Назва комбінації"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nazwa skrótu"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Название горячей клавиши"
           }
         }
       }
@@ -1564,6 +2068,24 @@
             "state": "translated",
             "value": "新建快捷键"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нова комбінація"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nowy skrót"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новая горячая клавиша"
+          }
         }
       }
     },
@@ -1617,6 +2139,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "未分配"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не призначено"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieprzypisany"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не назначена"
           }
         }
       }
@@ -1672,6 +2212,24 @@
             "state": "translated",
             "value": "提示词"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Підказка"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monit"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подсказка"
+          }
         }
       }
     },
@@ -1725,6 +2283,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "这将清除所有设置和预设。此操作无法撤销。"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Це видалить усі налаштування та пресети. Це не можна скасувати."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To usunie wszystkie ustawienia i konfiguracje. Tej operacji nie można cofnąć."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это удалит все настройки и пресеты. Это действие нельзя отменить."
           }
         }
       }
@@ -1780,6 +2356,24 @@
             "state": "translated",
             "value": "重置？"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скинути?"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zresetować?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сбросить?"
+          }
         }
       }
     },
@@ -1833,6 +2427,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "选择一个位置并保存文件。"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Виберіть призначення та збережіть файл."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz miejsce docelowe i zapisz plik."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите место назначения и сохраните файл."
           }
         }
       }
@@ -1888,6 +2500,24 @@
             "state": "translated",
             "value": "保存文件"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зберегти файл"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapisz plik"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохранить файл"
+          }
         }
       }
     },
@@ -1941,6 +2571,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "选择用于位置音频反馈的输出设备。"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Виберіть вихід для позиційного звукового відгуку."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz wyjście dla pozycyjnego dźwięku."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите выход для позиционной звуковой обратной связи."
           }
         }
       }
@@ -1996,6 +2644,24 @@
             "state": "translated",
             "value": "声音输出"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуковий вихід"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wyjście dźwięku"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуковой выход"
+          }
         }
       }
     },
@@ -2049,6 +2715,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "无法访问 %@, %@"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не вдалося отримати доступ до %@, %@"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie udało się uzyskać dostępu do %@, %@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось получить доступ к %@, %@"
           }
         }
       }
@@ -2104,6 +2788,24 @@
             "state": "translated",
             "value": "无法访问 %@, %@"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не вдалося отримати доступ до %@, %@"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie udało się uzyskać dostępu do %@, %@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось получить доступ к %@, %@"
+          }
         }
       }
     },
@@ -2157,6 +2859,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "连接错误"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помилка з'єднання"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Błąd połączenia"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ошибка соединения"
           }
         }
       }
@@ -2212,6 +2932,24 @@
             "state": "translated",
             "value": "解码 JSON 出错"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помилка декодування JSON"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Błąd dekodowania JSON"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ошибка декодирования JSON"
+          }
         }
       }
     },
@@ -2265,6 +3003,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "解码模型 JSON 出错"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помилка декодування JSON моделей"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Błąd dekodowania JSON modeli"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ошибка декодирования JSON моделей"
           }
         }
       }
@@ -2320,6 +3076,24 @@
             "state": "translated",
             "value": "状态码 %d: %@"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Код стану %d: %@"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kod stanu %d: %@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Код состояния %d: %@"
+          }
         }
       }
     },
@@ -2373,6 +3147,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "HTTP 错误"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помилка HTTP"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Błąd HTTP"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ошибка HTTP"
           }
         }
       }
@@ -2428,6 +3220,24 @@
             "state": "translated",
             "value": "无效的 URL"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неправильна URL-адреса"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieprawidłowy URL"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Недействительный URL"
+          }
         }
       }
     },
@@ -2481,6 +3291,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "无法解析 JSON 字符串。请重试。"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не вдається розібрати рядок JSON. Спробуйте ще раз."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie można przetworzyć ciągu JSON. Spróbuj ponownie."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удается разобрать строку JSON. Попробуйте снова."
           }
         }
       }
@@ -2536,6 +3364,24 @@
             "state": "translated",
             "value": "未收到服务器数据。"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не отримано даних від сервера."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie otrzymano danych z serwera."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Данные от сервера не получены."
+          }
         }
       }
     },
@@ -2589,6 +3435,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "错误：无法解析 JSON。"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помилка: Не вдалося розібрати JSON."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Błąd: Nie można przetworzyć JSON."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ошибка: Не удалось разобрать JSON."
           }
         }
       }
@@ -2752,6 +3616,24 @@
             "state": "translated",
             "value": "保存预设失败。"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не вдалося зберегти пресет."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie udało się zapisać ustawienia."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось сохранить пресет."
+          }
         }
       }
     },
@@ -2806,6 +3688,24 @@
             "state": "translated",
             "value": "没有有效的 HTTP 响应对象"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Немає дійсного об'єкта відповіді HTTP"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brak prawidłowego obiektu odpowiedzi HTTP"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет действительного объекта HTTP-ответа"
+          }
         }
       }
     },
@@ -2859,6 +3759,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "来自服务器的响应无效"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неправильна відповідь від сервера"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieprawidłowa odpowiedź z serwera"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Недействительный ответ от сервера"
           }
         }
       }
@@ -2968,6 +3886,24 @@
             "state": "translated",
             "value": "API 密钥："
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ключ API:"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klucz API:"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ключ API:"
+          }
         }
       }
     },
@@ -3021,6 +3957,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "API 密钥"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ключ API"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klucz API"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ключ API"
           }
         }
       }
@@ -3076,6 +4030,24 @@
             "state": "translated",
             "value": "模型名称"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Назва моделі"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nazwa modelu"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Название модели"
+          }
         }
       }
     },
@@ -3129,6 +4101,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "名称："
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Назва:"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nazwa:"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Имя:"
           }
         }
       }
@@ -3184,6 +4174,24 @@
             "state": "translated",
             "value": "名称"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Назва"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nazwa"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Имя"
+          }
         }
       }
     },
@@ -3237,6 +4245,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "系统提示词："
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Системна підказка:"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monit systemowy:"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Системная подсказка:"
           }
         }
       }
@@ -3292,6 +4318,24 @@
             "state": "translated",
             "value": "系统提示词"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Системна підказка"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monit systemowy"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Системная подсказка"
+          }
         }
       }
     },
@@ -3345,6 +4389,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "提供商 URL"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "URL-адреса постачальника"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "URL dostawcy"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "URL-адрес поставщика"
           }
         }
       }
@@ -3400,6 +4462,24 @@
             "state": "translated",
             "value": "用户提示词："
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Підказка користувача:"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monit użytkownika:"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пользовательская подсказка:"
+          }
         }
       }
     },
@@ -3453,6 +4533,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "用户提示词"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Підказка користувача"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monit użytkownika"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пользовательская подсказка"
           }
         }
       }
@@ -3508,6 +4606,24 @@
             "state": "translated",
             "value": "关于..."
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Про програму..."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O programie..."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "О программе..."
+          }
         }
       }
     },
@@ -3561,6 +4677,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "自动检查更新"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Автоматично перевіряти оновлення"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatycznie sprawdzaj aktualizacje"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Автоматически проверять обновления"
           }
         }
       }
@@ -3616,6 +4750,24 @@
             "state": "translated",
             "value": "自动安装更新"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Автоматично встановлювати оновлення"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatycznie instaluj aktualizacje"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Автоматически устанавливать обновления"
+          }
         }
       }
     },
@@ -3669,6 +4821,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "检查更新"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перевірити оновлення"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sprawdź aktualizacje"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверить обновления"
           }
         }
       }
@@ -3724,6 +4894,24 @@
             "state": "translated",
             "value": "选择相机..."
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вибрати камеру..."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz kamerę..."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбрать камеру..."
+          }
         }
       }
     },
@@ -3777,6 +4965,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "关闭菜单"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрити меню"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zamknij menu"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть меню"
           }
         }
       }
@@ -3832,6 +5038,24 @@
             "state": "translated",
             "value": "下载预发布版"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завантажити попередню версію"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pobierz wersję pre-release"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загрузить предварительную версию"
+          }
         }
       }
     },
@@ -3885,6 +5109,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "编辑探索提示词…"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Редагувати підказки дослідження…"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edytuj monity eksploracji…"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Редактировать подсказки исследования…"
           }
         }
       }
@@ -3940,6 +5182,24 @@
             "state": "translated",
             "value": "新建快捷键"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нова комбінація"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nowy skrót"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новая горячая клавиша"
+          }
         }
       }
     },
@@ -3993,6 +5253,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "预设管理器…"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Менеджер пресетів…"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menedżer ustawień…"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Менеджер пресетов…"
           }
         }
       }
@@ -4048,6 +5326,24 @@
             "state": "translated",
             "value": "预设"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пресети"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ustawienia wstępne"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пресеты"
+          }
         }
       }
     },
@@ -4101,6 +5397,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "退出"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вийти"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zakończ"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выйти"
           }
         }
       }
@@ -4156,6 +5470,24 @@
             "state": "translated",
             "value": "重置..."
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скинути..."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zresetuj..."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сбросить..."
+          }
         }
       }
     },
@@ -4209,6 +5541,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "保存最新图像"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зберегти останнє зображення"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapisz ostatni obraz"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохранить последнее изображение"
           }
         }
       }
@@ -4264,6 +5614,24 @@
             "state": "translated",
             "value": "保存 OCR 结果..."
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зберегти результат OCR..."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapisz wynik OCR..."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохранить результат OCR..."
+          }
         }
       }
     },
@@ -4317,6 +5685,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "设置"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Налаштування"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ustawienia"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Настройки"
           }
         }
       }
@@ -4372,6 +5758,24 @@
             "state": "translated",
             "value": "自动扫描"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Автоматичне сканування"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatyczne skanowanie"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Автоматическое сканирование"
+          }
         }
       }
     },
@@ -4425,6 +5829,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "检测对象"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Виявляти об'єкти"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wykrywaj obiekty"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обнаруживать объекты"
           }
         }
       }
@@ -4480,6 +5902,24 @@
             "state": "translated",
             "value": "登录时启动"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запускати при вході"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uruchom przy logowaniu"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запускать при входе"
+          }
         }
       }
     },
@@ -4533,6 +5973,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "日志"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Журнал"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dziennik"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Журнал"
           }
         }
       }
@@ -4588,6 +6046,24 @@
             "state": "translated",
             "value": "移动鼠标"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рухати мишу"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Przesuń mysz"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перемещать мышь"
+          }
         }
       }
     },
@@ -4641,6 +6117,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "位置音频"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Позиційний звук"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dźwięk pozycyjny"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Позиционный звук"
           }
         }
       }
@@ -4696,6 +6190,24 @@
             "state": "translated",
             "value": "扫描时重置位置"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скинути позицію при скануванні"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zresetuj pozycję przy skanowaniu"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сбросить позицию при сканировании"
+          }
         }
       }
     },
@@ -4749,6 +6261,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "目标窗口"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Цільове вікно"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Okno docelowe"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Целевое окно"
           }
         }
       }
@@ -4804,6 +6334,24 @@
             "state": "translated",
             "value": "使用预设提示词"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Використовувати підказку пресета"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Użyj monitu ustawienia"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Использовать подсказку пресета"
+          }
         }
       }
     },
@@ -4857,6 +6405,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "快捷键..."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Комбінації клавіш..."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skróty..."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Горячие клавиши..."
           }
         }
       }
@@ -4912,6 +6478,24 @@
             "state": "translated",
             "value": "声音输出..."
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуковий вихід..."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wyjście dźwięku..."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуковой выход..."
+          }
         }
       }
     },
@@ -4965,6 +6549,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "更新"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оновлення"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktualizacje"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обновления"
           }
         }
       }
@@ -5020,6 +6622,24 @@
             "state": "translated",
             "value": "实时 OCR 已启动。"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Розпізнавання в реальному часі запущено."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OCR w czasie rzeczywistym uruchomione."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Распознавание в реальном времени запущено."
+          }
         }
       }
     },
@@ -5073,6 +6693,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "正在停止实时 OCR。"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зупинка розпізнавання в реальному часі."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zatrzymywanie OCR w czasie rzeczywistym."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остановка распознавания в реальном времени."
           }
         }
       }
@@ -5128,6 +6766,24 @@
             "state": "translated",
             "value": "相机"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Камера"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kamera"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Камера"
+          }
         }
       }
     },
@@ -5178,6 +6834,24 @@
           }
         },
         "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VOCursor"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VOCursor"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "VOCursor"
+          }
+        },
+        "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "VOCursor"
@@ -5236,6 +6910,24 @@
             "state": "translated",
             "value": "窗口"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вікно"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Okno"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Окно"
+          }
         }
       }
     },
@@ -5289,6 +6981,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "选择一个窗口进行扫描。"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Виберіть вікно для сканування."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz okno do skanowania."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите окно для сканирования."
           }
         }
       }
@@ -5344,6 +7054,24 @@
             "state": "translated",
             "value": "关闭"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрити"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zamknij"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
         }
       }
     },
@@ -5394,6 +7122,24 @@
           }
         },
         "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d, %d"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d, %d"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d, %d"
+          }
+        },
+        "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "%d, %d"
@@ -5452,6 +7198,24 @@
             "state": "translated",
             "value": "退出 VOCR 导航。"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вийти з навігації VOCR."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wyjdź z nawigacji VOCR."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выйти из навигации VOCR."
+          }
         }
       }
     },
@@ -5505,6 +7269,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@, %@ 扫描完成"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершено сканування %@, %@"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zakończono skanowanie %@, %@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершено сканирование %@, %@"
           }
         }
       }
@@ -5560,6 +7342,24 @@
             "state": "translated",
             "value": "未找到内容"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нічого не знайдено"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nic nie znaleziono"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ничего не найдено"
+          }
         }
       }
     },
@@ -5613,6 +7413,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "目标窗口"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Цільове вікно"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Okno docelowe"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Целевое окно"
           }
         }
       }
@@ -5668,6 +7486,24 @@
             "state": "translated",
             "value": "未知应用"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Невідома програма"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieznana aplikacja"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неизвестное приложение"
+          }
         }
       }
     },
@@ -5722,6 +7558,24 @@
             "state": "translated",
             "value": "未知窗口"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Невідоме вікно"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieznane okno"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неизвестное окно"
+          }
         }
       }
     },
@@ -5775,6 +7629,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "无标题"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Без назви"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bez tytułu"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Без названия"
           }
         }
       }
@@ -5880,6 +7752,24 @@
           }
         },
         "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "https://"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "https://"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "https://"
+          }
+        },
+        "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "https://"
@@ -6046,6 +7936,24 @@
             "state": "translated",
             "value": "正在加载…"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завантаження…"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ładowanie…"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загрузка…"
+          }
         }
       }
     },
@@ -6099,6 +8007,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "模型"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Модель"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Model"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Модель"
           }
         }
       }
@@ -6154,6 +8080,24 @@
             "state": "translated",
             "value": "提供商"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Постачальник"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dostawca"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поставщик"
+          }
         }
       }
     },
@@ -6207,6 +8151,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "编辑预设"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Редагувати пресет"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edytuj ustawienie"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Редактировать пресет"
           }
         }
       }
@@ -6262,6 +8224,24 @@
             "state": "translated",
             "value": "新建预设"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новий пресет"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nowe ustawienie"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новый пресет"
+          }
         }
       }
     },
@@ -6315,6 +8295,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "预设管理器"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Менеджер пресетів"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menedżer ustawień"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Менеджер пресетов"
           }
         }
       }
@@ -6370,6 +8368,24 @@
             "state": "translated",
             "value": "已取消。"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скасовано."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anulowano."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отменено."
+          }
         }
       }
     },
@@ -6423,6 +8439,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "搜索 OCR 文本"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шукати текст OCR"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Szukaj tekstu OCR"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Искать текст OCR"
           }
         }
       }
@@ -6478,6 +8512,24 @@
             "state": "translated",
             "value": "未找到。"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не знайдено."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie znaleziono."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не найдено."
+          }
         }
       }
     },
@@ -6531,6 +8583,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "询问"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запитати"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapytaj"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спросить"
           }
         }
       }
@@ -6586,6 +8656,24 @@
             "state": "translated",
             "value": "开头"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Початок"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Początek"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начало"
+          }
         }
       }
     },
@@ -6639,6 +8727,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "底部"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Низ"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dół"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Низ"
           }
         }
       }
@@ -6694,6 +8800,24 @@
             "state": "translated",
             "value": "捕捉相机"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Захопити з камери"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Przechwyć kamerę"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Захватить с камеры"
+          }
         }
       }
     },
@@ -6747,6 +8871,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "向下"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вниз"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "W dół"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вниз"
           }
         }
       }
@@ -6802,6 +8944,24 @@
             "state": "translated",
             "value": "末尾"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кінець"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Koniec"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Конец"
+          }
         }
       }
     },
@@ -6855,6 +9015,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "退出导航"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вийти з навігації"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wyjdź z nawigacji"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выйти из навигации"
           }
         }
       }
@@ -6910,6 +9088,24 @@
             "state": "translated",
             "value": "探索"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Досліджувати"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eksploruj"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Исследовать"
+          }
         }
       }
     },
@@ -6963,6 +9159,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "查找下一个"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Знайти наступний"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Znajdź następny"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найти следующий"
           }
         }
       }
@@ -7018,6 +9232,24 @@
             "state": "translated",
             "value": "查找上一个"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Знайти попередній"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Znajdź poprzedni"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найти предыдущий"
+          }
         }
       }
     },
@@ -7071,6 +9303,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "查找文本"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Знайти текст"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Znajdź tekst"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найти текст"
           }
         }
       }
@@ -7126,6 +9376,24 @@
             "state": "translated",
             "value": "识别对象"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ідентифікувати об'єкт"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zidentyfikuj obiekt"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Идентифицировать объект"
+          }
         }
       }
     },
@@ -7179,6 +9447,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "向左"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ліворуч"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lewo"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Влево"
           }
         }
       }
@@ -7234,6 +9520,24 @@
             "state": "translated",
             "value": "下一个字符"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Наступний символ"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Następny znak"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Следующий символ"
+          }
         }
       }
     },
@@ -7284,6 +9588,24 @@
           }
         },
         "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OCR VOCursor"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OCR VOCursor"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OCR VOCursor"
+          }
+        },
+        "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "OCR VOCursor"
@@ -7342,6 +9664,24 @@
             "state": "translated",
             "value": "OCR 窗口"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вікно OCR"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Okno OCR"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Окно OCR"
+          }
         }
       }
     },
@@ -7395,6 +9735,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "上一个字符"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попередній символ"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poprzedni znak"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Предыдущий символ"
           }
         }
       }
@@ -7450,6 +9808,24 @@
             "state": "translated",
             "value": "实时 OCR"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Розпізнавання в реальному часі"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OCR w czasie rzeczywistym"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Распознавание в реальном времени"
+          }
         }
       }
     },
@@ -7503,6 +9879,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "报告位置"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повідомити позицію"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zgłoś lokalizację"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сообщить позицию"
           }
         }
       }
@@ -7558,6 +9952,24 @@
             "state": "translated",
             "value": "向右"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Праворуч"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prawo"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вправо"
+          }
         }
       }
     },
@@ -7611,6 +10023,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "设置"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Налаштування"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ustawienia"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Настройки"
           }
         }
       }
@@ -7666,6 +10096,24 @@
             "state": "translated",
             "value": "顶部"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Верх"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Góra"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Верх"
+          }
         }
       }
     },
@@ -7719,6 +10167,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "向上"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вгору"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "W górę"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вверх"
           }
         }
       }
@@ -7774,6 +10240,24 @@
             "state": "translated",
             "value": "自定义快捷键"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Налаштувати комбінації клавіш"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dostosuj skróty"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Настроить горячие клавиши"
+          }
         }
       }
     },
@@ -7828,6 +10312,24 @@
             "state": "translated",
             "value": "版本 %@ 已可用"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Доступна версія %@"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dostępna jest wersja %@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Доступна версия %@"
+          }
         }
       }
     },
@@ -7881,6 +10383,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "有可用的新更新"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Доступне нове оновлення"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dostępna jest nowa aktualizacja"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Доступно новое обновление"
           }
         }
       }
