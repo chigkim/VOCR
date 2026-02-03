@@ -1,366 +1,364 @@
 {
-  "sourceLanguage": "en",
-  "strings": {
-    "CFBundleName": {
-      "comment": "Bundle name",
-      "extractionState": "extracted_with_value",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "VOCR"
+  "sourceLanguage" : "en",
+  "strings" : {
+    "CFBundleName" : {
+      "comment" : "Bundle name",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR"
           }
         },
-        "pt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "VOCR"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "VOCR"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "VOCR"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "VOCR"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR"
           }
         },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "VOCR"
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "VOCR"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "VOCR"
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "VOCR"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "VOCR"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "VOCR"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR"
           }
         }
       }
     },
-    "CFBundleTypeName": {
-      "comment": "File type name for image files",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bilddateien"
+    "CFBundleTypeName" : {
+      "comment" : "File type name for image files",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bilddateien"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Image files"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Image files"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Archivos de imagen"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archivos de imagen"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fichiers image"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fichiers image"
           }
         },
-        "pt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arquivos de imagem"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "画像ファイル"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "图像文件"
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이미지 파일"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "画像ファイル"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pliki obrazów"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "이미지 파일"
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arquivos de imagem"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Файли зображень"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Файлы изображений"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pliki obrazów"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Файли зображень"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Файлы изображений"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "图像文件"
           }
         }
       }
     },
-    "NSAppleEventsUsageDescription": {
-      "comment": "Permission description for AppleScript/Apple Events access",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ansagen sprechen und Screenshot unter VoiceOver-Cursor aufnehmen"
+    "NSAppleEventsUsageDescription" : {
+      "comment" : "Permission description for AppleScript/Apple Events access",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ansagen sprechen und Screenshot unter VoiceOver-Cursor aufnehmen"
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Speak announcements and take Screenshot under VoiceOver cursor"
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speak announcements and take Screenshot under VoiceOver cursor"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Leer anuncios y capturar pantalla bajo cursor de VoiceOver"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leer anuncios y capturar pantalla bajo cursor de VoiceOver"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Lire les annonces et capturer l'écran sous le curseur VoiceOver"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lire les annonces et capturer l'écran sous le curseur VoiceOver"
           }
         },
-        "pt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Falar anúncios e capturar a tela sob o cursor do VoiceOver"
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VoiceOver カーソルの下でアナウンスを読み上げ、スクリーンショットを撮影します"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "朗读公告并截取 VoiceOver 光标下的屏幕"
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VoiceOver 커서 아래에서 알림을 읽고 스크린샷을 촬영합니다"
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "VoiceOver カーソルの下でアナウンスを読み上げ、スクリーンショットを撮影します"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odczytuj ogłoszenia i wykonuj zrzut ekranu pod kursorem VoiceOver"
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "VoiceOver 커서 아래에서 알림을 읽고 스크린샷을 촬영합니다"
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Falar anúncios e capturar a tela sob o cursor do VoiceOver"
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Озвучувати повідомлення та робити знімок екрана під курсором VoiceOver"
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Озвучивать объявления и делать снимок экрана под курсором VoiceOver"
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Odczytuj ogłoszenia i wykonuj zrzut ekranu pod kursorem VoiceOver"
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Озвучувати повідомлення та робити знімок екрана під курсором VoiceOver"
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Озвучивать объявления и делать снимок экрана под курсором VoiceOver"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "朗读公告并截取 VoiceOver 光标下的屏幕"
           }
         }
       }
     },
-    "NSCameraUsageDescription": {
-      "comment": "Permission description for camera access",
-      "extractionState": "manual",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Foto aufnehmen für VOCR."
+    "NSCameraUsageDescription" : {
+      "comment" : "Permission description for camera access",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Foto aufnehmen für VOCR."
           }
         },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Capture a photo to VOCR to use."
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capture a photo to VOCR to use."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Capturar foto para usar en VOCR."
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capturar foto para usar en VOCR."
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Capturer une photo pour VOCR."
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capturer une photo pour VOCR."
           }
         },
-        "pt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Capture uma foto para usar no VOCR."
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR で使用する写真を撮影します。"
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "拍摄一张照片供 VOCR 使用。"
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR에서 사용할 사진을 촬영합니다."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "VOCR で使用する写真を撮影します。"
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zrób zdjęcie do użycia w VOCR."
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "VOCR에서 사용할 사진을 촬영합니다."
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Capture uma foto para usar no VOCR."
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Зробіть фото для використання в VOCR."
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сделайте фото для использования в VOCR."
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zrób zdjęcie do użycia w VOCR."
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зробіть фото для використання в VOCR."
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сделайте фото для использования в VOCR."
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拍摄一张照片供 VOCR 使用。"
           }
         }
       }
     },
-    "NSHumanReadableCopyright": {
-      "comment": "Copyright (human-readable)",
-      "extractionState": "extracted_with_value",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copyright © 2019 Chi Kim. All rights reserved."
+    "NSHumanReadableCopyright" : {
+      "comment" : "Copyright (human-readable)",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2019 Chi Kim. Alle Rechte vorbehalten."
           }
         },
-        "pt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copyright © 2019 Chi Kim. Todos os direitos reservados."
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2019 Chi Kim. All rights reserved."
           }
         },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "版权所有 © 2019 Chi Kim。保留所有权利。"
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2019 Chi Kim. Todos los derechos reservados."
           }
         },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copyright © 2019 Chi Kim. 無断転載を禁じます。"
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2019 Chi Kim. Tous droits réservés."
           }
         },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copyright © 2019 Chi Kim. 모든 권리 보유."
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2019 Chi Kim. 無断転載を禁じます。"
           }
         },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copyright © 2019 Chi Kim. Alle Rechte vorbehalten."
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2019 Chi Kim. 모든 권리 보유."
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copyright © 2019 Chi Kim. Tous droits réservés."
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2019 Chi Kim. Wszelkie prawa zastrzeżone."
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copyright © 2019 Chi Kim. Todos los derechos reservados."
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2019 Chi Kim. Todos os direitos reservados."
           }
         },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "© 2019 Chi Kim. Усі права захищено."
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2019 Chi Kim. Все права защищены."
           }
         },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copyright © 2019 Chi Kim. Wszelkie prawa zastrzeżone."
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2019 Chi Kim. Усі права захищено."
           }
         },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "© 2019 Chi Kim. Все права защищены."
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版权所有 © 2019 Chi Kim。保留所有权利。"
           }
         }
       }
     }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }
