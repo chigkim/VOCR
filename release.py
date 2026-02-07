@@ -48,7 +48,7 @@ data_release = {
 	'tag_name': tag,
 	'name': release_name,
 	'body': release_body,
-	'draft': True,
+	'draft': False,
 	'prerelease': True
 }
 print(json.dumps(data_release, indent="\t"))
