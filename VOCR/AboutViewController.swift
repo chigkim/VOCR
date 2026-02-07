@@ -8,33 +8,31 @@
 
 import Cocoa
 
-
 class AboutViewController: NSViewController, NSWindowDelegate {
-	
-	@IBOutlet var info: NSTextField!
-	
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		info.stringValue = "\(Bundle.main.version)"
-		// Do any additional setup after loading the view.
-	}
-	
-	override func viewDidAppear() {
-		super.viewDidAppear()
-		if let window = self.view.window {
-			window.delegate = self
-		}
-	}
-	
-	override var representedObject: Any? {
-		didSet {
-			// Update the view, if already loaded.
-		}
-	}
-	
-	func windowWillClose(_ notification: Notification) {
-		NSApplication.shared.hide(nil)
-	}
-	
-}
 
+    @IBOutlet var info: NSTextField!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        info.stringValue = "\(Bundle.main.version)"
+        // Do any additional setup after loading the view.
+    }
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        if let window = self.view.window {
+            window.delegate = self
+        }
+    }
+
+    override var representedObject: Any? {
+        didSet {
+            // Update the view, if already loaded.
+        }
+    }
+
+    func windowWillClose(_ notification: Notification) {
+        NSApplication.shared.hide(nil)
+    }
+
+}

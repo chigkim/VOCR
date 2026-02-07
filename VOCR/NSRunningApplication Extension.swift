@@ -9,13 +9,14 @@
 import Cocoa
 
 extension NSRunningApplication {
-	func windows() -> [AXUIElement] {
-		let appRef = AXUIElementCreateApplication(self.processIdentifier)
-		var windowList:CFTypeRef?
-		AXUIElementCopyAttributeValue(appRef, "AXWindows" as CFString, &windowList)
+    func windows() -> [AXUIElement] {
+        let appRef = AXUIElementCreateApplication(self.processIdentifier)
+        var windowList: CFTypeRef?
+        AXUIElementCopyAttributeValue(appRef, "AXWindows" as CFString, &windowList)
         if windowList != nil {
-		return windowList as! [AXUIElement]
+            return windowList as! [AXUIElement]
         } else {
-            return []}
-	}
+            return []
+        }
+    }
 }

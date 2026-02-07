@@ -6,49 +6,48 @@
 //  Copyright © 2019 Chi Kim. All rights reserved.
 //
 
+import AVFoundation
 import AudioKit
 import SoundpipeAudioKit
-import AVFoundation
 
 class Player {
 
-	static let shared = Player()
+    static let shared = Player()
 
-	let osc:PinkNoise
-	let panner:Panner
-	let eq:BandPassButterworthFilter
-	let env:AmplitudeEnvelope
-	let ramp:Float = 0.1
-	let engine = AudioEngine()
+    let osc: PinkNoise
+    let panner: Panner
+    let eq: BandPassButterworthFilter
+    let env: AmplitudeEnvelope
+    let ramp: Float = 0.1
+    let engine = AudioEngine()
 
-	init() {
-		osc = PinkNoise(amplitude: 1.0)
+    init() {
+        osc = PinkNoise(amplitude: 1.0)
 
-		env = AmplitudeEnvelope(osc)
-		env.attackDuration = 0.05
-		env.decayDuration = 0.05
-		env.sustainLevel = 0.8
-		env.releaseDuration = 0.05
-		env.start()
-		
-		eq = BandPassButterworthFilter(env)
-		eq.bandwidth = 100
+        env = AmplitudeEnvelope(osc)
+        env.attackDuration = 0.05
+        env.decayDuration = 0.05
+        env.sustainLevel = 0.8
+        env.releaseDuration = 0.05
+        env.start()
 
-		let mixer = Mixer(eq)
-		panner = Panner(mixer)
+        eq = BandPassButterworthFilter(env)
+        eq.bandwidth = 100
 
-		osc.start()
-		engine.output = panner
-		try! engine.start()
-		mixer.volume = 1.0
-	}
+        let mixer = Mixer(eq)
+        panner = Panner(mixer)
 
-	func play(_ freq:Float, _ pan:Float) {
-		eq.$centerFrequency.ramp(to:freq, duration:ramp)
-		panner.$pan.ramp(to: pan, duration: ramp)
-		env.openGate()
-		usleep(100000)
-		env.closeGate()
-		}
+        osc.start()
+        engine.output = panner
+        try! engine.start()
+        mixer.volume = 1.0
+    }
+
+    func play(_ freq: Float, _ pan: Float) {
+        eq.$centerFrequency.ramp(to: freq, duration: ramp)
+        panner.$pan.ramp(to: pan, duration: ramp)
+        env.openGate()
+        usleep(100000)
+        env.closeGate()
+    }
 }
-
