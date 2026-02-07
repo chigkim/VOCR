@@ -3,6 +3,15 @@
     <channel>
         <title>VOCR</title>
         <item>
+            <title>3.0.0-beta.1</title>
+            <pubDate>Sat, 07 Feb 2026 12:56:56 -0500</pubDate>
+            <sparkle:version>51</sparkle:version>
+            <sparkle:shortVersionString>3.0.0-beta.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <sparkle:releaseNotesLink>https://chigkim.github.io/VOCR/VOCR_v3.0.0-beta.1.html</sparkle:releaseNotesLink>
+            <enclosure url="https://github.com/chigkim/VOCR/releases/download/untagged-12632571c179f6d39b23/VOCR_v3.0.0-beta.1.zip" length="3242908" type="application/octet-stream" sparkle:edSignature="vqLj4V4+MCdeQw78dYh3W3m+IZv1PSddkfm1J7XK94Sx1Z49pMVz4haIuG9BO6l0a+cYrInzlVD+tCkDOn2kDA=="/>
+        </item>
+        <item>
             <title>2.3.1</title>
             <pubDate>Tue, 06 May 2025 19:04:15 -0400</pubDate>
             <sparkle:version>49</sparkle:version>

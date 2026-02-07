@@ -48,8 +48,8 @@ data_release = {
 	'tag_name': tag,
 	'name': release_name,
 	'body': release_body,
-	'draft': False,
-	'prerelease': False
+	'draft': True,
+	'prerelease': True
 }
 print(json.dumps(data_release, indent="\t"))
 response_release = requests.post(url_create_release, json=data_release, headers=headers)

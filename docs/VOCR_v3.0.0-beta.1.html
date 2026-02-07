@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>changelog</title>
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       color: #1a1a1a;
       background-color: #fdfdfd;
@@ -170,18 +173,65 @@
 </head>
 <body>
 <h2 id="changelog">Changelog</h2>
+<p>This is a major update focusing on flexibility, customization, and
+making VOCR accessible to more users around the world.</p>
+<p>There are many internal changes, so we need your help with
+comprehensive testing to ensure nothing is broken and the new features
+are working as expected.</p>
+<h3 id="preset-system">Preset System</h3>
+<p>The old engine selection (GPT / Ollama / LlamaCpp) has been replaced
+with a flexible <strong>Preset</strong> system. Each preset stores its
+own API URL, API key, model, and prompts, so you can set up as many AI
+configurations as you like and switch between them instantly from the
+new <strong>Presets</strong> menu.</p>
+<p>A <strong>Preset Manager</strong> window lets you create, edit,
+duplicate, and delete presets.</p>
+<p>API keys are encrypted and stored securely using the macOS Keychain,
+and are only displayed in plain text when creating a preset.</p>
+<p>Built-in provider URLs are included for <strong>Claude, Gemini,
+Ollama, OpenAI, and OpenRouter</strong>. Any service that offers an
+OpenAI-compatible API will work.</p>
+<h3 id="follow-up-conversations">Follow-up Conversations</h3>
+<p>A new <strong>Follow up</strong> checkbox in the Ask dialog lets you
+carry on a multi-turn conversation with the AI instead of starting fresh
+each time.</p>
+<h3 id="customizable-explore-prompts">Customizable Explore Prompts</h3>
+<p>Explore mode uses a structured json-schema response format for more
+reliable results, and you can now edit the system prompt and user prompt
+used by Explore mode via <strong>Presets &gt; Edit Explore
+Prompts</strong>.</p>
+<h3 id="reset-option">Reset Option</h3>
+<p>A <strong>Reset</strong> item in the Settings menu lets you erase all
+settings and presets and start fresh.</p>
+<h3 id="languages">11 Languages</h3>
+<p>VOCR is now localized in English, German, Spanish, French, Japanese,
+Korean, Polish, Portuguese, Russian, Ukrainian, and Simplified
+Chinese.</p>
+<p>The translations are done by AI, so we need help from the community
+to improve. See the <a href="https://chigkim.github.io/VOCR/translation_guide">translation guide</a> for more information.</p>
+<h3 id="changed">Changed</h3>
 <ul>
-<li>Only supports MacOSX 13.0 and higher</li>
-<li>Automatically detects 18 language: en-US, fr-FR, it-IT, de-DE,
-es-ES, pt-BR, zh-Hans, zh-Hant, yue-Hans, yue-Hant, ko-KR, ja-JP, ru-RU,
-uk-UA, th-TH, vi-VT, ar-SA, ars-SA</li>
-<li>Support for llama-vision and Gemma3 model on Ollama</li>
-<li>Update to GPT-4.1</li>
-<li>Plays a sound alert before reading the response from LLMs.</li>
-<li>Now autoscan detects both left and right clicks; thanks <span
-class="citation" data-cites="vick08">@vick08</span></li>
-<li>Fixed Mac Camera; thanks <span class="citation"
-data-cites="vick08">@vick08</span></li>
+<li><strong>“Use Last Prompt”</strong> has been replaced by <strong>“Use
+Preset Prompt”</strong>, which sends the prompt saved in the active
+preset without showing the dialog.</li>
+<li>The <strong>Ask</strong> dialog button is now labeled “Ask” instead
+of “Ok”.</li>
+<li>AI status messages now show the name of the preset being used (e.g.,
+“Asking Claude… Please wait…”).</li>
+<li>Error messages are now shown as alert dialogs.</li>
+<li>Token usage information is now copied to the clipboard along with
+the AI response.</li>
 </ul>
+<h3 id="removed">Removed</h3>
+<ul>
+<li>The <strong>Engine</strong> submenu (GPT / Ollama / LlamaCpp) –
+replaced by presets.</li>
+<li>The <strong>OpenAI API Key</strong> dialog in Settings – API keys
+are now managed per-preset.</li>
+<li>The <strong>Set System Prompt</strong> dialog in Settings – prompts
+are now managed per-preset.</li>
+</ul>
+<p>Special thanks to <span class="citation"
+data-cites="vic08">@vic08</span>!</p>
 </body>
 </html>
