@@ -4985,74 +4985,74 @@
         }
       }
     },
-    "menu.downloadPreRelease" : {
-      "comment" : "Menu item for enabling pre-release version downloads",
+    "menu.downloadBetaRelease" : {
+      "comment" : "Menu item for enabling beta release version downloads",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vorabversionen laden"
+            "state" : "needs_review",
+            "value" : "Beta-Version laden"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Download  Pre-release"
+            "value" : "Download Beta Release"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Descargar prelanzamiento"
+            "state" : "needs_review",
+            "value" : "Descargar versión beta"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Télécharger préversion"
+            "state" : "needs_review",
+            "value" : "Télécharger version bêta"
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "プレリリースをダウンロード"
+            "state" : "needs_review",
+            "value" : "ベータ版をダウンロード"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "사전 출시 다운로드"
+            "state" : "needs_review",
+            "value" : "베타 릴리스 다운로드"
           }
         },
         "pl" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pobierz wersję pre-release"
+            "state" : "needs_review",
+            "value" : "Pobierz wersję beta"
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Baixar pré-lançamento"
+            "state" : "needs_review",
+            "value" : "Baixar versão beta"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Загрузить предварительную версию"
+            "state" : "needs_review",
+            "value" : "Загрузить бета-версию"
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Завантажити попередню версію"
+            "state" : "needs_review",
+            "value" : "Завантажити бета-версію"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "下载预发布版"
+            "state" : "needs_review",
+            "value" : "下载测试版"
           }
         }
       }
@@ -5125,6 +5125,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "编辑探索提示词…"
+          }
+        }
+      }
+    },
+    "menu.language" : {
+      "comment" : "Menu item for choosing display language",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Language"
+          }
+        }
+      }
+    },
+    "menu.language.system" : {
+      "comment" : "Use system language",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "System Default"
           }
         }
       }

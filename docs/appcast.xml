@@ -4,6 +4,7 @@
         <title>VOCR</title>
         <item>
             <title>3.0.0-beta.1</title>
+            <sparkle:channel>beta</sparkle:channel>
             <pubDate>Sat, 07 Feb 2026 12:56:56 -0500</pubDate>
             <sparkle:version>51</sparkle:version>
             <sparkle:shortVersionString>3.0.0-beta.1</sparkle:shortVersionString>

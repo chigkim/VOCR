@@ -46,10 +46,10 @@ class AutoUpdateManager: NSObject, SPUUpdaterDelegate, SPUStandardUserDriverDele
         //		}
 
         if Settings.preRelease {
-            log("Download pre-release.")
-            return Set(["pre"])
+            log("Download beta release.")
+            return Set(["beta"])
         } else {
-            log("No pre-release.")
+            log("No beta release.")
             return Set()
         }
     }

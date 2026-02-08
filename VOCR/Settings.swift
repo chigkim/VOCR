@@ -210,6 +210,49 @@ enum Settings {
         newShortcutMenuItem.target = target
         //		settingsMenu.addItem(newShortcutMenuItem)
 
+        let languageMenu = NSMenu()
+        let currentLanguage = UserDefaults.standard.array(forKey: "AppleLanguages")?.first as? String
+
+        let systemItem = NSMenuItem(
+            title: NSLocalizedString("menu.language.system", value: "System Default", comment: "Use system language"),
+            action: #selector(target.selectLanguage(_:)),
+            keyEquivalent: ""
+        )
+        systemItem.target = target
+        systemItem.representedObject = "system"
+        systemItem.state = (currentLanguage == nil) ? .on : .off
+        languageMenu.addItem(systemItem)
+        languageMenu.addItem(NSMenuItem.separator())
+
+        let availableLanguages = Bundle.main.localizations
+            .filter { $0 != "Base" }
+            .sorted { a, b in
+                let nameA = Locale(identifier: a).localizedString(forIdentifier: a) ?? a
+                let nameB = Locale(identifier: b).localizedString(forIdentifier: b) ?? b
+                return nameA.localizedCompare(nameB) == .orderedAscending
+            }
+        for code in availableLanguages {
+            let nativeName = Locale(identifier: code).localizedString(forIdentifier: code) ?? code
+            let item = NSMenuItem(
+                title: nativeName.prefix(1).uppercased() + nativeName.dropFirst(),
+                action: #selector(target.selectLanguage(_:)),
+                keyEquivalent: ""
+            )
+            item.target = target
+            item.representedObject = code
+            item.state = (currentLanguage == code) ? .on : .off
+            languageMenu.addItem(item)
+        }
+
+        let languageMenuItem = NSMenuItem(
+            title: NSLocalizedString(
+                "menu.language", value: "Language",
+                comment: "Menu item for choosing display language"),
+            action: nil, keyEquivalent: ""
+        )
+        languageMenuItem.submenu = languageMenu
+        settingsMenu.addItem(languageMenuItem)
+
         let resetMenuItem = NSMenuItem(
             title: NSLocalizedString(
                 "menu.reset", value: "Reset...",
@@ -290,8 +333,8 @@ enum Settings {
 
         let preReleaseItem = NSMenuItem(
             title: NSLocalizedString(
-                "menu.downloadPreRelease", value: "Download  Pre-release",
-                comment: "Menu item for enabling pre-release version downloads"),
+                "menu.downloadBetaRelease", value: "Download Beta Release",
+                comment: "Menu item for enabling beta release version downloads"),
             action: #selector(target.toggleSetting(_:)),
             keyEquivalent: ""
         )
@@ -472,8 +515,8 @@ class MenuHandler: NSObject {
             "menu.settings.log", value: "Log", comment: "Menu item for enabling debug logging"):
             Settings.writeLog = sender.state == .on
         case NSLocalizedString(
-            "menu.downloadPreRelease", value: "Download  Pre-release",
-            comment: "Menu item for enabling pre-release version downloads"):
+            "menu.downloadBetaRelease", value: "Download Beta Release",
+            comment: "Menu item for enabling beta release version downloads"):
             Settings.preRelease = sender.state == .on
         case NSLocalizedString(
             "menu.autoCheckForUpdates", value: "Automatically Check for Updates",
@@ -772,6 +815,23 @@ class MenuHandler: NSObject {
         if let appDelegate = NSApp.delegate as? AppDelegate {
             appDelegate.openPresetWindow()
             NSApp.activate(ignoringOtherApps: true)
+        }
+    }
+
+    @objc func selectLanguage(_ sender: NSMenuItem) {
+        guard let code = sender.representedObject as? String else { return }
+        if code == "system" {
+            UserDefaults.standard.removeObject(forKey: "AppleLanguages")
+        } else {
+            UserDefaults.standard.set([code], forKey: "AppleLanguages")
+        }
+        // Relaunch to apply the new language
+        let appURL = Bundle.main.bundleURL
+        NSWorkspace.shared.openApplication(
+            at: appURL,
+            configuration: NSWorkspace.OpenConfiguration()
+        ) { _, _ in
+            DispatchQueue.main.async { NSApp.terminate(nil) }
         }
     }
 
