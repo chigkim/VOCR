@@ -89,18 +89,38 @@ print('Asset uploaded successfully!')
 download = response_asset.json()['browser_download_url']
 sparkle_ns = 'http://www.andymatuschak.org/xml-namespaces/sparkle'
 ET.register_namespace('sparkle', sparkle_ns)
-tree = ET.parse(archives / "appcast.xml")
-for item in tree.iter('item'):
+new_tree = ET.parse(archives / "appcast.xml")
+for item in new_tree.iter('item'):
 	title = item.find('title')
 	if title is not None:
 		if title.text == tag[1:]:
 			enclosure = item.find('enclosure')
 			if enclosure is not None:
 				enclosure.set('url', download)
-		if 'beta' in title.text:
+		if 'beta' in title.text and item.find(f'{{{sparkle_ns}}}channel') is None:
 			channel = ET.SubElement(item, f'{{{sparkle_ns}}}channel')
 			channel.text = 'beta'
-tree.write(docs / "appcast.xml", xml_declaration=True, encoding='unicode')
+
+docs_appcast = docs / "appcast.xml"
+if docs_appcast.exists():
+	existing_tree = ET.parse(docs_appcast)
+	existing_channel = existing_tree.find('channel')
+	# Remove existing items with the same version to avoid duplicates
+	for item in new_tree.find('channel').findall('item'):
+		t = item.find('title')
+		if t is not None:
+			for old_item in existing_channel.findall('item'):
+				old_t = old_item.find('title')
+				if old_t is not None and old_t.text == t.text:
+					existing_channel.remove(old_item)
+	# Insert new items at the top (after <title>)
+	for i, item in enumerate(new_tree.find('channel').findall('item')):
+		existing_channel.insert(1 + i, item)
+	ET.indent(existing_tree, space="    ")
+	existing_tree.write(docs_appcast, xml_declaration=True, encoding='unicode')
+else:
+	ET.indent(new_tree, space="    ")
+	new_tree.write(docs_appcast, xml_declaration=True, encoding='unicode')
 (archives / "appcast.xml").unlink()
 run("git add docs/")
 run(f"git commit -a -m {tag}")
