@@ -2,7 +2,7 @@ Enhancing Accessibility with Seamless Screen Recognition
 
 ## Welcome to VOCR
 
-Discover the cutting-edge capabilities of VOCR, your ultimate OCR and AI-powered screen recognition tool designed to enhance your digital accessibility experience. Beyond the simple navigation feature with OCR, VOCR seamlessly integrates with VoiceOver, enabling users to effortlessly capture and recognize screen content with intuitive and customizable shortcuts. With features like Real-Time OCR, users can continuously monitor and read live content, such as subtitles. The ASK AI functionality allows you to leverage advanced AI models, including OpenAI GPT to ask detailed questions about images and receive insightful answers. It also supports local vision language models via Ollama for your privacy. Explore with AI takes it a step further by analyzing images, identifying different areas, and providing comprehensive descriptions.
+Discover the cutting-edge capabilities of VOCR, your ultimate OCR and AI-powered screen recognition tool designed to enhance your digital accessibility experience. Beyond the simple navigation feature with OCR, VOCR seamlessly integrates with VoiceOver, enabling users to effortlessly capture and recognize screen content with intuitive and customizable shortcuts. With features like Real-Time OCR, users can continuously monitor and read live content, such as subtitles. The ASK AI functionality allows you to leverage advanced AI models to ask detailed questions about images and receive insightful answers. VOCR works with any OpenAI-compatible API, with built-in support for Claude, Gemini, Ollama, OpenAI, and OpenRouter. A flexible preset system lets you configure multiple AI providers and switch between them instantly. Explore with AI takes it a step further by analyzing images, identifying different areas, and providing comprehensive descriptions.
 
 VOCR's robust suite of features offers unparalleled control and precision, making it an indispensable tool for users seeking a seamless, efficient, and highly functional OCR solution. Whether you're navigating inaccessible applications or curious about images, VOCR empowers you to do more with ease and confidence.
 
@@ -16,7 +16,7 @@ VOCR is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
 ## Download
 
-Here is the direct link to download [VOCR v2.0.1](https://github.com/chigkim/VOCR/releases/download/v2.0.1/VOCR_v2.0.1.zip).
+Here is the direct link to download [VOCR v3.0.0-beta.1](https://github.com/chigkim/VOCR/releases/download/v3.0.0-beta.1/VOCR_v3.0.0-beta.1.zip).
 
 ## Setup
 
@@ -52,19 +52,17 @@ Press Command+Shift+Control+R after scanning a window or using VOCursor to start
 
 ## Setup AI Model
 
-You can host your own vision language model using Ollama or utilize OpenAI GPT to ask questions about images captured with VOCR.
+VOCR uses a **Preset** system to manage AI configurations. Each preset stores its own API URL, API key, model, and prompts, so you can set up as many AI configurations as you like and switch between them instantly from the **Presets** menu.
 
-### To use the OpenAI GPT model:
+Built-in provider URLs are included for **Claude, Gemini, Ollama, OpenAI, and OpenRouter**. Any service that offers an OpenAI-compatible API will work.
 
-1. [Purchase API credits](https://platform.openai.com/settings/organization/billing/overview) for your account.
-2. Create an [OpenAI API key](https://platform.openai.com/account/api-keys).
-3. Enter your OpenAI API key in the VOCR Menu: Settings > Engine > OpenAI API Key.
+### To create a preset:
 
-Note: It may take several hours for your API to become active after purchasing credits.
+1. Open the VOCR Menu and go to **Presets > Preset Manager**.
+2. Create a new preset and enter your API URL, API key, and model.
+3. API keys are encrypted and stored securely using the macOS Keychain, and are only displayed once in plain text when creating a preset.
 
-The usage cost from VOCR is an estimate. For the official usage and cost, please refer to the [Usage Dashboard](https://platform.openai.com/usage) on OpenAI website.
-
-### To utilize a local vision language model with Ollama:
+### To use a local vision language model with Ollama:
 
 Ollama is free and private, but it is less accurate and requires a lot of computing power. I recommend M1 chip or later with minimum 16GB memory.
 
@@ -72,33 +70,38 @@ Ollama is free and private, but it is less accurate and requires a lot of comput
 2. Download a multimodal (vision-language) model by executing the following command in your terminal:
 
     ```
-    ollama pull llava
+    ollama pull qwen3-vl
     ```
 
-Note that there are also `llava:13b` and `llava:34b` models, which offer higher accuracy but require more storage, memory, and computing power.
+Note that there are also `qwen3-vl:30b`, which offer higher accuracy but require more storage, memory, and computing power.
+
+3. Create a preset in VOCR with the Ollama provider URL and your chosen model.
 
 You may also want to try a related app called [VOLlama](https://chigkim.github.io/VOLlama/). It is an accessible chat client for Ollama, allowing you to easily interact with an open-source large language model that runs locally on your computer.
 
 ## ASK AI
 
-After the setting up OpenAI and/or Ollama:
+After setting up a preset:
 
-1. Choose Ollama or GPT in VOCR Menu > Settings > Engine.
+1. Select your desired preset from the **Presets** menu.
 2. Scan a window/VOCursor or capture an image from a camera.
-3. Press Command+Shift+Control+A to ask the selected model a question about the image.
+3. Press Command+Shift+Control+A to ask the AI a question about the image.
 
-The response will be copied to the clipboard so you can review in case you miss it.
+The response and token usage information will be copied to the clipboard so you can review in case you miss it.
+
+A **Follow up** checkbox in the Ask dialog lets you carry on a multi-turn conversation with the AI instead of starting fresh each time.
 
 Also you can select an image file in Finder, bring up the contextual menu with VO+Shift+M, go to 'Open with,' and choose VOCR to ask a question about the image.
 
 ## Explore with AI
 
-1. Choose GPT in the VOCR Menu > Settings > Engine.
-2. Provide your OpenAI API key in VOCR Menu > Settings > Engine > OpenAI API Key.
-3. Scan a window or use VOCursor.
-4. Press Command+Shift+Control+E.
+1. Select your desired preset from the **Presets** menu.
+2. Scan a window or use VOCursor.
+3. Press Command+Shift+Control+E.
 
-VOCR will ask GPT to analyze the image, identify various areas, and describe the contents of each. You can navigate the results using the shortcuts Command + Control + Arrows.
+VOCR will ask the AI to analyze the image, identify various areas, and describe the contents of each. You can navigate the results using the shortcuts Command + Control + Arrows.
+
+You can customize the system prompt and user prompt used by Explore mode via **Presets > Edit Explore Prompts**.
 
 Note: This feature is experimental and often produces inaccurate descriptions of locations and content.
 
@@ -109,9 +112,9 @@ These shortcuts work at all times:
 * VOCR Menu: Command+Shift+Control+S
 * OCR Window: Command+Shift+Control+W
 * OCR VoiceOver Cursor: Command+Shift+Control+V
+* Ask AI: Command+Shift+Control+A
 * Camera Capture: Command+Shift+Control+C
 * Toggle Real-Time OCR: Command+Shift+Control+R
-* Ask AI: Command+Shift+Control+A
 * Explore with AI: Command+Shift+Control+E
 
 ## Navigation Shortcuts
@@ -134,7 +137,7 @@ Access the VOCR Menu with Command+Control+Shift+S. This menu contains all settin
 * Target Window: Allows you to scan a different window than the current one.
 * Autoscan: Automatically scans after clicking an item with VO+Shift+Space.
 * Detect Object: Locates objects with no text such as icons.
-* Use Last Prompt: Reuses the last prompt when asking AI with Command+Shift+Control+A.
+* Use Preset Prompt: Sends the prompt saved in the active preset without showing the dialog when asking AI with Command+Shift+Control+A.
 * Move Mouse: Moves the mouse cursor when you navigate.
 * Positional Audio: Provides audio feedback as the mouse cursor moves. Frequency changes correspond to vertical location, and audio panning corresponds to horizontal position. If you don't hear the audio feedback, go to Settings > Sound Output.
 * Reset Position: When disabled, the cursor will not reset to the top-left corner after every new scan.
@@ -143,9 +146,7 @@ Access the VOCR Menu with Command+Control+Shift+S. This menu contains all settin
 * Sound Output: Choose a sound device for audio positional feedback.
 * Choose Camera: Select the camera to use for capturing an image.
 * Shortcuts: Customize shortcuts.
-* Engine: Choose between GPT or Ollama.
-
-Note that Llama.cpp temporarily suspended support for the vision language model on their server.
+* Reset: Erase all settings and presets and start fresh.
 
 ## Operation
 
@@ -157,9 +158,20 @@ When you open the VOCR menu, few operations are available after a scan:
 
 ## Troubleshooting
 
-* If you hear "nothing found" you likely need to turn off the VoiceOver screen curtain with vo+shift+f11 or adjust accessibility and screen recording permissions in System Settings > Privacy & Security.
-* If you do not hear anything after using the "OCR VoiceOver Cursor" feature, you probably need to grant VOCR permissions to: send Apple Events.
+* If you hear "nothing found," you likely need to turn off the VoiceOver screen curtain with vo+shift+f11 or adjust accessibility and screen recording permissions in System Settings > Privacy & Security.
+* If you do not hear anything after using the "OCR VoiceOver Cursor" feature, you probably need to grant VOCR permission to send Apple Events.
 
-Usually, relaunching VOCR and reissuing the command retriggers the alerts to reappear in the system dialogs as described above.
+Usually, relaunching VOCR and reissuing the command causes the permission alerts to reappear in the system dialogs as described above.
+
+If VOCR does not work properly after a macOS update, try resetting all the privacy and security settings for VOCR.
+
+1. Select Reset in the VOCR settings menu.
+2. Quit VOCR.
+3. Open Terminal in Applications > Utilities.
+4. Run `tccutil reset All com.chikim.VOCR`
+5. Run `sudo tccutil reset All com.chikim.VOCR`
+6. Enter your admin password.
+7. Reboot.
+8. Run VOCR and grant all the necessary permissions again as described above.
 
 Lastly, please enjoy using VOCR!
