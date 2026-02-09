@@ -102,6 +102,8 @@ This creates `translations/csv/template.csv` with all keys and English strings, 
 
 Copy `template.csv` to `<language_code>.csv` (e.g., `it.csv` for Italian).
 
+See [ISO 639-1 Language Codes](https://www.loc.gov/standards/iso639-2/php/English_list.php) for more information.
+
 #### 3. Fill In Translations
 
 Open the CSV and fill in the **translation** column. You don't need to translate every string at once — empty rows are skipped during import.
@@ -176,14 +178,10 @@ open VOCR.xcodeproj
 
 1. Press ⌘B to build the project
 2. If there are no errors, press ⌘R to run
-3. Change your system language to your target language:
-   - System Preferences → Language & Region → Add your language
-   - Restart VOCR
+3. Change VOCR language to your target language:
+    - VOCR Settings > Languages
+    - Restart VOCR
 4. Verify your translations appear correctly
-
-#### 7. Submit Your Translation
-
-See [Submitting Your Translation](#submitting-your-translation) below.
 
 ## String Context and Guidelines
 
@@ -301,9 +299,8 @@ If your translation is much longer, consider:
 
 ## Testing Your Translation
 
-### Functional Testing
-
 Make sure your translation doesn't break functionality:
+
 - Format specifiers are present and correct
 - JSON syntax is valid
 - No missing translations (untranslated strings will show key names)
@@ -346,7 +343,7 @@ If you don't have Git set up, you can submit your CSV file directly:
 
 ### Language Codes
 - [Apple Language Codes](https://www.ibabbleon.com/iOS-Language-Codes-ISO-639.html)
-- [ISO 639-1 Language Codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+- [ISO 639-1 Language Codes](https://www.loc.gov/standards/iso639-2/php/English_list.php)
 
 ### Localization References
 - [Apple Human Interface Guidelines - Localization](https://developer.apple.com/design/human-interface-guidelines/localization)
