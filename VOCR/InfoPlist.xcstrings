@@ -80,67 +80,67 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ansagen sprechen und Screenshot unter VoiceOver-Cursor aufnehmen"
+            "value" : "Ermöglicht VOCR, Ankündigungen zu sprechen und Screenshots unter dem VoiceOver-Cursor aufzunehmen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Speak announcements and take Screenshot under VoiceOver cursor"
+            "value" : "Allows VOCR to speak announcements and take screenshots under the VoiceOver cursor."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Leer anuncios y capturar pantalla bajo cursor de VoiceOver"
+            "value" : "Permite a VOCR leer anuncios y capturar la pantalla debajo del cursor de VoiceOver."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lire les annonces et capturer l'écran sous le curseur VoiceOver"
+            "value" : "Autorise VOCR à lire les annonces et à capturer l'écran sous le curseur VoiceOver."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VoiceOver カーソルの下でアナウンスを読み上げ、スクリーンショットを撮影します"
+            "value" : "VOCRがVoiceOverカーソル下の内容を読み上げ、スクリーンショットを撮影できるようにします。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VoiceOver 커서 아래에서 알림을 읽고 스크린샷을 촬영합니다"
+            "value" : "VOCR이 VoiceOver 커서 아래의 알림을 읽고 스크린샷을 찍을 수 있도록 허용합니다."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Odczytuj ogłoszenia i wykonuj zrzut ekranu pod kursorem VoiceOver"
+            "value" : "Zezwól VOCR na odczytywanie ogłoszeń i robienie zrzutów ekranu pod kursorem VoiceOver."
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Falar anúncios e capturar a tela sob o cursor do VoiceOver"
+            "value" : "Permite que o VOCR fale anúncios e capture a tela sob o cursor do VoiceOver."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Озвучивать объявления и делать снимок экрана под курсором VoiceOver"
+            "value" : "Позволяет VOCR озвучивать объявления и делать снимок экрана под курсором VoiceOver."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Озвучувати повідомлення та робити знімок екрана під курсором VoiceOver"
+            "value" : "Дозволяє VOCR озвучувати повідомлення та робити знімок екрана під курсором VoiceOver."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "朗读公告并截取 VoiceOver 光标下的屏幕"
+            "value" : "允许 VOCR 朗读公告并截取 VoiceOver 光标下的屏幕。"
           }
         }
       }
