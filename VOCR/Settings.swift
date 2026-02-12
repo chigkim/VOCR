@@ -253,6 +253,16 @@ enum Settings {
         languageMenuItem.submenu = languageMenu
         settingsMenu.addItem(languageMenuItem)
 
+        let permissionsMenuItem = NSMenuItem(
+            title: NSLocalizedString(
+                "menu.settings.permissions", value: "Permissions…",
+                comment: "Menu item for managing app permissions"),
+            action: #selector(target.openPermissionsWindow(_:)),
+            keyEquivalent: ""
+        )
+        permissionsMenuItem.target = target
+        settingsMenu.addItem(permissionsMenuItem)
+
         let resetMenuItem = NSMenuItem(
             title: NSLocalizedString(
                 "menu.reset", value: "Reset...",
@@ -874,6 +884,11 @@ class MenuHandler: NSObject {
         ) { _, _ in
             DispatchQueue.main.async { NSApp.terminate(nil) }
         }
+    }
+
+    @objc func openPermissionsWindow(_ sender: NSMenuItem) {
+        PermissionsWindowController.shared.showWindow(nil)
+        NSApp.activate(ignoringOtherApps: true)
     }
 
 }

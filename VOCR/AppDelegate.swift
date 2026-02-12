@@ -29,6 +29,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             byReference: true
         )?.play()
         autoUpdateManager = AutoUpdateManager.shared
+
+        // Check if should show permissions onboarding
+        checkAndShowPermissionsOnboarding()
     }
 
     func killInstance() {
@@ -120,6 +123,54 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         window.contentViewController = vc
         let wc = NSWindowController(window: window)
         wc.showWindow(self)
+        NSApp.activate(ignoringOtherApps: true)
+    }
+
+    // MARK: - Permissions Onboarding
+
+    private func checkAndShowPermissionsOnboarding() {
+        if !PermissionsManager.shared.hasSeenPermissionsOnboarding {
+            // Delay onboarding slightly to allow app to fully launch
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.showPermissionsOnboarding()
+            }
+        }
+    }
+
+    private func showPermissionsOnboarding() {
+        let alert = NSAlert()
+        alert.messageText = NSLocalizedString(
+            "onboarding.permissions.title",
+            value: "Welcome to VOCR",
+            comment: "Title for permissions onboarding alert")
+        alert.informativeText = NSLocalizedString(
+            "onboarding.permissions.message",
+            value: "VOCR needs permissions to provide OCR and accessibility features. Would you like to set them up now?",
+            comment: "Message for permissions onboarding alert")
+        alert.addButton(
+            withTitle: NSLocalizedString(
+                "onboarding.permissions.setup",
+                value: "Set Up Permissions",
+                comment: "Button to set up permissions"))
+        alert.addButton(
+            withTitle: NSLocalizedString(
+                "onboarding.permissions.skip",
+                value: "Skip for Now",
+                comment: "Button to skip permissions setup"))
+
+        let response = alert.runModal()
+
+        if response == .alertFirstButtonReturn {
+            // User chose "Set Up Permissions"
+            openPermissionsWindow()
+        }
+
+        // Mark as seen regardless of choice
+        PermissionsManager.shared.markOnboardingComplete()
+    }
+
+    @objc func openPermissionsWindow() {
+        PermissionsWindowController.shared.showWindow(nil)
         NSApp.activate(ignoringOtherApps: true)
     }
 

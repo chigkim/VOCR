@@ -10,6 +10,9 @@
 		6D29B5302F2C97DF00297D25 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6D29B52F2F2C97DF00297D25 /* Localizable.xcstrings */; };
 		6D29B5312F2C97DF00297D25 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6D29B52E2F2C97DF00297D25 /* InfoPlist.xcstrings */; };
 		6D4816BE2C7EE946005E6C64 /* OCRTextSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4816BD2C7EE946005E6C64 /* OCRTextSearch.swift */; };
+		6D5818FC2F3DA7F100883867 /* PermissionsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5818FB2F3DA7F100883867 /* PermissionsWindowController.swift */; };
+		6D5818FD2F3DA7F100883867 /* PermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5818F92F3DA7F100883867 /* PermissionsManager.swift */; };
+		6D5818FE2F3DA7F100883867 /* PermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5818FA2F3DA7F100883867 /* PermissionsViewController.swift */; };
 		EA0C88682B4F8F4B00F2E920 /* ShortcutsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */; };
 		EA1158CE2B51EBC000B2C716 /* Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1158CD2B51EBC000B2C716 /* Shortcuts.swift */; };
 		EA1AC96A2B4C51FA00D3543F /* VOCursor.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EA1AC9692B4C51FA00D3543F /* VOCursor.scpt */; };
@@ -54,6 +57,9 @@
 		6D29B52E2F2C97DF00297D25 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		6D29B52F2F2C97DF00297D25 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		6D4816BD2C7EE946005E6C64 /* OCRTextSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OCRTextSearch.swift; sourceTree = "<group>"; };
+		6D5818F92F3DA7F100883867 /* PermissionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsManager.swift; sourceTree = "<group>"; };
+		6D5818FA2F3DA7F100883867 /* PermissionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsViewController.swift; sourceTree = "<group>"; };
+		6D5818FB2F3DA7F100883867 /* PermissionsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsWindowController.swift; sourceTree = "<group>"; };
 		EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsWindowController.swift; sourceTree = "<group>"; };
 		EA1158CD2B51EBC000B2C716 /* Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
 		EA1AC9692B4C51FA00D3543F /* VOCursor.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = VOCursor.scpt; sourceTree = "<group>"; };
@@ -128,6 +134,9 @@
 		EA6427272EB6798C00EDCC0C /* preset */ = {
 			isa = PBXGroup;
 			children = (
+				6D5818F92F3DA7F100883867 /* PermissionsManager.swift */,
+				6D5818FA2F3DA7F100883867 /* PermissionsViewController.swift */,
+				6D5818FB2F3DA7F100883867 /* PermissionsWindowController.swift */,
 				EA6427212EB6798C00EDCC0C /* Preset.swift */,
 				EA6427222EB6798C00EDCC0C /* PresetEditorWindowController.swift */,
 				EA6427232EB6798C00EDCC0C /* PresetManager.swift */,
@@ -310,6 +319,9 @@
 				6D4816BE2C7EE946005E6C64 /* OCRTextSearch.swift in Sources */,
 				EAF9C3C82354A66200D4D77C /* Settings.swift in Sources */,
 				EAC9ECD92BFB8D6200D61F00 /* MacCamera.swift in Sources */,
+				6D5818FC2F3DA7F100883867 /* PermissionsWindowController.swift in Sources */,
+				6D5818FD2F3DA7F100883867 /* PermissionsManager.swift in Sources */,
+				6D5818FE2F3DA7F100883867 /* PermissionsViewController.swift in Sources */,
 				EA1F642C2352503D0089C967 /* Player.swift in Sources */,
 				EA0C88682B4F8F4B00F2E920 /* ShortcutsWindowController.swift in Sources */,
 			);
@@ -466,7 +478,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 54;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 9N598S2535;
+				DEVELOPMENT_TEAM = 6Q47GP4GKF;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
