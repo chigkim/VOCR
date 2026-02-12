@@ -120,9 +120,7 @@ enum Shortcuts {
             Navigation.startOCR()
         }
         handlers["shortcut.capture_camera"] = {
-            if MacCamera.shared.isCameraAllowed() {
-                MacCamera.shared.takePicture()
-            }
+            MacCamera.shared.requestAccessThenTakePicture()
         }
         handlers["shortcut.realtime_ocr"] = realTimeHandler
         handlers["shortcut.explore"] = Navigation.explore
