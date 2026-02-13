@@ -116,7 +116,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Odczytuj ogłoszenia i wykonuj zrzut ekranu pod kursorem VoiceOver"
+            "value" : "Wymagane do czytania komunikatów i wykonywania zrzutów ekranu pod kursorem VoiceOver"
           }
         },
         "pt" : {
@@ -188,7 +188,7 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zrób zdjęcie do użycia w VOCR."
+            "value" : "Potrzebne do wykonywania zdjęć przez VOCR"
           }
         },
         "pt" : {
