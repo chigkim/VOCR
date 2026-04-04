@@ -17,6 +17,11 @@ final class PermissionsManager {
 
     private let onboardingDefaultsKey = "VOCR.hasSeenPermissionsOnboarding"
 
+    // Set to true within a session once the user has been sent to grant screen recording.
+    // CGPreflightScreenCaptureAccess() caches its result per process and won't reflect a
+    // mid-session grant until the app is restarted; this flag suppresses the false-negative.
+    private var screenRecordingRequested = false
+
     private init() {}
 
     // MARK: - Permission Types
@@ -251,7 +256,13 @@ final class PermissionsManager {
     }
 
     private func screenRecordingStatus() -> PermissionStatus {
-        return CGPreflightScreenCaptureAccess() ? .granted : .denied
+        if CGPreflightScreenCaptureAccess() {
+            return .granted
+        }
+        // CGPreflightScreenCaptureAccess() caches its result for the lifetime of the process.
+        // If the user was sent to grant this permission in the current session, treat it as
+        // granted so the warning is suppressed until restart (when the API reflects correctly).
+        return screenRecordingRequested ? .granted : .denied
     }
 
     private func notificationsStatus() -> PermissionStatus {
@@ -307,10 +318,11 @@ final class PermissionsManager {
     }
 
     func requestScreenRecording() {
-        // Register the app in System Settings > Screen Recording before opening it.
-        // Without this call macOS never adds the app to the list, so there's nothing to toggle.
+        screenRecordingRequested = true
+        // CGRequestScreenCaptureAccess() registers VOCR in System Settings > Screen Recording
+        // and presents the system permission dialog, which includes an "Open System Preferences"
+        // button. We don't also call openSystemPreferences() to avoid both appearing at once.
         CGRequestScreenCaptureAccess()
-        openSystemPreferences(for: .screenRecording)
     }
 
     func requestVoiceOver() {
