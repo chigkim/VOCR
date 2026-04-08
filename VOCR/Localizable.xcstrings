@@ -361,6 +361,18 @@
         }
       }
     },
+    "button.close" : {
+      "comment" : "Button to close window",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Close"
+          }
+        }
+      }
+    },
     "button.create" : {
       "comment" : "Button to create a new item",
       "extractionState" : "manual",
@@ -864,6 +876,54 @@
         }
       }
     },
+    "button.permission.enable" : {
+      "comment" : "Button text to enable permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Enable"
+          }
+        }
+      }
+    },
+    "button.permission.granted" : {
+      "comment" : "Button text when permission is granted",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "✓ Granted"
+          }
+        }
+      }
+    },
+    "button.permission.opensystemprefs" : {
+      "comment" : "Button text to open system settings",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open System Settings"
+          }
+        }
+      }
+    },
+    "button.refresh" : {
+      "comment" : "Button to refresh permission statuses",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Refresh Status"
+          }
+        }
+      }
+    },
     "button.resetAndRelaunch" : {
       "comment" : "Button to reset settings and restart application",
       "extractionState" : "manual",
@@ -1004,6 +1064,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "保存"
+          }
+        }
+      }
+    },
+    "column.action" : {
+      "comment" : "Table column header for permission action",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Action"
           }
         }
       }
@@ -1220,6 +1292,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "名称"
+          }
+        }
+      }
+    },
+    "column.permission" : {
+      "comment" : "Table column header for permission name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Permission"
+          }
+        }
+      }
+    },
+    "column.status" : {
+      "comment" : "Table column header for permission status",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Status"
           }
         }
       }
@@ -6119,6 +6215,18 @@
         }
       }
     },
+    "menu.settings.permissions" : {
+      "comment" : "Menu item for managing app permissions",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Permissions…"
+          }
+        }
+      }
+    },
     "menu.settings.positionalAudio" : {
       "comment" : "Menu item for enabling spatial audio feedback",
       "extractionState" : "manual",
@@ -7699,6 +7807,426 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无标题"
+          }
+        }
+      }
+    },
+    "onboarding.permissions.message" : {
+      "comment" : "Message for permissions onboarding alert",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "VOCR needs permissions to provide OCR and accessibility features. Would you like to set them up now?"
+          }
+        }
+      }
+    },
+    "onboarding.permissions.setup" : {
+      "comment" : "Button to set up permissions",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Set Up Permissions"
+          }
+        }
+      }
+    },
+    "onboarding.permissions.skip" : {
+      "comment" : "Button to skip permissions setup",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Skip for Now"
+          }
+        }
+      }
+    },
+    "onboarding.permissions.title" : {
+      "comment" : "Title for permissions onboarding alert",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Welcome to VOCR"
+          }
+        }
+      }
+    },
+    "permission.accessibility.description" : {
+      "comment" : "Description header for accessibility permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "VOCR needs Accessibility access to:"
+          }
+        }
+      }
+    },
+    "permission.accessibility.feature1" : {
+      "comment" : "Accessibility permission feature",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Read text from your screen for OCR"
+          }
+        }
+      }
+    },
+    "permission.accessibility.feature2" : {
+      "comment" : "Accessibility permission feature",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Control VoiceOver cursor position"
+          }
+        }
+      }
+    },
+    "permission.accessibility.feature3" : {
+      "comment" : "Accessibility permission feature",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Take screenshots under the VoiceOver cursor"
+          }
+        }
+      }
+    },
+    "permission.accessibility.feature4" : {
+      "comment" : "Accessibility permission feature",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Interact with window content"
+          }
+        }
+      }
+    },
+    "permission.accessibility.name" : {
+      "comment" : "Name for accessibility permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Accessibility"
+          }
+        }
+      }
+    },
+    "permission.notifications.description" : {
+      "comment" : "Description header for notifications permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "VOCR needs Notifications to:"
+          }
+        }
+      }
+    },
+    "permission.notifications.feature1" : {
+      "comment" : "Notifications permission feature",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Alert you when updates are available"
+          }
+        }
+      }
+    },
+    "permission.notifications.feature2" : {
+      "comment" : "Notifications permission feature",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Show OCR completion notifications"
+          }
+        }
+      }
+    },
+    "permission.notifications.feature3" : {
+      "comment" : "Notifications permission feature",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Provide background task updates"
+          }
+        }
+      }
+    },
+    "permission.notifications.name" : {
+      "comment" : "Name for notifications permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Notifications"
+          }
+        }
+      }
+    },
+    "permission.optional" : {
+      "comment" : "Text indicating permission is optional",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This permission is optional but enhances functionality."
+          }
+        }
+      }
+    },
+    "permission.required" : {
+      "comment" : "Text indicating permission is required",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This permission is required for core OCR functionality."
+          }
+        }
+      }
+    },
+    "permission.screenrecording.description" : {
+      "comment" : "Description header for screen recording permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "VOCR needs Screen Recording access to:"
+          }
+        }
+      }
+    },
+    "permission.screenrecording.feature1" : {
+      "comment" : "Screen recording permission feature",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Capture screen content for OCR"
+          }
+        }
+      }
+    },
+    "permission.screenrecording.feature2" : {
+      "comment" : "Screen recording permission feature",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Take screenshots of windows and displays"
+          }
+        }
+      }
+    },
+    "permission.screenrecording.feature3" : {
+      "comment" : "Screen recording permission feature",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Extract text from screen regions"
+          }
+        }
+      }
+    },
+    "permission.screenrecording.name" : {
+      "comment" : "Name for screen recording permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Screen Recording"
+          }
+        }
+      }
+    },
+    "permission.status.denied" : {
+      "comment" : "Status text for denied permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "✗ Unset"
+          }
+        }
+      }
+    },
+    "permission.status.granted" : {
+      "comment" : "Status text for granted permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "✓ Granted"
+          }
+        }
+      }
+    },
+    "permission.status.notset" : {
+      "comment" : "Status text for not determined permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "⚠️ Not Set"
+          }
+        }
+      }
+    },
+    "permission.status.restricted" : {
+      "comment" : "Status text for restricted permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🚫 Restricted"
+          }
+        }
+      }
+    },
+    "permission.voiceover.description" : {
+      "comment" : "Description header for VoiceOver automation permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "VOCR needs VoiceOver access to:"
+          }
+        }
+      }
+    },
+    "permission.voiceover.feature1" : {
+      "comment" : "VoiceOver automation permission feature",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Speak announcements through VoiceOver"
+          }
+        }
+      }
+    },
+    "permission.voiceover.feature2" : {
+      "comment" : "VoiceOver automation permission feature",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Control VoiceOver cursor and navigation"
+          }
+        }
+      }
+    },
+    "permission.voiceover.feature3" : {
+      "comment" : "VoiceOver automation permission feature",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Read the currently focused element via VoiceOver"
+          }
+        }
+      }
+    },
+    "permission.voiceover.name" : {
+      "comment" : "Name for VoiceOver automation permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "VoiceOver"
+          }
+        }
+      }
+    },
+    "permissions.missing.later" : {
+      "comment" : "Button to dismiss missing permissions alert",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Later"
+          }
+        }
+      }
+    },
+    "permissions.missing.message" : {
+      "comment" : "Message for missing permissions alert",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Some required permissions are not set up. VOCR may not function correctly."
+          }
+        }
+      }
+    },
+    "permissions.missing.open" : {
+      "comment" : "Button to open permissions window",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open Permissions"
+          }
+        }
+      }
+    },
+    "permissions.missing.title" : {
+      "comment" : "Title for missing permissions alert",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Permissions Required"
           }
         }
       }
@@ -10471,6 +10999,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "有可用的新更新"
+          }
+        }
+      }
+    },
+    "window.permissions.title" : {
+      "comment" : "Window title for permissions window",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "VOCR Permissions"
           }
         }
       }

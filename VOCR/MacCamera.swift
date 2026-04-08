@@ -17,31 +17,22 @@ class MacCamera: NSObject, AVCapturePhotoCaptureDelegate {
     var cameraOutput: AVCapturePhotoOutput!
     var deviceName = "Unknown Camera"
 
-    func isCameraAllowed() -> Bool {
-        let cameraPermissionStatus = AVCaptureDevice.authorizationStatus(for: .video)
-        switch cameraPermissionStatus {
+    func requestAccessThenTakePicture() {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
-            print("Already Authorized")
-            return true
-        case .denied:
-            print("denied")
-            return false
-        case .restricted:
-            print("restricted")
-            return false
-        default:
-            print("Ask permission")
-
-            var access = false
+            takePicture()
+        case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { granted in
-                if granted == true {
-                    print("User granted")
-                } else {
-                    print("User denied")
+                DispatchQueue.main.async {
+                    if granted { self.takePicture() }
                 }
-                access = granted
             }
-            return access
+        case .denied, .restricted:
+            if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Camera") {
+                NSWorkspace.shared.open(url)
+            }
+        @unknown default:
+            break
         }
     }
 

@@ -1,6 +1,18 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "CFBundleName" : {
+      "comment" : "Bundle name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "VOCR"
+          }
+        }
+      }
+    },
     "CFBundleTypeName" : {
       "comment" : "File type name for image files",
       "extractionState" : "manual",
@@ -213,6 +225,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "拍摄一张照片供 VOCR 使用。"
+          }
+        }
+      }
+    },
+    "NSHumanReadableCopyright" : {
+      "comment" : "Copyright (human-readable)",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Copyright © 2019 Chi Kim. All rights reserved."
+          }
+        }
+      }
+    },
+    "NSScreenCaptureUsageDescription" : {
+      "comment" : "Permission description for screen recording access",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR needs to capture your screen content to perform OCR and extract text from windows and applications."
           }
         }
       }
