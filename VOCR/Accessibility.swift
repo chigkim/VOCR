@@ -69,7 +69,7 @@ enum Accessibility {
         if let scriptObject = NSAppleScript(contentsOf: url!, error: &error) {
             var outputError: NSDictionary?
             if let output = scriptObject.executeAppleEvent(event, error: &outputError).stringValue {
-                debugPrint(outputError)
+                debugPrint(outputError as Any)
                 log("Speak: \(output)")
             } else {
                 log("Output Error: \(String(describing: outputError))")
