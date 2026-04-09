@@ -361,18 +361,6 @@
         }
       }
     },
-    "button.close" : {
-      "comment" : "Button to close window",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Close"
-          }
-        }
-      }
-    },
     "button.create" : {
       "comment" : "Button to create a new item",
       "extractionState" : "manual",
@@ -908,18 +896,6 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Open System Settings"
-          }
-        }
-      }
-    },
-    "button.refresh" : {
-      "comment" : "Button to refresh permission statuses",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Refresh Status"
           }
         }
       }
