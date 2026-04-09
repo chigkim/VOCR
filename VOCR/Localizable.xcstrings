@@ -70,6 +70,12 @@
             "state" : "translated",
             "value" : "预设"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preset"
+          }
         }
       }
     },
@@ -141,6 +147,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "VOCR 已就绪！"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR pronto!"
           }
         }
       }
@@ -214,6 +226,12 @@
             "state" : "translated",
             "value" : "添加"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi"
+          }
         }
       }
     },
@@ -285,6 +303,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "询问"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiedi"
           }
         }
       }
@@ -358,6 +382,12 @@
             "state" : "translated",
             "value" : "取消"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annulla"
+          }
         }
       }
     },
@@ -429,6 +459,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "创建"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crea"
           }
         }
       }
@@ -502,6 +538,12 @@
             "state" : "translated",
             "value" : "删除"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina"
+          }
         }
       }
     },
@@ -573,6 +615,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "复制"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duplica"
           }
         }
       }
@@ -646,6 +694,12 @@
             "state" : "translated",
             "value" : "编辑"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica"
+          }
         }
       }
     },
@@ -717,6 +771,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "从开头"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dall'inizio"
           }
         }
       }
@@ -790,6 +850,12 @@
             "state" : "translated",
             "value" : "从当前位置"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dalla posizione corrente"
+          }
         }
       }
     },
@@ -860,6 +926,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "确定"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
           }
         }
       }
@@ -969,6 +1041,12 @@
             "state" : "translated",
             "value" : "重置并重新启动"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ripristina e riavvia"
+          }
         }
       }
     },
@@ -1040,6 +1118,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "保存"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salva"
           }
         }
       }
@@ -1125,6 +1209,12 @@
             "state" : "translated",
             "value" : "快捷键"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasto di scelta rapida"
+          }
         }
       }
     },
@@ -1197,6 +1287,12 @@
             "state" : "translated",
             "value" : "模型"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modello"
+          }
         }
       }
     },
@@ -1268,6 +1364,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "名称"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome"
           }
         }
       }
@@ -1365,6 +1467,12 @@
             "state" : "translated",
             "value" : "正在询问 %@... 请稍候..."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiedo a %@... Attendere prego..."
+          }
         }
       }
     },
@@ -1436,6 +1544,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "选择要给 VOCR 使用的相机。"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli una fotocamera da utilizzare con VOCR."
           }
         }
       }
@@ -1509,6 +1623,12 @@
             "state" : "translated",
             "value" : "相机"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fotocamera"
+          }
         }
       }
     },
@@ -1580,6 +1700,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未知"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sconosciuto"
           }
         }
       }
@@ -1653,6 +1779,12 @@
             "state" : "translated",
             "value" : "更新探索模式使用的系统和用户提示词。"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiorna i prompt utente e di sistema utilizzati per la modalità Esplorazione."
+          }
         }
       }
     },
@@ -1724,6 +1856,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "系统提示词"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prompt di sistema"
           }
         }
       }
@@ -1797,6 +1935,12 @@
             "state" : "translated",
             "value" : "编辑探索提示词"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica i Prompt d'esplorazione"
+          }
         }
       }
     },
@@ -1868,6 +2012,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "用户提示词"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prompt utente"
           }
         }
       }
@@ -1941,6 +2091,12 @@
             "state" : "translated",
             "value" : "跟进"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Follow up"
+          }
         }
       }
     },
@@ -2011,6 +2167,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "所有快捷方式都已添加。"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutte le scorciatoie sono già state aggiunte."
           }
         }
       }
@@ -2084,6 +2246,12 @@
             "state" : "translated",
             "value" : "快捷键名称"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome della scorciatoia"
+          }
         }
       }
     },
@@ -2155,6 +2323,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新建快捷键"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuova scorciatoia"
           }
         }
       }
@@ -2228,6 +2402,12 @@
             "state" : "translated",
             "value" : "未分配"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non assegnata"
+          }
         }
       }
     },
@@ -2299,6 +2479,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "提示词"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prompt"
           }
         }
       }
@@ -2372,6 +2558,12 @@
             "state" : "translated",
             "value" : "这将清除所有设置和预设。此操作无法撤销。"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo cancellerà tutte le impostazioni e i preset. L'operazione non può essere annullata."
+          }
         }
       }
     },
@@ -2443,6 +2635,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "重置？"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ripristinare?"
           }
         }
       }
@@ -2516,6 +2714,12 @@
             "state" : "translated",
             "value" : "选择一个位置并保存文件。"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli una destinazione e salva il tuo file."
+          }
         }
       }
     },
@@ -2587,6 +2791,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "保存文件"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salva Il Tuo File"
           }
         }
       }
@@ -2660,6 +2870,12 @@
             "state" : "translated",
             "value" : "选择用于位置音频反馈的输出设备。"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli un dispositivo per il feedback audio posizionale."
+          }
         }
       }
     },
@@ -2731,6 +2947,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "声音输出"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uscita audio"
           }
         }
       }
@@ -2804,6 +3026,12 @@
             "state" : "translated",
             "value" : "无法访问 %@, %@"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile accedere a %@, %@"
+          }
         }
       }
     },
@@ -2875,6 +3103,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法访问 %@, %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile accedere a %@, %@"
           }
         }
       }
@@ -2948,6 +3182,12 @@
             "state" : "translated",
             "value" : "连接错误"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Errore di connessione"
+          }
         }
       }
     },
@@ -3019,6 +3259,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "解码 JSON 出错"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Errore di decodifica JSON"
           }
         }
       }
@@ -3092,6 +3338,12 @@
             "state" : "translated",
             "value" : "解码模型 JSON 出错"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Errore di decodifica dei modelli JSON"
+          }
         }
       }
     },
@@ -3163,6 +3415,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "状态码 %d: %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codice di stato %d: %@"
           }
         }
       }
@@ -3236,6 +3494,12 @@
             "state" : "translated",
             "value" : "HTTP 错误"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Errore HTTP"
+          }
         }
       }
     },
@@ -3307,6 +3571,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无效的 URL"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL non valido"
           }
         }
       }
@@ -3380,6 +3650,12 @@
             "state" : "translated",
             "value" : "无法解析 JSON 字符串。请重试。"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile analizzare la stringa JSON. Riprova."
+          }
         }
       }
     },
@@ -3451,6 +3727,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未收到服务器数据。"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessun dato ricevuto dal server."
           }
         }
       }
@@ -3524,6 +3806,12 @@
             "state" : "translated",
             "value" : "错误：无法解析 JSON。"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Errore: impossibile analizzare JSON."
+          }
         }
       }
     },
@@ -3584,6 +3872,12 @@
             "state" : "translated",
             "value" : "无法从服务器获取模型列表。请手动输入要使用的模型名称。"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile recuperare l'elenco dei modelli dal server. Si prega di inserire manualmente il nome del modello da usare."
+          }
         }
       }
     },
@@ -3643,6 +3937,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "获取模型失败。"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile recuperare i modelli."
           }
         }
       }
@@ -3716,6 +4016,12 @@
             "state" : "translated",
             "value" : "保存预设失败。"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile salvare il preset."
+          }
         }
       }
     },
@@ -3787,6 +4093,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "没有有效的 HTTP 响应对象"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oggetto di risposta HTTP non valido"
           }
         }
       }
@@ -3860,6 +4172,12 @@
             "state" : "translated",
             "value" : "来自服务器的响应无效"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Risposta non valida dal server"
+          }
         }
       }
     },
@@ -3919,6 +4237,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "截取 %@, %@ 的屏幕失败"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile acquisire uno screenshot di %@, %@"
           }
         }
       }
@@ -3992,6 +4316,12 @@
             "state" : "translated",
             "value" : "API 密钥："
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiave API:"
+          }
         }
       }
     },
@@ -4063,6 +4393,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "API 密钥"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiave API"
           }
         }
       }
@@ -4136,6 +4472,12 @@
             "state" : "translated",
             "value" : "模型名称"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome del modello"
+          }
         }
       }
     },
@@ -4207,6 +4549,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "名称："
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome:"
           }
         }
       }
@@ -4280,6 +4628,12 @@
             "state" : "translated",
             "value" : "名称"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome"
+          }
         }
       }
     },
@@ -4351,6 +4705,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "系统提示词："
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prompt di sistema:"
           }
         }
       }
@@ -4424,6 +4784,12 @@
             "state" : "translated",
             "value" : "系统提示词"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prompt di sistema"
+          }
         }
       }
     },
@@ -4495,6 +4861,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "提供商 URL"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL del Provider"
           }
         }
       }
@@ -4568,6 +4940,12 @@
             "state" : "translated",
             "value" : "用户提示词："
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prompt utente:"
+          }
         }
       }
     },
@@ -4639,6 +5017,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "用户提示词"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prompt utente"
           }
         }
       }
@@ -4712,6 +5096,12 @@
             "state" : "translated",
             "value" : "关于..."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informazioni..."
+          }
         }
       }
     },
@@ -4783,6 +5173,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "自动检查更新"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controlla automaticamente gli aggiornamenti"
           }
         }
       }
@@ -4856,6 +5252,12 @@
             "state" : "translated",
             "value" : "自动安装更新"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installa automaticamente gli aggiornamenti"
+          }
         }
       }
     },
@@ -4927,6 +5329,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "检查更新"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controlla gli aggiornamenti"
           }
         }
       }
@@ -5000,6 +5408,12 @@
             "state" : "translated",
             "value" : "选择相机..."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli la fotocamera..."
+          }
         }
       }
     },
@@ -5071,6 +5485,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "关闭菜单"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiudi menu"
           }
         }
       }
@@ -5144,6 +5564,12 @@
             "state" : "needs_review",
             "value" : "下载测试版"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scarica la versione beta"
+          }
         }
       }
     },
@@ -5216,6 +5642,12 @@
             "state" : "translated",
             "value" : "编辑探索提示词…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica i Prompt d'esplorazione..."
+          }
         }
       }
     },
@@ -5234,6 +5666,12 @@
             "state" : "translated",
             "value" : "Język"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lingua"
+          }
         }
       }
     },
@@ -5251,6 +5689,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Domyślny systemowy"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Predefinita del sistema"
           }
         }
       }
@@ -5324,6 +5768,12 @@
             "state" : "translated",
             "value" : "新建快捷键"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuove scorciatoie"
+          }
         }
       }
     },
@@ -5395,6 +5845,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "预设管理器…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestione preset..."
           }
         }
       }
@@ -5468,6 +5924,12 @@
             "state" : "translated",
             "value" : "预设"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preset"
+          }
         }
       }
     },
@@ -5539,6 +6001,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "退出"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esci"
           }
         }
       }
@@ -5612,6 +6080,12 @@
             "state" : "translated",
             "value" : "重置..."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ripristina..."
+          }
         }
       }
     },
@@ -5683,6 +6157,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "保存最新图像"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salva l'ultima immagine"
           }
         }
       }
@@ -5756,6 +6236,12 @@
             "state" : "translated",
             "value" : "保存 OCR 结果..."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salva il risultato OCR..."
+          }
         }
       }
     },
@@ -5827,6 +6313,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "设置"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impostazioni"
           }
         }
       }
@@ -5900,6 +6392,12 @@
             "state" : "translated",
             "value" : "自动扫描"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scansione automatica"
+          }
         }
       }
     },
@@ -5971,6 +6469,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "检测对象"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rileva oggetti"
           }
         }
       }
@@ -6044,6 +6548,12 @@
             "state" : "translated",
             "value" : "登录时启动"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avvio al login"
+          }
         }
       }
     },
@@ -6116,6 +6626,12 @@
             "state" : "translated",
             "value" : "日志"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log"
+          }
         }
       }
     },
@@ -6187,6 +6703,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "移动鼠标"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sposta Il Mouse"
           }
         }
       }
@@ -6272,6 +6794,12 @@
             "state" : "translated",
             "value" : "位置音频"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audio posizionale"
+          }
         }
       }
     },
@@ -6343,6 +6871,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "扫描时重置位置"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ripristina posizione dopo la scansione"
           }
         }
       }
@@ -6416,6 +6950,12 @@
             "state" : "translated",
             "value" : "目标窗口"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finestra di destinazione"
+          }
         }
       }
     },
@@ -6487,6 +7027,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "使用预设提示词"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usa il prompt del preset"
           }
         }
       }
@@ -6560,6 +7106,12 @@
             "state" : "translated",
             "value" : "快捷键..."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorciatoie..."
+          }
         }
       }
     },
@@ -6631,6 +7183,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "声音输出..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uscita audio..."
           }
         }
       }
@@ -6704,6 +7262,12 @@
             "state" : "translated",
             "value" : "更新"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiornamenti"
+          }
         }
       }
     },
@@ -6775,6 +7339,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "实时 OCR 已启动。"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avvio l'OCR in tempo reale."
           }
         }
       }
@@ -6848,6 +7418,12 @@
             "state" : "translated",
             "value" : "正在停止实时 OCR。"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arresto dell'OCR in tempo reale."
+          }
         }
       }
     },
@@ -6919,6 +7495,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "相机"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fotocamera"
           }
         }
       }
@@ -6992,6 +7574,12 @@
             "state" : "translated",
             "value" : "VOCursor"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CursoreVO"
+          }
         }
       }
     },
@@ -7063,6 +7651,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "窗口"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finestra"
           }
         }
       }
@@ -7136,6 +7730,12 @@
             "state" : "translated",
             "value" : "选择一个窗口进行扫描。"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli una finestra da scansionare."
+          }
         }
       }
     },
@@ -7208,6 +7808,12 @@
             "state" : "translated",
             "value" : "关闭"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiudi"
+          }
         }
       }
     },
@@ -7276,6 +7882,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d, %d"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d, %d"
@@ -7352,6 +7964,12 @@
             "state" : "translated",
             "value" : "退出 VOCR 导航。"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esci dalla navigazione VOCR."
+          }
         }
       }
     },
@@ -7423,6 +8041,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@, %@ 扫描完成"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scansione terminata %@, %@"
           }
         }
       }
@@ -7496,6 +8120,12 @@
             "state" : "translated",
             "value" : "未找到内容"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non è stato trovato nulla"
+          }
         }
       }
     },
@@ -7567,6 +8197,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "目标窗口"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finestra di destinazione"
           }
         }
       }
@@ -7640,6 +8276,12 @@
             "state" : "translated",
             "value" : "未知应用"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App sconosciuta"
+          }
         }
       }
     },
@@ -7712,6 +8354,12 @@
             "state" : "translated",
             "value" : "未知窗口"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finestra sconosciuta"
+          }
         }
       }
     },
@@ -7783,6 +8431,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无标题"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senza titolo"
           }
         }
       }
@@ -8264,6 +8918,12 @@
             "state" : "translated",
             "value" : "保存后不会显示。"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non sarà mostrata dopo il salvataggio."
+          }
         }
       }
     },
@@ -8336,6 +8996,12 @@
             "state" : "translated",
             "value" : "https://"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://"
+          }
         }
       }
     },
@@ -8396,6 +9062,12 @@
             "state" : "translated",
             "value" : "你是一个有帮助的助手。"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sei un assistente utile."
+          }
         }
       }
     },
@@ -8455,6 +9127,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "请对图像进行全面而详细的分析。"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analizza l'immagine in modo completo e dettagliato."
           }
         }
       }
@@ -8528,6 +9206,12 @@
             "state" : "translated",
             "value" : "正在加载…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caricamento..."
+          }
         }
       }
     },
@@ -8599,6 +9283,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "模型"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modello"
           }
         }
       }
@@ -8672,6 +9362,12 @@
             "state" : "translated",
             "value" : "提供商"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Provider"
+          }
         }
       }
     },
@@ -8743,6 +9439,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "编辑预设"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica preset"
           }
         }
       }
@@ -8816,6 +9518,12 @@
             "state" : "translated",
             "value" : "新建预设"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuovo preset"
+          }
         }
       }
     },
@@ -8887,6 +9595,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "预设管理器"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestore preset"
           }
         }
       }
@@ -8960,6 +9674,12 @@
             "state" : "translated",
             "value" : "已取消。"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annullato."
+          }
         }
       }
     },
@@ -9031,6 +9751,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "搜索 OCR 文本"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerca testo OCR"
           }
         }
       }
@@ -9104,6 +9830,12 @@
             "state" : "translated",
             "value" : "未找到。"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non trovato."
+          }
         }
       }
     },
@@ -9175,6 +9907,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "询问"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiedi"
           }
         }
       }
@@ -9248,6 +9986,12 @@
             "state" : "translated",
             "value" : "开头"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inizio"
+          }
         }
       }
     },
@@ -9319,6 +10063,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "底部"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In fondo"
           }
         }
       }
@@ -9392,6 +10142,12 @@
             "state" : "translated",
             "value" : "捕捉相机"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fotocamera d'acquisizione"
+          }
         }
       }
     },
@@ -9463,6 +10219,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "向下"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giù"
           }
         }
       }
@@ -9536,6 +10298,12 @@
             "state" : "translated",
             "value" : "末尾"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fine"
+          }
         }
       }
     },
@@ -9607,6 +10375,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "退出导航"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esci dalla navigazione"
           }
         }
       }
@@ -9680,6 +10454,12 @@
             "state" : "translated",
             "value" : "探索"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esplora"
+          }
         }
       }
     },
@@ -9751,6 +10531,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "查找下一个"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trova successiva"
           }
         }
       }
@@ -9824,6 +10610,12 @@
             "state" : "translated",
             "value" : "查找上一个"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trova precedente"
+          }
         }
       }
     },
@@ -9895,6 +10687,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "查找文本"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trova Testo"
           }
         }
       }
@@ -9968,6 +10766,12 @@
             "state" : "translated",
             "value" : "识别对象"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Identifica oggetto"
+          }
         }
       }
     },
@@ -10039,6 +10843,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "向左"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sinistra"
           }
         }
       }
@@ -10112,6 +10922,12 @@
             "state" : "translated",
             "value" : "下一个字符"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carattere successivo"
+          }
         }
       }
     },
@@ -10183,6 +10999,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OCR VOCursor"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OCR CursoreVO"
           }
         }
       }
@@ -10256,6 +11078,12 @@
             "state" : "translated",
             "value" : "OCR 窗口"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OCR finestra"
+          }
         }
       }
     },
@@ -10327,6 +11155,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "上一个字符"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carattere precedente"
           }
         }
       }
@@ -10400,6 +11234,12 @@
             "state" : "translated",
             "value" : "实时 OCR"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OCR in tempo reale"
+          }
         }
       }
     },
@@ -10471,6 +11311,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "报告位置"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coordinate Posizione"
           }
         }
       }
@@ -10544,6 +11390,12 @@
             "state" : "translated",
             "value" : "向右"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Destra"
+          }
         }
       }
     },
@@ -10615,6 +11467,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "设置"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impostazioni"
           }
         }
       }
@@ -10688,6 +11546,12 @@
             "state" : "translated",
             "value" : "顶部"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In cima"
+          }
         }
       }
     },
@@ -10759,6 +11623,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "向上"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Su"
           }
         }
       }
@@ -10832,6 +11702,12 @@
             "state" : "translated",
             "value" : "自定义快捷键"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personalizza le scorciatoie"
+          }
         }
       }
     },
@@ -10904,6 +11780,12 @@
             "state" : "translated",
             "value" : "版本 %@ 已可用"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La versione %@ è ora disponibile"
+          }
         }
       }
     },
@@ -10975,6 +11857,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "有可用的新更新"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "È disponibile un nuovo aggiornamento"
           }
         }
       }

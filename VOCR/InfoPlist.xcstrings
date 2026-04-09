@@ -82,6 +82,12 @@
             "state" : "translated",
             "value" : "图像文件"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File immagine"
+          }
         }
       }
     },
@@ -154,6 +160,12 @@
             "state" : "translated",
             "value" : "朗读公告并截取 VoiceOver 光标下的屏幕"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leggi gli annunci e acquisisci uno screenshot in corrispondenza del cursore di VoiceOver"
+          }
         }
       }
     },
@@ -225,6 +237,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "拍摄一张照片供 VOCR 使用。"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scatta una foto da utilizzare con VOCR."
           }
         }
       }
