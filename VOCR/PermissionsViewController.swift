@@ -20,19 +20,6 @@ final class PermissionsViewController: NSViewController {
     private let detailFeaturesLabel = NSTextField()
     private let detailRequirementLabel = NSTextField()
 
-    private let refreshButton = NSButton(
-        title: NSLocalizedString(
-            "button.refresh", value: "Refresh Status", comment: "Button to refresh permission statuses"),
-        target: nil,
-        action: nil
-    )
-
-    private let closeButton = NSButton(
-        title: NSLocalizedString(
-            "button.close", value: "Close", comment: "Button to close window"),
-        target: nil,
-        action: nil
-    )
 
     // Data
     private var permissions: [PermissionsManager.Permission] = PermissionsManager.Permission.allCases
@@ -109,17 +96,6 @@ final class PermissionsViewController: NSViewController {
         // Setup detail panel
         setupDetailPanel()
 
-        // Setup buttons
-        refreshButton.target = self
-        refreshButton.action = #selector(refreshPressed)
-        refreshButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(refreshButton)
-
-        closeButton.target = self
-        closeButton.action = #selector(closePressed)
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(closeButton)
-
         // Layout constraints
         NSLayoutConstraint.activate([
             // Table view at top
@@ -128,20 +104,11 @@ final class PermissionsViewController: NSViewController {
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             scrollView.heightAnchor.constraint(equalToConstant: 120),
 
-            // Detail panel below table
+            // Detail panel below table, pinned to bottom
             detailPanel.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 20),
             detailPanel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             detailPanel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            detailPanel.heightAnchor.constraint(equalToConstant: 220),
-
-            // Buttons at bottom
-            refreshButton.topAnchor.constraint(equalTo: detailPanel.bottomAnchor, constant: 20),
-            refreshButton.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor, constant: -8),
-            refreshButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
-
-            closeButton.topAnchor.constraint(equalTo: detailPanel.bottomAnchor, constant: 20),
-            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            closeButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            detailPanel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
         ])
     }
 
@@ -213,13 +180,6 @@ final class PermissionsViewController: NSViewController {
         ])
     }
 
-    @objc private func refreshPressed() {
-        refreshStatuses()
-    }
-
-    @objc private func closePressed() {
-        view.window?.close()
-    }
 
     private func refreshStatuses() {
         statuses = PermissionsManager.shared.checkAllStatuses()
