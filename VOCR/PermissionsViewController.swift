@@ -21,7 +21,8 @@ final class PermissionsViewController: NSViewController {
     private let detailRequirementLabel = NSTextField()
 
     // Data
-    private var permissions: [PermissionsManager.Permission] = PermissionsManager.Permission.allCases
+    private var permissions: [PermissionsManager.Permission] = PermissionsManager.Permission
+        .allCases
     private var statuses: [PermissionsManager.Permission: PermissionsManager.PermissionStatus] = [:]
 
     // Column IDs
@@ -52,7 +53,8 @@ final class PermissionsViewController: NSViewController {
 
     override func viewDidDisappear() {
         super.viewDidDisappear()
-        NotificationCenter.default.removeObserver(self, name: NSApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.removeObserver(
+            self, name: NSApplication.didBecomeActiveNotification, object: nil)
     }
 
     @objc private func appDidBecomeActive() {
@@ -63,7 +65,8 @@ final class PermissionsViewController: NSViewController {
         // Configure table columns
         let permissionColumn = NSTableColumn(identifier: ColumnID.permission)
         permissionColumn.title = NSLocalizedString(
-            "column.permission", value: "Permission", comment: "Table column header for permission name")
+            "column.permission", value: "Permission",
+            comment: "Table column header for permission name")
         permissionColumn.width = 150
         tableView.addTableColumn(permissionColumn)
 
@@ -161,24 +164,35 @@ final class PermissionsViewController: NSViewController {
 
         NSLayoutConstraint.activate([
             detailTitleLabel.topAnchor.constraint(equalTo: detailPanel.topAnchor, constant: 12),
-            detailTitleLabel.leadingAnchor.constraint(equalTo: detailPanel.leadingAnchor, constant: 12),
-            detailTitleLabel.trailingAnchor.constraint(equalTo: detailPanel.trailingAnchor, constant: -12),
+            detailTitleLabel.leadingAnchor.constraint(
+                equalTo: detailPanel.leadingAnchor, constant: 12),
+            detailTitleLabel.trailingAnchor.constraint(
+                equalTo: detailPanel.trailingAnchor, constant: -12),
 
-            detailDescriptionLabel.topAnchor.constraint(equalTo: detailTitleLabel.bottomAnchor, constant: 8),
-            detailDescriptionLabel.leadingAnchor.constraint(equalTo: detailPanel.leadingAnchor, constant: 12),
-            detailDescriptionLabel.trailingAnchor.constraint(equalTo: detailPanel.trailingAnchor, constant: -12),
+            detailDescriptionLabel.topAnchor.constraint(
+                equalTo: detailTitleLabel.bottomAnchor, constant: 8),
+            detailDescriptionLabel.leadingAnchor.constraint(
+                equalTo: detailPanel.leadingAnchor, constant: 12),
+            detailDescriptionLabel.trailingAnchor.constraint(
+                equalTo: detailPanel.trailingAnchor, constant: -12),
 
-            detailFeaturesLabel.topAnchor.constraint(equalTo: detailDescriptionLabel.bottomAnchor, constant: 8),
-            detailFeaturesLabel.leadingAnchor.constraint(equalTo: detailPanel.leadingAnchor, constant: 12),
-            detailFeaturesLabel.trailingAnchor.constraint(equalTo: detailPanel.trailingAnchor, constant: -12),
+            detailFeaturesLabel.topAnchor.constraint(
+                equalTo: detailDescriptionLabel.bottomAnchor, constant: 8),
+            detailFeaturesLabel.leadingAnchor.constraint(
+                equalTo: detailPanel.leadingAnchor, constant: 12),
+            detailFeaturesLabel.trailingAnchor.constraint(
+                equalTo: detailPanel.trailingAnchor, constant: -12),
 
-            detailRequirementLabel.topAnchor.constraint(equalTo: detailFeaturesLabel.bottomAnchor, constant: 12),
-            detailRequirementLabel.leadingAnchor.constraint(equalTo: detailPanel.leadingAnchor, constant: 12),
-            detailRequirementLabel.trailingAnchor.constraint(equalTo: detailPanel.trailingAnchor, constant: -12),
-            detailRequirementLabel.bottomAnchor.constraint(lessThanOrEqualTo: detailPanel.bottomAnchor, constant: -12),
+            detailRequirementLabel.topAnchor.constraint(
+                equalTo: detailFeaturesLabel.bottomAnchor, constant: 12),
+            detailRequirementLabel.leadingAnchor.constraint(
+                equalTo: detailPanel.leadingAnchor, constant: 12),
+            detailRequirementLabel.trailingAnchor.constraint(
+                equalTo: detailPanel.trailingAnchor, constant: -12),
+            detailRequirementLabel.bottomAnchor.constraint(
+                lessThanOrEqualTo: detailPanel.bottomAnchor, constant: -12),
         ])
     }
-
 
     private func refreshStatuses() {
         statuses = PermissionsManager.shared.checkAllStatuses()
@@ -190,9 +204,9 @@ final class PermissionsViewController: NSViewController {
 
             // Update detail panel if notifications is selected
             if let selectedRow = self?.tableView.selectedRow,
-               selectedRow >= 0,
-               selectedRow < (self?.permissions.count ?? 0),
-               self?.permissions[selectedRow] == .notifications
+                selectedRow >= 0,
+                selectedRow < (self?.permissions.count ?? 0),
+                self?.permissions[selectedRow] == .notifications
             {
                 self?.updateDetailPanel(for: .notifications)
             }
@@ -223,7 +237,8 @@ final class PermissionsViewController: NSViewController {
         switch (permission, status) {
         case (.accessibility, .granted):
             return NSLocalizedString(
-                "button.permission.granted", value: "✓ Granted", comment: "Button text when permission is granted")
+                "button.permission.granted", value: "✓ Granted",
+                comment: "Button text when permission is granted")
         case (.accessibility, _):
             return NSLocalizedString(
                 "button.permission.opensystemprefs", value: "Open System Settings",
@@ -231,7 +246,8 @@ final class PermissionsViewController: NSViewController {
 
         case (.screenRecording, .granted):
             return NSLocalizedString(
-                "button.permission.granted", value: "✓ Granted", comment: "Button text when permission is granted")
+                "button.permission.granted", value: "✓ Granted",
+                comment: "Button text when permission is granted")
         case (.screenRecording, _):
             return NSLocalizedString(
                 "button.permission.opensystemprefs", value: "Open System Settings",
@@ -239,10 +255,12 @@ final class PermissionsViewController: NSViewController {
 
         case (.notifications, .granted):
             return NSLocalizedString(
-                "button.permission.granted", value: "✓ Granted", comment: "Button text when permission is granted")
+                "button.permission.granted", value: "✓ Granted",
+                comment: "Button text when permission is granted")
         case (.notifications, .notDetermined):
             return NSLocalizedString(
-                "button.permission.enable", value: "Enable", comment: "Button text to enable permission")
+                "button.permission.enable", value: "Enable",
+                comment: "Button text to enable permission")
         case (.notifications, _):
             return NSLocalizedString(
                 "button.permission.opensystemprefs", value: "Open System Settings",
@@ -250,7 +268,8 @@ final class PermissionsViewController: NSViewController {
 
         case (.voiceOver, .granted):
             return NSLocalizedString(
-                "button.permission.granted", value: "✓ Granted", comment: "Button text when permission is granted")
+                "button.permission.granted", value: "✓ Granted",
+                comment: "Button text when permission is granted")
         case (.voiceOver, _):
             return NSLocalizedString(
                 "button.permission.opensystemprefs", value: "Open System Settings",
@@ -337,7 +356,9 @@ extension PermissionsViewController: NSTableViewDataSource, NSTableViewDelegate 
             return cellView
 
         case ColumnID.action:
-            let button = NSButton(title: actionButtonTitle(for: permission), target: self, action: #selector(handleActionButton(_:)))
+            let button = NSButton(
+                title: actionButtonTitle(for: permission), target: self,
+                action: #selector(handleActionButton(_:)))
             button.bezelStyle = .rounded
             button.isEnabled = (status != .granted && status != .restricted)
             return button

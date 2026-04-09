@@ -28,7 +28,9 @@ class MacCamera: NSObject, AVCapturePhotoCaptureDelegate {
                 }
             }
         case .denied, .restricted:
-            if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Camera") {
+            if let url = URL(
+                string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Camera")
+            {
                 NSWorkspace.shared.open(url)
             }
         @unknown default:

@@ -155,14 +155,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             "permissions.missing.message",
             value: "Some required permissions are not set up. VOCR may not function correctly.",
             comment: "Message for missing permissions alert")
-        alert.addButton(withTitle: NSLocalizedString(
-            "permissions.missing.open",
-            value: "Open Permissions",
-            comment: "Button to open permissions window"))
-        alert.addButton(withTitle: NSLocalizedString(
-            "permissions.missing.later",
-            value: "Later",
-            comment: "Button to dismiss missing permissions alert"))
+        alert.addButton(
+            withTitle: NSLocalizedString(
+                "permissions.missing.open",
+                value: "Open Permissions",
+                comment: "Button to open permissions window"))
+        alert.addButton(
+            withTitle: NSLocalizedString(
+                "permissions.missing.later",
+                value: "Later",
+                comment: "Button to dismiss missing permissions alert"))
 
         if alert.runModal() == .alertFirstButtonReturn {
             openPermissionsWindow()
@@ -177,7 +179,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             comment: "Title for permissions onboarding alert")
         alert.informativeText = NSLocalizedString(
             "onboarding.permissions.message",
-            value: "VOCR needs permissions to provide OCR and accessibility features. Would you like to set them up now?",
+            value:
+                "VOCR needs permissions to provide OCR and accessibility features. Would you like to set them up now?",
             comment: "Message for permissions onboarding alert")
         alert.addButton(
             withTitle: NSLocalizedString(

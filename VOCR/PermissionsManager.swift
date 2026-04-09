@@ -279,9 +279,9 @@ final class PermissionsManager {
             let result = AEDeterminePermissionToAutomateTarget(
                 descriptor.aeDesc, typeWildCard, typeWildCard, false)
             switch result {
-            case noErr:                             return .granted
-            case OSStatus(errAEEventNotPermitted):  return .denied
-            default:                                return .notDetermined
+            case noErr: return .granted
+            case OSStatus(errAEEventNotPermitted): return .denied
+            default: return .notDetermined
             }
         }
         return .notDetermined
@@ -328,7 +328,8 @@ final class PermissionsManager {
     func requestVoiceOver() {
         // Trigger TCC prompts for both System Events (used internally to detect if VoiceOver
         // is running) and VoiceOver itself by sending harmless real Apple Events.
-        let systemEventsScript = NSAppleScript(source: "tell application \"System Events\" to get name")
+        let systemEventsScript = NSAppleScript(
+            source: "tell application \"System Events\" to get name")
         var error: NSDictionary?
         systemEventsScript?.executeAndReturnError(&error)
 
@@ -359,16 +360,20 @@ final class PermissionsManager {
         case .accessibility:
             // macOS 13+ uses new Settings app
             if #available(macOS 13, *) {
-                prefPane = "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
+                prefPane =
+                    "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
             } else {
-                prefPane = "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
+                prefPane =
+                    "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
             }
 
         case .screenRecording:
             if #available(macOS 13, *) {
-                prefPane = "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture"
+                prefPane =
+                    "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture"
             } else {
-                prefPane = "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture"
+                prefPane =
+                    "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture"
             }
 
         case .notifications:

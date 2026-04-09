@@ -211,10 +211,12 @@ enum Settings {
         //		settingsMenu.addItem(newShortcutMenuItem)
 
         let languageMenu = NSMenu()
-        let currentLanguage = UserDefaults.standard.array(forKey: "AppleLanguages")?.first as? String
+        let currentLanguage =
+            UserDefaults.standard.array(forKey: "AppleLanguages")?.first as? String
 
         let systemItem = NSMenuItem(
-            title: NSLocalizedString("menu.language.system", value: "System Default", comment: "Use system language"),
+            title: NSLocalizedString(
+                "menu.language.system", value: "System Default", comment: "Use system language"),
             action: #selector(target.selectLanguage(_:)),
             keyEquivalent: ""
         )
