@@ -76,6 +76,12 @@
             "state" : "translated",
             "value" : "Preset"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forhåndsinnstillinger"
+          }
         }
       }
     },
@@ -153,6 +159,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "VOCR pronto!"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR er klar!"
           }
         }
       }
@@ -232,6 +244,12 @@
             "state" : "translated",
             "value" : "Aggiungi"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Legg til"
+          }
         }
       }
     },
@@ -309,6 +327,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chiedi"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spør"
           }
         }
       }
@@ -388,6 +412,12 @@
             "state" : "translated",
             "value" : "Annulla"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avbryt"
+          }
         }
       }
     },
@@ -466,6 +496,12 @@
             "state" : "translated",
             "value" : "Crea"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lag ny"
+          }
         }
       }
     },
@@ -543,6 +579,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Elimina"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slett"
           }
         }
       }
@@ -700,6 +742,12 @@
             "state" : "translated",
             "value" : "Modifica"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rediger"
+          }
         }
       }
     },
@@ -777,6 +825,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dall'inizio"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fra starten"
           }
         }
       }
@@ -856,6 +910,12 @@
             "state" : "translated",
             "value" : "Dalla posizione corrente"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fra nåværende plassering"
+          }
         }
       }
     },
@@ -933,6 +993,12 @@
             "state" : "translated",
             "value" : "OK"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
         }
       }
     },
@@ -944,6 +1010,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Enable"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tillat"
           }
         }
       }
@@ -957,6 +1029,12 @@
             "state" : "new",
             "value" : "✓ Granted"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Tillatelse gitt"
+          }
         }
       }
     },
@@ -968,6 +1046,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Open System Settings"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åpne Systeminnstillinger"
           }
         }
       }
@@ -1047,6 +1131,12 @@
             "state" : "translated",
             "value" : "Ripristina e riavvia"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilbakestill og start på nytt"
+          }
         }
       }
     },
@@ -1125,6 +1215,12 @@
             "state" : "translated",
             "value" : "Salva"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lagre"
+          }
         }
       }
     },
@@ -1136,6 +1232,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Action"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handling"
           }
         }
       }
@@ -1215,6 +1317,12 @@
             "state" : "translated",
             "value" : "Tasto di scelta rapida"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snarvei"
+          }
         }
       }
     },
@@ -1292,6 +1400,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Modello"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modell"
           }
         }
       }
@@ -1371,6 +1485,12 @@
             "state" : "translated",
             "value" : "Nome"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navn"
+          }
         }
       }
     },
@@ -1383,6 +1503,12 @@
             "state" : "new",
             "value" : "Permission"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tillatelse"
+          }
         }
       }
     },
@@ -1393,6 +1519,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Status"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Status"
           }
         }
@@ -1473,6 +1605,12 @@
             "state" : "translated",
             "value" : "Chiedo a %@... Attendere prego..."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spør %@... Vennligst vent..."
+          }
         }
       }
     },
@@ -1550,6 +1688,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scegli una fotocamera da utilizzare con VOCR."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velg hvilket kamera VOCR skal bruke."
           }
         }
       }
@@ -1629,6 +1773,12 @@
             "state" : "translated",
             "value" : "Fotocamera"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kamera"
+          }
         }
       }
     },
@@ -1706,6 +1856,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sconosciuto"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ukjent"
           }
         }
       }
@@ -1785,6 +1941,12 @@
             "state" : "translated",
             "value" : "Aggiorna i prompt utente e di sistema utilizzati per la modalità Esplorazione."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oppdater system- og brukerpromptene som brukes i Utforsker-modus."
+          }
         }
       }
     },
@@ -1862,6 +2024,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prompt di sistema"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System Prompt"
           }
         }
       }
@@ -1941,6 +2109,12 @@
             "state" : "translated",
             "value" : "Modifica i Prompt d'esplorazione"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rediger prompts for Utforsker"
+          }
         }
       }
     },
@@ -2018,6 +2192,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prompt utente"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brukerprompt"
           }
         }
       }
@@ -2097,6 +2277,12 @@
             "state" : "translated",
             "value" : "Follow up"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Følg opp"
+          }
         }
       }
     },
@@ -2173,6 +2359,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tutte le scorciatoie sono già state aggiunte."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle snarveier har allerede blitt lagt til."
           }
         }
       }
@@ -2252,6 +2444,12 @@
             "state" : "translated",
             "value" : "Nome della scorciatoia"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snarveisnavn"
+          }
         }
       }
     },
@@ -2329,6 +2527,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nuova scorciatoia"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ny snarvei"
           }
         }
       }
@@ -2408,6 +2612,12 @@
             "state" : "translated",
             "value" : "Non assegnata"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikke tildelt"
+          }
         }
       }
     },
@@ -2482,6 +2692,12 @@
           }
         },
         "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prompt"
+          }
+        },
+        "nb" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prompt"
@@ -2564,6 +2780,12 @@
             "state" : "translated",
             "value" : "Questo cancellerà tutte le impostazioni e i preset. L'operazione non può essere annullata."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dette vil slette alle innstillinger og forhåndsinnstillinger. Dette kan ikke angres."
+          }
         }
       }
     },
@@ -2641,6 +2863,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ripristinare?"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilbakestill"
           }
         }
       }
@@ -2720,6 +2948,12 @@
             "state" : "translated",
             "value" : "Scegli una destinazione e salva il tuo file."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velg plassering og lagre filen."
+          }
         }
       }
     },
@@ -2797,6 +3031,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Salva Il Tuo File"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lagre filen."
           }
         }
       }
@@ -2876,6 +3116,12 @@
             "state" : "translated",
             "value" : "Scegli un dispositivo per il feedback audio posizionale."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velg lydutgang for retningsbasert lyd"
+          }
         }
       }
     },
@@ -2953,6 +3199,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uscita audio"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lydutgang"
           }
         }
       }
@@ -3032,6 +3284,12 @@
             "state" : "translated",
             "value" : "Impossibile accedere a %@, %@"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fikk ikke tilgang til %@, %@"
+          }
         }
       }
     },
@@ -3109,6 +3367,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Impossibile accedere a %@, %@"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fikk ikke tilgang til %@, %@"
           }
         }
       }
@@ -3188,6 +3452,12 @@
             "state" : "translated",
             "value" : "Errore di connessione"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilkoblingsfeil"
+          }
         }
       }
     },
@@ -3265,6 +3535,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Errore di decodifica JSON"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feil ved dekoding av JSON"
           }
         }
       }
@@ -3344,6 +3620,12 @@
             "state" : "translated",
             "value" : "Errore di decodifica dei modelli JSON"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feil ved dekoding av JSON for modeller"
+          }
         }
       }
     },
@@ -3421,6 +3703,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Codice di stato %d: %@"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statuskode %d: %@"
           }
         }
       }
@@ -3500,6 +3788,12 @@
             "state" : "translated",
             "value" : "Errore HTTP"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HTTP Feil"
+          }
         }
       }
     },
@@ -3577,6 +3871,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "URL non valido"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ugyldig URL"
           }
         }
       }
@@ -3656,6 +3956,12 @@
             "state" : "translated",
             "value" : "Impossibile analizzare la stringa JSON. Riprova."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kan ikke tolke JSON-strengen. Prøv igjen."
+          }
         }
       }
     },
@@ -3733,6 +4039,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nessun dato ricevuto dal server."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingen data mottat fra server."
           }
         }
       }
@@ -3812,6 +4124,12 @@
             "state" : "translated",
             "value" : "Errore: impossibile analizzare JSON."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feil: Kunne ikke tolke JSON."
+          }
         }
       }
     },
@@ -3878,6 +4196,12 @@
             "state" : "translated",
             "value" : "Impossibile recuperare l'elenco dei modelli dal server. Si prega di inserire manualmente il nome del modello da usare."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kan ikke hente listen over modeller fra serveren. Skriv inn modellnavnet du vil bruke manuelt."
+          }
         }
       }
     },
@@ -3943,6 +4267,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Impossibile recuperare i modelli."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunne ikke hente modeller."
           }
         }
       }
@@ -4022,6 +4352,12 @@
             "state" : "translated",
             "value" : "Impossibile salvare il preset."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunne ikke lagre forhåndsinnstilling."
+          }
         }
       }
     },
@@ -4100,6 +4436,12 @@
             "state" : "translated",
             "value" : "Oggetto di risposta HTTP non valido"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingen gyldig HTTP-respons."
+          }
         }
       }
     },
@@ -4177,6 +4519,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Risposta non valida dal server"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ugyldig respons fra server."
           }
         }
       }
@@ -4322,6 +4670,12 @@
             "state" : "translated",
             "value" : "Chiave API:"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API-nøkkel:"
+          }
         }
       }
     },
@@ -4399,6 +4753,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chiave API"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API-nøkkel"
           }
         }
       }
@@ -4478,6 +4838,12 @@
             "state" : "translated",
             "value" : "Nome del modello"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modellnavn"
+          }
         }
       }
     },
@@ -4555,6 +4921,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nome:"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navn:"
           }
         }
       }
@@ -4634,6 +5006,12 @@
             "state" : "translated",
             "value" : "Nome"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navn"
+          }
         }
       }
     },
@@ -4711,6 +5089,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prompt di sistema:"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System Prompt:"
           }
         }
       }
@@ -4790,6 +5174,12 @@
             "state" : "translated",
             "value" : "Prompt di sistema"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System Prompt"
+          }
         }
       }
     },
@@ -4867,6 +5257,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "URL del Provider"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leverandør-URL"
           }
         }
       }
@@ -4946,6 +5342,12 @@
             "state" : "translated",
             "value" : "Prompt utente:"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brukerprompt:"
+          }
         }
       }
     },
@@ -5023,6 +5425,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prompt utente"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brukerprompt"
           }
         }
       }
@@ -5102,6 +5510,12 @@
             "state" : "translated",
             "value" : "Informazioni..."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om"
+          }
         }
       }
     },
@@ -5179,6 +5593,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Controlla automaticamente gli aggiornamenti"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sjekk automatisk etter oppdateringer"
           }
         }
       }
@@ -5258,6 +5678,12 @@
             "state" : "translated",
             "value" : "Installa automaticamente gli aggiornamenti"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installer oppdateringer automatisk"
+          }
         }
       }
     },
@@ -5335,6 +5761,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Controlla gli aggiornamenti"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sjekk etter oppdateringer"
           }
         }
       }
@@ -5414,6 +5846,12 @@
             "state" : "translated",
             "value" : "Scegli la fotocamera..."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velg Kamera."
+          }
         }
       }
     },
@@ -5491,6 +5929,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chiudi menu"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lukk meny"
           }
         }
       }
@@ -5570,6 +6014,12 @@
             "state" : "translated",
             "value" : "Scarica la versione beta"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last ned beta-versjoner"
+          }
         }
       }
     },
@@ -5648,6 +6098,12 @@
             "state" : "translated",
             "value" : "Modifica i Prompt d'esplorazione..."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rediger Utforsker-prompts"
+          }
         }
       }
     },
@@ -5672,6 +6128,12 @@
             "state" : "translated",
             "value" : "Lingua"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Språk"
+          }
         }
       }
     },
@@ -5695,6 +6157,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Predefinita del sistema"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Systemstandard"
           }
         }
       }
@@ -5774,6 +6242,12 @@
             "state" : "translated",
             "value" : "Nuove scorciatoie"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ny snarvei"
+          }
         }
       }
     },
@@ -5851,6 +6325,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gestione preset..."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Behandle forhåndsinnstillinger..."
           }
         }
       }
@@ -5930,6 +6410,12 @@
             "state" : "translated",
             "value" : "Preset"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forhåndsinnstillinger"
+          }
         }
       }
     },
@@ -6007,6 +6493,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Esci"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avslutt"
           }
         }
       }
@@ -6086,6 +6578,12 @@
             "state" : "translated",
             "value" : "Ripristina..."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilbakestill"
+          }
         }
       }
     },
@@ -6163,6 +6661,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Salva l'ultima immagine"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lagre Siste Bilde"
           }
         }
       }
@@ -6242,6 +6746,12 @@
             "state" : "translated",
             "value" : "Salva il risultato OCR..."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lagre resultat fra OCR..."
+          }
         }
       }
     },
@@ -6319,6 +6829,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Impostazioni"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Innstillinger"
           }
         }
       }
@@ -6398,6 +6914,12 @@
             "state" : "translated",
             "value" : "Scansione automatica"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan Automatisk"
+          }
         }
       }
     },
@@ -6475,6 +6997,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rileva oggetti"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oppdag objekter"
           }
         }
       }
@@ -6554,6 +7082,12 @@
             "state" : "translated",
             "value" : "Avvio al login"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starte ved pålogging"
+          }
         }
       }
     },
@@ -6631,6 +7165,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Log"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logging"
           }
         }
       }
@@ -6710,6 +7250,12 @@
             "state" : "translated",
             "value" : "Sposta Il Mouse"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flytt musepekeren"
+          }
         }
       }
     },
@@ -6721,6 +7267,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Permissions…"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tillatelser"
           }
         }
       }
@@ -6800,6 +7352,12 @@
             "state" : "translated",
             "value" : "Audio posizionale"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retningsbasert lyd"
+          }
         }
       }
     },
@@ -6877,6 +7435,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ripristina posizione dopo la scansione"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilbakestill posisjon etter skanning"
           }
         }
       }
@@ -6956,6 +7520,12 @@
             "state" : "translated",
             "value" : "Finestra di destinazione"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Målvindu"
+          }
         }
       }
     },
@@ -7033,6 +7603,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Usa il prompt del preset"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bruk forhåndsinnstilt prompt"
           }
         }
       }
@@ -7112,6 +7688,12 @@
             "state" : "translated",
             "value" : "Scorciatoie..."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snarveier"
+          }
         }
       }
     },
@@ -7189,6 +7771,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uscita audio..."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lydutgang"
           }
         }
       }
@@ -7268,6 +7856,12 @@
             "state" : "translated",
             "value" : "Aggiornamenti"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oppdateringer"
+          }
         }
       }
     },
@@ -7345,6 +7939,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Avvio l'OCR in tempo reale."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sanntids-OCR startet."
           }
         }
       }
@@ -7424,6 +8024,12 @@
             "state" : "translated",
             "value" : "Arresto dell'OCR in tempo reale."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stopper sanntids-OCR."
+          }
         }
       }
     },
@@ -7501,6 +8107,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fotocamera"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kamera"
           }
         }
       }
@@ -7580,6 +8192,12 @@
             "state" : "translated",
             "value" : "CursoreVO"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VoiceOver markør"
+          }
         }
       }
     },
@@ -7657,6 +8275,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Finestra"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vindu"
           }
         }
       }
@@ -7736,6 +8360,12 @@
             "state" : "translated",
             "value" : "Scegli una finestra da scansionare."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velg vinduet som skal scannes."
+          }
         }
       }
     },
@@ -7814,6 +8444,12 @@
             "state" : "translated",
             "value" : "Chiudi"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lukk"
+          }
         }
       }
     },
@@ -7888,6 +8524,12 @@
           }
         },
         "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d, %d"
+          }
+        },
+        "nb" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d, %d"
@@ -7970,6 +8612,12 @@
             "state" : "translated",
             "value" : "Esci dalla navigazione VOCR."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avslutter OCR navigasjon."
+          }
         }
       }
     },
@@ -8047,6 +8695,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scansione terminata %@, %@"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ferdig å scanne %@, %@"
           }
         }
       }
@@ -8126,6 +8780,12 @@
             "state" : "translated",
             "value" : "Non è stato trovato nulla"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingenting funnet"
+          }
         }
       }
     },
@@ -8203,6 +8863,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Finestra di destinazione"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Målvindu"
           }
         }
       }
@@ -8282,6 +8948,12 @@
             "state" : "translated",
             "value" : "App sconosciuta"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ukjent app"
+          }
         }
       }
     },
@@ -8359,6 +9031,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Finestra sconosciuta"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ukjent vindu"
           }
         }
       }
@@ -8438,6 +9116,12 @@
             "state" : "translated",
             "value" : "Senza titolo"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingen tittel"
+          }
         }
       }
     },
@@ -8449,6 +9133,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "VOCR needs permissions to provide OCR and accessibility features. Would you like to set them up now?"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR trenger tillatelser for å kunne bruke OCR og tilgjengelighetsfunksjoner. Vil du konfigurere dem nå?"
           }
         }
       }
@@ -8462,6 +9152,12 @@
             "state" : "new",
             "value" : "Set Up Permissions"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konfigurer tillatelser"
+          }
         }
       }
     },
@@ -8473,6 +9169,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Skip for Now"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hopp over for nå"
           }
         }
       }
@@ -8486,6 +9188,12 @@
             "state" : "new",
             "value" : "Welcome to VOCR"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velkommen til VOCR"
+          }
         }
       }
     },
@@ -8498,6 +9206,12 @@
             "state" : "new",
             "value" : "VOCR needs Accessibility access to:"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR trenger tilgang til Tilgjengelighet for å:"
+          }
         }
       }
     },
@@ -8508,6 +9222,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Read text from your screen for OCR"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Read text from your screen for OCR"
           }
         }
@@ -8522,6 +9242,12 @@
             "state" : "new",
             "value" : "Control VoiceOver cursor position"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sty­re VoiceOver-markøren"
+          }
         }
       }
     },
@@ -8533,6 +9259,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Take screenshots under the VoiceOver cursor"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta skjermbilde ved VoiceOver-markøren"
           }
         }
       }
@@ -8546,6 +9278,12 @@
             "state" : "new",
             "value" : "Interact with window content"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Håndtere vindusinnhold"
+          }
         }
       }
     },
@@ -8557,6 +9295,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Accessibility"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilgjengelighet"
           }
         }
       }
@@ -8570,6 +9314,12 @@
             "state" : "new",
             "value" : "VOCR needs Notifications to:"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR trenger å sende varsler for å:"
+          }
         }
       }
     },
@@ -8581,6 +9331,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Alert you when updates are available"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varsle deg når oppdateringer er tilgjengelige"
           }
         }
       }
@@ -8594,6 +9350,12 @@
             "state" : "new",
             "value" : "Show OCR completion notifications"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vise varsler når OCR er fullført"
+          }
         }
       }
     },
@@ -8605,6 +9367,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Provide background task updates"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gi oppdateringer om oppgaver i bakgrunnen"
           }
         }
       }
@@ -8618,6 +9386,12 @@
             "state" : "new",
             "value" : "Notifications"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varslinger"
+          }
         }
       }
     },
@@ -8629,6 +9403,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "This permission is optional but enhances functionality."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denne tillatelsen er valgfri"
           }
         }
       }
@@ -8642,6 +9422,12 @@
             "state" : "new",
             "value" : "This permission is required for core OCR functionality."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denne tillatelsen er påkrevd for grunnleggende OCR-funksjonalitet."
+          }
         }
       }
     },
@@ -8653,6 +9439,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "VOCR needs Screen Recording access to:"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR trenger tilgang til Skjermopptak for å:"
           }
         }
       }
@@ -8666,6 +9458,12 @@
             "state" : "new",
             "value" : "Capture screen content for OCR"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta opp skjerminnhold for OCR"
+          }
         }
       }
     },
@@ -8677,6 +9475,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Take screenshots of windows and displays"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta skjermbilder av vinduer og skjermer"
           }
         }
       }
@@ -8690,6 +9494,12 @@
             "state" : "new",
             "value" : "Extract text from screen regions"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hente ut tekst fra områder på skjermen"
+          }
         }
       }
     },
@@ -8701,6 +9511,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Screen Recording"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skjermopptak"
           }
         }
       }
@@ -8714,6 +9530,12 @@
             "state" : "new",
             "value" : "✗ Unset"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikke angitt"
+          }
         }
       }
     },
@@ -8725,6 +9547,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "✓ Granted"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tillatt"
           }
         }
       }
@@ -8738,6 +9566,12 @@
             "state" : "new",
             "value" : "⚠️ Not Set"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ Ikke angitt"
+          }
         }
       }
     },
@@ -8749,6 +9583,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "🚫 Restricted"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚫 Begrenset"
           }
         }
       }
@@ -8762,6 +9602,12 @@
             "state" : "new",
             "value" : "VOCR needs VoiceOver access to:"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR trenger tilgang til VoiceOver for å:"
+          }
         }
       }
     },
@@ -8773,6 +9619,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Speak announcements through VoiceOver"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lese opp varslinger med VoiceOver"
           }
         }
       }
@@ -8786,6 +9638,12 @@
             "state" : "new",
             "value" : "Control VoiceOver cursor and navigation"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sty­re VoiceOver-markøren og navigasjonen"
+          }
         }
       }
     },
@@ -8798,6 +9656,12 @@
             "state" : "new",
             "value" : "Read the currently focused element via VoiceOver"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lese det fokuserte elementet med VoiceOver"
+          }
         }
       }
     },
@@ -8808,6 +9672,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "VoiceOver"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "VoiceOver"
           }
         }
@@ -8822,6 +9692,12 @@
             "state" : "new",
             "value" : "Later"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senere"
+          }
         }
       }
     },
@@ -8833,6 +9709,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Some required permissions are not set up. VOCR may not function correctly."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noen nødvendige tillatelser er ikke konfigurert. VOCR fungerer kanskje ikke som den skal."
           }
         }
       }
@@ -8846,6 +9728,12 @@
             "state" : "new",
             "value" : "Open Permissions"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åpne Tillatelser"
+          }
         }
       }
     },
@@ -8857,6 +9745,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Permissions Required"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tillatelser er påkrevd"
           }
         }
       }
@@ -8923,6 +9817,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Non sarà mostrata dopo il salvataggio."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vises ikke etter lagring."
           }
         }
       }
@@ -9002,6 +9902,12 @@
             "state" : "translated",
             "value" : "https://"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://"
+          }
         }
       }
     },
@@ -9068,6 +9974,12 @@
             "state" : "translated",
             "value" : "Sei un assistente utile."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du er en hjelpsom assistent."
+          }
         }
       }
     },
@@ -9133,6 +10045,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Analizza l'immagine in modo completo e dettagliato."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analyser bildet grundig og detaljert."
           }
         }
       }
@@ -9212,6 +10130,12 @@
             "state" : "translated",
             "value" : "Caricamento..."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laster..."
+          }
         }
       }
     },
@@ -9289,6 +10213,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Modello"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modell"
           }
         }
       }
@@ -9368,6 +10298,12 @@
             "state" : "translated",
             "value" : "Provider"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leverandør"
+          }
         }
       }
     },
@@ -9445,6 +10381,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Modifica preset"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rediger Forhåndsinnstilling"
           }
         }
       }
@@ -9524,6 +10466,12 @@
             "state" : "translated",
             "value" : "Nuovo preset"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ny Forhåndsinnstilling"
+          }
         }
       }
     },
@@ -9601,6 +10549,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gestore preset"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forhåndsinnstillinger"
           }
         }
       }
@@ -9680,6 +10634,12 @@
             "state" : "translated",
             "value" : "Annullato."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avbrudt"
+          }
         }
       }
     },
@@ -9757,6 +10717,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cerca testo OCR"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Søk i OCR tekst"
           }
         }
       }
@@ -9836,6 +10802,12 @@
             "state" : "translated",
             "value" : "Non trovato."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikke funnet"
+          }
         }
       }
     },
@@ -9913,6 +10885,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chiedi"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spør"
           }
         }
       }
@@ -9992,6 +10970,12 @@
             "state" : "translated",
             "value" : "Inizio"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starten"
+          }
         }
       }
     },
@@ -10069,6 +11053,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "In fondo"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bunden"
           }
         }
       }
@@ -10148,6 +11138,12 @@
             "state" : "translated",
             "value" : "Fotocamera d'acquisizione"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta bilde med kamera"
+          }
         }
       }
     },
@@ -10225,6 +11221,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Giù"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ned"
           }
         }
       }
@@ -10304,6 +11306,12 @@
             "state" : "translated",
             "value" : "Fine"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slutten"
+          }
         }
       }
     },
@@ -10381,6 +11389,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Esci dalla navigazione"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Går ut av navigasjon"
           }
         }
       }
@@ -10460,6 +11474,12 @@
             "state" : "translated",
             "value" : "Esplora"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utforsk"
+          }
         }
       }
     },
@@ -10537,6 +11557,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Trova successiva"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finn neste"
           }
         }
       }
@@ -10616,6 +11642,12 @@
             "state" : "translated",
             "value" : "Trova precedente"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finn forrige"
+          }
         }
       }
     },
@@ -10693,6 +11725,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Trova Testo"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finn tekst"
           }
         }
       }
@@ -10772,6 +11810,12 @@
             "state" : "translated",
             "value" : "Identifica oggetto"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Identifiser objekter"
+          }
         }
       }
     },
@@ -10849,6 +11893,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sinistra"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Venstre"
           }
         }
       }
@@ -10928,6 +11978,12 @@
             "state" : "translated",
             "value" : "Carattere successivo"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neste bokstav"
+          }
         }
       }
     },
@@ -11005,6 +12061,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OCR CursoreVO"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OCR av VoiceOver markør"
           }
         }
       }
@@ -11084,6 +12146,12 @@
             "state" : "translated",
             "value" : "OCR finestra"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OCR av vindu"
+          }
         }
       }
     },
@@ -11161,6 +12229,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Carattere precedente"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forrige bokstav"
           }
         }
       }
@@ -11240,6 +12314,12 @@
             "state" : "translated",
             "value" : "OCR in tempo reale"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sanntids-OCR"
+          }
         }
       }
     },
@@ -11317,6 +12397,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Coordinate Posizione"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oppgi plassering"
           }
         }
       }
@@ -11396,6 +12482,12 @@
             "state" : "translated",
             "value" : "Destra"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Høyre"
+          }
         }
       }
     },
@@ -11473,6 +12565,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Impostazioni"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Innstillinger"
           }
         }
       }
@@ -11552,6 +12650,12 @@
             "state" : "translated",
             "value" : "In cima"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starten"
+          }
         }
       }
     },
@@ -11629,6 +12733,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Su"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opp"
           }
         }
       }
@@ -11708,6 +12818,12 @@
             "state" : "translated",
             "value" : "Personalizza le scorciatoie"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilpass snarveier"
+          }
         }
       }
     },
@@ -11785,6 +12901,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "La versione %@ è ora disponibile"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versjon %@ er nå tilgjengelig"
           }
         }
       }
@@ -11864,6 +12986,12 @@
             "state" : "translated",
             "value" : "È disponibile un nuovo aggiornamento"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En ny oppdatering er tilgjengelig"
+          }
         }
       }
     },
@@ -11875,6 +13003,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "VOCR Permissions"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR tillatelser"
           }
         }
       }

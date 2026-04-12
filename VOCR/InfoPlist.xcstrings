@@ -10,6 +10,12 @@
             "state" : "new",
             "value" : "VOCR"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR"
+          }
         }
       }
     },
@@ -87,6 +93,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "File immagine"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bildefiler"
           }
         }
       }
@@ -166,6 +178,12 @@
             "state" : "translated",
             "value" : "Leggi gli annunci e acquisisci uno screenshot in corrispondenza del cursore di VoiceOver"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les opp meldinger og ta skjermbilde under VoiceOver-markøren"
+          }
         }
       }
     },
@@ -244,6 +262,12 @@
             "state" : "translated",
             "value" : "Scatta una foto da utilizzare con VOCR."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta et bilde til VOCR."
+          }
         }
       }
     },
@@ -256,6 +280,12 @@
             "state" : "new",
             "value" : "Copyright © 2019 Chi Kim. All rights reserved."
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2019 Chi Kim. Alle rettigheter forbeholdt."
+          }
         }
       }
     },
@@ -267,6 +297,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "VOCR needs to capture your screen content to perform OCR and extract text from windows and applications."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR trenger å ta skjermopptakfor å utføre OCR og hente ut tekst fra vinduer og apper."
           }
         }
       }
