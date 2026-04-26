@@ -47,6 +47,9 @@ enum Shortcuts {
             id: "shortcut.realtime_ocr", defaultName: "Realtime OCR", isNavigation: false,
             comment: "Shortcut name for starting/stopping realtime OCR"),
         Definition(
+            id: "shortcut.computer_use", defaultName: "Computer Use", isNavigation: false,
+            comment: "Shortcut name for starting computer use"),
+        Definition(
             id: "shortcut.ask", defaultName: "Ask", isNavigation: false,
             comment: "Shortcut name for asking questions"),
         Definition(
@@ -123,6 +126,7 @@ enum Shortcuts {
             MacCamera.shared.requestAccessThenTakePicture()
         }
         handlers["shortcut.realtime_ocr"] = realTimeHandler
+        handlers["shortcut.computer_use"] = ComputerUseController.shared.showPrompt
         handlers["shortcut.explore"] = Navigation.explore
         handlers["shortcut.ask"] = {
             ask()

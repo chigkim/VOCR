@@ -11,7 +11,21 @@ import Cocoa
 
 enum Accessibility {
 
-    static let speech: NSSpeechSynthesizer = NSSpeechSynthesizer()
+    class SpeechDelegate: NSObject, NSSpeechSynthesizerDelegate {
+        var onFinish: (() -> Void)?
+        func speechSynthesizer(
+            _ sender: NSSpeechSynthesizer, didFinishSpeaking finishedCharacterCount: Bool
+        ) {
+            onFinish?()
+        }
+    }
+
+    static let speechDelegate = SpeechDelegate()
+    static let speech: NSSpeechSynthesizer = {
+        let synthesizer = NSSpeechSynthesizer()
+        synthesizer.delegate = speechDelegate
+        return synthesizer
+    }()
 
     static func isTrusted(ask: Bool) -> Bool {
         let prompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
@@ -35,6 +49,19 @@ enum Accessibility {
         DispatchQueue.global().async {
             speech.startSpeaking(message)
         }
+    }
+
+    static func speakWithSynthesizerSynchronous(_ message: String) {
+        log("Speak with synthesizer synchronous: \(message)")
+        let semaphore = DispatchSemaphore(value: 0)
+        speechDelegate.onFinish = {
+            semaphore.signal()
+        }
+        DispatchQueue.main.async {
+            speech.startSpeaking(message)
+        }
+        semaphore.wait()
+        speechDelegate.onFinish = nil
     }
 
     static func isVoiceOverRunning() -> Bool {

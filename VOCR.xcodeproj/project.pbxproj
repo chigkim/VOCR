@@ -13,6 +13,7 @@
 		6D5818FC2F3DA7F100883867 /* PermissionsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5818FB2F3DA7F100883867 /* PermissionsWindowController.swift */; };
 		6D5818FD2F3DA7F100883867 /* PermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5818F92F3DA7F100883867 /* PermissionsManager.swift */; };
 		6D5818FE2F3DA7F100883867 /* PermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5818FA2F3DA7F100883867 /* PermissionsViewController.swift */; };
+		6DC0A0012F9D000100000001 /* ComputerUse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC0A0002F9D000100000001 /* ComputerUse.swift */; };
 		EA0C88682B4F8F4B00F2E920 /* ShortcutsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */; };
 		EA1158CE2B51EBC000B2C716 /* Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1158CD2B51EBC000B2C716 /* Shortcuts.swift */; };
 		EA1AC96A2B4C51FA00D3543F /* VOCursor.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EA1AC9692B4C51FA00D3543F /* VOCursor.scpt */; };
@@ -60,6 +61,7 @@
 		6D5818F92F3DA7F100883867 /* PermissionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsManager.swift; sourceTree = "<group>"; };
 		6D5818FA2F3DA7F100883867 /* PermissionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsViewController.swift; sourceTree = "<group>"; };
 		6D5818FB2F3DA7F100883867 /* PermissionsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsWindowController.swift; sourceTree = "<group>"; };
+		6DC0A0002F9D000100000001 /* ComputerUse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerUse.swift; sourceTree = "<group>"; };
 		EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsWindowController.swift; sourceTree = "<group>"; };
 		EA1158CD2B51EBC000B2C716 /* Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
 		EA1AC9692B4C51FA00D3543F /* VOCursor.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = VOCursor.scpt; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				EADE59B8232EB09A00E2F65A /* Assets.xcassets */,
 				EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */,
 				EA688D442355BDC500F722C7 /* Bundle Extension.swift */,
+				6DC0A0002F9D000100000001 /* ComputerUse.swift */,
 				EA8AD6402352B4A000D26871 /* Double Extension.swift */,
 				EAD0E5A82B57942F004E69AD /* FileLogger.swift */,
 				EADE59BD232EB09A00E2F65A /* Info.plist */,
@@ -299,6 +302,7 @@
 				EAC1C94B2B59D96200FBE97D /* AutoUpdateManager.swift in Sources */,
 				EADE59B5232EB09A00E2F65A /* AppDelegate.swift in Sources */,
 				EA688D452355BDC500F722C7 /* Bundle Extension.swift in Sources */,
+				6DC0A0012F9D000100000001 /* ComputerUse.swift in Sources */,
 				EAD0E5A92B57942F004E69AD /* FileLogger.swift in Sources */,
 				EA2DA1AF232EB22300D31031 /* NSRunningApplication Extension.swift in Sources */,
 				EA6427202EB6798100EDCC0C /* OpenAIAPI.swift in Sources */,
