@@ -15,10 +15,8 @@ struct UIChallengeApp: App {
                 .environmentObject(logger)
                 .environmentObject(computerUse)
                 .environmentObject(levels)
-                .frame(minWidth: 960, minHeight: 680)
                 .onAppear {
                     NSApp.activate(ignoringOtherApps: true)
-                    maximizeWindow()
 
                     logger.log("App", "App launched and activated")
                     if let launchPrompt {
@@ -98,13 +96,15 @@ struct UIChallengeApp: App {
     }
 
     private func maximizeWindow() {
-        guard let window = NSApp.windows.first(where: { $0.title == "UI Challenge" })
-        else {
-            return
-        }
+        DispatchQueue.main.async {
+            guard let window = NSApp.windows.first(where: { $0.title == "UI Challenge" })
+            else {
+                return
+            }
 
-        if let screen = window.screen ?? NSScreen.main {
-            window.setFrame(screen.visibleFrame, display: true, animate: true)
+            if let screen = window.screen ?? NSScreen.main {
+                window.setFrame(screen.visibleFrame, display: true, animate: true)
+            }
         }
     }
 
@@ -483,12 +483,14 @@ struct ContentView: View {
                 levelBody
                 navigationAndRequirements
             }
-            .frame(width: 560, alignment: .topLeading)
+            .frame(minWidth: 300, alignment: .topLeading)
 
             LogPanel()
-                .frame(width: 360)
+                .frame(minWidth: 200)
+                .frame(height: 450)
         }
         .padding(20)
+        .fixedSize()
     }
 
     private var levelHeader: some View {
