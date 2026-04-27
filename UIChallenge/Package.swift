@@ -3,16 +3,16 @@
 import PackageDescription
 
 let package = Package(
-    name: "ComputerUseTestApp",
+    name: "UIChallenge",
     platforms: [
         .macOS(.v13)
     ],
     products: [
-        .executable(name: "ComputerUseTestApp", targets: ["ComputerUseTestApp"])
+        .executable(name: "UIChallenge", targets: ["UIChallenge"])
     ],
     targets: [
         .executableTarget(
-            name: "ComputerUseTestApp"
+            name: "UIChallenge"
         )
     ]
 )

@@ -3,14 +3,14 @@ import Carbon
 import SwiftUI
 
 @main
-struct ComputerUseTestApp: App {
+struct UIChallengeApp: App {
     @StateObject private var logger = ActionLogger()
     @StateObject private var computerUse = ComputerUseRunner()
     @StateObject private var levels = LevelController()
     private let launchPrompt = LaunchArguments.prompt
 
     var body: some Scene {
-        WindowGroup("Computer Use Test App") {
+        WindowGroup("UI Challenge") {
             ContentView()
                 .environmentObject(logger)
                 .environmentObject(computerUse)
@@ -31,7 +31,7 @@ struct ComputerUseTestApp: App {
         .windowResizability(.contentSize)
         .commands {
             CommandGroup(after: .appInfo) {
-                Button("About Computer Use Test App") {
+                Button("About UI Challenge") {
                     showAboutPanel()
                     logger.log("Menu", "About selected")
                 }
@@ -113,7 +113,7 @@ struct ComputerUseTestApp: App {
     }
 
     private func maximizeWindow() {
-        guard let window = NSApp.windows.first(where: { $0.title == "Computer Use Test App" })
+        guard let window = NSApp.windows.first(where: { $0.title == "UI Challenge" })
         else {
             return
         }
@@ -125,7 +125,7 @@ struct ComputerUseTestApp: App {
 
     private func showAboutPanel() {
         let alert = NSAlert()
-        alert.messageText = "Computer Use Test App"
+        alert.messageText = "UI Challenge"
         alert.informativeText =
             "A macOS test harness for validating VOCR computer-use clicks, drags, typing, menus, shortcuts, and selections."
         alert.addButton(withTitle: "OK")

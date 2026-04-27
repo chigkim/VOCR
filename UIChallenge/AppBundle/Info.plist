@@ -6,15 +6,15 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>en</string>
     <key>CFBundleExecutable</key>
-    <string>ComputerUseTestApp</string>
+    <string>UIChallenge</string>
     <key>CFBundleIdentifier</key>
-    <string>com.chikim.ComputerUseTestApp</string>
+    <string>com.chikim.UIChallenge</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>Computer Use Test App</string>
+    <string>UI Challenge</string>
     <key>CFBundleDisplayName</key>
-    <string>Computer Use Test App</string>
+    <string>UI Challenge</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>

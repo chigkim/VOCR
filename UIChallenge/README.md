@@ -1,4 +1,4 @@
-# Computer Use Test App
+# UI Challenge
 
 A standalone macOS app bundle for testing VOCR computer use.
 
@@ -24,33 +24,33 @@ export OPENAI_BASE_URL="https://api.openai.com/v1" # optional
 
 Grant permissions before running computer use:
 
-- System Settings > Privacy & Security > Screen Recording > enable `Computer Use Test App`
-- System Settings > Privacy & Security > Accessibility > enable `Computer Use Test App`
+- System Settings > Privacy & Security > Screen Recording > enable `UI Challenge`
+- System Settings > Privacy & Security > Accessibility > enable `UI Challenge`
 
 After changing either permission, quit and relaunch the app.
 
 Launch it as a full macOS app:
 
 ```sh
-open ".build/Computer Use Test App.app"
+open ".build/UI Challenge.app"
 ```
 
 Or launch the installed copy:
 
 ```sh
-open "$HOME/Applications/Computer Use Test App.app"
+open "$HOME/Applications/UI Challenge.app"
 ```
 
 Run and observe logs in Terminal:
 
 ```sh
-.build/Computer\ Use\ Test\ App.app/Contents/MacOS/ComputerUseTestApp
+.build/UI\ Challenge.app/Contents/MacOS/UIChallenge
 ```
 
 Run an automatic computer-use prompt when the app opens:
 
 ```sh
-.build/Computer\ Use\ Test\ App.app/Contents/MacOS/ComputerUseTestApp \
+.build/UI\ Challenge.app/Contents/MacOS/UIChallenge \
   --prompt "Click Drag Source, set the slider to 75, type hello, and press Send."
 ```
 

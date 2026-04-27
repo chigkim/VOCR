@@ -3,8 +3,8 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
-APP_NAME="Computer Use Test App"
-EXECUTABLE_NAME="ComputerUseTestApp"
+APP_NAME="UI Challenge"
+EXECUTABLE_NAME="UIChallenge"
 CONFIGURATION="${1:-debug}"
 INSTALL_DIR="${2:-}"
 
