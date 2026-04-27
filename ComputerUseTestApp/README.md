@@ -60,4 +60,13 @@ If launching by double-clicking in Finder, set the API key in the launch environ
 launchctl setenv OPENAI_API_KEY "..."
 ```
 
-The app logs every interaction with `debugPrint` and mirrors the same entries in the on-screen Action Log.
+The app presents one validation level at a time. Each level shows an instruction at the top, a task UI, and a Next button. Clicking Next advances only when the current level's requirements are complete; otherwise the visible log shows a terse failure message so the model must infer what is missing from the instruction, UI state, and visible history.
+
+Human debugging controls are in the Levels menu:
+
+- Restart from Level 1
+- Reset Current Level
+- Jump to a specific level
+- Show Validation Details in UI
+
+The on-screen Visible Log is model-facing and intentionally concise. Full validation failures and internal state are written with `debugPrint` in the console.
