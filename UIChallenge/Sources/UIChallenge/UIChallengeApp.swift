@@ -75,13 +75,6 @@ struct UIChallengeApp: App {
 
                 Divider()
 
-                Button("Log Menu Action") {
-                    logger.log("Menu", "Log Menu Action selected")
-                }
-                .keyboardShortcut("m", modifiers: [.command, .shift])
-
-                Divider()
-
                 Button("Clear Action Log") {
                     logger.clear()
                 }
@@ -202,6 +195,7 @@ enum LevelID: Int, CaseIterable, Identifiable {
     case scrollTask
     case pointerTask
     case stress
+    case summary
 
     var id: Int { rawValue }
     var number: Int { rawValue + 1 }
@@ -220,6 +214,7 @@ enum LevelID: Int, CaseIterable, Identifiable {
         case .scrollTask: return "Scroll"
         case .pointerTask: return "Pointer Actions"
         case .stress: return "Stress"
+        case .summary: return "Results Summary"
         }
     }
 
@@ -255,6 +250,8 @@ enum LevelID: Int, CaseIterable, Identifiable {
         case .stress:
             return
                 "Set the popup to Delta, type final check in the small field, select cell 24, enable Ready, click the lower Confirm button, then click Next."
+        case .summary:
+            return "Review your overall performance in the UI Challenge."
         }
     }
 }
@@ -306,6 +303,7 @@ final class LevelController: ObservableObject {
         var totalMet = 0
         var totalPossible = 0
         for level in LevelID.allCases {
+            if level == .summary { continue }
             let requirements = levelRequirements(for: level)
             totalPossible += requirements.count
             totalMet += requirements.filter { checkRequirement(level: level, requirement: $0) }.count
@@ -314,12 +312,20 @@ final class LevelController: ObservableObject {
     }
 
     var scoreReport: String {
+        if currentLevel == .summary {
+            let total = totalScore
+            return "Final Score: \(total.met)/\(total.total)"
+        }
         let current = currentScore
         let total = totalScore
         return "Level: \(currentLevel.number)/\(LevelID.allCases.count) | Level Score: \(current.met)/\(current.total) | Total Score: \(total.met)/\(total.total)"
     }
 
     func updateResults() {
+        if currentLevel == .summary {
+            testResults = [:]
+            return
+        }
         let requirements = levelRequirements(for: currentLevel)
         var newResults: [String: Bool] = [:]
         for req in requirements {
@@ -381,11 +387,12 @@ final class LevelController: ObservableObject {
         case .scrollTask: scrollTargetClicked = false
         case .pointerTask: dropReceived = false; dropIsTargeted = false
         case .stress: stressPopup = "Alpha"; stressText = ""; stressCell = nil; stressReady = false; stressLowerConfirmClicked = false
+        case .summary: break
         }
         updateResults()
     }
 
-    private func levelRequirements(for level: LevelID) -> [String] {
+    func levelRequirements(for level: LevelID) -> [String] {
         switch level {
         case .acceptChallenge: return ["I Accept Challenge enabled"]
         case .textEntry: return ["Message is 'launch code delta-42'", "Send clicked"]
@@ -399,10 +406,11 @@ final class LevelController: ObservableObject {
         case .scrollTask: return ["Target 18 clicked"]
         case .pointerTask: return ["Drag and drop complete"]
         case .stress: return ["Popup Delta", "Text 'final check'", "Cell 24", "Ready enabled", "Lower Confirm clicked"]
+        case .summary: return []
         }
     }
 
-    private func checkRequirement(level: LevelID, requirement: String) -> Bool {
+    func checkRequirement(level: LevelID, requirement: String) -> Bool {
         switch level {
         case .acceptChallenge:
             return challengeAccepted
@@ -441,6 +449,8 @@ final class LevelController: ObservableObject {
             if requirement.contains("Cell") { return stressCell == 24 }
             if requirement.contains("Ready") { return stressReady }
             return stressLowerConfirmClicked
+        case .summary:
+            return true
         }
     }
 }
@@ -522,25 +532,34 @@ struct ContentView: View {
         case .scrollTask: scrollTaskLevel
         case .pointerTask: pointerTaskLevel
         case .stress: stressLevel
+        case .summary: summaryLevel
         }
     }
 
     private var navigationAndRequirements: some View {
         VStack(alignment: .leading, spacing: 12) {
-            GroupBox("Requirements Status") {
-                VStack(alignment: .leading, spacing: 4) {
-                    ForEach(levels.testResults.keys.sorted(), id: \.self) { key in
-                        HStack {
-                            Image(systemName: levels.testResults[key] == true ? "checkmark.circle.fill" : "circle")
-                                .foregroundColor(levels.testResults[key] == true ? .green : .secondary)
-                            Text(key)
-                                .strikethrough(levels.testResults[key] == true)
-                                .foregroundColor(levels.testResults[key] == true ? .secondary : .primary)
+            if levels.currentLevel != .summary {
+                GroupBox("Requirements Status") {
+                    VStack(alignment: .leading, spacing: 4) {
+                        ForEach(levels.testResults.keys.sorted(), id: \.self) { key in
+                            HStack {
+                                Image(
+                                    systemName: levels.testResults[key] == true
+                                        ? "checkmark.circle.fill" : "circle"
+                                )
+                                .foregroundColor(
+                                    levels.testResults[key] == true ? .green : .secondary
+                                )
+                                Text(key)
+                                    .strikethrough(levels.testResults[key] == true)
+                                    .foregroundColor(
+                                        levels.testResults[key] == true ? .secondary : .primary)
+                            }
                         }
                     }
+                    .padding(8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .padding(8)
-                .frame(maxWidth: .infinity, alignment: .leading)
             }
 
             HStack {
@@ -560,6 +579,58 @@ struct ContentView: View {
                     levels.resetCurrentLevel(logger: logger)
                 }
             }
+        }
+    }
+
+    private var summaryLevel: some View {
+        GroupBox("Performance Summary") {
+            VStack(alignment: .leading, spacing: 0) {
+                HStack(spacing: 0) {
+                    Text("Lvl").frame(width: 30, alignment: .leading)
+                    Text("Short Test Name").frame(maxWidth: .infinity, alignment: .leading)
+                    Text("Pass").frame(width: 70, alignment: .leading)
+                }
+                .font(.headline)
+                .padding(.vertical, 8)
+                .padding(.horizontal, 12)
+                .background(Color.secondary.opacity(0.1))
+
+                Divider()
+
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 0) {
+                        ForEach(LevelID.allCases.filter { $0 != .summary }) { level in
+                            let requirements = levels.levelRequirements(for: level)
+                            ForEach(requirements, id: \.self) { req in
+                                let pass = levels.checkRequirement(level: level, requirement: req)
+                                HStack(spacing: 0) {
+                                    Text("\(level.number)").frame(width: 30, alignment: .leading)
+                                    Text(req).frame(maxWidth: .infinity, alignment: .leading)
+                                    HStack(spacing: 4) {
+                                        Image(
+                                            systemName: pass
+                                                ? "checkmark.circle.fill" : "xmark.circle.fill"
+                                        )
+                                        .foregroundColor(pass ? .green : .red)
+                                        Text(pass ? "Pass" : "Fail")
+                                    }
+                                    .frame(width: 70, alignment: .leading)
+                                }
+                                .padding(.vertical, 6)
+                                .padding(.horizontal, 12)
+
+                                Divider()
+                            }
+                        }
+                    }
+                }
+            }
+            .frame(height: 380)
+            .background(Color(nsColor: .controlBackgroundColor))
+            .cornerRadius(6)
+            .overlay(
+                RoundedRectangle(cornerRadius: 6).stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+            )
         }
     }
 
