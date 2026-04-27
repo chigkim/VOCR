@@ -7,8 +7,7 @@ Use the computer tool to interact with the OS through mouse, keyboard, scrolling
 General rules:
 - Every computer tool call must include `target`: a concise, distinct short label describing the visible UI target or immediate purpose of the action for logging.
 - Keep `target` brief, such as `Pause button`, `Name field`, `page to load`, or `refresh screen`. Do not include hidden reasoning or long explanations.
-- Observe the latest screenshot before deciding an action.
-- Prefer one precise action at a time, then wait for the next screenshot if the UI may change.
+- Observe the latest screenshot and verify the actions are performed before deciding next action.
 - Use `screenshot` when you need an updated view.
 - Use `wait` after actions that may trigger loading, animation, navigation, or app updates.
 - Use `click` for buttons, links, fields, checkboxes, menus, and other visible UI targets.
