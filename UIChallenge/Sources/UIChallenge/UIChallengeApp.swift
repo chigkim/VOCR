@@ -178,7 +178,9 @@ final class ActionLogger: ObservableObject {
                 self.entries.removeLast()
             }
             // Rebuild fullLogText from entries to keep it in sync and limited
-            self.fullLogText = self.entries.map { "[\($0.timestamp)] \($0.category): \($0.message)" }.joined(separator: "\n") + (self.entries.isEmpty ? "" : "\n")
+            self.fullLogText =
+                self.entries.map { "[\($0.timestamp)] \($0.category): \($0.message)" }.joined(
+                    separator: "\n") + (self.entries.isEmpty ? "" : "\n")
         }
         debugPrint("[\(entry.timestamp)] \(category): \(message)")
     }
@@ -236,25 +238,31 @@ enum LevelID: Int, CaseIterable, Identifiable {
         case .textEntry:
             return "Type launch code delta-42 in the Message field, click Send, then click Next."
         case .selectionControls:
-            return "Choose Charlie from the popup menu, choose Three in the radio group, enable the checkbox, then click Next."
+            return
+                "Choose Charlie from the popup menu, choose Three in the radio group, enable the checkbox, then click Next."
         case .numericControls:
-            return "Set the slider between 70 and 80 and the stepper between 3 and 5, then click Next."
+            return
+                "Set the slider between 70 and 80 and the stepper between 3 and 5, then click Next."
         case .scrollTask:
             return "Scroll the list, click Hidden Target 18, then click Next."
         case .modalTask:
-            return "Open the approval sheet, type Rivera in the reviewer field, choose Approve, confirm the sheet, then click Next."
+            return
+                "Open the approval sheet, type Rivera in the reviewer field, choose Approve, confirm the sheet, then click Next."
         case .contextMenu:
             return "Right-click the Context Target and choose Archive, then click Next."
         case .textEditing:
-            return "In the notes editor, make the text exactly: Alpha beta gamma. Then double-click the Word Target and triple-click the Paragraph Target before clicking Next."
+            return
+                "In the notes editor, make the text exactly: Alpha beta gamma. Then double-click the Word Target and triple-click the Paragraph Target before clicking Next."
         case .tableList:
             return "Select table cell 13 and list row Gamma, then click Next."
         case .keyboardShortcut:
-            return "Click Start Shortcut Capture, press Command+Shift+M in the shortcut test area, then click Next."
+            return
+                "Click Start Shortcut Capture, press Command+Shift+M in the shortcut test area, then click Next."
         case .pointerTask:
             return "Drag the Drag Source onto the Drop Target, then click Next."
         case .stress:
-            return "Set the popup to Delta, type final check in the small field, select cell 24, enable Ready, click the lower Confirm button, then click Next."
+            return
+                "Set the popup to Delta, type final check in the small field, select cell 24, enable Ready, click the lower Confirm button, then click Next."
         }
     }
 }
@@ -354,11 +362,14 @@ final class LevelController: ObservableObject {
             advance(logger: logger)
         } else {
             let message = "Requirements not met. Check the instruction and current state."
-            validationMessage = showValidationDetails ? "\(message) Missing: \(missing.joined(separator: "; "))" : message
+            validationMessage =
+                showValidationDetails
+                ? "\(message) Missing: \(missing.joined(separator: "; "))" : message
             logger.log("Level", "Requirements not met.")
             logger.developerLog(
                 "Validation",
-                "Level \(currentLevel.number) failed: \(missing.joined(separator: "; ")); state: \(stateSummary(for: currentLevel))")
+                "Level \(currentLevel.number) failed: \(missing.joined(separator: "; ")); state: \(stateSummary(for: currentLevel))"
+            )
         }
     }
 
@@ -439,7 +450,8 @@ final class LevelController: ObservableObject {
             return basicClicked ? [] : ["Verify Access button was not clicked"]
         case .textEntry:
             return [
-                messageText == "launch code delta-42" ? nil : "Message field must equal launch code delta-42",
+                messageText == "launch code delta-42"
+                    ? nil : "Message field must equal launch code delta-42",
                 messageSent ? nil : "Send button was not clicked",
             ].compactMap { $0 }
         case .selectionControls:
@@ -465,7 +477,8 @@ final class LevelController: ObservableObject {
             return contextChoice == "Archive" ? [] : ["Context menu choice must be Archive"]
         case .textEditing:
             return [
-                notesText == "Alpha beta gamma." ? nil : "Notes text must be exactly Alpha beta gamma.",
+                notesText == "Alpha beta gamma."
+                    ? nil : "Notes text must be exactly Alpha beta gamma.",
                 wordDoubleClicked ? nil : "Word Target was not double-clicked",
                 paragraphTripleClicked ? nil : "Paragraph Target was not triple-clicked",
             ].compactMap { $0 }
@@ -475,7 +488,8 @@ final class LevelController: ObservableObject {
                 selectedListRow == "Gamma" ? nil : "List row Gamma must be selected",
             ].compactMap { $0 }
         case .keyboardShortcut:
-            return shortcutPressed == "Pressed Command+Shift+M" ? [] : ["Command+Shift+M must be pressed in the shortcut test area"]
+            return shortcutPressed == "Pressed Command+Shift+M"
+                ? [] : ["Command+Shift+M must be pressed in the shortcut test area"]
         case .pointerTask:
             return dropReceived ? [] : ["Drag Source was not dropped on Drop Target"]
         case .stress:
@@ -496,25 +510,30 @@ final class LevelController: ObservableObject {
         case .textEntry:
             return "messageText=\(messageText), messageSent=\(messageSent)"
         case .selectionControls:
-            return "selectedPopup=\(selectedPopup), selectedRadio=\(selectedRadio), checkboxEnabled=\(checkboxEnabled)"
+            return
+                "selectedPopup=\(selectedPopup), selectedRadio=\(selectedRadio), checkboxEnabled=\(checkboxEnabled)"
         case .numericControls:
             return "sliderValue=\(Int(sliderValue)), stepperValue=\(stepperValue)"
         case .scrollTask:
             return "scrollTargetClicked=\(scrollTargetClicked)"
         case .modalTask:
-            return "modalReviewer=\(modalReviewer), modalDecision=\(modalDecision), modalConfirmed=\(modalConfirmed)"
+            return
+                "modalReviewer=\(modalReviewer), modalDecision=\(modalDecision), modalConfirmed=\(modalConfirmed)"
         case .contextMenu:
             return "contextChoice=\(contextChoice)"
         case .textEditing:
-            return "notesText=\(notesText), wordDoubleClicked=\(wordDoubleClicked), paragraphTripleClicked=\(paragraphTripleClicked)"
+            return
+                "notesText=\(notesText), wordDoubleClicked=\(wordDoubleClicked), paragraphTripleClicked=\(paragraphTripleClicked)"
         case .tableList:
-            return "selectedCell=\(String(describing: selectedCell)), selectedListRow=\(selectedListRow)"
+            return
+                "selectedCell=\(String(describing: selectedCell)), selectedListRow=\(selectedListRow)"
         case .keyboardShortcut:
             return "shortcutPressed=\(shortcutPressed)"
         case .pointerTask:
             return "dropReceived=\(dropReceived)"
         case .stress:
-            return "stressPopup=\(stressPopup), stressText=\(stressText), stressCell=\(String(describing: stressCell)), stressReady=\(stressReady), stressLowerConfirmClicked=\(stressLowerConfirmClicked)"
+            return
+                "stressPopup=\(stressPopup), stressText=\(stressText), stressCell=\(String(describing: stressCell)), stressReady=\(stressReady), stressLowerConfirmClicked=\(stressLowerConfirmClicked)"
         }
     }
 }
@@ -703,11 +722,13 @@ struct ContentView: View {
                         logger.log("Slider", "Changed to \(Int(value)).")
                     }
 
-                Stepper("Stepper Value: \(levels.stepperValue)", value: $levels.stepperValue, in: 0...10)
-                    .accessibilityLabel("Stepper Value")
-                    .onChange(of: levels.stepperValue) { value in
-                        logger.log("Stepper", "Changed to \(value).")
-                    }
+                Stepper(
+                    "Stepper Value: \(levels.stepperValue)", value: $levels.stepperValue, in: 0...10
+                )
+                .accessibilityLabel("Stepper Value")
+                .onChange(of: levels.stepperValue) { value in
+                    logger.log("Stepper", "Changed to \(value).")
+                }
             }
             .padding(.vertical, 4)
         }
@@ -727,7 +748,8 @@ struct ContentView: View {
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .accessibilityLabel(index == 18 ? "Hidden Target 18" : "Practice Target \(index)")
+                        .accessibilityLabel(
+                            index == 18 ? "Hidden Target 18" : "Practice Target \(index)")
                     }
                 }
                 .padding(.vertical, 6)
@@ -874,7 +896,10 @@ struct ContentView: View {
                         .buttonStyle(.bordered)
                         .controlSize(.large)
                         .accessibilityLabel("Cell \(number)")
-                        .background(levels.selectedCell == number ? Color.accentColor.opacity(0.18) : Color.clear)
+                        .background(
+                            levels.selectedCell == number
+                                ? Color.accentColor.opacity(0.18) : Color.clear
+                        )
                         .cornerRadius(6)
                     }
                 }
@@ -942,8 +967,13 @@ struct ContentView: View {
         Text("Drop Target")
             .font(.headline)
             .frame(width: 150, height: 54)
-            .background(levels.dropIsTargeted ? Color.green.opacity(0.28) : Color.secondary.opacity(0.12))
-            .overlay(RoundedRectangle(cornerRadius: 8).stroke(levels.dropIsTargeted ? Color.green : Color.secondary, lineWidth: 2))
+            .background(
+                levels.dropIsTargeted ? Color.green.opacity(0.28) : Color.secondary.opacity(0.12)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8).stroke(
+                    levels.dropIsTargeted ? Color.green : Color.secondary, lineWidth: 2)
+            )
             .cornerRadius(8)
             .accessibilityLabel("Drop Target")
             .onDrop(
@@ -952,7 +982,9 @@ struct ContentView: View {
                     get: { levels.dropIsTargeted },
                     set: { value in
                         levels.dropIsTargeted = value
-                        logger.log("Drag", value ? "Drag entered Drop Target." : "Drag exited Drop Target.")
+                        logger.log(
+                            "Drag", value ? "Drag entered Drop Target." : "Drag exited Drop Target."
+                        )
                     }
                 )
             ) { providers in

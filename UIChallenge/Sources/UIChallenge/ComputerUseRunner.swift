@@ -423,7 +423,8 @@ extension ComputerUseRunner {
                                 "type": "string",
                                 "enum": [
                                     "screenshot", "wait", "cursor_position", "move", "click",
-                                    "double_click", "triple_click", "drag", "scroll", "keypress", "type",
+                                    "double_click", "triple_click", "drag", "scroll", "keypress",
+                                    "type",
                                 ],
                             ],
                             "target": ["type": "string"],
