@@ -467,7 +467,7 @@ extension ComputerUseController {
     private var defaultComputerUseSystemInstruction: String {
         """
         You can control the computer GUI with the `computer` tool. Coordinates are pixels relative to the top-left corner of the latest screenshot image. Every computer tool call must include `target`, a concise label such as `Pause button`, `Name field`, `page to load`, or `refresh screen`.
-        Observe the latest screenshot before deciding an action. Prefer one precise action at a time, then wait for the next screenshot if the UI may change. Use screenshot for an updated view, wait after loading or animation, click for visible controls, double_click only when required, drag for sliders or drag-and-drop, scroll for off-screen content, keypress for shortcuts and special keys, type only when text input has focus, and cursor_position only when the current pointer location matters.
+        Observe the latest screenshot before deciding an action. Prefer one precise action at a time, then wait for the next screenshot if the UI may change. Use screenshot for an updated view, wait after loading or animation, click for visible controls, double_click or triple_click only when required, drag for sliders or drag-and-drop, scroll for off-screen content, keypress for shortcuts and special keys, type only when text input has focus, and cursor_position only when the current pointer location matters.
         Use uppercase key names for non-text keys. Use CTRL, SHIFT, OPTION, and COMMAND in keypress arrays.
         """
     }
@@ -493,7 +493,7 @@ extension ComputerUseController {
                                 "type": "string",
                                 "enum": [
                                     "screenshot", "wait", "cursor_position", "move", "click",
-                                    "double_click", "drag", "scroll", "keypress", "type",
+                                    "double_click", "triple_click", "drag", "scroll", "keypress", "type",
                                 ],
                             ],
                             "target": ["type": "string"],
@@ -1091,6 +1091,11 @@ extension ComputerUseController {
             withModifiers(action.modifiers) {
                 click(point: point, button: action.button, clickCount: 2)
             }
+        case "triple_click":
+            guard let point = point(for: action) else { return }
+            withModifiers(action.modifiers) {
+                click(point: point, button: action.button, clickCount: 3)
+            }
         case "move":
             guard let point = point(for: action) else { return }
             moveMouse(to: point)
@@ -1144,6 +1149,7 @@ extension ComputerUseController {
             switch action.type {
             case "click": return "Click\(targetSuffix)."
             case "double_click": return "Double click\(targetSuffix)."
+            case "triple_click": return "Triple click\(targetSuffix)."
             case "move": return "Move\(targetSuffix)."
             case "scroll": return "Scroll\(targetSuffix)."
             case "drag": return "Drag\(targetSuffix)."
@@ -1165,6 +1171,8 @@ extension ComputerUseController {
             return "Click\(targetSuffix)\(coords)."
         case "double_click":
             return "Double click\(targetSuffix)\(coords)."
+        case "triple_click":
+            return "Triple click\(targetSuffix)\(coords)."
         case "move":
             return "Move\(targetSuffix) to\(coords)."
         case "scroll":
@@ -1240,17 +1248,17 @@ extension ComputerUseController {
         let downType = cgMouseDownType(button)
         let upType = cgMouseUpType(button)
 
-        for _ in 0..<clickCount {
+        for clickIndex in 1...clickCount {
             let down = CGEvent(
                 mouseEventSource: nil, mouseType: downType, mouseCursorPosition: point,
                 mouseButton: mouseButton)
-            down?.setIntegerValueField(.mouseEventClickState, value: Int64(clickCount))
+            down?.setIntegerValueField(.mouseEventClickState, value: Int64(clickIndex))
             down?.post(tap: .cghidEventTap)
 
             let up = CGEvent(
                 mouseEventSource: nil, mouseType: upType, mouseCursorPosition: point,
                 mouseButton: mouseButton)
-            up?.setIntegerValueField(.mouseEventClickState, value: Int64(clickCount))
+            up?.setIntegerValueField(.mouseEventClickState, value: Int64(clickIndex))
             up?.post(tap: .cghidEventTap)
         }
     }

@@ -16,12 +16,13 @@
               "move",
               "click",
               "double_click",
+              "triple_click",
               "drag",
               "scroll",
               "keypress",
               "type"
             ],
-            "description": "The computer action to perform. Action-specific requirements: screenshot and cursor_position require no extra fields; wait may include duration_ms; move requires x and y; click and double_click require x and y and may include button and modifiers; drag requires path and may include modifiers; scroll requires x, y, scroll_x, and scroll_y and may include modifiers; keypress requires keys; type requires text."
+            "description": "The computer action to perform. Action-specific requirements: screenshot and cursor_position require no extra fields; wait may include duration_ms; move requires x and y; click, double_click, and triple_click require x and y and may include button and modifiers; drag requires path and may include modifiers; scroll requires x, y, scroll_x, and scroll_y and may include modifiers; keypress requires keys; type requires text."
           },
           "target": {
             "type": "string",
@@ -40,7 +41,7 @@
           "button": {
             "type": "string",
             "enum": ["left", "right", "middle"],
-            "description": "Mouse button to click. Used with click and double_click. Defaults to left when omitted."
+            "description": "Mouse button to click. Used with click, double_click, and triple_click. Defaults to left when omitted."
           },
           "modifiers": {
             "type": "array",

@@ -12,6 +12,7 @@ General rules:
 - Use `wait` after actions that may trigger loading, animation, navigation, or app updates.
 - Use `click` for buttons, links, fields, checkboxes, menus, and other visible UI targets.
 - Use `double_click` only when a double-click is normally required, such as opening files or selecting words.
+- Use `triple_click` only when a triple-click is normally required, such as selecting paragraphs or lines in text editors.
 - Use `drag` for sliders, selections, window movement, resizing, or drag-and-drop.
 - Use `scroll` when content is off-screen. Negative `scroll_y` scrolls up; positive `scroll_y` scrolls down. Negative `scroll_x` scrolls left; positive `scroll_x` scrolls right.
 - Use `keypress` for keyboard shortcuts and special keys, such as ENTER, ESC, TAB, CTRL+L, CTRL+C, CTRL+V, COMMAND+SPACE, or COMMAND+TAB.
@@ -32,4 +33,5 @@ Key naming:
 
 - Do not invent coordinates. Estimate coordinates from the visible screenshot.
 - If the target is ambiguous, get a screenshot or use a safer interaction.
+- Only utilize supported action type.
 - Pay attention to parameter types when calling tools.
