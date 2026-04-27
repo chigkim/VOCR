@@ -13,6 +13,8 @@
 		6D5818FC2F3DA7F100883867 /* PermissionsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5818FB2F3DA7F100883867 /* PermissionsWindowController.swift */; };
 		6D5818FD2F3DA7F100883867 /* PermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5818F92F3DA7F100883867 /* PermissionsManager.swift */; };
 		6D5818FE2F3DA7F100883867 /* PermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5818FA2F3DA7F100883867 /* PermissionsViewController.swift */; };
+		6D8E1B012F9D100100000001 /* portable_computer_use_tools.json in Resources */ = {isa = PBXBuildFile; fileRef = 6D8E1AFF2F9D100100000001 /* portable_computer_use_tools.json */; };
+		6D8E1B022F9D100100000001 /* portable_computer_use_system_message.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6D8E1B002F9D100100000001 /* portable_computer_use_system_message.txt */; };
 		6DC0A0012F9D000100000001 /* ComputerUse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC0A0002F9D000100000001 /* ComputerUse.swift */; };
 		EA0C88682B4F8F4B00F2E920 /* ShortcutsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */; };
 		EA1158CE2B51EBC000B2C716 /* Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1158CD2B51EBC000B2C716 /* Shortcuts.swift */; };
@@ -61,6 +63,8 @@
 		6D5818F92F3DA7F100883867 /* PermissionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsManager.swift; sourceTree = "<group>"; };
 		6D5818FA2F3DA7F100883867 /* PermissionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsViewController.swift; sourceTree = "<group>"; };
 		6D5818FB2F3DA7F100883867 /* PermissionsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsWindowController.swift; sourceTree = "<group>"; };
+		6D8E1AFF2F9D100100000001 /* portable_computer_use_tools.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = portable_computer_use_tools.json; sourceTree = "<group>"; };
+		6D8E1B002F9D100100000001 /* portable_computer_use_system_message.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = portable_computer_use_system_message.txt; sourceTree = "<group>"; };
 		6DC0A0002F9D000100000001 /* ComputerUse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerUse.swift; sourceTree = "<group>"; };
 		EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsWindowController.swift; sourceTree = "<group>"; };
 		EA1158CD2B51EBC000B2C716 /* Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
@@ -146,11 +150,21 @@
 			path = preset;
 			sourceTree = "<group>";
 		};
+		6D8E1AFE2F9D100100000001 /* tools */ = {
+			isa = PBXGroup;
+			children = (
+				6D8E1B002F9D100100000001 /* portable_computer_use_system_message.txt */,
+				6D8E1AFF2F9D100100000001 /* portable_computer_use_tools.json */,
+			);
+			path = tools;
+			sourceTree = "<group>";
+		};
 		EADE59A8232EB09A00E2F65A = {
 			isa = PBXGroup;
 			children = (
 				EA2D4F082B5215CD001D6D24 /* Shortcuts.json */,
 				EAAD42AD298596FB00BE5D98 /* com.chikim.VOCR.plist */,
+				6D8E1AFE2F9D100100000001 /* tools */,
 				EA5C7AD72351D81100D84042 /* Scripts */,
 				EADE59B3232EB09A00E2F65A /* VOCR */,
 				EADE59B2232EB09A00E2F65A /* Products */,
@@ -280,8 +294,10 @@
 				6D29B5302F2C97DF00297D25 /* Localizable.xcstrings in Resources */,
 				6D29B5312F2C97DF00297D25 /* InfoPlist.xcstrings in Resources */,
 				EADE59B9232EB09A00E2F65A /* Assets.xcassets in Resources */,
+				6D8E1B012F9D100100000001 /* portable_computer_use_tools.json in Resources */,
 				EAD9CFD22355E11600E7F594 /* say.scpt in Resources */,
 				EA1AC96A2B4C51FA00D3543F /* VOCursor.scpt in Resources */,
+				6D8E1B022F9D100100000001 /* portable_computer_use_system_message.txt in Resources */,
 				EA2D4F092B5215CD001D6D24 /* Shortcuts.json in Resources */,
 				EA5C7AD92351D81100D84042 /* VOScreenshot.scpt in Resources */,
 				EADE59BC232EB09A00E2F65A /* Main.storyboard in Resources */,

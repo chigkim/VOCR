@@ -21,7 +21,8 @@ struct ComputerUseTestApp: App {
                     logger.log("App", "App launched and activated")
                     if let launchPrompt {
                         logger.log("Computer Use", "Launch prompt queued: \(launchPrompt)")
-                        computerUse.startAfterWindowAppears(prompt: launchPrompt, logger: logger)
+                        computerUse.startAfterWindowAppears(
+                            prompt: launchPrompt, logger: logger, quitWhenDone: true)
                     }
                 }
         }

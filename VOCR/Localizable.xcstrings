@@ -1434,18 +1434,6 @@
         }
       }
     },
-    "computerUse.alreadyRunning" : {
-      "comment" : "Speech when computer use is already active",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Computer use is already running."
-          }
-        }
-      }
-    },
     "computerUse.approval.title" : {
       "comment" : "Title for computer use approval dialog",
       "extractionState" : "extracted_with_value",
@@ -1538,18 +1526,6 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Could not access the frontmost window."
-          }
-        }
-      }
-    },
-    "computerUse.openAIOnly" : {
-      "comment" : "Speech when active preset cannot run computer use",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Computer use requires an OpenAI preset that supports the Responses API."
           }
         }
       }

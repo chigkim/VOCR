@@ -1,0 +1,102 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "computer",
+      "description": "Control a computer GUI using screenshot-local pixel coordinates. Coordinates refer to the latest screenshot image provided by the client, with (0, 0) at the top-left corner.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "screenshot",
+              "wait",
+              "cursor_position",
+              "move",
+              "click",
+              "double_click",
+              "drag",
+              "scroll",
+              "keypress",
+              "type"
+            ],
+            "description": "The computer action to perform. Action-specific requirements: screenshot and cursor_position require no extra fields; wait may include duration_ms; move requires x and y; click and double_click require x and y and may include button and modifiers; drag requires path and may include modifiers; scroll requires x, y, scroll_x, and scroll_y and may include modifiers; keypress requires keys; type requires text."
+          },
+          "target": {
+            "type": "string",
+            "description": "Concise, distinct short label describing the visible UI target or immediate purpose of this action for logging, such as \"Pause button\", \"Name field\", \"page to load\", or \"refresh screen\"."
+          },
+          "x": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "X coordinate in pixels relative to the top-left corner of the latest screenshot image."
+          },
+          "y": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Y coordinate in pixels relative to the top-left corner of the latest screenshot image."
+          },
+          "button": {
+            "type": "string",
+            "enum": ["left", "right", "middle"],
+            "description": "Mouse button to click. Used with click and double_click. Defaults to left when omitted."
+          },
+          "modifiers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["ctrl", "shift", "option", "command"]
+            },
+            "description": "Keyboard modifiers to hold during mouse actions on macOS. Use option for Option and command for Command."
+          },
+          "path": {
+            "type": "array",
+            "description": "Drag path as screenshot-local pixel coordinates. Used with drag.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "X coordinate in pixels relative to the top-left corner of the latest screenshot image."
+                },
+                "y": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Y coordinate in pixels relative to the top-left corner of the latest screenshot image."
+                }
+              },
+              "required": ["x", "y"]
+            }
+          },
+          "scroll_x": {
+            "type": "integer",
+            "description": "Horizontal scroll amount. Negative scrolls left, positive scrolls right."
+          },
+          "scroll_y": {
+            "type": "integer",
+            "description": "Vertical scroll amount. Negative scrolls up, positive scrolls down."
+          },
+          "keys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Keys to press together for keypress, such as [\"CTRL\", \"L\"] or [\"ENTER\"]."
+          },
+          "text": {
+            "type": "string",
+            "description": "Text to type at the current keyboard focus. Used with type."
+          },
+          "duration_ms": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Time to wait in milliseconds. Used with wait. The executor should choose a small default when omitted."
+          }
+        },
+        "required": ["action", "target"]
+      }
+    }
+  }
+]
