@@ -89,7 +89,7 @@ struct UIChallengeApp: App {
             }
 
             CommandMenu("Levels") {
-                Button("Restart From Level 1") {
+                Button("Restart Challenge") {
                     levels.restart(logger: logger)
                 }
                 .keyboardShortcut("1", modifiers: [.command, .option])
@@ -100,14 +100,6 @@ struct UIChallengeApp: App {
                 .keyboardShortcut("r", modifiers: [.command, .option])
 
                 Toggle("Show Validation Details in UI", isOn: $levels.showValidationDetails)
-
-                Divider()
-
-                ForEach(LevelID.allCases) { level in
-                    Button("\(level.number). \(level.title)") {
-                        levels.jump(to: level, logger: logger)
-                    }
-                }
             }
         }
     }
@@ -198,16 +190,16 @@ final class ActionLogger: ObservableObject {
 }
 
 enum LevelID: Int, CaseIterable, Identifiable {
-    case basicClick = 0
+    case acceptChallenge = 0
     case textEntry
-    case selectionControls
-    case numericControls
-    case scrollTask
     case modalTask
-    case contextMenu
-    case textEditing
+    case selectionControls
     case tableList
+    case numericControls
+    case contextMenu
     case keyboardShortcut
+    case textEditing
+    case scrollTask
     case pointerTask
     case stress
 
@@ -216,16 +208,16 @@ enum LevelID: Int, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .basicClick: return "Basic Click"
+        case .acceptChallenge: return "Accept Challenge"
         case .textEntry: return "Text Entry"
+        case .modalTask: return "Modal Task"
         case .selectionControls: return "Selection Controls"
-        case .numericControls: return "Numeric Controls"
-        case .scrollTask: return "Scroll"
-        case .modalTask: return "Modal"
-        case .contextMenu: return "Context Menu"
-        case .textEditing: return "Text Editing"
         case .tableList: return "Table and List"
+        case .numericControls: return "Numeric Controls"
+        case .contextMenu: return "Context Menu"
         case .keyboardShortcut: return "Keyboard Shortcut"
+        case .textEditing: return "Text Editing"
+        case .scrollTask: return "Scroll"
         case .pointerTask: return "Pointer Actions"
         case .stress: return "Stress"
         }
@@ -233,31 +225,31 @@ enum LevelID: Int, CaseIterable, Identifiable {
 
     var instruction: String {
         switch self {
-        case .basicClick:
-            return "Click the Verify Access button, then click Next."
+        case .acceptChallenge:
+            return "Enable the 'I Accept Challenge' toggle, then click Next."
         case .textEntry:
             return "Type launch code delta-42 in the Message field, click Send, then click Next."
-        case .selectionControls:
-            return
-                "Choose Charlie from the popup menu, choose Three in the radio group, enable the checkbox, then click Next."
-        case .numericControls:
-            return
-                "Set the slider between 70 and 80 and the stepper between 3 and 5, then click Next."
-        case .scrollTask:
-            return "Scroll the list, click Hidden Target 18, then click Next."
         case .modalTask:
             return
                 "Open the approval sheet, type Rivera in the reviewer field, choose Approve, confirm the sheet, then click Next."
-        case .contextMenu:
-            return "Right-click the Context Target and choose Archive, then click Next."
-        case .textEditing:
+        case .selectionControls:
             return
-                "In the notes editor, make the text exactly: Alpha beta gamma. Then double-click the Word Target and triple-click the Paragraph Target before clicking Next."
+                "Choose Charlie from the popup menu, choose Three in the radio group, enable the checkbox, then click Next."
         case .tableList:
             return "Select table cell 13 and list row Gamma, then click Next."
+        case .numericControls:
+            return
+                "Set the slider between 70 and 80 and the stepper between 3 and 5, then click Next."
+        case .contextMenu:
+            return "Right-click the Context Target and choose Archive, then click Next."
         case .keyboardShortcut:
             return
                 "Click Start Shortcut Capture, press Command+Shift+M in the shortcut test area, then click Next."
+        case .textEditing:
+            return
+                "In the notes editor, make the text exactly: Alpha beta gamma. Then double-click the Word Target and triple-click the Paragraph Target before clicking Next."
+        case .scrollTask:
+            return "Scroll the list, click Hidden Target 18, then click Next."
         case .pointerTask:
             return "Drag the Drag Source onto the Drop Target, then click Next."
         case .stress:
@@ -268,272 +260,187 @@ enum LevelID: Int, CaseIterable, Identifiable {
 }
 
 final class LevelController: ObservableObject {
-    @Published var currentLevel: LevelID = .basicClick
-    @Published var validationMessage = ""
+    @Published var currentLevel: LevelID = .acceptChallenge
     @Published var showValidationDetails = false
+    @Published var testResults: [String: Bool] = [:]
 
-    @Published var basicClicked = false
-    @Published var messageText = ""
-    @Published var messageSent = false
-    @Published var selectedPopup = "Alpha"
-    @Published var selectedRadio = "One"
-    @Published var checkboxEnabled = false
-    @Published var sliderValue = 50.0
-    @Published var stepperValue = 0
-    @Published var scrollTargetClicked = false
-    @Published var modalReviewer = ""
-    @Published var modalDecision = "Review"
-    @Published var modalConfirmed = false
-    @Published var contextChoice = ""
-    @Published var notesText = ""
-    @Published var wordDoubleClicked = false
-    @Published var paragraphTripleClicked = false
-    @Published var selectedCell: Int?
-    @Published var selectedListRow = ""
-    @Published var shortcutCaptureRequest = 0
-    @Published var shortcutPressed = ""
-    @Published var dropReceived = false
-    @Published var dropIsTargeted = false
-    @Published var stressPopup = "Alpha"
-    @Published var stressText = ""
-    @Published var stressCell: Int?
-    @Published var stressReady = false
-    @Published var stressLowerConfirmClicked = false
+    @Published var challengeAccepted = false { didSet { updateResults() } }
+    @Published var messageText = "" { didSet { updateResults() } }
+    @Published var messageSent = false { didSet { updateResults() } }
+    @Published var selectedPopup = "Alpha" { didSet { updateResults() } }
+    @Published var selectedRadio = "One" { didSet { updateResults() } }
+    @Published var checkboxEnabled = false { didSet { updateResults() } }
+    @Published var sliderValue = 50.0 { didSet { updateResults() } }
+    @Published var stepperValue = 0 { didSet { updateResults() } }
+    @Published var scrollTargetClicked = false { didSet { updateResults() } }
+    @Published var modalReviewer = "" { didSet { updateResults() } }
+    @Published var modalDecision = "Review" { didSet { updateResults() } }
+    @Published var modalConfirmed = false { didSet { updateResults() } }
+    @Published var contextChoice = "" { didSet { updateResults() } }
+    @Published var notesText = "" { didSet { updateResults() } }
+    @Published var wordDoubleClicked = false { didSet { updateResults() } }
+    @Published var paragraphTripleClicked = false { didSet { updateResults() } }
+    @Published var selectedCell: Int? { didSet { updateResults() } }
+    @Published var selectedListRow = "" { didSet { updateResults() } }
+    @Published var shortcutCaptureRequest = 0 { didSet { updateResults() } }
+    @Published var shortcutPressed = "" { didSet { updateResults() } }
+    @Published var dropReceived = false { didSet { updateResults() } }
+    @Published var dropIsTargeted = false { didSet { updateResults() } }
+    @Published var stressPopup = "Alpha" { didSet { updateResults() } }
+    @Published var stressText = "" { didSet { updateResults() } }
+    @Published var stressCell: Int? { didSet { updateResults() } }
+    @Published var stressReady = false { didSet { updateResults() } }
+    @Published var stressLowerConfirmClicked = false { didSet { updateResults() } }
+
+    init() {
+        updateResults()
+    }
 
     var currentScore: (met: Int, total: Int) {
-        let total = requirementCount(for: currentLevel)
-        return (total - missingRequirements(for: currentLevel).count, total)
+        let requirements = levelRequirements(for: currentLevel)
+        let met = requirements.filter { testResults[$0] == true }.count
+        return (met, requirements.count)
     }
 
-    var completedLevelCount: Int {
-        currentLevel.rawValue
-    }
-
-    var totalLevelCount: Int {
-        LevelID.allCases.count
-    }
-
-    var cumulativeScore: (met: Int, total: Int) {
-        let completedScore = LevelID.allCases
-            .filter { $0.rawValue < currentLevel.rawValue }
-            .reduce(0) { total, level in
-                total + requirementCount(for: level)
-            }
-        let current = currentScore
-        let totalScore = LevelID.allCases.reduce(0) { total, level in
-            total + requirementCount(for: level)
+    var totalScore: (met: Int, total: Int) {
+        var totalMet = 0
+        var totalPossible = 0
+        for level in LevelID.allCases {
+            let requirements = levelRequirements(for: level)
+            totalPossible += requirements.count
+            totalMet += requirements.filter { checkRequirement(level: level, requirement: $0) }.count
         }
-        return (completedScore + current.met, totalScore)
+        return (totalMet, totalPossible)
     }
 
-    var scoreText: String {
-        let score = currentScore
-        let cumulative = cumulativeScore
-        return
-            "Score: \(score.met)/\(score.total) | Total Score: \(cumulative.met)/\(cumulative.total) | Completed levels: \(completedLevelCount)/\(totalLevelCount)"
+    var scoreReport: String {
+        let current = currentScore
+        let total = totalScore
+        return "Level: \(currentLevel.number)/\(LevelID.allCases.count) | Level Score: \(current.met)/\(current.total) | Total Score: \(total.met)/\(total.total)"
+    }
+
+    func updateResults() {
+        let requirements = levelRequirements(for: currentLevel)
+        var newResults: [String: Bool] = [:]
+        for req in requirements {
+            newResults[req] = checkRequirement(level: currentLevel, requirement: req)
+        }
+        testResults = newResults
     }
 
     func restart(logger: ActionLogger) {
-        currentLevel = .basicClick
-        resetStateForCurrentLevel()
-        logger.log("Level", "Restarted from Level 1.")
-        logger.developerLog("Level", "Restarted from level 1")
+        currentLevel = .acceptChallenge
+        resetStateForAllLevels()
+        logger.log("Level", "Restarted challenge.")
     }
 
     func jump(to level: LevelID, logger: ActionLogger) {
         currentLevel = level
-        resetStateForCurrentLevel()
-        logger.log("Level", "Loaded Level \(level.number): \(level.title).")
-        logger.developerLog("Level", "Jumped to level \(level.number): \(level.title)")
+        updateResults()
+        logger.log("Level", "Jumped to Level \(level.number): \(level.title).")
     }
 
     func resetCurrentLevel(logger: ActionLogger) {
-        resetStateForCurrentLevel()
+        resetState(for: currentLevel)
         logger.log("Level", "Current level reset.")
-        logger.developerLog("Level", "Reset level \(currentLevel.number): \(currentLevel.title)")
     }
 
-    func completeCurrentLevel(logger: ActionLogger) {
-        let missing = missingRequirements(for: currentLevel)
-        if missing.isEmpty {
-            logger.log("Level", "Level complete.")
-            logger.developerLog("Validation", "Level \(currentLevel.number) passed")
-            validationMessage = "Level complete."
-            advance(logger: logger)
-        } else {
-            let message = "Requirements not met. Check the instruction and current state."
-            validationMessage =
-                showValidationDetails
-                ? "\(message) Missing: \(missing.joined(separator: "; "))" : message
-            logger.log("Level", "Requirements not met.")
-            logger.developerLog(
-                "Validation",
-                "Level \(currentLevel.number) failed: \(missing.joined(separator: "; ")); state: \(stateSummary(for: currentLevel))"
-            )
+    func nextLevel(logger: ActionLogger) {
+        if let next = LevelID(rawValue: currentLevel.rawValue + 1) {
+            currentLevel = next
+            updateResults()
+            logger.log("Level", "Advanced to Level \(next.number).")
         }
     }
 
-    private func advance(logger: ActionLogger) {
-        guard let next = LevelID(rawValue: currentLevel.rawValue + 1) else {
-            logger.log("Level", "All levels complete.")
-            logger.developerLog("Level", "All levels complete")
-            return
-        }
-
-        currentLevel = next
-        resetStateForCurrentLevel()
-        logger.log("Level", "Advanced to Level \(next.number): \(next.title).")
-        logger.developerLog("Level", "Advanced to level \(next.number): \(next.title)")
-    }
-
-    private func resetStateForCurrentLevel() {
-        validationMessage = ""
-        switch currentLevel {
-        case .basicClick:
-            basicClicked = false
-        case .textEntry:
-            messageText = ""
-            messageSent = false
-        case .selectionControls:
-            selectedPopup = "Alpha"
-            selectedRadio = "One"
-            checkboxEnabled = false
-        case .numericControls:
-            sliderValue = 50
-            stepperValue = 0
-        case .scrollTask:
-            scrollTargetClicked = false
-        case .modalTask:
-            modalReviewer = ""
-            modalDecision = "Review"
-            modalConfirmed = false
-        case .contextMenu:
-            contextChoice = ""
-        case .textEditing:
-            notesText = ""
-            wordDoubleClicked = false
-            paragraphTripleClicked = false
-        case .tableList:
-            selectedCell = nil
-            selectedListRow = ""
-        case .keyboardShortcut:
-            shortcutCaptureRequest = 0
-            shortcutPressed = ""
-        case .pointerTask:
-            dropReceived = false
-            dropIsTargeted = false
-        case .stress:
-            stressPopup = "Alpha"
-            stressText = ""
-            stressCell = nil
-            stressReady = false
-            stressLowerConfirmClicked = false
+    func previousLevel(logger: ActionLogger) {
+        if let prev = LevelID(rawValue: currentLevel.rawValue - 1) {
+            currentLevel = prev
+            updateResults()
+            logger.log("Level", "Went back to Level \(prev.number).")
         }
     }
 
-    private func requirementCount(for level: LevelID) -> Int {
+    private func resetStateForAllLevels() {
+        for level in LevelID.allCases {
+            resetState(for: level)
+        }
+    }
+
+    private func resetState(for level: LevelID) {
         switch level {
-        case .basicClick, .scrollTask, .contextMenu, .keyboardShortcut, .pointerTask:
-            return 1
-        case .textEntry, .numericControls, .tableList:
-            return 2
-        case .selectionControls, .modalTask, .textEditing:
-            return 3
-        case .stress:
-            return 5
+        case .acceptChallenge: challengeAccepted = false
+        case .textEntry: messageText = ""; messageSent = false
+        case .modalTask: modalReviewer = ""; modalDecision = "Review"; modalConfirmed = false
+        case .selectionControls: selectedPopup = "Alpha"; selectedRadio = "One"; checkboxEnabled = false
+        case .tableList: selectedCell = nil; selectedListRow = ""
+        case .numericControls: sliderValue = 50; stepperValue = 0
+        case .contextMenu: contextChoice = ""
+        case .keyboardShortcut: shortcutCaptureRequest = 0; shortcutPressed = ""
+        case .textEditing: notesText = ""; wordDoubleClicked = false; paragraphTripleClicked = false
+        case .scrollTask: scrollTargetClicked = false
+        case .pointerTask: dropReceived = false; dropIsTargeted = false
+        case .stress: stressPopup = "Alpha"; stressText = ""; stressCell = nil; stressReady = false; stressLowerConfirmClicked = false
+        }
+        updateResults()
+    }
+
+    private func levelRequirements(for level: LevelID) -> [String] {
+        switch level {
+        case .acceptChallenge: return ["I Accept Challenge enabled"]
+        case .textEntry: return ["Message is 'launch code delta-42'", "Send clicked"]
+        case .modalTask: return ["Reviewer is Rivera", "Decision is Approve", "Sheet confirmed"]
+        case .selectionControls: return ["Popup is Charlie", "Radio is Three", "Checkbox enabled"]
+        case .tableList: return ["Cell 13 selected", "Row Gamma selected"]
+        case .numericControls: return ["Slider 70-80", "Stepper 3-5"]
+        case .contextMenu: return ["Choice is Archive"]
+        case .keyboardShortcut: return ["Cmd+Shift+M pressed"]
+        case .textEditing: return ["Text is 'Alpha beta gamma.'", "Word double-clicked", "Paragraph triple-clicked"]
+        case .scrollTask: return ["Target 18 clicked"]
+        case .pointerTask: return ["Drag and drop complete"]
+        case .stress: return ["Popup Delta", "Text 'final check'", "Cell 24", "Ready enabled", "Lower Confirm clicked"]
         }
     }
 
-    private func missingRequirements(for level: LevelID) -> [String] {
+    private func checkRequirement(level: LevelID, requirement: String) -> Bool {
         switch level {
-        case .basicClick:
-            return basicClicked ? [] : ["Verify Access button was not clicked"]
+        case .acceptChallenge:
+            return challengeAccepted
         case .textEntry:
-            return [
-                messageText == "launch code delta-42"
-                    ? nil : "Message field must equal launch code delta-42",
-                messageSent ? nil : "Send button was not clicked",
-            ].compactMap { $0 }
-        case .selectionControls:
-            return [
-                selectedPopup == "Charlie" ? nil : "Popup must be Charlie",
-                selectedRadio == "Three" ? nil : "Radio must be Three",
-                checkboxEnabled ? nil : "Checkbox must be enabled",
-            ].compactMap { $0 }
-        case .numericControls:
-            return [
-                (70...80).contains(Int(sliderValue)) ? nil : "Slider must be between 70 and 80",
-                (3...5).contains(stepperValue) ? nil : "Stepper must be between 3 and 5",
-            ].compactMap { $0 }
-        case .scrollTask:
-            return scrollTargetClicked ? [] : ["Hidden Target 18 was not clicked"]
+            if requirement.contains("Message") { return messageText == "launch code delta-42" }
+            return messageSent
         case .modalTask:
-            return [
-                modalReviewer == "Rivera" ? nil : "Reviewer must be Rivera",
-                modalDecision == "Approve" ? nil : "Decision must be Approve",
-                modalConfirmed ? nil : "Approval sheet was not confirmed",
-            ].compactMap { $0 }
-        case .contextMenu:
-            return contextChoice == "Archive" ? [] : ["Context menu choice must be Archive"]
-        case .textEditing:
-            return [
-                notesText == "Alpha beta gamma."
-                    ? nil : "Notes text must be exactly Alpha beta gamma.",
-                wordDoubleClicked ? nil : "Word Target was not double-clicked",
-                paragraphTripleClicked ? nil : "Paragraph Target was not triple-clicked",
-            ].compactMap { $0 }
+            if requirement.contains("Reviewer") { return modalReviewer == "Rivera" }
+            if requirement.contains("Decision") { return modalDecision == "Approve" }
+            return modalConfirmed
+        case .selectionControls:
+            if requirement.contains("Popup") { return selectedPopup == "Charlie" }
+            if requirement.contains("Radio") { return selectedRadio == "Three" }
+            return checkboxEnabled
         case .tableList:
-            return [
-                selectedCell == 13 ? nil : "Cell 13 must be selected",
-                selectedListRow == "Gamma" ? nil : "List row Gamma must be selected",
-            ].compactMap { $0 }
+            if requirement.contains("Cell") { return selectedCell == 13 }
+            return selectedListRow == "Gamma"
+        case .numericControls:
+            if requirement.contains("Slider") { return (70...80).contains(Int(sliderValue)) }
+            return (3...5).contains(stepperValue)
+        case .contextMenu:
+            return contextChoice == "Archive"
         case .keyboardShortcut:
             return shortcutPressed == "Pressed Command+Shift+M"
-                ? [] : ["Command+Shift+M must be pressed in the shortcut test area"]
-        case .pointerTask:
-            return dropReceived ? [] : ["Drag Source was not dropped on Drop Target"]
-        case .stress:
-            return [
-                stressPopup == "Delta" ? nil : "Stress popup must be Delta",
-                stressText == "final check" ? nil : "Small field must equal final check",
-                stressCell == 24 ? nil : "Cell 24 must be selected",
-                stressReady ? nil : "Ready must be enabled",
-                stressLowerConfirmClicked ? nil : "Lower Confirm button must be clicked",
-            ].compactMap { $0 }
-        }
-    }
-
-    private func stateSummary(for level: LevelID) -> String {
-        switch level {
-        case .basicClick:
-            return "basicClicked=\(basicClicked)"
-        case .textEntry:
-            return "messageText=\(messageText), messageSent=\(messageSent)"
-        case .selectionControls:
-            return
-                "selectedPopup=\(selectedPopup), selectedRadio=\(selectedRadio), checkboxEnabled=\(checkboxEnabled)"
-        case .numericControls:
-            return "sliderValue=\(Int(sliderValue)), stepperValue=\(stepperValue)"
-        case .scrollTask:
-            return "scrollTargetClicked=\(scrollTargetClicked)"
-        case .modalTask:
-            return
-                "modalReviewer=\(modalReviewer), modalDecision=\(modalDecision), modalConfirmed=\(modalConfirmed)"
-        case .contextMenu:
-            return "contextChoice=\(contextChoice)"
         case .textEditing:
-            return
-                "notesText=\(notesText), wordDoubleClicked=\(wordDoubleClicked), paragraphTripleClicked=\(paragraphTripleClicked)"
-        case .tableList:
-            return
-                "selectedCell=\(String(describing: selectedCell)), selectedListRow=\(selectedListRow)"
-        case .keyboardShortcut:
-            return "shortcutPressed=\(shortcutPressed)"
+            if requirement.contains("Text") { return notesText == "Alpha beta gamma." }
+            if requirement.contains("Word") { return wordDoubleClicked }
+            return paragraphTripleClicked
+        case .scrollTask:
+            return scrollTargetClicked
         case .pointerTask:
-            return "dropReceived=\(dropReceived)"
+            return dropReceived
         case .stress:
-            return
-                "stressPopup=\(stressPopup), stressText=\(stressText), stressCell=\(String(describing: stressCell)), stressReady=\(stressReady), stressLowerConfirmClicked=\(stressLowerConfirmClicked)"
+            if requirement.contains("Popup") { return stressPopup == "Delta" }
+            if requirement.contains("Text") { return stressText == "final check" }
+            if requirement.contains("Cell") { return stressCell == 24 }
+            if requirement.contains("Ready") { return stressReady }
+            return stressLowerConfirmClicked
         }
     }
 }
@@ -564,7 +471,7 @@ struct ContentView: View {
             VStack(alignment: .leading, spacing: 16) {
                 levelHeader
                 levelBody
-                validationFooter
+                navigationAndRequirements
             }
             .frame(width: 560, alignment: .topLeading)
 
@@ -584,7 +491,7 @@ struct ContentView: View {
 
                 Spacer()
 
-                Text(levels.scoreText)
+                Text(levels.scoreReport)
                     .font(.headline.monospacedDigit())
                     .padding(.horizontal, 10)
                     .padding(.vertical, 6)
@@ -603,55 +510,72 @@ struct ContentView: View {
     @ViewBuilder
     private var levelBody: some View {
         switch levels.currentLevel {
-        case .basicClick: basicClickLevel
+        case .acceptChallenge: acceptChallengeLevel
         case .textEntry: textEntryLevel
-        case .selectionControls: selectionControlsLevel
-        case .numericControls: numericControlsLevel
-        case .scrollTask: scrollTaskLevel
         case .modalTask: modalTaskLevel
-        case .contextMenu: contextMenuLevel
-        case .textEditing: textEditingLevel
+        case .selectionControls: selectionControlsLevel
         case .tableList: tableListLevel
+        case .numericControls: numericControlsLevel
+        case .contextMenu: contextMenuLevel
         case .keyboardShortcut: keyboardShortcutLevel
+        case .textEditing: textEditingLevel
+        case .scrollTask: scrollTaskLevel
         case .pointerTask: pointerTaskLevel
         case .stress: stressLevel
         }
     }
 
-    private var validationFooter: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            if !levels.validationMessage.isEmpty {
-                Text(levels.validationMessage)
-                    .font(.headline)
-                    .foregroundColor(levels.validationMessage == "Level complete." ? .green : .red)
+    private var navigationAndRequirements: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            GroupBox("Requirements Status") {
+                VStack(alignment: .leading, spacing: 4) {
+                    ForEach(levels.testResults.keys.sorted(), id: \.self) { key in
+                        HStack {
+                            Image(systemName: levels.testResults[key] == true ? "checkmark.circle.fill" : "circle")
+                                .foregroundColor(levels.testResults[key] == true ? .green : .secondary)
+                            Text(key)
+                                .strikethrough(levels.testResults[key] == true)
+                                .foregroundColor(levels.testResults[key] == true ? .secondary : .primary)
+                        }
+                    }
+                }
+                .padding(8)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
 
             HStack {
-                Button("Next") {
-                    logger.log("Button", "Next clicked.")
-                    levels.completeCurrentLevel(logger: logger)
+                Button("Previous") {
+                    levels.previousLevel(logger: logger)
                 }
-                .keyboardShortcut(.return, modifiers: [.command])
-                .accessibilityLabel("Next")
+                .disabled(levels.currentLevel.rawValue == 0)
+
+                Button("Next") {
+                    levels.nextLevel(logger: logger)
+                }
+                .disabled(levels.currentLevel.rawValue == LevelID.allCases.count - 1)
+
+                Spacer()
 
                 Button("Reset Level") {
                     levels.resetCurrentLevel(logger: logger)
                 }
-                .accessibilityLabel("Reset Level")
-
-                Spacer()
             }
         }
     }
 
-    private var basicClickLevel: some View {
-        GroupBox("Basic") {
-            Button("Verify Access") {
-                levels.basicClicked = true
-                logger.log("Button", "Verify Access clicked.")
+    private var acceptChallengeLevel: some View {
+        GroupBox("Challenge") {
+            VStack(alignment: .leading, spacing: 20) {
+                Text("This test harness validates VOCR computer-use capabilities across various macOS UI controls.")
+                    .font(.body)
+
+                Toggle("I Accept Challenge", isOn: $levels.challengeAccepted)
+                    .toggleStyle(.button)
+                    .font(.headline)
+                    .padding()
+                    .accessibilityLabel("I Accept Challenge")
             }
-            .controlSize(.large)
-            .accessibilityLabel("Verify Access")
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 
