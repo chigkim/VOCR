@@ -626,7 +626,7 @@ struct ContentView: View {
     }
 
     private var basicClickLevel: some View {
-        GroupBox("Basic Button") {
+        GroupBox("Basic") {
             Button("Verify Access") {
                 levels.basicClicked = true
                 logger.log("Button", "Verify Access clicked.")
