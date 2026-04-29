@@ -572,7 +572,7 @@ extension ComputerUseController {
             actionLog.append(description)
         }
 
-        guard let screenshotMessage = makeScreenshotUserMessage(text: "Latest screenshot.") else {
+        guard let screenshotMessage = makeScreenshotUserMessage(text: screenshotText(for: messages)) else {
             fail(ComputerUseError.screenshotFailed)
             return
         }
@@ -808,6 +808,12 @@ extension ComputerUseController {
             let role = message["role"] as? String
 
             if role == "assistant", message["tool_calls"] != nil, index != latestToolCallIndex {
+                if let content = message["content"] as? String, !content.isEmpty {
+                    trimmedMessages.append([
+                        "role": "assistant",
+                        "content": content,
+                    ])
+                }
                 continue
             }
 
@@ -846,6 +852,8 @@ extension ComputerUseController {
             let restoredContent = Array(sanitizedContent.reversed())
             if removedImage, isRefreshScreenshotMessage(restoredContent) {
                 sanitizedMessages.remove(at: index)
+            } else if removedImage, let compactedContent = compactedScreenshotContent(restoredContent) {
+                sanitizedMessages[index]["content"] = compactedContent
             } else {
                 sanitizedMessages[index]["content"] = restoredContent
             }
@@ -864,6 +872,63 @@ extension ComputerUseController {
         }
 
         return text.trimmingCharacters(in: .whitespacesAndNewlines).hasPrefix("Latest screenshot.")
+    }
+
+    private func compactedScreenshotContent(_ content: [[String: Any]]) -> [[String: Any]]? {
+        guard content.count == 1,
+            var textItem = content.first,
+            textItem["type"] as? String == "text",
+            let text = textItem["text"] as? String,
+            let range = text.range(of: "\n\nLatest screenshot.")
+        else {
+            return nil
+        }
+
+        let prefix = String(text[..<range.lowerBound])
+        guard prefix.hasPrefix("Previous tool result:") else {
+            return nil
+        }
+
+        textItem["text"] = prefix
+        return [textItem]
+    }
+
+    private func screenshotText(for messages: [[String: Any]]) -> String {
+        let toolResults = latestToolResults(in: messages)
+        guard !toolResults.isEmpty else {
+            return "Latest screenshot."
+        }
+
+        return """
+            Previous tool result:
+            \(toolResults.map { "- \($0)" }.joined(separator: "\n"))
+
+            Latest screenshot.
+            """
+    }
+
+    private func latestToolResults(in messages: [[String: Any]]) -> [String] {
+        guard let latestToolCallIndex = messages.indices.last(where: { index in
+            guard messages[index]["role"] as? String == "assistant" else { return false }
+            return messages[index]["tool_calls"] != nil
+        }) else {
+            return []
+        }
+        guard latestToolCallIndex + 1 < messages.endIndex else {
+            return []
+        }
+
+        var results: [String] = []
+        for message in messages[(latestToolCallIndex + 1)...] {
+            guard message["role"] as? String == "tool" else {
+                continue
+            }
+            if let content = message["content"] as? String, !content.isEmpty {
+                results.append(content)
+            }
+        }
+
+        return results
     }
 
     private func chatCompletionsURL(_ base: URL) -> URL {
@@ -1071,7 +1136,6 @@ extension ComputerUseController {
             let logDescription = actionDescription(action, full: true)
             let speechDescription = actionDescription(action, full: false)
             actionLog.append(logDescription)
-            Accessibility.speakWithSynthesizerSynchronous(speechDescription)
 
             if requiresApproval(action) && !approveAllActionsForCurrentTask {
                 switch approve(action: logDescription) {
@@ -1085,6 +1149,7 @@ extension ComputerUseController {
                 }
             }
 
+            Accessibility.speakWithSynthesizerSynchronous(speechDescription)
             try execute(action: action)
         }
     }
