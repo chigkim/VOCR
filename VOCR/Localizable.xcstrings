@@ -235,14 +235,26 @@
         }
       }
     },
-    "button.approve" : {
-      "comment" : "Button title to approve",
+    "button.approveAll" : {
+      "comment" : "Button title to approve all remaining computer use actions",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Approve"
+            "value" : "Approve All"
+          }
+        }
+      }
+    },
+    "button.approveOnce" : {
+      "comment" : "Button title to approve one computer use action",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Approve Once"
           }
         }
       }
@@ -1526,18 +1538,6 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Could not access the frontmost window."
-          }
-        }
-      }
-    },
-    "computerUse.started" : {
-      "comment" : "Speech when computer use starts",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Computer use started."
           }
         }
       }

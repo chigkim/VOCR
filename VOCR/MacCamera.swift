@@ -79,10 +79,10 @@ class MacCamera: NSObject, AVCapturePhotoCaptureDelegate {
                     cameraOutput.capturePhoto(with: settings, delegate: self)
                 }
             } else {
-                print("issue here : captureSession.canAddInput")
+                log("issue here : captureSession.canAddInput")
             }
         } else {
-            print("some problem here")
+            log("some problem here")
         }
     }
 
@@ -91,9 +91,9 @@ class MacCamera: NSObject, AVCapturePhotoCaptureDelegate {
         error: Error?
     ) {
         captureSession.stopRunning()
-        print("photo captured")
+        log("photo captured")
         if let error = error {
-            debugPrint(error)
+            log(error)
         }
 
         if let dataImage = photo.fileDataRepresentation() {
@@ -123,18 +123,18 @@ class MacCamera: NSObject, AVCapturePhotoCaptureDelegate {
 
                 switch response {
                 case .alertFirstButtonReturn:
-                    print("Recognizing image using VisionKit")
+                    log("Recognizing image using VisionKit")
                     let message = classify(cgImage: cgImage)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         Accessibility.speak(message)
                     }
 
                 case .alertSecondButtonReturn:
-                    print("Recognizing image with LLM")
+                    log("Recognizing image with LLM")
                     ask(image: cgImage)
 
                 case .alertThirdButtonReturn:
-                    print("Recognizing text in an image using VisionKit")
+                    log("Recognizing text in an image using VisionKit")
                     Navigation.displayResults = []
                     Navigation.cgImage = cgImage
                     Navigation.startOCR()
@@ -152,19 +152,19 @@ class MacCamera: NSObject, AVCapturePhotoCaptureDelegate {
                     }
 
                 case NSApplication.ModalResponse(rawValue: 1003):
-                    print("Close button selected")
+                    log("Close button selected")
                     return
 
                 default:
-                    print("Invalid or unexpected menu response: \(response.rawValue)")
+                    log("Invalid or unexpected menu response: \(response.rawValue)")
                 }
 
             } else {
-                print("Error: could not create CGIImage from photo.")
+                log("Error: could not create CGIImage from photo.")
             }
 
         } else {
-            print("Error getting file data representation from photo")
+            log("Error getting file data representation from photo")
         }
     }
 

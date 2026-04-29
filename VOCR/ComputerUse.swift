@@ -6,9 +6,16 @@ enum ComputerUseError: Error {
     case invalidURL
     case noPreset
     case noWindow
+    case missingBundledResource(String)
     case screenshotFailed
     case cancelled
     case invalidResponse(String)
+}
+
+private enum ComputerUseApprovalDecision {
+    case cancel
+    case approveOnce
+    case approveAll
 }
 
 final class ComputerUseController {
@@ -23,6 +30,8 @@ final class ComputerUseController {
     private var lastPrompt = ""
     private var textContext: [String] = []
     private var currentTurn = 0
+    private var approveAllActionsForCurrentTask = false
+    private var hasAnnouncedAIRequestForCurrentTask = false
 
     // Tracking for clipboard report
     private var actionLog: [String] = []
@@ -64,7 +73,7 @@ final class ComputerUseController {
 
     private func start(prompt: String, followUp: Bool) {
         guard let preset = Settings.activePreset() else {
-            Accessibility.speak(
+            Accessibility.speakWithSynthesizer(
                 NSLocalizedString(
                     "computerUse.noPreset", value: "No active AI preset is selected.",
                     comment: "Speech when computer use has no preset"))
@@ -72,7 +81,7 @@ final class ComputerUseController {
         }
 
         guard Accessibility.isTrusted(ask: true) else {
-            Accessibility.speak(
+            Accessibility.speakWithSynthesizer(
                 NSLocalizedString(
                     "computerUse.accessibilityRequired",
                     value: "Accessibility permission is required for computer use.",
@@ -81,7 +90,7 @@ final class ComputerUseController {
         }
 
         guard let rect = Navigation.getWindow(), rect.width > 0, rect.height > 0 else {
-            Accessibility.speak(
+            Accessibility.speakWithSynthesizer(
                 NSLocalizedString(
                     "computerUse.noWindow", value: "Could not access the frontmost window.",
                     comment: "Speech when frontmost window is unavailable"))
@@ -92,6 +101,8 @@ final class ComputerUseController {
         running = true
         cancelled = false
         currentTurn = 1
+        approveAllActionsForCurrentTask = false
+        hasAnnouncedAIRequestForCurrentTask = false
 
         // Reset tracking for new session
         actionLog = []
@@ -99,13 +110,16 @@ final class ComputerUseController {
         totalOutputTokens = 0
         totalCachedTokens = 0
 
-        Accessibility.speak(
-            NSLocalizedString(
-                "computerUse.started", value: "Computer use started.",
-                comment: "Speech when computer use starts"))
+        announceInitialAIRequest(model: preset.model) { [weak self] in
+            guard let self = self else { return }
+            guard self.running, !self.cancelled else {
+                self.finish(message: nil)
+                return
+            }
 
-        let input = buildInput(prompt: prompt, followUp: followUp)
-        sendInitialRequest(preset: preset, input: input)
+            let input = self.buildInput(prompt: prompt, followUp: followUp)
+            self.sendInitialRequest(preset: preset, input: input)
+        }
     }
 
     private func finish(message: String?) {
@@ -113,6 +127,8 @@ final class ComputerUseController {
         running = false
         cancelled = false
         currentTask = nil
+        approveAllActionsForCurrentTask = false
+        hasAnnouncedAIRequestForCurrentTask = false
 
         if wasCancelled {
             let cancelMsg = NSLocalizedString(
@@ -153,6 +169,8 @@ final class ComputerUseController {
         running = false
         cancelled = false
         currentTask = nil
+        approveAllActionsForCurrentTask = false
+        hasAnnouncedAIRequestForCurrentTask = false
 
         if wasCancelled {
             let cancelMsg = NSLocalizedString(
@@ -169,7 +187,7 @@ final class ComputerUseController {
             format: NSLocalizedString(
                 "computerUse.failed", value: "Computer use failed: %@",
                 comment: "Speech when computer use fails"), "\(error)")
-        Accessibility.speak(message)
+        Accessibility.speakWithSynthesizer(message)
         actionLog.append(message)
 
         let total = totalInputTokens + totalOutputTokens
@@ -184,6 +202,38 @@ final class ComputerUseController {
             NSLocalizedString(
                 "computerUse.errorTitle", value: "Computer Use Error",
                 comment: "Alert title for computer use errors"), "\(error)")
+    }
+
+    private func announceInitialAIRequest(model: String, completion: @escaping () -> Void) {
+        announceAIRequestIfNeeded(model: model, completion: completion)
+    }
+
+    private func announceAIRequestIfNeeded(model: String) {
+        announceAIRequestIfNeeded(message: aiRequestAnnouncement(model: model), completion: nil)
+    }
+
+    private func announceAIRequestIfNeeded(
+        model: String, completion: @escaping () -> Void
+    ) {
+        announceAIRequestIfNeeded(message: aiRequestAnnouncement(model: model), completion: completion)
+    }
+
+    private func announceAIRequestIfNeeded(message: String, completion: (() -> Void)?) {
+        guard !hasAnnouncedAIRequestForCurrentTask else {
+            completion?()
+            return
+        }
+
+        hasAnnouncedAIRequestForCurrentTask = true
+        Accessibility.speakWithSynthesizer(message, completion: completion)
+    }
+
+    private func aiRequestAnnouncement(model: String) -> String {
+        String(
+            format: NSLocalizedString(
+                "dialog.asking.message", value: "Asking %@... Please wait...",
+                comment: "Speech message when making a request to an AI service"),
+            model)
     }
 
     private func buildInput(prompt: String, followUp: Bool) -> String {
@@ -449,10 +499,13 @@ extension ComputerUseController {
         }
     }
 
-    private var systemInstruction: String {
-        var instruction =
-            loadBundledText(name: "portable_computer_use_system_message", ext: "txt")
-            ?? defaultComputerUseSystemInstruction
+    private var systemInstruction: String? {
+        guard var instruction = loadBundledText(
+            name: "portable_computer_use_system_message", ext: "txt")
+        else {
+            return nil
+        }
+
         instruction += """
 
             You are controlling the user's frontmost macOS window through VOCR.
@@ -464,75 +517,15 @@ extension ComputerUseController {
         return instruction
     }
 
-    private var defaultComputerUseSystemInstruction: String {
-        """
-        You can control the computer GUI with the `computer` tool. Coordinates are pixels relative to the top-left corner of the latest screenshot image. Every computer tool call must include `target`, a concise label such as `Pause button`, `Name field`, `page to load`, or `refresh screen`.
-        Observe the latest screenshot before deciding an action. Prefer one precise action at a time, then wait for the next screenshot if the UI may change. Use screenshot for an updated view, wait after loading or animation, click for visible controls, double_click or triple_click only when required, drag for sliders or drag-and-drop, scroll for off-screen content, keypress for shortcuts and special keys, type only when text input has focus, and cursor_position only when the current pointer location matters.
-        Use uppercase key names for non-text keys. Use CTRL, SHIFT, OPTION, and COMMAND in keypress arrays.
-        """
-    }
-
-    private var computerTools: [[String: Any]] {
-        if let data = loadBundledData(name: "portable_computer_use_tools", ext: "json"),
+    private var computerTools: [[String: Any]]? {
+        guard
+            let data = loadBundledData(name: "portable_computer_use_tools", ext: "json"),
             let tools = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]]
-        {
-            return tools
+        else {
+            return nil
         }
 
-        return [
-            [
-                "type": "function",
-                "function": [
-                    "name": "computer",
-                    "description":
-                        "Control a computer GUI using screenshot-local pixel coordinates.",
-                    "parameters": [
-                        "type": "object",
-                        "properties": [
-                            "action": [
-                                "type": "string",
-                                "enum": [
-                                    "screenshot", "wait", "cursor_position", "move", "click",
-                                    "double_click", "triple_click", "drag", "scroll", "keypress",
-                                    "type",
-                                ],
-                            ],
-                            "target": ["type": "string"],
-                            "x": ["type": "integer", "minimum": 0],
-                            "y": ["type": "integer", "minimum": 0],
-                            "button": [
-                                "type": "string",
-                                "enum": ["left", "right", "middle"],
-                            ],
-                            "modifiers": [
-                                "type": "array",
-                                "items": [
-                                    "type": "string",
-                                    "enum": ["ctrl", "shift", "option", "command"],
-                                ],
-                            ],
-                            "path": [
-                                "type": "array",
-                                "items": [
-                                    "type": "object",
-                                    "properties": [
-                                        "x": ["type": "integer", "minimum": 0],
-                                        "y": ["type": "integer", "minimum": 0],
-                                    ],
-                                    "required": ["x", "y"],
-                                ],
-                            ],
-                            "scroll_x": ["type": "integer"],
-                            "scroll_y": ["type": "integer"],
-                            "keys": ["type": "array", "items": ["type": "string"]],
-                            "text": ["type": "string"],
-                            "duration_ms": ["type": "integer", "minimum": 0],
-                        ],
-                        "required": ["action", "target"],
-                    ],
-                ],
-            ]
-        ]
+        return tools
     }
 
     private func sendInitialRequest(
@@ -542,6 +535,11 @@ extension ComputerUseController {
         ),
         input: String
     ) {
+        guard let systemInstruction else {
+            fail(ComputerUseError.missingBundledResource("portable_computer_use_system_message.txt"))
+            return
+        }
+
         guard let screenshotMessage = makeScreenshotUserMessage(text: input) else {
             fail(ComputerUseError.screenshotFailed)
             return
@@ -552,7 +550,10 @@ extension ComputerUseController {
             screenshotMessage,
         ]
 
-        let body = chatBody(model: preset.model, messages: messages)
+        guard let body = chatBody(model: preset.model, messages: messages) else {
+            fail(ComputerUseError.missingBundledResource("portable_computer_use_tools.json"))
+            return
+        }
 
         send(body: body, preset: preset) { [weak self] result in
             self?.handleResponseResult(result, preset: preset, messages: messages)
@@ -569,7 +570,6 @@ extension ComputerUseController {
         let description = "Screenshot."
         if actionLog.last != description {
             actionLog.append(description)
-            Accessibility.speakWithSynthesizerSynchronous(description)
         }
 
         guard let screenshotMessage = makeScreenshotUserMessage(text: "Latest screenshot.") else {
@@ -578,7 +578,10 @@ extension ComputerUseController {
         }
 
         let updatedMessages = sanitizedMessagesForRequest(messages + [screenshotMessage])
-        let body = chatBody(model: preset.model, messages: updatedMessages)
+        guard let body = chatBody(model: preset.model, messages: updatedMessages) else {
+            fail(ComputerUseError.missingBundledResource("portable_computer_use_tools.json"))
+            return
+        }
 
         send(body: body, preset: preset) { [weak self] result in
             self?.handleResponseResult(result, preset: preset, messages: updatedMessages)
@@ -612,12 +615,7 @@ extension ComputerUseController {
             return
         }
 
-        Accessibility.speak(
-            String(
-                format: NSLocalizedString(
-                    "dialog.asking.message", value: "Asking %@... Please wait...",
-                    comment: "Speech message when making a request to an AI service"), preset.model)
-        )
+        announceAIRequestIfNeeded(model: preset.model)
 
         currentTask = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -729,7 +727,7 @@ extension ComputerUseController {
         }
 
         for message in assistantMessages {
-            Accessibility.speak(message)
+            Accessibility.speakWithSynthesizerSynchronous(message)
         }
 
         var updatedMessages = messages
@@ -785,8 +783,12 @@ extension ComputerUseController {
         }
     }
 
-    private func chatBody(model: String, messages: [[String: Any]]) -> [String: Any] {
-        [
+    private func chatBody(model: String, messages: [[String: Any]]) -> [String: Any]? {
+        guard let computerTools else {
+            return nil
+        }
+
+        return [
             "model": model,
             "messages": sanitizedMessagesForRequest(messages),
             "tools": computerTools,
@@ -1071,9 +1073,16 @@ extension ComputerUseController {
             actionLog.append(logDescription)
             Accessibility.speakWithSynthesizerSynchronous(speechDescription)
 
-            if requiresApproval(action), !approve(action: logDescription) {
-                abort()
-                throw ComputerUseError.cancelled
+            if requiresApproval(action) && !approveAllActionsForCurrentTask {
+                switch approve(action: logDescription) {
+                case .cancel:
+                    abort()
+                    throw ComputerUseError.cancelled
+                case .approveOnce:
+                    break
+                case .approveAll:
+                    approveAllActionsForCurrentTask = true
+                }
             }
 
             try execute(action: action)
@@ -1203,12 +1212,11 @@ extension ComputerUseController {
         return riskyWords.contains { lowercased.contains($0) }
     }
 
-    private func approve(action: String) -> Bool {
+    private func approve(action: String) -> ComputerUseApprovalDecision {
         let semaphore = DispatchSemaphore(value: 0)
-        var approved = false
+        var decision = ComputerUseApprovalDecision.cancel
 
         DispatchQueue.main.async {
-            Accessibility.speak("Approval required. \(action)")
             let alert = NSAlert()
             alert.messageText = NSLocalizedString(
                 "computerUse.approval.title", value: "Approve Computer Use Action?",
@@ -1216,19 +1224,33 @@ extension ComputerUseController {
             alert.informativeText = action
             alert.addButton(
                 withTitle: NSLocalizedString(
-                    "button.approve", value: "Approve", comment: "Button title to approve"))
+                    "button.cancel", value: "Cancel", comment: "Button title to cancel an action"))
             alert.addButton(
                 withTitle: NSLocalizedString(
-                    "button.cancel", value: "Cancel", comment: "Button title to cancel an action"))
-            alert.buttons.first?.keyEquivalent = "\r"
-            approved = alert.runModal() == .alertFirstButtonReturn
+                    "button.approveOnce", value: "Approve Once",
+                    comment: "Button title to approve one computer use action"))
+            alert.addButton(
+                withTitle: NSLocalizedString(
+                    "button.approveAll", value: "Approve All",
+                    comment: "Button title to approve all remaining computer use actions"))
+            alert.buttons[0].keyEquivalent = "\u{1b}"
+            alert.buttons[1].keyEquivalent = "\r"
+
+            switch alert.runModal() {
+            case .alertSecondButtonReturn:
+                decision = .approveOnce
+            case .alertThirdButtonReturn:
+                decision = .approveAll
+            default:
+                decision = .cancel
+            }
             self.dismissComputerUseDialog(alert)
             semaphore.signal()
         }
 
         semaphore.wait()
-        Thread.sleep(forTimeInterval: 0.2)
-        return approved
+        Thread.sleep(forTimeInterval: 0.1)
+        return decision
     }
 
     private func dismissComputerUseDialog(_ alert: NSAlert) {

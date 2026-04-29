@@ -44,10 +44,22 @@ enum Accessibility {
             userInfo: announcement)
     }
 
-    static func speakWithSynthesizer(_ message: String) {
+    static func speakWithSynthesizer(_ message: String, completion: (() -> Void)? = nil) {
         log("Speak with synthesizer: \(message)")
-        DispatchQueue.global().async {
-            speech.startSpeaking(message)
+        DispatchQueue.main.async {
+            guard let completion = completion else {
+                speech.startSpeaking(message)
+                return
+            }
+
+            speechDelegate.onFinish = {
+                speechDelegate.onFinish = nil
+                completion()
+            }
+            if !speech.startSpeaking(message) {
+                speechDelegate.onFinish = nil
+                completion()
+            }
         }
     }
 
@@ -96,7 +108,9 @@ enum Accessibility {
         if let scriptObject = NSAppleScript(contentsOf: url!, error: &error) {
             var outputError: NSDictionary?
             if let output = scriptObject.executeAppleEvent(event, error: &outputError).stringValue {
-                debugPrint(outputError as Any)
+                if let outputError {
+                    log("Speak output error: \(outputError)")
+                }
                 log("Speak: \(output)")
             } else {
                 log("Output Error: \(String(describing: outputError))")

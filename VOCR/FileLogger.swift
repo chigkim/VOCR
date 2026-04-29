@@ -57,7 +57,7 @@ class FileLogger {
     func log(_ message: String) {
         let timestamp = Date().description
         let logMessage = "\(timestamp)\n\(message)\n"
-        print(logMessage)
+        Swift.print(logMessage)
         if Settings.writeLog {
             write(logMessage)
         }

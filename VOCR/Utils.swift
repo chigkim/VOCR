@@ -408,13 +408,8 @@ func performOCR(cgImage: CGImage) -> [Observation] {
     textRecognitionRequest.customWords = []
     textRecognitionRequest.usesCPUOnly = false
     textRecognitionRequest.cancel()
-    do {
-        try debugPrint(
-            "\(textRecognitionRequest.supportedRecognitionLanguages().count), \(textRecognitionRequest.supportedRecognitionLanguages())"
-        )
-    } catch {
-
-    }
+    let supportedLanguages = (try? textRecognitionRequest.supportedRecognitionLanguages()) ?? []
+    log("\(supportedLanguages.count), \(supportedLanguages)")
     let rectDetectRequest = VNDetectRectanglesRequest()
     rectDetectRequest.maximumObservations = 1000
     rectDetectRequest.minimumConfidence = 0.0

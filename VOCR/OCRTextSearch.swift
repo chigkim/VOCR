@@ -16,7 +16,7 @@ class OCRTextSearch {
 
     func search(query: String = "", fromBeginning: Bool = false, backward: Bool = false) {
         guard !Navigation.displayResults.isEmpty else {
-            print("No OCR results to search.")
+            log("No OCR results to search.")
             return
         }
 
@@ -72,7 +72,7 @@ class OCRTextSearch {
                         Navigation.l = lineIndex
                         Navigation.w = wordIndex
                         setMouseCoordinates(x: lineIndex, y: wordIndex)
-                        print(
+                        log(
                             "Found '\(searchQuery)' at line \(lineIndex + 1), word \(wordIndex + 1)"
                         )
                         Accessibility.speak(
@@ -93,7 +93,7 @@ class OCRTextSearch {
                         Navigation.l = lineIndex
                         Navigation.w = wordIndex
                         setMouseCoordinates(x: lineIndex, y: wordIndex)
-                        print(
+                        log(
                             "Found '\(searchQuery)' at line \(lineIndex + 1), word \(wordIndex + 1)"
                         )
                         Accessibility.speak(

@@ -343,7 +343,7 @@ final class PermissionsManager {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) {
             granted, error in
             if let error = error {
-                print("Notification permission error: \(error)")
+                log("Notification permission error: \(error)")
             }
             DispatchQueue.main.async {
                 completion(granted)

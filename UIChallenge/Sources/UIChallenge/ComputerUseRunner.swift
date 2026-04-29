@@ -143,12 +143,24 @@ final class ComputerUseRunner: ObservableObject {
             return
         }
 
+        guard let systemInstruction else {
+            fail(
+                RunnerError.missingBundledResource("portable_computer_use_system_message.txt"),
+                logger: logger)
+            return
+        }
+
         let messages: [[String: Any]] = [
             ["role": "system", "content": systemInstruction],
             screenshotMessage,
         ]
 
-        let body = chatBody(model: config.model, messages: messages)
+        guard let body = chatBody(model: config.model, messages: messages) else {
+            fail(
+                RunnerError.missingBundledResource("portable_computer_use_tools.json"),
+                logger: logger)
+            return
+        }
 
         send(body: body, config: config, logger: logger) { [weak self] result in
             self?.handle(
@@ -374,16 +386,20 @@ extension ComputerUseRunner {
     fileprivate enum RunnerError: Error {
         case invalidURL
         case invalidResponse(String)
+        case missingBundledResource(String)
         case screenshotFailed
         case unsupportedAction(String)
     }
 }
 
 extension ComputerUseRunner {
-    fileprivate var systemInstruction: String {
-        var instruction =
-            loadToolsText(name: "portable_computer_use_system_message", ext: "txt")
-            ?? defaultComputerUseSystemInstruction
+    fileprivate var systemInstruction: String? {
+        guard var instruction = loadToolsText(
+            name: "portable_computer_use_system_message", ext: "txt")
+        else {
+            return nil
+        }
+
         instruction += """
 
             You are controlling the UIChallenge window for automated validation.
@@ -394,75 +410,15 @@ extension ComputerUseRunner {
         return instruction
     }
 
-    fileprivate var defaultComputerUseSystemInstruction: String {
-        """
-        You can control the computer GUI with the `computer` tool. Coordinates are pixels relative to the top-left corner of the latest screenshot image. Every computer tool call must include `target`, a concise label such as `Pause button`, `Name field`, `page to load`, or `refresh screen`.
-        Observe the latest screenshot before deciding an action. Prefer one precise action at a time, then wait for the next screenshot if the UI may change. Use screenshot for an updated view, wait after loading or animation, click for visible controls, double_click or triple_click only when required, drag for sliders or drag-and-drop, scroll for off-screen content, keypress for shortcuts and special keys, type only when text input has focus, and cursor_position only when the current pointer location matters.
-        Use uppercase key names for non-text keys. Use CTRL, SHIFT, OPTION, and COMMAND in keypress arrays.
-        """
-    }
-
-    fileprivate var computerTools: [[String: Any]] {
-        if let data = loadToolsData(name: "portable_computer_use_tools", ext: "json"),
+    fileprivate var computerTools: [[String: Any]]? {
+        guard
+            let data = loadToolsData(name: "portable_computer_use_tools", ext: "json"),
             let tools = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]]
-        {
-            return tools
+        else {
+            return nil
         }
 
-        return [
-            [
-                "type": "function",
-                "function": [
-                    "name": "computer",
-                    "description":
-                        "Control a computer GUI using screenshot-local pixel coordinates.",
-                    "parameters": [
-                        "type": "object",
-                        "properties": [
-                            "action": [
-                                "type": "string",
-                                "enum": [
-                                    "screenshot", "wait", "cursor_position", "move", "click",
-                                    "double_click", "triple_click", "drag", "scroll", "keypress",
-                                    "type",
-                                ],
-                            ],
-                            "target": ["type": "string"],
-                            "x": ["type": "integer", "minimum": 0],
-                            "y": ["type": "integer", "minimum": 0],
-                            "button": [
-                                "type": "string",
-                                "enum": ["left", "right", "middle"],
-                            ],
-                            "modifiers": [
-                                "type": "array",
-                                "items": [
-                                    "type": "string",
-                                    "enum": ["ctrl", "shift", "option", "command"],
-                                ],
-                            ],
-                            "path": [
-                                "type": "array",
-                                "items": [
-                                    "type": "object",
-                                    "properties": [
-                                        "x": ["type": "integer", "minimum": 0],
-                                        "y": ["type": "integer", "minimum": 0],
-                                    ],
-                                    "required": ["x", "y"],
-                                ],
-                            ],
-                            "scroll_x": ["type": "integer"],
-                            "scroll_y": ["type": "integer"],
-                            "keys": ["type": "array", "items": ["type": "string"]],
-                            "text": ["type": "string"],
-                            "duration_ms": ["type": "integer", "minimum": 0],
-                        ],
-                        "required": ["action", "target"],
-                    ],
-                ],
-            ]
-        ]
+        return tools
     }
 
     fileprivate func send(
@@ -635,7 +591,9 @@ extension ComputerUseRunner {
         }
 
         let updatedMessages = sanitizedMessagesForRequest(messages + [screenshotMessage])
-        let body = chatBody(model: config.model, messages: updatedMessages)
+        guard let body = chatBody(model: config.model, messages: updatedMessages) else {
+            throw RunnerError.missingBundledResource("portable_computer_use_tools.json")
+        }
 
         send(body: body, config: config, logger: logger) { [weak self] result in
             self?.handle(
@@ -671,8 +629,12 @@ extension ComputerUseRunner {
         }
     }
 
-    fileprivate func chatBody(model: String, messages: [[String: Any]]) -> [String: Any] {
-        [
+    fileprivate func chatBody(model: String, messages: [[String: Any]]) -> [String: Any]? {
+        guard let computerTools else {
+            return nil
+        }
+
+        return [
             "model": model,
             "messages": sanitizedMessagesForRequest(messages),
             "tools": computerTools,
