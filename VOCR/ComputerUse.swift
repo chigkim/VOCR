@@ -31,6 +31,7 @@ final class ComputerUseController {
     private var hasAnnouncedAIRequestForCurrentTask = false
     private var conversationMessages: [[String: Any]] = []
     private var hasLoggedConversationForCurrentTask = false
+    private var hasAcceptedCriticalWarning = false
 
     // Tracking for clipboard report
     private var actionLog: [String] = []
@@ -49,6 +50,10 @@ final class ComputerUseController {
     func showPrompt() {
         if running {
             abort()
+            return
+        }
+
+        guard hasAcceptedCriticalWarning || criticalWarningDialog() else {
             return
         }
 
@@ -242,6 +247,36 @@ final class ComputerUseController {
 
         textContext = ["User: \(prompt)"]
         return prompt
+    }
+
+    private func criticalWarningDialog() -> Bool {
+        let alert = NSAlert()
+        alert.alertStyle = .critical
+        alert.messageText = NSLocalizedString(
+            "computerUse.criticalWarning.title", value: "USE AT YOUR OWN RISK",
+            comment: "Title for computer use critical warning dialog")
+        alert.informativeText = NSLocalizedString(
+            "computerUse.criticalWarning.message",
+            value:
+                "This add-on uses an AI model to control your computer's mouse and keyboard. The author is not responsible for any irreversible actions, data loss, or other damages this add-on may perform or cause. Please use this tool responsibly and always monitor the add-on while it is running.",
+            comment: "Message for computer use critical warning dialog")
+        alert.addButton(
+            withTitle: NSLocalizedString(
+                "button.iAgree", value: "I Agree", comment: "Button title to accept a warning"))
+        alert.addButton(
+            withTitle: NSLocalizedString(
+                "button.disagree", value: "Disagree",
+                comment: "Button title to reject a warning"))
+
+        let response = alert.runModal()
+        hide()
+
+        if response == .alertFirstButtonReturn {
+            hasAcceptedCriticalWarning = true
+            return true
+        }
+
+        return false
     }
 
     private func promptDialog(value: String) -> (prompt: String, followUp: Bool)? {
@@ -1023,6 +1058,11 @@ extension ComputerUseController {
     }
 
     private func makeScreenshotUserMessage(text: String) -> [String: Any]? {
+        Accessibility.speakWithSynthesizerSynchronous(
+            NSLocalizedString(
+                "computerUse.screenshot", value: "Screenshot.",
+                comment: "Speech before computer use takes a screenshot"))
+
         guard let originalImage = captureCurrentScreenshot() else {
             return nil
         }

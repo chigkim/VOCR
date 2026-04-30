@@ -571,6 +571,18 @@
         }
       }
     },
+    "button.disagree" : {
+      "comment" : "Button title to reject a warning",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Disagree"
+          }
+        }
+      }
+    },
     "button.duplicate" : {
       "comment" : "Button to duplicate selected preset",
       "extractionState" : "manual",
@@ -879,6 +891,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "从当前位置"
+          }
+        }
+      }
+    },
+    "button.iAgree" : {
+      "comment" : "Button title to accept a warning",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "I Agree"
           }
         }
       }
@@ -1470,6 +1494,30 @@
         }
       }
     },
+    "computerUse.criticalWarning.message" : {
+      "comment" : "Message for computer use critical warning dialog",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This add-on uses an AI model to control your computer's mouse and keyboard. The author is not responsible for any irreversible actions, data loss, or other damages this add-on may perform or cause. Please use this tool responsibly and always monitor the add-on while it is running."
+          }
+        }
+      }
+    },
+    "computerUse.criticalWarning.title" : {
+      "comment" : "Title for computer use critical warning dialog",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "USE AT YOUR OWN RISK"
+          }
+        }
+      }
+    },
     "computerUse.dialog.title" : {
       "comment" : "Title for computer use prompt dialog",
       "extractionState" : "extracted_with_value",
@@ -1538,6 +1586,18 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Could not access the frontmost window."
+          }
+        }
+      }
+    },
+    "computerUse.screenshot" : {
+      "comment" : "Speech before computer use takes a screenshot",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Screenshot."
           }
         }
       }

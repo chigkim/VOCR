@@ -23,6 +23,7 @@ enum Accessibility {
     static let speechDelegate = SpeechDelegate()
     static let speech: NSSpeechSynthesizer = {
         let synthesizer = NSSpeechSynthesizer()
+        synthesizer.rate = 230
         synthesizer.delegate = speechDelegate
         return synthesizer
     }()
@@ -65,15 +66,36 @@ enum Accessibility {
 
     static func speakWithSynthesizerSynchronous(_ message: String) {
         log("Speak with synthesizer synchronous: \(message)")
-        let semaphore = DispatchSemaphore(value: 0)
-        speechDelegate.onFinish = {
-            semaphore.signal()
+        if Thread.isMainThread {
+            var finished = false
+            speechDelegate.onFinish = {
+                finished = true
+            }
+            guard speech.startSpeaking(message) else {
+                speechDelegate.onFinish = nil
+                return
+            }
+            while !finished && speech.isSpeaking {
+                RunLoop.current.run(mode: .default, before: Date(timeIntervalSinceNow: 0.05))
+            }
+            speechDelegate.onFinish = nil
+            return
         }
+
+        let semaphore = DispatchSemaphore(value: 0)
         DispatchQueue.main.async {
-            speech.startSpeaking(message)
+            speechDelegate.onFinish = {
+                semaphore.signal()
+            }
+            if !speech.startSpeaking(message) {
+                speechDelegate.onFinish = nil
+                semaphore.signal()
+            }
         }
         semaphore.wait()
-        speechDelegate.onFinish = nil
+        DispatchQueue.main.sync {
+            speechDelegate.onFinish = nil
+        }
     }
 
     static func isVoiceOverRunning() -> Bool {
