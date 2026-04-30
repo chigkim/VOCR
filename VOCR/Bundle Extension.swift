@@ -19,6 +19,8 @@ extension Bundle {
     }
 
     var version: String {
-        return "v\(releaseVersionNumber!).\(buildVersionNumber!)"
+        let release = releaseVersionNumber ?? "0"
+        let build = buildVersionNumber ?? "0"
+        return "v\(release).\(build)"
     }
 }

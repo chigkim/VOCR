@@ -8,7 +8,6 @@
 
 import AVFoundation
 import Cocoa
-import UniformTypeIdentifiers
 
 class MacCamera: NSObject, AVCapturePhotoCaptureDelegate {
 
@@ -167,14 +166,4 @@ class MacCamera: NSObject, AVCapturePhotoCaptureDelegate {
             log("Error getting file data representation from photo")
         }
     }
-
-    @discardableResult func writeCGImage(_ image: CGImage, to destinationURL: URL) -> Bool {
-        guard
-            let destination = CGImageDestinationCreateWithURL(
-                destinationURL as CFURL, UTType.png.identifier as CFString, 1, nil)
-        else { return false }
-        CGImageDestinationAddImage(destination, image, nil)
-        return CGImageDestinationFinalize(destination)
-    }
-
 }

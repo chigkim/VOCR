@@ -171,22 +171,14 @@ final class PresetManager {
 
     /// Call this right before you send a request to a model.
     /// Returns the currently selected preset, including a decrypted API key.
-    func activePresetDecrypted() -> (
-        id: UUID,
-        name: String,
-        url: String,
-        model: String,
-        systemPrompt: String,
-        prompt: String,
-        apiKey: String
-    )? {
+    func activePreset() -> ActivePreset? {
         if let preset =
             (selectedPresetID.flatMap { sel in presets.first(where: { $0.id == sel }) }
                 ?? presets.first(where: { $0.name == "Default" }))
         {
             do {
                 let apiKey = try SecureCrypto.decryptAPIKey(preset.encryptedKeyCombinedBase64)
-                return (
+                return ActivePreset(
                     id: preset.id,
                     name: preset.name,
                     url: preset.url,
@@ -203,8 +195,4 @@ final class PresetManager {
         }
     }
 
-    /// For populating UI lists.
-    func listPresetSummaries() -> [(id: UUID, label: String)] {
-        presets.map { ($0.id, $0.name) }
-    }
 }

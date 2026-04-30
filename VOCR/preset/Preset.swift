@@ -33,6 +33,16 @@ struct ModelProvider {
     ]
 }
 
+struct ActivePreset {
+    let id: UUID
+    let name: String
+    let url: String
+    let model: String
+    let systemPrompt: String
+    let prompt: String
+    let apiKey: String
+}
+
 /// A saved configuration describing how to talk to a model endpoint.
 ///
 /// NOTE: The API key is NOT stored in plaintext. It's stored in

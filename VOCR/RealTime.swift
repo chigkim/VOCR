@@ -8,29 +8,10 @@
 
 import Cocoa
 import Foundation
-import Vision
 
 enum RealTime {
 
     static var run: Bool = false
-
-    static func performOCR(cgImage: CGImage) -> [VNRecognizedTextObservation]? {
-        let textRecognitionRequest = VNRecognizeTextRequest()
-        textRecognitionRequest.recognitionLevel = VNRequestTextRecognitionLevel.accurate
-        textRecognitionRequest.minimumTextHeight = 0
-        textRecognitionRequest.usesLanguageCorrection = true
-        textRecognitionRequest.customWords = []
-        textRecognitionRequest.usesCPUOnly = false
-        textRecognitionRequest.cancel()
-        let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
-        do {
-            try requestHandler.perform([textRecognitionRequest])
-        } catch _ {}
-        guard let texts = textRecognitionRequest.results else {
-            return []
-        }
-        return texts
-    }
 
     static func diff(old: String, new: String) -> String? {
         let oldArray = old.lowercased().components(separatedBy: .whitespaces)
@@ -61,14 +42,13 @@ enum RealTime {
             if let rect = rect {
                 var oldText = ""
                 while run {
-                    if let cgImage = TakeScreensShots(rect: rect) {
-                        if let texts = performOCR(cgImage: cgImage) {
-                            let newText = texts.map { $0.topCandidates(1)[0].string }.joined(
-                                separator: " ")
-                            if let insertedText = diff(old: oldText, new: newText) {
-                                oldText = newText
-                                Accessibility.speak(insertedText)
-                            }
+                    if let cgImage = ScreenCapture.capture(rect: rect) {
+                        let texts = VisionOCR.recognizedText(in: cgImage)
+                        let newText = texts.map { $0.topCandidates(1)[0].string }.joined(
+                            separator: " ")
+                        if let insertedText = diff(old: oldText, new: newText) {
+                            oldText = newText
+                            Accessibility.speak(insertedText)
                         }
                     }
                     Thread.sleep(forTimeInterval: 0.5)

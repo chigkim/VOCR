@@ -20,15 +20,6 @@ final class ComputerUseController {
 
     static let shared = ComputerUseController()
 
-    private typealias AIPreset = (
-        name: String,
-        url: String,
-        model: String,
-        apiKey: String,
-        presetPrompt: String,
-        systemPrompt: String
-    )
-
     private var running = false
     private var cancelled = false
     private var currentTask: URLSessionDataTask?
@@ -80,7 +71,7 @@ final class ComputerUseController {
     }
 
     private func start(prompt: String, followUp: Bool) {
-        guard let preset = Settings.activePreset() else {
+        guard let preset = PresetManager.shared.activePreset() else {
             Accessibility.speakWithSynthesizer(
                 NSLocalizedString(
                     "computerUse.noPreset", value: "No active AI preset is selected.",
@@ -537,7 +528,7 @@ extension ComputerUseController {
     }
 
     private func sendInitialRequest(
-        preset: AIPreset,
+        preset: ActivePreset,
         input: String
     ) {
         guard let systemInstruction else {
@@ -560,7 +551,7 @@ extension ComputerUseController {
 
     private func sendScreenshot(
         messages: [[String: Any]],
-        preset: AIPreset
+        preset: ActivePreset
     ) {
         let description = "Screenshot."
         if actionLog.last != description {
@@ -575,7 +566,7 @@ extension ComputerUseController {
         sendChatRequest(messages: messages + [screenshotMessage], preset: preset)
     }
 
-    private func sendChatRequest(messages: [[String: Any]], preset: AIPreset) {
+    private func sendChatRequest(messages: [[String: Any]], preset: ActivePreset) {
         let requestMessages = sanitizedMessagesForRequest(messages)
         conversationMessages = requestMessages
 
@@ -598,7 +589,7 @@ extension ComputerUseController {
 
     private func send(
         body: [String: Any],
-        preset: AIPreset,
+        preset: ActivePreset,
         completion: @escaping (Result<ChatCompletionResponse, Error>) -> Void
     ) {
         guard let base = URL(string: preset.url) else {
@@ -662,7 +653,7 @@ extension ComputerUseController {
 
     private func handleResponseResult(
         _ result: Result<ChatCompletionResponse, Error>,
-        preset: AIPreset,
+        preset: ActivePreset,
         messages: [[String: Any]]
     ) {
         if cancelled {
@@ -680,7 +671,7 @@ extension ComputerUseController {
 
     private func handle(
         response: ChatCompletionResponse,
-        preset: AIPreset,
+        preset: ActivePreset,
         messages: [[String: Any]]
     ) {
         if cancelled {
@@ -1028,15 +1019,7 @@ extension ComputerUseController {
         if let rect = Navigation.getWindow(), rect.width > 0, rect.height > 0 {
             currentWindowRect = rect
         }
-        return TakeScreensShots(rect: currentWindowRect)
-    }
-
-    private func pngBase64(image: CGImage) -> String? {
-        let bitmapRep = NSBitmapImageRep(cgImage: image)
-        guard let data = bitmapRep.representation(using: .png, properties: [:]) else {
-            return nil
-        }
-        return data.base64EncodedString(options: [])
+        return ScreenCapture.capture(rect: currentWindowRect)
     }
 
     private func makeScreenshotUserMessage(text: String) -> [String: Any]? {
@@ -1048,9 +1031,9 @@ extension ComputerUseController {
         let targetHeight = Int(currentWindowRect.height)
 
         guard
-            let resizedImage = resizeCGImage(
-                originalImage, toWidth: targetWidth, toHeight: targetHeight),
-            let screenshotBase64 = pngBase64(image: resizedImage)
+            let resizedImage = ScreenCapture.resized(
+                originalImage, width: targetWidth, height: targetHeight),
+            let screenshotBase64 = ScreenCapture.base64(resizedImage, type: .png)
         else {
             return nil
         }

@@ -204,7 +204,7 @@ enum Shortcuts {
         var data: Data?
         let bundle = Bundle.main
         if let bundlePath = bundle.path(forResource: "Shortcuts", ofType: "json") {
-            data = try! Data(contentsOf: URL(fileURLWithPath: bundlePath))
+            data = try? Data(contentsOf: URL(fileURLWithPath: bundlePath))
         }
         return data
     }
@@ -299,7 +299,7 @@ enum Shortcuts {
     static func settingsHandler() {
         let mouseLocation = NSEvent.mouseLocation
         let rect = CGRect(x: mouseLocation.x, y: mouseLocation.y, width: 1, height: 1)
-        Settings.setupMenu().popUp(positioning: nil, at: rect.origin, in: nil)
+        StatusMenuController.makeMenu().popUp(positioning: nil, at: rect.origin, in: nil)
     }
     static func realTimeHandler() {
         if RealTime.run {

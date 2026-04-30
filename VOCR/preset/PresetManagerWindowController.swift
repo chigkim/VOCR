@@ -2,9 +2,11 @@ import Cocoa
 
 final class PresetManagerWindowController: NSWindowController {
 
+    static let shared = PresetManagerWindowController()
+
     let rootVC = PresetManagerViewController()
 
-    init() {
+    private init() {
         let win = NSWindow(
             contentRect: NSRect(x: 200, y: 200, width: 500, height: 360),
             styleMask: [.titled, .closable, .miniaturizable, .resizable],
@@ -22,5 +24,11 @@ final class PresetManagerWindowController: NSWindowController {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func showWindow(_ sender: Any?) {
+        super.showWindow(sender)
+        window?.center()
+        window?.makeKeyAndOrderFront(sender)
     }
 }

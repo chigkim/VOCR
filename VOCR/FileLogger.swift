@@ -22,7 +22,7 @@ class FileLogger {
         .first!
         self.fileURL = documentsDirectory.appendingPathComponent("VOCR.txt")
         if FileManager.default.fileExists(atPath: self.fileURL.path) {
-            try! FileManager.default.removeItem(at: self.fileURL)
+            try? FileManager.default.removeItem(at: self.fileURL)
         }
 
     }
