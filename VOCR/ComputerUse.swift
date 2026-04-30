@@ -32,6 +32,8 @@ final class ComputerUseController {
     private var currentTurn = 0
     private var approveAllActionsForCurrentTask = false
     private var hasAnnouncedAIRequestForCurrentTask = false
+    private var conversationMessages: [[String: Any]] = []
+    private var hasLoggedConversationForCurrentTask = false
 
     // Tracking for clipboard report
     private var actionLog: [String] = []
@@ -103,6 +105,8 @@ final class ComputerUseController {
         currentTurn = 1
         approveAllActionsForCurrentTask = false
         hasAnnouncedAIRequestForCurrentTask = false
+        conversationMessages = []
+        hasLoggedConversationForCurrentTask = false
 
         // Reset tracking for new session
         actionLog = []
@@ -138,6 +142,7 @@ final class ComputerUseController {
                 actionLog.append(cancelMsg)
             }
             copyLogToClipboard(status: "Cancelled")
+            logConversationJSON(status: "Cancelled")
             return
         }
 
@@ -162,6 +167,7 @@ final class ComputerUseController {
             NSLocalizedString(
                 "computerUse.finished", value: "Computer use finished.",
                 comment: "Speech when computer use finishes"))
+        logConversationJSON(status: message ?? "Completed")
     }
 
     private func fail(_ error: Error) {
@@ -180,6 +186,7 @@ final class ComputerUseController {
                 actionLog.append(cancelMsg)
             }
             copyLogToClipboard(status: "Cancelled")
+            logConversationJSON(status: "Cancelled")
             return
         }
 
@@ -202,6 +209,7 @@ final class ComputerUseController {
             NSLocalizedString(
                 "computerUse.errorTitle", value: "Computer Use Error",
                 comment: "Alert title for computer use errors"), "\(error)")
+        logConversationJSON(status: "Error: \(error)")
     }
 
     private func announceInitialAIRequest(model: String, completion: @escaping () -> Void) {
@@ -506,6 +514,17 @@ extension ComputerUseController {
             return nil
         }
 
+        let osName = "macOS \(ProcessInfo.processInfo.operatingSystemVersionString)"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm"
+        formatter.timeZone = .current
+        let dateString = formatter.string(from: Date())
+        let timezoneString = TimeZone.current.abbreviation() ?? ""
+        let fullDateString = "\(dateString) \(timezoneString)"
+
+        instruction = instruction.replacingOccurrences(of: "{os}", with: osName, options: .caseInsensitive)
+        instruction = instruction.replacingOccurrences(of: "{date}", with: fullDateString, options: .caseInsensitive)
+
         instruction += """
 
             You are controlling the user's frontmost macOS window through VOCR.
@@ -549,6 +568,7 @@ extension ComputerUseController {
             ["role": "system", "content": systemInstruction],
             screenshotMessage,
         ]
+        conversationMessages = messages
 
         guard let body = chatBody(model: preset.model, messages: messages) else {
             fail(ComputerUseError.missingBundledResource("portable_computer_use_tools.json"))
@@ -578,6 +598,7 @@ extension ComputerUseController {
         }
 
         let updatedMessages = sanitizedMessagesForRequest(messages + [screenshotMessage])
+        conversationMessages = updatedMessages
         guard let body = chatBody(model: preset.model, messages: updatedMessages) else {
             fail(ComputerUseError.missingBundledResource("portable_computer_use_tools.json"))
             return
@@ -720,6 +741,10 @@ extension ComputerUseController {
             return
         }
 
+        var updatedMessages = messages
+        updatedMessages.append(assistantMessagePayload(assistantMessage))
+        conversationMessages = updatedMessages
+
         let toolCalls = assistantMessage.tool_calls ?? []
         guard !toolCalls.isEmpty else {
             finish(message: assistantMessages.last)
@@ -729,9 +754,6 @@ extension ComputerUseController {
         for message in assistantMessages {
             Accessibility.speakWithSynthesizerSynchronous(message)
         }
-
-        var updatedMessages = messages
-        updatedMessages.append(assistantMessagePayload(assistantMessage))
 
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
@@ -744,6 +766,7 @@ extension ComputerUseController {
                         "tool_call_id": toolCall.id,
                         "content": result,
                     ])
+                    self.conversationMessages = updatedMessages
                 }
                 if self.cancelled {
                     self.finish(message: nil)
@@ -760,6 +783,37 @@ extension ComputerUseController {
         response.choices.compactMap { $0.message.content }.filter { !$0.isEmpty }
     }
 
+    private func formatCompactResult(action: ComputerAction, status: String, valueOverride: String? = nil) -> String {
+        let actionType = action.type
+        let target = action.target ?? ""
+        var value = valueOverride ?? ""
+
+        if valueOverride == nil {
+            switch actionType {
+            case "click", "double_click", "triple_click", "move":
+                if let x = action.x, let y = action.y {
+                    value = "\(x),\(y)"
+                }
+            case "scroll":
+                let sx = action.scrollX ?? 0
+                let sy = action.scrollY ?? 0
+                value = "\(sx),\(sy)"
+            case "drag":
+                value = "\(action.path?.count ?? 0) points"
+            case "type":
+                value = action.text ?? ""
+            case "keypress":
+                value = (action.keys ?? []).joined(separator: "+")
+            case "wait":
+                value = "\(action.durationMS ?? 1000)ms"
+            default:
+                break
+            }
+        }
+
+        return "\(status)|\(actionType)|\(value)|\(target)"
+    }
+
     private func execute(toolCall: ToolCall) throws -> String {
         guard toolCall.function.name == "computer" else {
             throw ComputerUseError.invalidResponse("Unsupported tool: \(toolCall.function.name)")
@@ -770,16 +824,24 @@ extension ComputerUseController {
         }
 
         let action = try JSONDecoder().decode(ComputerAction.self, from: data)
-        try execute(actions: [action])
+        
+        do {
+            try execute(actions: [action])
+        } catch {
+            if case .cancelled = error as? ComputerUseError {
+                throw error
+            }
+            return formatCompactResult(action: action, status: "fail")
+        }
 
         switch action.type {
         case "cursor_position":
             let position = cursorPosition()
-            return "Cursor position: x \(Int(position.x)), y \(Int(position.y))."
+            return formatCompactResult(action: action, status: "pass", valueOverride: "\(Int(position.x)),\(Int(position.y))")
         case "screenshot":
-            return "Screenshot requested. A fresh screenshot is attached in the next message."
+            return formatCompactResult(action: action, status: "pass", valueOverride: "Fresh screenshot attached")
         default:
-            return "Completed: \(actionDescription(action, full: true))"
+            return formatCompactResult(action: action, status: "pass")
         }
     }
 
@@ -854,6 +916,12 @@ extension ComputerUseController {
                 sanitizedMessages.remove(at: index)
             } else if removedImage, let compactedContent = compactedScreenshotContent(restoredContent) {
                 sanitizedMessages[index]["content"] = compactedContent
+            } else if removedImage, restoredContent.count == 1,
+                let first = restoredContent.first,
+                first["type"] as? String == "text",
+                let text = first["text"] as? String
+            {
+                sanitizedMessages[index]["content"] = text
             } else {
                 sanitizedMessages[index]["content"] = restoredContent
             }
@@ -874,9 +942,9 @@ extension ComputerUseController {
         return text.trimmingCharacters(in: .whitespacesAndNewlines).hasPrefix("Latest screenshot.")
     }
 
-    private func compactedScreenshotContent(_ content: [[String: Any]]) -> [[String: Any]]? {
+    private func compactedScreenshotContent(_ content: [[String: Any]]) -> String? {
         guard content.count == 1,
-            var textItem = content.first,
+            let textItem = content.first,
             textItem["type"] as? String == "text",
             let text = textItem["text"] as? String,
             let range = text.range(of: "\n\nLatest screenshot.")
@@ -889,8 +957,7 @@ extension ComputerUseController {
             return nil
         }
 
-        textItem["text"] = prefix
-        return [textItem]
+        return prefix
     }
 
     private func screenshotText(for messages: [[String: Any]]) -> String {
@@ -1120,6 +1187,49 @@ extension ComputerUseController {
         pasteboard.setString(report, forType: .string)
 
         log("Computer use report copied to clipboard.")
+    }
+
+    private func logConversationJSON(status: String) {
+        guard !hasLoggedConversationForCurrentTask else { return }
+        hasLoggedConversationForCurrentTask = true
+
+        let payload: [String: Any] = [
+            "status": status,
+            "messages": redactedImageBinary(in: conversationMessages),
+        ]
+
+        guard JSONSerialization.isValidJSONObject(payload),
+            let data = try? JSONSerialization.data(
+                withJSONObject: payload, options: [.prettyPrinted, .sortedKeys]),
+            let json = String(data: data, encoding: .utf8)
+        else {
+            log("Computer use conversation JSON could not be serialized.")
+            return
+        }
+
+        log("Computer use conversation JSON:\n\(json)")
+    }
+
+    private func redactedImageBinary(in messages: [[String: Any]]) -> [[String: Any]] {
+        messages.map { message in
+            var message = message
+            guard let content = message["content"] as? [[String: Any]] else {
+                return message
+            }
+
+            message["content"] = content.map { item in
+                var item = item
+                if var imageURL = item["image_url"] as? [String: Any],
+                    let url = imageURL["url"] as? String,
+                    url.hasPrefix("data:image/")
+                {
+                    imageURL["url"] = "[image data redacted]"
+                    item["image_url"] = imageURL
+                }
+                return item
+            }
+            return message
+        }
     }
 }
 

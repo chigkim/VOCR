@@ -12,6 +12,8 @@ final class ComputerUseRunner: ObservableObject {
     private var screenScale: CGFloat = 1.0
     private var lastPrompt = ""
     private let maxTurns = 30
+    private var conversationMessages: [[String: Any]] = []
+    private var hasLoggedConversationForCurrentTask = false
 
     // Cumulative token tracking
     private var totalInputTokens = 0
@@ -119,6 +121,8 @@ final class ComputerUseRunner: ObservableObject {
         currentWindowRect = rect
         cancelled = false
         isRunning = true
+        conversationMessages = []
+        hasLoggedConversationForCurrentTask = false
 
         // Reset token counters for new session
         totalInputTokens = 0
@@ -154,6 +158,7 @@ final class ComputerUseRunner: ObservableObject {
             ["role": "system", "content": systemInstruction],
             screenshotMessage,
         ]
+        conversationMessages = messages
 
         guard let body = chatBody(model: config.model, messages: messages) else {
             fail(
@@ -177,6 +182,7 @@ final class ComputerUseRunner: ObservableObject {
         if cancelled {
             logger.log("Computer Use", "Cancelled")
             cancelled = false
+            logConversationJSON(logger: logger, status: "Cancelled")
             quitIfNeededAfterRun(delay: 0.5)
             return
         }
@@ -194,6 +200,7 @@ final class ComputerUseRunner: ObservableObject {
         logger.log("Computer Use", "Finished")
 
         copyLogToClipboard(logger: logger, status: message ?? "Completed")
+        logConversationJSON(logger: logger, status: message ?? "Completed")
         quitIfNeededAfterRun(delay: 0.7)
     }
 
@@ -206,6 +213,7 @@ final class ComputerUseRunner: ObservableObject {
         if cancelled || (error as NSError).code == NSURLErrorCancelled {
             logger.log("Computer Use", "Cancelled")
             cancelled = false
+            logConversationJSON(logger: logger, status: "Cancelled")
             quitIfNeededAfterRun(delay: 0.5)
             return
         }
@@ -219,6 +227,7 @@ final class ComputerUseRunner: ObservableObject {
         )
 
         copyLogToClipboard(logger: logger, status: "Error: \(error)")
+        logConversationJSON(logger: logger, status: "Error: \(error)")
 
         showError("\(error)")
         quitIfNeededAfterRun(delay: 0.7)
@@ -254,6 +263,49 @@ final class ComputerUseRunner: ObservableObject {
             pasteboard.setString(report, forType: .string)
 
             logger.log("App", "Session report copied to clipboard")
+        }
+    }
+
+    private func logConversationJSON(logger: ActionLogger, status: String) {
+        guard !hasLoggedConversationForCurrentTask else { return }
+        hasLoggedConversationForCurrentTask = true
+
+        let payload: [String: Any] = [
+            "status": status,
+            "messages": redactedImageBinary(in: conversationMessages),
+        ]
+
+        guard JSONSerialization.isValidJSONObject(payload),
+            let data = try? JSONSerialization.data(
+                withJSONObject: payload, options: [.prettyPrinted, .sortedKeys]),
+            let json = String(data: data, encoding: .utf8)
+        else {
+            logger.log("Computer Use Conversation JSON", "Could not serialize conversation.")
+            return
+        }
+
+        logger.log("Computer Use Conversation JSON", json)
+    }
+
+    private func redactedImageBinary(in messages: [[String: Any]]) -> [[String: Any]] {
+        messages.map { message in
+            var message = message
+            guard let content = message["content"] as? [[String: Any]] else {
+                return message
+            }
+
+            message["content"] = content.map { item in
+                var item = item
+                if var imageURL = item["image_url"] as? [String: Any],
+                    let url = imageURL["url"] as? String,
+                    url.hasPrefix("data:image/")
+                {
+                    imageURL["url"] = "[image data redacted]"
+                    item["image_url"] = imageURL
+                }
+                return item
+            }
+            return message
         }
     }
 
@@ -400,6 +452,17 @@ extension ComputerUseRunner {
             return nil
         }
 
+        let osName = "macOS \(ProcessInfo.processInfo.operatingSystemVersionString)"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm"
+        formatter.timeZone = .current
+        let dateString = formatter.string(from: Date())
+        let timezoneString = TimeZone.current.abbreviation() ?? ""
+        let fullDateString = "\(dateString) \(timezoneString)"
+
+        instruction = instruction.replacingOccurrences(of: "{os}", with: osName, options: .caseInsensitive)
+        instruction = instruction.replacingOccurrences(of: "{date}", with: fullDateString, options: .caseInsensitive)
+
         instruction += """
 
             You are controlling the UIChallenge window for automated validation.
@@ -545,14 +608,15 @@ extension ComputerUseRunner {
             return
         }
 
+        var updatedMessages = messages
+        updatedMessages.append(assistantMessagePayload(assistantMessage))
+        conversationMessages = updatedMessages
+
         let toolCalls = assistantMessage.tool_calls ?? []
         guard !toolCalls.isEmpty else {
             finish(logger: logger, message: assistantMessages.last)
             return
         }
-
-        var updatedMessages = messages
-        updatedMessages.append(assistantMessagePayload(assistantMessage))
 
         DispatchQueue.global(qos: .userInitiated).async {
             do {
@@ -563,6 +627,7 @@ extension ComputerUseRunner {
                         "tool_call_id": toolCall.id,
                         "content": result,
                     ])
+                    self.conversationMessages = updatedMessages
                 }
                 guard !self.cancelled else {
                     self.finish(logger: logger, message: nil)
@@ -591,6 +656,7 @@ extension ComputerUseRunner {
         }
 
         let updatedMessages = sanitizedMessagesForRequest(messages + [screenshotMessage])
+        conversationMessages = updatedMessages
         guard let body = chatBody(model: config.model, messages: updatedMessages) else {
             throw RunnerError.missingBundledResource("portable_computer_use_tools.json")
         }
@@ -711,6 +777,12 @@ extension ComputerUseRunner {
                 sanitizedMessages.remove(at: index)
             } else if removedImage, let compactedContent = compactedScreenshotContent(restoredContent) {
                 sanitizedMessages[index]["content"] = compactedContent
+            } else if removedImage, restoredContent.count == 1,
+                let first = restoredContent.first,
+                first["type"] as? String == "text",
+                let text = first["text"] as? String
+            {
+                sanitizedMessages[index]["content"] = text
             } else {
                 sanitizedMessages[index]["content"] = restoredContent
             }
@@ -731,9 +803,9 @@ extension ComputerUseRunner {
         return text.trimmingCharacters(in: .whitespacesAndNewlines).hasPrefix("Latest screenshot.")
     }
 
-    fileprivate func compactedScreenshotContent(_ content: [[String: Any]]) -> [[String: Any]]? {
+    fileprivate func compactedScreenshotContent(_ content: [[String: Any]]) -> String? {
         guard content.count == 1,
-            var textItem = content.first,
+            let textItem = content.first,
             textItem["type"] as? String == "text",
             let text = textItem["text"] as? String,
             let range = text.range(of: "\n\nLatest screenshot.")
@@ -742,12 +814,11 @@ extension ComputerUseRunner {
         }
 
         let prefix = String(text[..<range.lowerBound])
-        guard prefix.hasPrefix("Previous tool result:") else {
+        guard prefix.hasPrefix("Toolcall Results:") else {
             return nil
         }
 
-        textItem["text"] = prefix
-        return [textItem]
+        return prefix
     }
 
     fileprivate func screenshotText(for messages: [[String: Any]]) -> String {
@@ -1134,9 +1205,28 @@ extension ComputerUseRunner {
         for action in actions {
             if cancelled { return }
 
-            logger.log("Computer Use Action", describe(action))
+            let description = describe(action)
+            logger.log("Computer Use Action", description)
+            speakWithSynthesizerSynchronous(description)
             try execute(action: action)
             Thread.sleep(forTimeInterval: 0.2)
+        }
+    }
+
+    fileprivate func speakWithSynthesizerSynchronous(_ message: String) {
+        let synthesizer = NSSpeechSynthesizer()
+        let startSpeaking = {
+            _ = synthesizer.startSpeaking(message)
+        }
+
+        if Thread.isMainThread {
+            startSpeaking()
+        } else {
+            DispatchQueue.main.sync(execute: startSpeaking)
+        }
+
+        while synthesizer.isSpeaking {
+            Thread.sleep(forTimeInterval: 0.05)
         }
     }
 
@@ -1502,6 +1592,51 @@ extension AXUIElement {
         let error = AXUIElementCopyAttributeValue(self, attribute as CFString, &value)
         guard error == .success else {
             return ""
+        }
+
+        if let stringValue = value as? String {
+            return stringValue
+        }
+
+        return String(reflecting: value).trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}
+
+extension ComputerUseRunner {
+    fileprivate func promptDialog(defaultValue: String) -> String? {
+        let alert = NSAlert()
+        alert.messageText = "Ask Computer Use"
+        alert.informativeText = "Enter a task for the built-in computer-use loop."
+        alert.addButton(withTitle: "Perform")
+        alert.addButton(withTitle: "Cancel")
+
+        let textField = NSTextField(frame: NSRect(x: 0, y: 0, width: 420, height: 24))
+        textField.stringValue = defaultValue
+        textField.placeholderString = "Example: click cell 13, type hello, then press Send"
+        alert.accessoryView = textField
+
+        DispatchQueue.main.async {
+            alert.window.makeFirstResponder(textField)
+        }
+
+        guard alert.runModal() == .alertFirstButtonReturn else {
+            return nil
+        }
+
+        return textField.stringValue
+    }
+
+    fileprivate func showError(_ message: String) {
+        DispatchQueue.main.async {
+            let alert = NSAlert()
+            alert.messageText = "Computer Use Error"
+            alert.informativeText = message
+            alert.addButton(withTitle: "OK")
+            alert.runModal()
+        }
+    }
+}
+  return ""
         }
 
         if let stringValue = value as? String {
