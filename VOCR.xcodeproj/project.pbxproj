@@ -120,6 +120,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6D8E1AFE2F9D100100000001 /* tools */ = {
+			isa = PBXGroup;
+			children = (
+				6D8E1B002F9D100100000001 /* portable_computer_use_system_message.txt */,
+				6D8E1AFF2F9D100100000001 /* portable_computer_use_tools.json */,
+			);
+			path = tools;
+			sourceTree = "<group>";
+		};
 		EA1F63FA2352496E0089C967 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,15 +157,6 @@
 				EA6427262EB6798C00EDCC0C /* SecureCrypto.swift */,
 			);
 			path = preset;
-			sourceTree = "<group>";
-		};
-		6D8E1AFE2F9D100100000001 /* tools */ = {
-			isa = PBXGroup;
-			children = (
-				6D8E1B002F9D100100000001 /* portable_computer_use_system_message.txt */,
-				6D8E1AFF2F9D100100000001 /* portable_computer_use_tools.json */,
-			);
-			path = tools;
 			sourceTree = "<group>";
 		};
 		EADE59A8232EB09A00E2F65A = {
@@ -496,7 +496,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 56;
+				CURRENT_PROJECT_VERSION = 60;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_APP_SANDBOX = NO;
@@ -510,7 +510,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = "3.0.0-beta.3";
+				MARKETING_VERSION = "3.0.0-beta.4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chikim.VOCR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -527,8 +527,9 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 56;
+				CURRENT_PROJECT_VERSION = 60;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -540,7 +541,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = "3.0.0-beta.3";
+				MARKETING_VERSION = "3.0.0-beta.4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chikim.VOCR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

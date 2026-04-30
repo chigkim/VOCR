@@ -26,8 +26,6 @@ General rules:
 
 Mouse modifiers:
 - For Shift-click, Ctrl-click, Option-click, Command-click, etc., include `modifiers`.
-- Use `option` for Option on macOS.
-- Use `command` for Command on macOS.
 - Examples: `modifiers: ["shift"]`, `modifiers: ["ctrl"]`, `modifiers: ["command"]`, `modifiers: ["option"]`.
 
 Key naming:

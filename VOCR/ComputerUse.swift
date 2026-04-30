@@ -4,8 +4,6 @@ import HotKey
 
 enum ComputerUseError: Error {
     case invalidURL
-    case noPreset
-    case noWindow
     case missingBundledResource(String)
     case screenshotFailed
     case cancelled
@@ -22,11 +20,19 @@ final class ComputerUseController {
 
     static let shared = ComputerUseController()
 
+    private typealias AIPreset = (
+        name: String,
+        url: String,
+        model: String,
+        apiKey: String,
+        presetPrompt: String,
+        systemPrompt: String
+    )
+
     private var running = false
     private var cancelled = false
     private var currentTask: URLSessionDataTask?
     private var currentWindowRect = CGRect.zero
-    private var screenScale: CGFloat = 1.0
     private var lastPrompt = ""
     private var textContext: [String] = []
     private var currentTurn = 0
@@ -114,7 +120,7 @@ final class ComputerUseController {
         totalOutputTokens = 0
         totalCachedTokens = 0
 
-        announceInitialAIRequest(model: preset.model) { [weak self] in
+        announceAIRequestIfNeeded(model: preset.model) { [weak self] in
             guard let self = self else { return }
             guard self.running, !self.cancelled else {
                 self.finish(message: nil)
@@ -128,21 +134,10 @@ final class ComputerUseController {
 
     private func finish(message: String?) {
         let wasCancelled = cancelled
-        running = false
-        cancelled = false
-        currentTask = nil
-        approveAllActionsForCurrentTask = false
-        hasAnnouncedAIRequestForCurrentTask = false
+        resetTaskState()
 
         if wasCancelled {
-            let cancelMsg = NSLocalizedString(
-                "computerUse.cancelled", value: "Computer use cancelled.",
-                comment: "Speech when computer use is cancelled")
-            if actionLog.last != cancelMsg {
-                actionLog.append(cancelMsg)
-            }
-            copyLogToClipboard(status: "Cancelled")
-            logConversationJSON(status: "Cancelled")
+            completeCancelledTask()
             return
         }
 
@@ -155,12 +150,7 @@ final class ComputerUseController {
             Accessibility.speak(message)
         }
 
-        let total = totalInputTokens + totalOutputTokens
-        let finalUsageMsg =
-            "Final Usage - Total: \(total) [input: \(totalInputTokens) (cached: \(totalCachedTokens)), output: \(totalOutputTokens)]"
-        log(finalUsageMsg)
-        actionLog.append(finalUsageMsg)
-
+        appendFinalUsage()
         copyLogToClipboard(status: message ?? "Completed")
 
         Accessibility.speak(
@@ -172,21 +162,10 @@ final class ComputerUseController {
 
     private func fail(_ error: Error) {
         let wasCancelled = cancelled || (error as NSError).code == NSURLErrorCancelled
-        running = false
-        cancelled = false
-        currentTask = nil
-        approveAllActionsForCurrentTask = false
-        hasAnnouncedAIRequestForCurrentTask = false
+        resetTaskState()
 
         if wasCancelled {
-            let cancelMsg = NSLocalizedString(
-                "computerUse.cancelled", value: "Computer use cancelled.",
-                comment: "Speech when computer use is cancelled")
-            if actionLog.last != cancelMsg {
-                actionLog.append(cancelMsg)
-            }
-            copyLogToClipboard(status: "Cancelled")
-            logConversationJSON(status: "Cancelled")
+            completeCancelledTask()
             return
         }
 
@@ -197,12 +176,7 @@ final class ComputerUseController {
         Accessibility.speakWithSynthesizer(message)
         actionLog.append(message)
 
-        let total = totalInputTokens + totalOutputTokens
-        let finalUsageMsg =
-            "Final Usage - Total: \(total) [input: \(totalInputTokens) (cached: \(totalCachedTokens)), output: \(totalOutputTokens)]"
-        log(finalUsageMsg)
-        actionLog.append(finalUsageMsg)
-
+        appendFinalUsage()
         copyLogToClipboard(status: "Error: \(error)")
 
         alert(
@@ -212,28 +186,43 @@ final class ComputerUseController {
         logConversationJSON(status: "Error: \(error)")
     }
 
-    private func announceInitialAIRequest(model: String, completion: @escaping () -> Void) {
-        announceAIRequestIfNeeded(model: model, completion: completion)
+    private func resetTaskState() {
+        running = false
+        cancelled = false
+        currentTask = nil
+        approveAllActionsForCurrentTask = false
+        hasAnnouncedAIRequestForCurrentTask = false
     }
 
-    private func announceAIRequestIfNeeded(model: String) {
-        announceAIRequestIfNeeded(message: aiRequestAnnouncement(model: model), completion: nil)
+    private func completeCancelledTask() {
+        let cancelMsg = NSLocalizedString(
+            "computerUse.cancelled", value: "Computer use cancelled.",
+            comment: "Speech when computer use is cancelled")
+        if actionLog.last != cancelMsg {
+            actionLog.append(cancelMsg)
+        }
+        copyLogToClipboard(status: "Cancelled")
+        logConversationJSON(status: "Cancelled")
     }
 
-    private func announceAIRequestIfNeeded(
-        model: String, completion: @escaping () -> Void
-    ) {
-        announceAIRequestIfNeeded(message: aiRequestAnnouncement(model: model), completion: completion)
+    private func appendFinalUsage() {
+        let total = totalInputTokens + totalOutputTokens
+        let message =
+            "Final Usage - Total: \(total) [input: \(totalInputTokens) (cached: \(totalCachedTokens)), output: \(totalOutputTokens)]"
+        log(message)
+        actionLog.append(message)
     }
 
-    private func announceAIRequestIfNeeded(message: String, completion: (() -> Void)?) {
+    private func announceAIRequestIfNeeded(model: String, completion: (() -> Void)? = nil) {
         guard !hasAnnouncedAIRequestForCurrentTask else {
             completion?()
             return
         }
 
         hasAnnouncedAIRequestForCurrentTask = true
-        Accessibility.speakWithSynthesizer(message, completion: completion)
+        Accessibility.speakWithSynthesizer(
+            aiRequestAnnouncement(model: model),
+            completion: completion)
     }
 
     private func aiRequestAnnouncement(model: String) -> String {
@@ -548,10 +537,7 @@ extension ComputerUseController {
     }
 
     private func sendInitialRequest(
-        preset: (
-            name: String, url: String, model: String, apiKey: String, presetPrompt: String,
-            systemPrompt: String
-        ),
+        preset: AIPreset,
         input: String
     ) {
         guard let systemInstruction else {
@@ -568,24 +554,13 @@ extension ComputerUseController {
             ["role": "system", "content": systemInstruction],
             screenshotMessage,
         ]
-        conversationMessages = messages
 
-        guard let body = chatBody(model: preset.model, messages: messages) else {
-            fail(ComputerUseError.missingBundledResource("portable_computer_use_tools.json"))
-            return
-        }
-
-        send(body: body, preset: preset) { [weak self] result in
-            self?.handleResponseResult(result, preset: preset, messages: messages)
-        }
+        sendChatRequest(messages: messages, preset: preset)
     }
 
     private func sendScreenshot(
         messages: [[String: Any]],
-        preset: (
-            name: String, url: String, model: String, apiKey: String, presetPrompt: String,
-            systemPrompt: String
-        )
+        preset: AIPreset
     ) {
         let description = "Screenshot."
         if actionLog.last != description {
@@ -597,24 +572,33 @@ extension ComputerUseController {
             return
         }
 
-        let updatedMessages = sanitizedMessagesForRequest(messages + [screenshotMessage])
-        conversationMessages = updatedMessages
-        guard let body = chatBody(model: preset.model, messages: updatedMessages) else {
+        sendChatRequest(messages: messages + [screenshotMessage], preset: preset)
+    }
+
+    private func sendChatRequest(messages: [[String: Any]], preset: AIPreset) {
+        let requestMessages = sanitizedMessagesForRequest(messages)
+        conversationMessages = requestMessages
+
+        guard let computerTools else {
             fail(ComputerUseError.missingBundledResource("portable_computer_use_tools.json"))
             return
         }
 
+        let body: [String: Any] = [
+            "model": preset.model,
+            "messages": requestMessages,
+            "tools": computerTools,
+            "tool_choice": "auto",
+        ]
+
         send(body: body, preset: preset) { [weak self] result in
-            self?.handleResponseResult(result, preset: preset, messages: updatedMessages)
+            self?.handleResponseResult(result, preset: preset, messages: requestMessages)
         }
     }
 
     private func send(
         body: [String: Any],
-        preset: (
-            name: String, url: String, model: String, apiKey: String, presetPrompt: String,
-            systemPrompt: String
-        ),
+        preset: AIPreset,
         completion: @escaping (Result<ChatCompletionResponse, Error>) -> Void
     ) {
         guard let base = URL(string: preset.url) else {
@@ -678,10 +662,7 @@ extension ComputerUseController {
 
     private func handleResponseResult(
         _ result: Result<ChatCompletionResponse, Error>,
-        preset: (
-            name: String, url: String, model: String, apiKey: String, presetPrompt: String,
-            systemPrompt: String
-        ),
+        preset: AIPreset,
         messages: [[String: Any]]
     ) {
         if cancelled {
@@ -699,10 +680,7 @@ extension ComputerUseController {
 
     private func handle(
         response: ChatCompletionResponse,
-        preset: (
-            name: String, url: String, model: String, apiKey: String, presetPrompt: String,
-            systemPrompt: String
-        ),
+        preset: AIPreset,
         messages: [[String: Any]]
     ) {
         if cancelled {
@@ -824,9 +802,9 @@ extension ComputerUseController {
         }
 
         let action = try JSONDecoder().decode(ComputerAction.self, from: data)
-        
+
         do {
-            try execute(actions: [action])
+            try perform(action)
         } catch {
             if case .cancelled = error as? ComputerUseError {
                 throw error
@@ -837,25 +815,13 @@ extension ComputerUseController {
         switch action.type {
         case "cursor_position":
             let position = cursorPosition()
-            return formatCompactResult(action: action, status: "pass", valueOverride: "\(Int(position.x)),\(Int(position.y))")
+            let value = "\(Int(position.x)),\(Int(position.y))"
+            return formatCompactResult(action: action, status: "pass", valueOverride: value)
         case "screenshot":
             return formatCompactResult(action: action, status: "pass", valueOverride: "Fresh screenshot attached")
         default:
             return formatCompactResult(action: action, status: "pass")
         }
-    }
-
-    private func chatBody(model: String, messages: [[String: Any]]) -> [String: Any]? {
-        guard let computerTools else {
-            return nil
-        }
-
-        return [
-            "model": model,
-            "messages": sanitizedMessagesForRequest(messages),
-            "tools": computerTools,
-            "tool_choice": "auto",
-        ]
     }
 
     private func sanitizedMessagesForRequest(_ messages: [[String: Any]]) -> [[String: Any]] {
@@ -1089,8 +1055,6 @@ extension ComputerUseController {
             return nil
         }
 
-        screenScale = 1.0
-
         let screenshotText = """
             \(text)
 
@@ -1237,31 +1201,28 @@ extension ComputerUseController {
 
 extension ComputerUseController {
 
-    private func execute(actions: [ComputerAction]) throws {
-        for action in actions {
-            if cancelled {
-                throw ComputerUseError.cancelled
-            }
-
-            let logDescription = actionDescription(action, full: true)
-            let speechDescription = actionDescription(action, full: false)
-            actionLog.append(logDescription)
-
-            if requiresApproval(action) && !approveAllActionsForCurrentTask {
-                switch approve(action: logDescription) {
-                case .cancel:
-                    abort()
-                    throw ComputerUseError.cancelled
-                case .approveOnce:
-                    break
-                case .approveAll:
-                    approveAllActionsForCurrentTask = true
-                }
-            }
-
-            Accessibility.speakWithSynthesizerSynchronous(speechDescription)
-            try execute(action: action)
+    private func perform(_ action: ComputerAction) throws {
+        if cancelled {
+            throw ComputerUseError.cancelled
         }
+
+        let logDescription = actionDescription(action, full: true)
+        actionLog.append(logDescription)
+
+        if requiresApproval(logDescription) && !approveAllActionsForCurrentTask {
+            switch approve(action: logDescription) {
+            case .cancel:
+                abort()
+                throw ComputerUseError.cancelled
+            case .approveOnce:
+                break
+            case .approveAll:
+                approveAllActionsForCurrentTask = true
+            }
+        }
+
+        Accessibility.speakWithSynthesizerSynchronous(actionDescription(action, full: false))
+        try execute(action: action)
     }
 
     private func execute(action: ComputerAction) throws {
@@ -1318,7 +1279,7 @@ extension ComputerUseController {
         return globalPoint(x: x, y: y)
     }
 
-    func globalPoint(x: Int, y: Int) -> CGPoint {
+    private func globalPoint(x: Int, y: Int) -> CGPoint {
         // Model provides x, y in pixels (relative to the screenshot)
         // Since we resized the screenshot to point dimensions, mapping is now 1:1
         let pointX = CGFloat(x)
@@ -1382,8 +1343,8 @@ extension ComputerUseController {
         }
     }
 
-    private func requiresApproval(_ action: ComputerAction) -> Bool {
-        let lowercased = actionDescription(action).lowercased()
+    private func requiresApproval(_ actionDescription: String) -> Bool {
+        let lowercased = actionDescription.lowercased()
         return riskyWords.contains { lowercased.contains($0) }
     }
 
