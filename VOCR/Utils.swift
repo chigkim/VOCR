@@ -45,16 +45,38 @@ func askPrompt(value: String) -> (prompt: String, followUp: Bool)? {
         withTitle: NSLocalizedString(
             "button.cancel", value: "Cancel", comment: "Button title to cancel an action"))
 
-    // Create a vertical stack view to hold text field + checkbox
     let stackView = NSStackView()
     stackView.orientation = .vertical
     stackView.spacing = 8
     stackView.translatesAutoresizingMaskIntoConstraints = false
 
-    // Text field
-    let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
-    inputTextField.stringValue = value
-    stackView.addArrangedSubview(inputTextField)
+    let promptSize = NSSize(width: 760, height: 320)
+    let scrollView = NSScrollView(frame: NSRect(origin: .zero, size: promptSize))
+    scrollView.translatesAutoresizingMaskIntoConstraints = false
+    scrollView.hasVerticalScroller = true
+    scrollView.hasHorizontalScroller = false
+    scrollView.borderType = .bezelBorder
+
+    let inputTextView = NSTextView(frame: scrollView.bounds)
+    inputTextView.isRichText = false
+    inputTextView.isEditable = true
+    inputTextView.isSelectable = true
+    inputTextView.isHorizontallyResizable = false
+    inputTextView.isVerticallyResizable = true
+    inputTextView.autoresizingMask = [.width]
+    inputTextView.minSize = NSSize(width: 0, height: promptSize.height)
+    inputTextView.maxSize = NSSize(
+        width: CGFloat.greatestFiniteMagnitude,
+        height: CGFloat.greatestFiniteMagnitude)
+    inputTextView.string = value
+    inputTextView.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
+    inputTextView.textContainer?.containerSize = NSSize(
+        width: promptSize.width,
+        height: CGFloat.greatestFiniteMagnitude)
+    inputTextView.textContainer?.widthTracksTextView = true
+
+    scrollView.documentView = inputTextView
+    stackView.addArrangedSubview(scrollView)
 
     // Checkbox
     let followUpButton = NSButton(
@@ -63,16 +85,29 @@ func askPrompt(value: String) -> (prompt: String, followUp: Bool)? {
             comment: "Checkbox label for enabling follow-up mode"), target: nil, action: nil)
     stackView.addArrangedSubview(followUpButton)
 
-    alert.accessoryView = stackView
+    let accessoryView = NSView(frame: NSRect(x: 0, y: 0, width: promptSize.width, height: promptSize.height + 28))
+    accessoryView.addSubview(stackView)
+    NSLayoutConstraint.activate([
+        accessoryView.widthAnchor.constraint(equalToConstant: promptSize.width),
+        accessoryView.heightAnchor.constraint(equalToConstant: promptSize.height + 28),
+        stackView.leadingAnchor.constraint(equalTo: accessoryView.leadingAnchor),
+        stackView.trailingAnchor.constraint(equalTo: accessoryView.trailingAnchor),
+        stackView.topAnchor.constraint(equalTo: accessoryView.topAnchor),
+        stackView.bottomAnchor.constraint(equalTo: accessoryView.bottomAnchor),
+        scrollView.widthAnchor.constraint(equalToConstant: promptSize.width),
+        scrollView.heightAnchor.constraint(equalToConstant: promptSize.height),
+    ])
+
+    alert.accessoryView = accessoryView
 
     DispatchQueue.main.async {
-        alert.window.makeFirstResponder(inputTextField)
+        alert.window.makeFirstResponder(inputTextView)
     }
 
     let response = alert.runModal()
     hide()
     if response == .alertFirstButtonReturn {
-        let prompt = inputTextField.stringValue
+        let prompt = inputTextView.string
         return (prompt, followUpButton.state == .on)
     }
     return nil
