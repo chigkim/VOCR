@@ -4019,6 +4019,30 @@
         }
       }
     },
+    "error.preset.decryptKey.message" : {
+      "comment" : "Alert message when a preset API key cannot be decrypted",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "VOCR could not decrypt the API key for the \"%@\" preset. Please open Preset Manager, edit this preset, re-enter the API key, and save it."
+          }
+        }
+      }
+    },
+    "error.preset.decryptKey.title" : {
+      "comment" : "Alert title when a preset API key cannot be decrypted",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Cannot Decrypt API Key"
+          }
+        }
+      }
+    },
     "error.preset.fetchModelsFailed.message" : {
       "comment" : "Informative text for fetch models failure",
       "extractionState" : "manual",

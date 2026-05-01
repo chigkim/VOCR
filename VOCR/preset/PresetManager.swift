@@ -19,7 +19,13 @@ final class PresetManager {
 
     // MARK: - Persistence
 
+    private func presetSummary(_ preset: Preset) -> String {
+        let host = URL(string: preset.url)?.host ?? preset.url
+        return "\(preset.name) id=\(preset.id.uuidString) model=\(preset.model) host=\(host)"
+    }
+
     private func makeDefaultPresets() {
+        log("PresetManager: creating default preset")
         do {
             try addPreset(
                 name: "Default", url: "https://api.openai.com/v1", model: "gpt-5.2",
@@ -31,6 +37,7 @@ final class PresetManager {
             }
         } catch {
             // If creating default presets fails (e.g., encryption error), start with empty presets.
+            log("PresetManager: failed to create default preset: \(error)")
             self.presets = []
         }
     }
@@ -38,11 +45,20 @@ final class PresetManager {
     private func loadFromDisk() {
         let defaults = UserDefaults.standard
 
-        if let data = defaults.data(forKey: presetsDefaultsKey),
-            let decoded = try? JSONDecoder().decode([Preset].self, from: data)
-        {
-            self.presets = decoded
+        if let data = defaults.data(forKey: presetsDefaultsKey) {
+            do {
+                let decoded = try JSONDecoder().decode([Preset].self, from: data)
+                self.presets = decoded
+                log("PresetManager: loaded \(decoded.count) presets from defaults")
+                for preset in decoded {
+                    log("PresetManager: loaded preset \(presetSummary(preset))")
+                }
+            } catch {
+                log("PresetManager: failed to decode presets from defaults: \(error)")
+                makeDefaultPresets()
+            }
         } else {
+            log("PresetManager: no presets found in defaults")
             makeDefaultPresets()
         }
 
@@ -50,6 +66,11 @@ final class PresetManager {
             let id = UUID(uuidString: idString)
         {
             self.selectedPresetID = id
+            log("PresetManager: loaded selected preset id \(id.uuidString)")
+        } else if let idString = defaults.string(forKey: selectedIDDefaultsKey) {
+            log("PresetManager: ignored invalid selected preset id \(idString)")
+        } else {
+            log("PresetManager: no selected preset id in defaults")
         }
     }
 
@@ -58,12 +79,17 @@ final class PresetManager {
 
         if let data = try? JSONEncoder().encode(presets) {
             defaults.set(data, forKey: presetsDefaultsKey)
+            log("PresetManager: saved \(presets.count) presets to defaults")
+        } else {
+            log("PresetManager: failed to encode presets for saving")
         }
 
         if let sel = selectedPresetID {
             defaults.set(sel.uuidString, forKey: selectedIDDefaultsKey)
+            log("PresetManager: saved selected preset id \(sel.uuidString)")
         } else {
             defaults.removeObject(forKey: selectedIDDefaultsKey)
+            log("PresetManager: cleared selected preset id")
         }
     }
 
@@ -91,6 +117,7 @@ final class PresetManager {
         )
 
         presets.append(newPreset)
+        log("PresetManager: added preset \(presetSummary(newPreset))")
         saveToDisk()
     }
 
@@ -122,6 +149,7 @@ final class PresetManager {
         }
 
         presets[idx] = updated
+        log("PresetManager: updated preset \(presetSummary(updated)); keyRotated=\(apiKeyPlaintext?.isEmpty == false)")
         saveToDisk()
     }
 
@@ -131,6 +159,7 @@ final class PresetManager {
         }
 
         presets.removeAll { $0.id == id }
+        log("PresetManager: removed preset id \(id.uuidString)")
         saveToDisk()
     }
 
@@ -157,13 +186,18 @@ final class PresetManager {
         // make the duplicate the selected preset in memory
         selectedPresetID = newPreset.id
 
+        log("PresetManager: duplicated preset \(originalID.uuidString) as \(presetSummary(newPreset))")
         saveToDisk()
         return newPreset.id
     }
 
     func selectPreset(id: UUID) {
-        guard presets.contains(where: { $0.id == id }) else { return }
+        guard let preset = presets.first(where: { $0.id == id }) else {
+            log("PresetManager: ignored selection for unknown preset id \(id.uuidString)")
+            return
+        }
         selectedPresetID = id
+        log("PresetManager: selected preset \(presetSummary(preset))")
         saveToDisk()
     }
 
@@ -172,27 +206,54 @@ final class PresetManager {
     /// Call this right before you send a request to a model.
     /// Returns the currently selected preset, including a decrypted API key.
     func activePreset() -> ActivePreset? {
-        if let preset =
-            (selectedPresetID.flatMap { sel in presets.first(where: { $0.id == sel }) }
-                ?? presets.first(where: { $0.name == "Default" }))
-        {
-            do {
-                let apiKey = try SecureCrypto.decryptAPIKey(preset.encryptedKeyCombinedBase64)
-                return ActivePreset(
-                    id: preset.id,
-                    name: preset.name,
-                    url: preset.url,
-                    model: preset.model,
-                    systemPrompt: preset.systemPrompt,
-                    prompt: preset.prompt,
-                    apiKey: apiKey
-                )
-            } catch {
-                return nil
-            }
-        } else {
+        let selectedPreset = selectedPresetID.flatMap { sel in
+            presets.first(where: { $0.id == sel })
+        }
+        let defaultPreset = presets.first(where: { $0.name == "Default" })
+
+        if selectedPreset == nil, let selectedPresetID {
+            log("PresetManager: selected preset id \(selectedPresetID.uuidString) was not found")
+        }
+
+        guard let preset = selectedPreset ?? defaultPreset else {
+            log("PresetManager: active preset unavailable; presets=\(presets.count), selected=\(selectedPresetID?.uuidString ?? "nil")")
             return nil
         }
+
+        log("PresetManager: resolving active preset \(presetSummary(preset))")
+
+        do {
+            let apiKey = try SecureCrypto.decryptAPIKey(preset.encryptedKeyCombinedBase64)
+            log("PresetManager: active preset key decrypted for \(preset.name) id=\(preset.id.uuidString)")
+            return ActivePreset(
+                id: preset.id,
+                name: preset.name,
+                url: preset.url,
+                model: preset.model,
+                systemPrompt: preset.systemPrompt,
+                prompt: preset.prompt,
+                apiKey: apiKey
+            )
+        } catch {
+            log("PresetManager: failed to decrypt active preset key for \(presetSummary(preset)): \(error)")
+            alertPresetKeyDecryptionFailure(presetName: preset.name)
+            return nil
+        }
+    }
+
+    private func alertPresetKeyDecryptionFailure(presetName: String) {
+        let title = NSLocalizedString(
+            "error.preset.decryptKey.title",
+            value: "Cannot Decrypt API Key",
+            comment: "Alert title when a preset API key cannot be decrypted")
+        let message = String(
+            format: NSLocalizedString(
+                "error.preset.decryptKey.message",
+                value:
+                    "VOCR could not decrypt the API key for the \"%@\" preset. Please open Preset Manager, edit this preset, re-enter the API key, and save it.",
+                comment: "Alert message when a preset API key cannot be decrypted"),
+            presetName)
+        alert(title, message)
     }
 
 }

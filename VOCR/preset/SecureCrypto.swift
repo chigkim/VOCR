@@ -7,10 +7,12 @@ enum SecureCrypto {
 
     /// Get the app-wide symmetric key. Create and store it in Keychain if missing.
     static func getOrCreateMasterKey() throws -> SymmetricKey {
-        if let data = KeychainManager.retrieve(key: masterKeyKeychainID) {
+        let retrieval = KeychainManager.retrieveWithStatus(key: masterKeyKeychainID)
+
+        if let data = retrieval.data {
             // existing key in Keychain
             return SymmetricKey(data: data)
-        } else {
+        } else if retrieval.status == errSecItemNotFound {
             // generate new 32-byte random key
             var keyData = Data(count: 32)
             let status = keyData.withUnsafeMutableBytes { ptr in
@@ -34,6 +36,11 @@ enum SecureCrypto {
             }
 
             return SymmetricKey(data: keyData)
+        } else {
+            throw KeychainManager.error(
+                retrieval.status,
+                message: "Failed to retrieve preset master key from Keychain"
+            )
         }
     }
 
