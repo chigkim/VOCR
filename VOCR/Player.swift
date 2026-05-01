@@ -39,7 +39,11 @@ class Player {
 
         osc.start()
         engine.output = panner
-        try! engine.start()
+        do {
+            try engine.start()
+        } catch {
+            log("Could not start audio engine: \(error)")
+        }
         mixer.volume = 1.0
     }
 

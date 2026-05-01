@@ -64,33 +64,10 @@ enum Settings {
     ]
     static var exploreUserPrompt =
         "The resolution of the following image has {image.width} width and {image.height} height."
-    static var messages: [[String: Any]] = []
-    static var followUp = false
     static let target = MenuHandler()
     static var writeLog = false
     static var preRelease = false
     static var camera = "Unknown"
-
-    static func activePreset() -> (
-        name: String,
-        url: String,
-        model: String,
-        apiKey: String,
-        presetPrompt: String,
-        systemPrompt: String
-    )? {
-        guard let p = PresetManager.shared.activePresetDecrypted() else {
-            return nil
-        }
-        return (
-            name: p.name,
-            url: p.url,
-            model: p.model,
-            apiKey: p.apiKey,
-            presetPrompt: p.prompt,
-            systemPrompt: p.systemPrompt
-        )
-    }
 
     static var allSettings: [(title: String, action: Selector, value: Bool)] {
         return [
@@ -151,8 +128,11 @@ enum Settings {
         ]
     }
 
-    static func setupMenu() -> NSMenu {
-        load()
+}
+
+enum StatusMenuController {
+    static func makeMenu() -> NSMenu {
+        Settings.load()
         let menu = NSMenu()
         let presetsMenu = NSMenu()
         buildPresetsSubmenu(into: presetsMenu)
@@ -164,50 +144,50 @@ enum Settings {
         menu.addItem(presetsMenuItem)
 
         let settingsMenu = NSMenu()
-        for setting in allSettings {
+        for setting in Settings.allSettings {
             let menuItem = NSMenuItem(
                 title: setting.title, action: setting.action, keyEquivalent: "")
-            menuItem.target = target
+            menuItem.target = Settings.target
             menuItem.state = setting.value ? .on : .off
             settingsMenu.addItem(menuItem)
         }
 
         if Settings.autoScan {
-            installMouseMonitor()
+            Settings.installMouseMonitor()
         }
 
         let soundOutputMenuItem = NSMenuItem(
             title: NSLocalizedString(
                 "menu.soundOutput", value: "Sound Output...",
                 comment: "Menu item for choosing audio output device"),
-            action: #selector(target.chooseOutput(_:)), keyEquivalent: "")
-        soundOutputMenuItem.target = target
+            action: #selector(MenuHandler.chooseOutput(_:)), keyEquivalent: "")
+        soundOutputMenuItem.target = Settings.target
         settingsMenu.addItem(soundOutputMenuItem)
 
         let cameraMenuItem = NSMenuItem(
             title: NSLocalizedString(
                 "menu.chooseCamera", value: "Choose Camera...",
                 comment: "Menu item for selecting camera device"),
-            action: #selector(target.chooseCamera(_:)), keyEquivalent: ""
+            action: #selector(MenuHandler.chooseCamera(_:)), keyEquivalent: ""
         )
-        cameraMenuItem.target = target
+        cameraMenuItem.target = Settings.target
         settingsMenu.addItem(cameraMenuItem)
 
         let shortcutsMenuItem = NSMenuItem(
             title: NSLocalizedString(
                 "menu.shortcuts", value: "Shortcuts...",
                 comment: "Menu item for managing keyboard shortcuts"),
-            action: #selector(target.openShortcutsWindow(_:)),
+            action: #selector(MenuHandler.openShortcutsWindow(_:)),
             keyEquivalent: "")
-        shortcutsMenuItem.target = target
+        shortcutsMenuItem.target = Settings.target
         settingsMenu.addItem(shortcutsMenuItem)
 
         let newShortcutMenuItem = NSMenuItem(
             title: NSLocalizedString(
                 "menu.newShortcuts", value: "New Shortcuts",
                 comment: "Menu item for creating a new keyboard shortcut"),
-            action: #selector(target.addShortcut(_:)), keyEquivalent: "")
-        newShortcutMenuItem.target = target
+            action: #selector(MenuHandler.addShortcut(_:)), keyEquivalent: "")
+        newShortcutMenuItem.target = Settings.target
         //		settingsMenu.addItem(newShortcutMenuItem)
 
         let languageMenu = NSMenu()
@@ -217,10 +197,10 @@ enum Settings {
         let systemItem = NSMenuItem(
             title: NSLocalizedString(
                 "menu.language.system", value: "System Default", comment: "Use system language"),
-            action: #selector(target.selectLanguage(_:)),
+            action: #selector(MenuHandler.selectLanguage(_:)),
             keyEquivalent: ""
         )
-        systemItem.target = target
+        systemItem.target = Settings.target
         systemItem.representedObject = "system"
         systemItem.state = (currentLanguage == nil) ? .on : .off
         languageMenu.addItem(systemItem)
@@ -237,10 +217,10 @@ enum Settings {
             let nativeName = Locale(identifier: code).localizedString(forIdentifier: code) ?? code
             let item = NSMenuItem(
                 title: nativeName.prefix(1).uppercased() + nativeName.dropFirst(),
-                action: #selector(target.selectLanguage(_:)),
-                keyEquivalent: ""
-            )
-            item.target = target
+                    action: #selector(MenuHandler.selectLanguage(_:)),
+                    keyEquivalent: ""
+                )
+            item.target = Settings.target
             item.representedObject = code
             item.state = (currentLanguage == code) ? .on : .off
             languageMenu.addItem(item)
@@ -259,19 +239,19 @@ enum Settings {
             title: NSLocalizedString(
                 "menu.settings.permissions", value: "Permissions…",
                 comment: "Menu item for managing app permissions"),
-            action: #selector(target.openPermissionsWindow(_:)),
+            action: #selector(MenuHandler.openPermissionsWindow(_:)),
             keyEquivalent: ""
         )
-        permissionsMenuItem.target = target
+        permissionsMenuItem.target = Settings.target
         settingsMenu.addItem(permissionsMenuItem)
 
         let resetMenuItem = NSMenuItem(
             title: NSLocalizedString(
                 "menu.reset", value: "Reset...",
                 comment: "Menu item for resetting all settings and presets"),
-            action: #selector(target.reset(_:)), keyEquivalent: ""
+            action: #selector(MenuHandler.reset(_:)), keyEquivalent: ""
         )
-        resetMenuItem.target = target
+        resetMenuItem.target = Settings.target
         settingsMenu.addItem(resetMenuItem)
 
         let settingsMenuItem = NSMenuItem(
@@ -286,9 +266,9 @@ enum Settings {
                 title: NSLocalizedString(
                     "menu.saveLatestImage", value: "Save Latest Image",
                     comment: "Menu item for saving the most recent captured image"),
-                action: #selector(target.saveLastImage(_:)),
-                keyEquivalent: "s")
-            saveScreenshotMenuItem.target = target
+                    action: #selector(MenuHandler.saveLastImage(_:)),
+                    keyEquivalent: "s")
+            saveScreenshotMenuItem.target = Settings.target
             menu.addItem(saveScreenshotMenuItem)
         }
 
@@ -297,9 +277,9 @@ enum Settings {
                 title: NSLocalizedString(
                     "menu.saveOCRResult", value: "Save OCR Result...",
                     comment: "Menu item for saving OCR text results to file"),
-                action: #selector(target.saveResult(_:)),
-                keyEquivalent: "")
-            saveMenuItem.target = target
+                    action: #selector(MenuHandler.saveResult(_:)),
+                    keyEquivalent: "")
+            saveMenuItem.target = Settings.target
             menu.addItem(saveMenuItem)
         }
 
@@ -307,35 +287,35 @@ enum Settings {
         let aboutMenuItem = NSMenuItem(
             title: NSLocalizedString(
                 "menu.about", value: "About...", comment: "Menu item for displaying About window"),
-            action: #selector(target.displayAboutWindow(_:)), keyEquivalent: "")
-        aboutMenuItem.target = target
+            action: #selector(MenuHandler.displayAboutWindow(_:)), keyEquivalent: "")
+        aboutMenuItem.target = Settings.target
         updateMenu.addItem(aboutMenuItem)
 
         let checkForUpdatesItem = NSMenuItem(
             title: NSLocalizedString(
                 "menu.checkForUpdates", value: "Check for Updates",
                 comment: "Menu item for manually checking for software updates"),
-            action: #selector(target.checkForUpdates), keyEquivalent: ""
+            action: #selector(MenuHandler.checkForUpdates), keyEquivalent: ""
         )
-        checkForUpdatesItem.target = target
+        checkForUpdatesItem.target = Settings.target
         updateMenu.addItem(checkForUpdatesItem)
 
         let autoCheckItem = NSMenuItem(
             title: NSLocalizedString(
                 "menu.autoCheckForUpdates", value: "Automatically Check for Updates",
                 comment: "Menu item for enabling automatic update checks"),
-            action: #selector(target.toggleSetting(_:)),
+            action: #selector(MenuHandler.toggleSetting(_:)),
             keyEquivalent: "")
-        autoCheckItem.target = target
+        autoCheckItem.target = Settings.target
         updateMenu.addItem(autoCheckItem)
 
         let autoUpdateItem = NSMenuItem(
             title: NSLocalizedString(
                 "menu.autoInstallUpdates", value: "Automatically Install Updates",
                 comment: "Menu item for enabling automatic update installation"),
-            action: #selector(target.toggleSetting(_:)),
+            action: #selector(MenuHandler.toggleSetting(_:)),
             keyEquivalent: "")
-        autoUpdateItem.target = target
+        autoUpdateItem.target = Settings.target
         updateMenu.addItem(autoUpdateItem)
 
         if let updater = AutoUpdateManager.shared.updaterController?.updater {
@@ -347,10 +327,10 @@ enum Settings {
             title: NSLocalizedString(
                 "menu.downloadBetaRelease", value: "Download Beta Release",
                 comment: "Menu item for enabling beta release version downloads"),
-            action: #selector(target.toggleSetting(_:)),
+            action: #selector(MenuHandler.toggleSetting(_:)),
             keyEquivalent: ""
         )
-        preReleaseItem.target = target
+        preReleaseItem.target = Settings.target
         updateMenu.addItem(preReleaseItem)
         preReleaseItem.state = (Settings.preRelease) ? .on : .off
 
@@ -366,8 +346,8 @@ enum Settings {
                 title: NSLocalizedString(
                     "menu.dismiss", value: "Dismiss Menu",
                     comment: "Menu item for dismissing the menu"),
-                action: #selector(target.dismiss(_:)), keyEquivalent: "z")
-            dismissMenuItem.target = target
+                action: #selector(MenuHandler.dismiss(_:)), keyEquivalent: "z")
+            dismissMenuItem.target = Settings.target
             menu.addItem(dismissMenuItem)
         }
 
@@ -390,23 +370,13 @@ enum Settings {
                 action: #selector(MenuHandler.selectPresetFromMenu(_:)),
                 keyEquivalent: ""
             )
-            chooseItem.target = target
+            chooseItem.target = Settings.target
             chooseItem.representedObject = p.id
             chooseItem.state = (p.id == active) ? .on : .off
             submenu.addItem(chooseItem)
         }
 
         submenu.addItem(NSMenuItem.separator())
-        let presetManagerItem = NSMenuItem(
-            title: NSLocalizedString(
-                "menu.presetManager", value: "Preset Manager…",
-                comment: "Menu item for opening preset manager window"),
-            action: #selector(MenuHandler.openPresetManagerWindow(_:)),
-            keyEquivalent: ""
-        )
-        presetManagerItem.target = target
-        submenu.addItem(presetManagerItem)
-
         let editExplorePromptsItem = NSMenuItem(
             title: NSLocalizedString(
                 "menu.editExplorePrompts", value: "Edit Explore Prompts…",
@@ -414,10 +384,24 @@ enum Settings {
             action: #selector(MenuHandler.openEditExplorePrompts(_:)),
             keyEquivalent: ""
         )
-        editExplorePromptsItem.target = target
+        editExplorePromptsItem.target = Settings.target
         submenu.addItem(editExplorePromptsItem)
 
+        let presetManagerItem = NSMenuItem(
+            title: NSLocalizedString(
+                "menu.presetManager", value: "Preset Manager…",
+                comment: "Menu item for opening preset manager window"),
+            action: #selector(MenuHandler.openPresetManagerWindow(_:)),
+            keyEquivalent: ""
+        )
+        presetManagerItem.target = Settings.target
+        submenu.addItem(presetManagerItem)
+
     }
+
+}
+
+extension Settings {
 
     static func installMouseMonitor() {
         self.eventMonitor = NSEvent.addGlobalMonitorForEvents(
@@ -484,6 +468,57 @@ enum Settings {
         defaults.set(Settings.exploreUserPrompt, forKey: "exploreUserPrompt")
     }
 
+}
+
+enum LaunchAgentManager {
+    private static let launchAgentRelativePath = "Library/LaunchAgents/com.chikim.VOCR.plist"
+
+    private static var launchAgentURL: URL {
+        FileManager.default.homeDirectoryForCurrentUser
+            .appendingPathComponent(launchAgentRelativePath)
+    }
+
+    private static var bundledLaunchAgentURL: URL? {
+        Bundle.main.url(forResource: "com.chikim.VOCR", withExtension: "plist")
+    }
+
+    @discardableResult
+    static func installDefaultIfNeeded(launchOnBoot: Bool) -> Bool {
+        let fileManager = FileManager.default
+        let launchFile = launchAgentURL
+        guard !launchOnBoot, !fileManager.fileExists(atPath: launchFile.path) else {
+            return false
+        }
+
+        setLaunchOnBoot(true)
+        return fileManager.fileExists(atPath: launchFile.path)
+    }
+
+    static func setLaunchOnBoot(_ enabled: Bool) {
+        let fileManager = FileManager.default
+        let launchFile = launchAgentURL
+        let launchFolder = launchFile.deletingLastPathComponent()
+
+        do {
+            if !fileManager.fileExists(atPath: launchFolder.path) {
+                try fileManager.createDirectory(
+                    at: launchFolder, withIntermediateDirectories: true, attributes: nil)
+            }
+
+            if enabled {
+                guard !fileManager.fileExists(atPath: launchFile.path),
+                    let bundledLaunchAgentURL
+                else {
+                    return
+                }
+                try fileManager.copyItem(at: bundledLaunchAgentURL, to: launchFile)
+            } else if fileManager.fileExists(atPath: launchFile.path) {
+                try fileManager.removeItem(at: launchFile)
+            }
+        } catch {
+            log("Launch agent update failed: \(error)")
+        }
+    }
 }
 
 class MenuHandler: NSObject {
@@ -559,19 +594,7 @@ class MenuHandler: NSObject {
 
     @objc func toggleLaunch(_ sender: NSMenuItem) {
         toggleSetting(sender)
-        let fileManager = FileManager.default
-        let home = fileManager.homeDirectoryForCurrentUser
-        let launchPath = "Library/LaunchAgents/com.chikim.VOCR.plist"
-        let launchFile = home.appendingPathComponent(launchPath)
-        if Settings.launchOnBoot {
-            if !fileManager.fileExists(atPath: launchFile.path) {
-                let bundle = Bundle.main
-                let bundlePath = bundle.path(forResource: "com.chikim.VOCR", ofType: "plist")
-                try! fileManager.copyItem(at: URL(fileURLWithPath: bundlePath!), to: launchFile)
-            } else {
-                try! fileManager.removeItem(at: launchFile)
-            }
-        }
+        LaunchAgentManager.setLaunchOnBoot(Settings.launchOnBoot)
     }
 
     @objc func displayAboutWindow(_ sender: Any?) {
@@ -605,8 +628,13 @@ class MenuHandler: NSObject {
         hide()
         let n = modalResult.rawValue - 1000
         Player.shared.engine.stop()
-        try! Player.shared.engine.setDevice(AudioEngine.outputDevices[n])
-        try! Player.shared.engine.start()
+        guard AudioEngine.outputDevices.indices.contains(n) else { return }
+        do {
+            try Player.shared.engine.setDevice(AudioEngine.outputDevices[n])
+            try Player.shared.engine.start()
+        } catch {
+            log("Could not switch audio output: \(error)")
+        }
     }
 
     @objc func chooseCamera(_ sender: Any?) {
@@ -629,6 +657,7 @@ class MenuHandler: NSObject {
             let modalResult = alert.runModal()
             hide()
             let n = modalResult.rawValue - 1000
+            guard devices.indices.contains(n) else { return }
             Settings.camera = devices[n].localizedName
             Settings.save()
         }
@@ -643,12 +672,18 @@ class MenuHandler: NSObject {
             if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
                 if let url = savePanel.url {
                     let text = Navigation.text()
-                    try! text.write(to: url, atomically: false, encoding: .utf8)
+                    do {
+                        try text.write(to: url, atomically: false, encoding: .utf8)
+                    } catch {
+                        log("Could not save OCR result: \(error)")
+                    }
                 }
             }
             let windows = NSApplication.shared.windows
             NSApplication.shared.hide(nil)
-            windows[1].close()
+            if windows.indices.contains(1) {
+                windows[1].close()
+            }
         }
     }
 
@@ -658,7 +693,11 @@ class MenuHandler: NSObject {
 
     @objc func saveLastImage(_ sender: NSMenuItem) {
         if let cgImage = Navigation.cgImage {
-            try! saveImage(cgImage)
+            do {
+                try saveImage(cgImage)
+            } catch {
+                log("Could not save image: \(error)")
+            }
         }
     }
 
@@ -818,16 +857,14 @@ class MenuHandler: NSObject {
         PresetManager.shared.selectPreset(id: presetID)
 
         if let appDelegate = NSApp.delegate as? AppDelegate {
-            let newMenu = Settings.setupMenu()
+            let newMenu = StatusMenuController.makeMenu()
             appDelegate.statusItem.menu = newMenu
         }
     }
 
     @objc func openPresetManagerWindow(_ sender: NSMenuItem) {
-        if let appDelegate = NSApp.delegate as? AppDelegate {
-            appDelegate.openPresetWindow()
-            NSApp.activate(ignoringOtherApps: true)
-        }
+        PresetManagerWindowController.shared.showWindow(nil)
+        NSApp.activate(ignoringOtherApps: true)
     }
 
     @objc func selectLanguage(_ sender: NSMenuItem) {

@@ -10,6 +10,10 @@ import Foundation
 import Security
 
 class KeychainManager {
+    struct RetrievalResult {
+        let data: Data?
+        let status: OSStatus
+    }
 
     @discardableResult
     static func store(key: String, data: Data) -> OSStatus {
@@ -25,7 +29,7 @@ class KeychainManager {
         return SecItemAdd(query as CFDictionary, nil)
     }
 
-    static func retrieve(key: String) -> Data? {
+    static func retrieveWithStatus(key: String) -> RetrievalResult {
         let query =
             [
                 kSecClass as String: kSecClassGenericPassword,
@@ -38,9 +42,21 @@ class KeychainManager {
         let status = SecItemCopyMatching(query as CFDictionary, &itemCopy)
 
         if status == noErr, let data = itemCopy as? Data {
-            return data
-        } else {
-            return nil
+            return RetrievalResult(data: data, status: status)
         }
+
+        return RetrievalResult(data: nil, status: status)
+    }
+
+    static func retrieve(key: String) -> Data? {
+        retrieveWithStatus(key: key).data
+    }
+
+    static func error(_ status: OSStatus, message: String) -> NSError {
+        NSError(
+            domain: NSOSStatusErrorDomain,
+            code: Int(status),
+            userInfo: [NSLocalizedDescriptionKey: "\(message): \(status)"]
+        )
     }
 }

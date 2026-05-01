@@ -13,6 +13,9 @@
 		6D5818FC2F3DA7F100883867 /* PermissionsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5818FB2F3DA7F100883867 /* PermissionsWindowController.swift */; };
 		6D5818FD2F3DA7F100883867 /* PermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5818F92F3DA7F100883867 /* PermissionsManager.swift */; };
 		6D5818FE2F3DA7F100883867 /* PermissionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5818FA2F3DA7F100883867 /* PermissionsViewController.swift */; };
+		6D8E1B012F9D100100000001 /* portable_computer_use_tools.json in Resources */ = {isa = PBXBuildFile; fileRef = 6D8E1AFF2F9D100100000001 /* portable_computer_use_tools.json */; };
+		6D8E1B022F9D100100000001 /* portable_computer_use_system_message.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6D8E1B002F9D100100000001 /* portable_computer_use_system_message.txt */; };
+		6DC0A0012F9D000100000001 /* ComputerUse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC0A0002F9D000100000001 /* ComputerUse.swift */; };
 		EA0C88682B4F8F4B00F2E920 /* ShortcutsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */; };
 		EA1158CE2B51EBC000B2C716 /* Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1158CD2B51EBC000B2C716 /* Shortcuts.swift */; };
 		EA1AC96A2B4C51FA00D3543F /* VOCursor.scpt in Resources */ = {isa = PBXBuildFile; fileRef = EA1AC9692B4C51FA00D3543F /* VOCursor.scpt */; };
@@ -22,7 +25,6 @@
 		EA2DA1AF232EB22300D31031 /* NSRunningApplication Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */; };
 		EA3F43732B4857F9005453C2 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3F43722B4857F9005453C2 /* Observation.swift */; };
 		EA42F44F2A2A04440010BC39 /* AXSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EA42F44E2A2A04440010BC39 /* AXSwift */; };
-		EA42F4512A2A05410010BC39 /* UIElement Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA42F4502A2A05410010BC39 /* UIElement Extension.swift */; };
 		EA5581EF2B5AF6F800408F92 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5581EE2B5AF6F800408F92 /* KeychainManager.swift */; };
 		EA5C7ACC2351BB6D00D84042 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACB2351BB6D00D84042 /* Navigation.swift */; };
 		EA5C7AD02351C8DE00D84042 /* AXUIElement Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */; };
@@ -60,6 +62,9 @@
 		6D5818F92F3DA7F100883867 /* PermissionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsManager.swift; sourceTree = "<group>"; };
 		6D5818FA2F3DA7F100883867 /* PermissionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsViewController.swift; sourceTree = "<group>"; };
 		6D5818FB2F3DA7F100883867 /* PermissionsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsWindowController.swift; sourceTree = "<group>"; };
+		6D8E1AFF2F9D100100000001 /* portable_computer_use_tools.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = portable_computer_use_tools.json; sourceTree = "<group>"; };
+		6D8E1B002F9D100100000001 /* portable_computer_use_system_message.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = portable_computer_use_system_message.txt; sourceTree = "<group>"; };
+		6DC0A0002F9D000100000001 /* ComputerUse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComputerUse.swift; sourceTree = "<group>"; };
 		EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsWindowController.swift; sourceTree = "<group>"; };
 		EA1158CD2B51EBC000B2C716 /* Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
 		EA1AC9692B4C51FA00D3543F /* VOCursor.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = VOCursor.scpt; sourceTree = "<group>"; };
@@ -68,7 +73,6 @@
 		EA2DA1AB232EB1D600D31031 /* Accessibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Accessibility.swift; sourceTree = "<group>"; };
 		EA2DA1AE232EB22300D31031 /* NSRunningApplication Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSRunningApplication Extension.swift"; sourceTree = "<group>"; };
 		EA3F43722B4857F9005453C2 /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
-		EA42F4502A2A05410010BC39 /* UIElement Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIElement Extension.swift"; sourceTree = "<group>"; };
 		EA5581EE2B5AF6F800408F92 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		EA5C7ACB2351BB6D00D84042 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AXUIElement Extension.swift"; sourceTree = "<group>"; };
@@ -114,6 +118,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6D8E1AFE2F9D100100000001 /* tools */ = {
+			isa = PBXGroup;
+			children = (
+				6D8E1B002F9D100100000001 /* portable_computer_use_system_message.txt */,
+				6D8E1AFF2F9D100100000001 /* portable_computer_use_tools.json */,
+			);
+			path = tools;
+			sourceTree = "<group>";
+		};
 		EA1F63FA2352496E0089C967 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +162,7 @@
 			children = (
 				EA2D4F082B5215CD001D6D24 /* Shortcuts.json */,
 				EAAD42AD298596FB00BE5D98 /* com.chikim.VOCR.plist */,
+				6D8E1AFE2F9D100100000001 /* tools */,
 				EA5C7AD72351D81100D84042 /* Scripts */,
 				EADE59B3232EB09A00E2F65A /* VOCR */,
 				EADE59B2232EB09A00E2F65A /* Products */,
@@ -181,6 +195,7 @@
 				EADE59B8232EB09A00E2F65A /* Assets.xcassets */,
 				EA5C7ACF2351C8DE00D84042 /* AXUIElement Extension.swift */,
 				EA688D442355BDC500F722C7 /* Bundle Extension.swift */,
+				6DC0A0002F9D000100000001 /* ComputerUse.swift */,
 				EA8AD6402352B4A000D26871 /* Double Extension.swift */,
 				EAD0E5A82B57942F004E69AD /* FileLogger.swift */,
 				EADE59BD232EB09A00E2F65A /* Info.plist */,
@@ -194,7 +209,6 @@
 				EAF9C3C72354A66200D4D77C /* Settings.swift */,
 				EA1158CD2B51EBC000B2C716 /* Shortcuts.swift */,
 				EA0C88672B4F8F4B00F2E920 /* ShortcutsWindowController.swift */,
-				EA42F4502A2A05410010BC39 /* UIElement Extension.swift */,
 				EA9EB89D28EA5B0A00FE6210 /* Utils.swift */,
 				EADE59BE232EB09A00E2F65A /* VOCR.entitlements */,
 				EAC1C94A2B59D96200FBE97D /* AutoUpdateManager.swift */,
@@ -277,8 +291,10 @@
 				6D29B5302F2C97DF00297D25 /* Localizable.xcstrings in Resources */,
 				6D29B5312F2C97DF00297D25 /* InfoPlist.xcstrings in Resources */,
 				EADE59B9232EB09A00E2F65A /* Assets.xcassets in Resources */,
+				6D8E1B012F9D100100000001 /* portable_computer_use_tools.json in Resources */,
 				EAD9CFD22355E11600E7F594 /* say.scpt in Resources */,
 				EA1AC96A2B4C51FA00D3543F /* VOCursor.scpt in Resources */,
+				6D8E1B022F9D100100000001 /* portable_computer_use_system_message.txt in Resources */,
 				EA2D4F092B5215CD001D6D24 /* Shortcuts.json in Resources */,
 				EA5C7AD92351D81100D84042 /* VOScreenshot.scpt in Resources */,
 				EADE59BC232EB09A00E2F65A /* Main.storyboard in Resources */,
@@ -299,6 +315,7 @@
 				EAC1C94B2B59D96200FBE97D /* AutoUpdateManager.swift in Sources */,
 				EADE59B5232EB09A00E2F65A /* AppDelegate.swift in Sources */,
 				EA688D452355BDC500F722C7 /* Bundle Extension.swift in Sources */,
+				6DC0A0012F9D000100000001 /* ComputerUse.swift in Sources */,
 				EAD0E5A92B57942F004E69AD /* FileLogger.swift in Sources */,
 				EA2DA1AF232EB22300D31031 /* NSRunningApplication Extension.swift in Sources */,
 				EA6427202EB6798100EDCC0C /* OpenAIAPI.swift in Sources */,
@@ -306,7 +323,6 @@
 				EA1158CE2B51EBC000B2C716 /* Shortcuts.swift in Sources */,
 				EA9EB89E28EA5B0A00FE6210 /* Utils.swift in Sources */,
 				EA2DA1AD232EB1D600D31031 /* Accessibility.swift in Sources */,
-				EA42F4512A2A05410010BC39 /* UIElement Extension.swift in Sources */,
 				EA6427282EB6798C00EDCC0C /* PresetEditorWindowController.swift in Sources */,
 				EA6427292EB6798C00EDCC0C /* PresetManager.swift in Sources */,
 				EA64272A2EB6798C00EDCC0C /* Preset.swift in Sources */,
@@ -476,7 +492,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 56;
+				CURRENT_PROJECT_VERSION = 62;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_APP_SANDBOX = NO;
@@ -490,7 +506,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = "3.0.0-beta.3";
+				MARKETING_VERSION = "3.0.0-beta.4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chikim.VOCR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -507,8 +523,9 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 56;
+				CURRENT_PROJECT_VERSION = 62;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 9N598S2535;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -520,7 +537,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = "3.0.0-beta.3";
+				MARKETING_VERSION = "3.0.0-beta.4";
 				PRODUCT_BUNDLE_IDENTIFIER = com.chikim.VOCR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

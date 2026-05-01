@@ -47,30 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func setupAutoLaunch() {
-        let fileManager = FileManager.default
-        let home = fileManager.homeDirectoryForCurrentUser
-        let launchFolder = home.appendingPathComponent("Library/LaunchAgents")
-        if !fileManager.fileExists(atPath: launchFolder.path) {
-            try! fileManager.createDirectory(
-                at: launchFolder,
-                withIntermediateDirectories: false,
-                attributes: nil
-            )
-        }
-        let launchPath = "Library/LaunchAgents/com.chikim.VOCR.plist"
-        let launchFile = home.appendingPathComponent(launchPath)
-        if !Settings.launchOnBoot
-            && !fileManager.fileExists(atPath: launchFile.path)
-        {
-            let bundle = Bundle.main
-            let bundlePath = bundle.path(
-                forResource: "com.chikim.VOCR",
-                ofType: "plist"
-            )
-            try! fileManager.copyItem(
-                at: URL(fileURLWithPath: bundlePath!),
-                to: launchFile
-            )
+        if LaunchAgentManager.installDefaultIfNeeded(launchOnBoot: Settings.launchOnBoot) {
             Settings.launchOnBoot = true
             Settings.save()
         }
@@ -81,7 +58,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func menuNeedsUpdate(_ menu: NSMenu) {
-        let menu = Settings.setupMenu()
+        let menu = StatusMenuController.makeMenu()
         menu.delegate = self
         statusItem.menu = menu
     }
@@ -107,23 +84,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
         }
         return false
-    }
-
-    @objc func openPresetWindow() {
-        // Present a simple Preset Manager window using PresetManagerViewController
-        let vc = PresetManagerViewController()
-        let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 520, height: 360),
-            styleMask: [.titled, .closable, .miniaturizable, .resizable],
-            backing: .buffered,
-            defer: false
-        )
-        window.title = NSLocalizedString(
-            "app.presets.window.title", value: "Presets", comment: "Title for presets window")
-        window.contentViewController = vc
-        let wc = NSWindowController(window: window)
-        wc.showWindow(self)
-        NSApp.activate(ignoringOtherApps: true)
     }
 
     // MARK: - Permissions Onboarding

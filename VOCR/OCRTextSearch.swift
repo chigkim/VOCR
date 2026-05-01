@@ -16,7 +16,7 @@ class OCRTextSearch {
 
     func search(query: String = "", fromBeginning: Bool = false, backward: Bool = false) {
         guard !Navigation.displayResults.isEmpty else {
-            print("No OCR results to search.")
+            log("No OCR results to search.")
             return
         }
 
@@ -72,7 +72,7 @@ class OCRTextSearch {
                         Navigation.l = lineIndex
                         Navigation.w = wordIndex
                         setMouseCoordinates(x: lineIndex, y: wordIndex)
-                        print(
+                        log(
                             "Found '\(searchQuery)' at line \(lineIndex + 1), word \(wordIndex + 1)"
                         )
                         Accessibility.speak(
@@ -93,7 +93,7 @@ class OCRTextSearch {
                         Navigation.l = lineIndex
                         Navigation.w = wordIndex
                         setMouseCoordinates(x: lineIndex, y: wordIndex)
-                        print(
+                        log(
                             "Found '\(searchQuery)' at line \(lineIndex + 1), word \(wordIndex + 1)"
                         )
                         Accessibility.speak(
@@ -123,9 +123,6 @@ class OCRTextSearch {
         let textField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
         textField.stringValue = lastSearchQuery  // Recall last search term
         alert.accessoryView = textField
-        DispatchQueue.main.async {
-            alert.window.makeFirstResponder(textField)
-        }
 
         alert.addButton(
             withTitle: NSLocalizedString(
@@ -141,6 +138,7 @@ class OCRTextSearch {
         // Set "From Current" as the default button
         alert.window.defaultButtonCell = alert.buttons[1].cell as? NSButtonCell
 
+        showDialog(alert, focusing: textField)
         let response = alert.runModal()
 
         if response == .alertFirstButtonReturn {  // From Beginning

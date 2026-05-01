@@ -102,7 +102,6 @@ enum Navigation {
             window = windows![r]
         }
 
-        // report(UIElement(window))
         windowName = window.value(of: "AXTitle")
         log("Window information: \(appName) - \(windowName)")
         var position: CFTypeRef?
@@ -179,7 +178,7 @@ enum Navigation {
             setVOCursor()
         }
         if cgSize != CGSize() {
-            if let image = TakeScreensShots(rect: CGRect(origin: cgPosition, size: cgSize)) {
+            if let image = ScreenCapture.capture(rect: CGRect(origin: cgPosition, size: cgSize)) {
                 cgImage = image
             } else {
                 Accessibility.speak(
@@ -204,7 +203,7 @@ enum Navigation {
             prepare()
         }
         guard let image = cgImage else { return }
-        let result = performOCR(cgImage: image)
+        let result = VisionOCR.observations(in: image, detectObjects: Settings.detectObject)
         if result.count == 0 {
             Accessibility.speak(
                 NSLocalizedString(
@@ -223,16 +222,13 @@ enum Navigation {
 
     static func explore() {
         prepare()
-        //		guard let  image = cgImage, let image = resizeCGImage(image, toWidth: Int(Navigation.cgSize.width), toHeight:Int(Navigation.cgSize.height)) else { return }
-        //		   log("Resized:", image.width, image.height)
         guard let image = cgImage else { return }
         let prompt = Settings.exploreUserPrompt.replacingOccurrences(
             of: "{image.width}", with: String(image.width)
         ).replacingOccurrences(of: "{image.height}", with: String(image.height))
-        Settings.followUp = false
         OpenAIAPI.describe(
             image: image, system: Settings.exploreSystemPrompt, prompt: prompt,
-            completion: exploreHandler)
+            followUp: false, completion: exploreHandler)
     }
 
     static func exploreHandler(description: String) {
@@ -248,13 +244,6 @@ enum Navigation {
                         "navigation.finished_scanning", value: "Finished scanning %@, %@",
                         comment: "Message when scanning is complete"), self.appName, self.windowName
                 ))
-
-            //			DispatchQueue.main.async {
-            //				if let cgImage = cgImage {
-            //					let boxImage = drawBoxes(cgImage, boxes:result, color:NSColor.red)!
-            //					try? saveImage(boxImage)
-            //				}
-            //			}
 
         } else {
             Accessibility.speakWithSynthesizer(
@@ -365,8 +354,6 @@ enum Navigation {
                 log("\(rect.debugDescription)")
                 if let croppedImage = image.cropping(to: rect) {
                     ask(image: croppedImage)
-                    //					try! saveImage(croppedImage)
-                    // classify(cgImage:croppedImage)
                 }
             }
         }
@@ -384,7 +371,6 @@ enum Navigation {
             CGWarpMouseCursorPosition(convert2coordinates(displayResults[l][w].boundingBox))
         }
         Accessibility.speak(displayResults[l][w].value)
-        //		 identifyObject()
     }
 
     static func left() {

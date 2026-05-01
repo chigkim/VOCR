@@ -11,7 +11,22 @@ import Cocoa
 
 enum Accessibility {
 
-    static let speech: NSSpeechSynthesizer = NSSpeechSynthesizer()
+    class SpeechDelegate: NSObject, NSSpeechSynthesizerDelegate {
+        var onFinish: (() -> Void)?
+        func speechSynthesizer(
+            _ sender: NSSpeechSynthesizer, didFinishSpeaking finishedCharacterCount: Bool
+        ) {
+            onFinish?()
+        }
+    }
+
+    static let speechDelegate = SpeechDelegate()
+    static let speech: NSSpeechSynthesizer = {
+        let synthesizer = NSSpeechSynthesizer()
+        synthesizer.rate = 230
+        synthesizer.delegate = speechDelegate
+        return synthesizer
+    }()
 
     static func isTrusted(ask: Bool) -> Bool {
         let prompt = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
@@ -30,10 +45,56 @@ enum Accessibility {
             userInfo: announcement)
     }
 
-    static func speakWithSynthesizer(_ message: String) {
+    static func speakWithSynthesizer(_ message: String, completion: (() -> Void)? = nil) {
         log("Speak with synthesizer: \(message)")
-        DispatchQueue.global().async {
-            speech.startSpeaking(message)
+        DispatchQueue.main.async {
+            guard let completion = completion else {
+                speech.startSpeaking(message)
+                return
+            }
+
+            speechDelegate.onFinish = {
+                speechDelegate.onFinish = nil
+                completion()
+            }
+            if !speech.startSpeaking(message) {
+                speechDelegate.onFinish = nil
+                completion()
+            }
+        }
+    }
+
+    static func speakWithSynthesizerSynchronous(_ message: String) {
+        log("Speak with synthesizer synchronous: \(message)")
+        if Thread.isMainThread {
+            var finished = false
+            speechDelegate.onFinish = {
+                finished = true
+            }
+            guard speech.startSpeaking(message) else {
+                speechDelegate.onFinish = nil
+                return
+            }
+            while !finished && speech.isSpeaking {
+                RunLoop.current.run(mode: .default, before: Date(timeIntervalSinceNow: 0.05))
+            }
+            speechDelegate.onFinish = nil
+            return
+        }
+
+        let semaphore = DispatchSemaphore(value: 0)
+        DispatchQueue.main.async {
+            speechDelegate.onFinish = {
+                semaphore.signal()
+            }
+            if !speech.startSpeaking(message) {
+                speechDelegate.onFinish = nil
+                semaphore.signal()
+            }
+        }
+        semaphore.wait()
+        DispatchQueue.main.sync {
+            speechDelegate.onFinish = nil
         }
     }
 
@@ -69,7 +130,9 @@ enum Accessibility {
         if let scriptObject = NSAppleScript(contentsOf: url!, error: &error) {
             var outputError: NSDictionary?
             if let output = scriptObject.executeAppleEvent(event, error: &outputError).stringValue {
-                debugPrint(outputError as Any)
+                if let outputError {
+                    log("Speak output error: \(outputError)")
+                }
                 log("Speak: \(output)")
             } else {
                 log("Output Error: \(String(describing: outputError))")

@@ -47,6 +47,9 @@ enum Shortcuts {
             id: "shortcut.realtime_ocr", defaultName: "Realtime OCR", isNavigation: false,
             comment: "Shortcut name for starting/stopping realtime OCR"),
         Definition(
+            id: "shortcut.computer_use", defaultName: "Computer Use", isNavigation: false,
+            comment: "Shortcut name for starting computer use"),
+        Definition(
             id: "shortcut.ask", defaultName: "Ask", isNavigation: false,
             comment: "Shortcut name for asking questions"),
         Definition(
@@ -123,6 +126,7 @@ enum Shortcuts {
             MacCamera.shared.requestAccessThenTakePicture()
         }
         handlers["shortcut.realtime_ocr"] = realTimeHandler
+        handlers["shortcut.computer_use"] = ComputerUseController.shared.showPrompt
         handlers["shortcut.explore"] = Navigation.explore
         handlers["shortcut.ask"] = {
             ask()
@@ -200,7 +204,7 @@ enum Shortcuts {
         var data: Data?
         let bundle = Bundle.main
         if let bundlePath = bundle.path(forResource: "Shortcuts", ofType: "json") {
-            data = try! Data(contentsOf: URL(fileURLWithPath: bundlePath))
+            data = try? Data(contentsOf: URL(fileURLWithPath: bundlePath))
         }
         return data
     }
@@ -260,6 +264,7 @@ enum Shortcuts {
         if navigationActive {
             register(names: navigationShortcuts)
         }
+
     }
 
     static func register(names: [String]) {
@@ -271,6 +276,14 @@ enum Shortcuts {
                 hotkeys.append(hotkey)
             }
         }
+
+        // Hardcoded shortcut for testing: Ctrl+Shift+Cmd+T
+        let testHotKey = HotKey(carbonKeyCode: 17, carbonModifiers: 4864)
+        testHotKey.keyDownHandler = {
+            test()
+        }
+        // hotkeys.append(testHotKey)
+
     }
 
     static func deregister(names: [String]) {
@@ -295,7 +308,7 @@ enum Shortcuts {
     static func settingsHandler() {
         let mouseLocation = NSEvent.mouseLocation
         let rect = CGRect(x: mouseLocation.x, y: mouseLocation.y, width: 1, height: 1)
-        Settings.setupMenu().popUp(positioning: nil, at: rect.origin, in: nil)
+        StatusMenuController.makeMenu().popUp(positioning: nil, at: rect.origin, in: nil)
     }
     static func realTimeHandler() {
         if RealTime.run {
@@ -314,4 +327,90 @@ enum Shortcuts {
         }
 
     }
+}
+
+func test2() {
+    let alert = NSAlert()
+    alert.messageText = "Test"
+    alert.addButton(withTitle: "Ask")
+    alert.addButton(withTitle: "Cancel")
+
+    let stackView = NSStackView()
+    stackView.orientation = .vertical
+    stackView.spacing = 8
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+
+    let promptSize = NSSize(width: 760, height: 320)
+    let scrollView = NSScrollView(frame: NSRect(origin: .zero, size: promptSize))
+    scrollView.translatesAutoresizingMaskIntoConstraints = false
+    scrollView.hasVerticalScroller = true
+    scrollView.hasHorizontalScroller = false
+    scrollView.borderType = .bezelBorder
+
+    let inputTextView = NSTextView(frame: scrollView.bounds)
+    inputTextView.isRichText = false
+    inputTextView.isEditable = true
+    inputTextView.isSelectable = true
+    inputTextView.isHorizontallyResizable = false
+    inputTextView.isVerticallyResizable = true
+    inputTextView.autoresizingMask = [.width]
+    inputTextView.minSize = NSSize(width: 0, height: promptSize.height)
+    inputTextView.maxSize = NSSize(
+        width: CGFloat.greatestFiniteMagnitude,
+        height: CGFloat.greatestFiniteMagnitude)
+    inputTextView.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
+    inputTextView.textContainer?.containerSize = NSSize(
+        width: promptSize.width,
+        height: CGFloat.greatestFiniteMagnitude)
+    inputTextView.textContainer?.widthTracksTextView = true
+
+    scrollView.documentView = inputTextView
+    stackView.addArrangedSubview(scrollView)
+
+    // Checkbox
+    let followUpButton = NSButton(checkboxWithTitle: "Follow Up", target: nil, action: nil)
+    stackView.addArrangedSubview(followUpButton)
+
+    let accessoryView = NSView(frame: NSRect(x: 0, y: 0, width: promptSize.width, height: promptSize.height + 28))
+    accessoryView.addSubview(stackView)
+    NSLayoutConstraint.activate([
+        accessoryView.widthAnchor.constraint(equalToConstant: promptSize.width),
+        accessoryView.heightAnchor.constraint(equalToConstant: promptSize.height + 28),
+        stackView.leadingAnchor.constraint(equalTo: accessoryView.leadingAnchor),
+        stackView.trailingAnchor.constraint(equalTo: accessoryView.trailingAnchor),
+        stackView.topAnchor.constraint(equalTo: accessoryView.topAnchor),
+        stackView.bottomAnchor.constraint(equalTo: accessoryView.bottomAnchor),
+        scrollView.widthAnchor.constraint(equalToConstant: promptSize.width),
+        scrollView.heightAnchor.constraint(equalToConstant: promptSize.height),
+    ])
+
+    alert.accessoryView = accessoryView
+
+    showDialog(alert, focusing: inputTextView)
+    let response = alert.runModal()
+    hide()
+    if response == .alertFirstButtonReturn {
+        Accessibility.speakWithSynthesizerSynchronous(inputTextView.string)
+    }
+}
+
+func test() {
+    let alert = NSAlert()
+    alert.messageText = "Test"
+    alert.informativeText = "This is test."
+    alert.addButton(withTitle: "Cancel")
+    alert.addButton(withTitle: "Approve Once")
+    alert.addButton(withTitle: "Approve All")
+    alert.buttons[0].keyEquivalent = "\u{1b}"
+    alert.buttons[1].keyEquivalent = "\r"
+    
+    switch alert.runModal() {
+    case .alertSecondButtonReturn:
+        Accessibility.speakWithSynthesizer("Approve")
+    case .alertThirdButtonReturn:
+        Accessibility.speakWithSynthesizer("Approve All")
+    default:
+        Accessibility.speakWithSynthesizer("Cancel")
+    }
+    hide()
 }

@@ -22,7 +22,7 @@ class FileLogger {
         .first!
         self.fileURL = documentsDirectory.appendingPathComponent("VOCR.txt")
         if FileManager.default.fileExists(atPath: self.fileURL.path) {
-            try! FileManager.default.removeItem(at: self.fileURL)
+            try? FileManager.default.removeItem(at: self.fileURL)
         }
 
     }
@@ -57,7 +57,7 @@ class FileLogger {
     func log(_ message: String) {
         let timestamp = Date().description
         let logMessage = "\(timestamp)\n\(message)\n"
-        print(logMessage)
+        Swift.print(logMessage)
         if Settings.writeLog {
             write(logMessage)
         }
