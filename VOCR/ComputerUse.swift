@@ -343,10 +343,7 @@ final class ComputerUseController {
 
         alert.accessoryView = accessoryView
 
-        DispatchQueue.main.async {
-            alert.window.makeFirstResponder(inputTextView)
-        }
-
+        showDialog(alert, focusing: inputTextView)
         let response = alert.runModal()
         hide()
 
@@ -1407,22 +1404,23 @@ extension ComputerUseController {
             alert.informativeText = action
             alert.addButton(
                 withTitle: NSLocalizedString(
-                    "button.cancel", value: "Cancel", comment: "Button title to cancel an action"))
-            alert.addButton(
-                withTitle: NSLocalizedString(
                     "button.approveOnce", value: "Approve Once",
                     comment: "Button title to approve one computer use action"))
             alert.addButton(
                 withTitle: NSLocalizedString(
                     "button.approveAll", value: "Approve All",
                     comment: "Button title to approve all remaining computer use actions"))
-            alert.buttons[0].keyEquivalent = "\u{1b}"
-            alert.buttons[1].keyEquivalent = "\r"
+            alert.addButton(
+                withTitle: NSLocalizedString(
+                    "button.cancel", value: "Cancel", comment: "Button title to cancel an action"))
+            alert.buttons[0].keyEquivalent = "\r"
+            alert.buttons[2].keyEquivalent = "\u{1b}"
+            showDialog(alert, focusing: alert.buttons[0])
 
             switch alert.runModal() {
-            case .alertSecondButtonReturn:
+            case .alertFirstButtonReturn:
                 decision = .approveOnce
-            case .alertThirdButtonReturn:
+            case .alertSecondButtonReturn:
                 decision = .approveAll
             default:
                 decision = .cancel

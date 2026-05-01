@@ -123,9 +123,6 @@ class OCRTextSearch {
         let textField = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
         textField.stringValue = lastSearchQuery  // Recall last search term
         alert.accessoryView = textField
-        DispatchQueue.main.async {
-            alert.window.makeFirstResponder(textField)
-        }
 
         alert.addButton(
             withTitle: NSLocalizedString(
@@ -141,6 +138,7 @@ class OCRTextSearch {
         // Set "From Current" as the default button
         alert.window.defaultButtonCell = alert.buttons[1].cell as? NSButtonCell
 
+        showDialog(alert, focusing: textField)
         let response = alert.runModal()
 
         if response == .alertFirstButtonReturn {  // From Beginning

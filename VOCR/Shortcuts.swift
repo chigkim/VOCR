@@ -282,7 +282,7 @@ enum Shortcuts {
         testHotKey.keyDownHandler = {
             test()
         }
-        hotkeys.append(testHotKey)
+        // hotkeys.append(testHotKey)
 
     }
 
@@ -329,7 +329,7 @@ enum Shortcuts {
     }
 }
 
-func show() {
+func test2() {
     let alert = NSAlert()
     alert.messageText = "Test"
     alert.addButton(withTitle: "Ask")
@@ -386,10 +386,7 @@ func show() {
 
     alert.accessoryView = accessoryView
 
-    DispatchQueue.main.async {
-        alert.window.makeFirstResponder(inputTextView)
-    }
-
+    showDialog(alert, focusing: inputTextView)
     let response = alert.runModal()
     hide()
     if response == .alertFirstButtonReturn {
@@ -417,4 +414,3 @@ func test() {
     }
     hide()
 }
-

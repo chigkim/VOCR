@@ -377,16 +377,6 @@ enum StatusMenuController {
         }
 
         submenu.addItem(NSMenuItem.separator())
-        let presetManagerItem = NSMenuItem(
-            title: NSLocalizedString(
-                "menu.presetManager", value: "Preset Manager…",
-                comment: "Menu item for opening preset manager window"),
-            action: #selector(MenuHandler.openPresetManagerWindow(_:)),
-            keyEquivalent: ""
-        )
-        presetManagerItem.target = Settings.target
-        submenu.addItem(presetManagerItem)
-
         let editExplorePromptsItem = NSMenuItem(
             title: NSLocalizedString(
                 "menu.editExplorePrompts", value: "Edit Explore Prompts…",
@@ -396,6 +386,16 @@ enum StatusMenuController {
         )
         editExplorePromptsItem.target = Settings.target
         submenu.addItem(editExplorePromptsItem)
+
+        let presetManagerItem = NSMenuItem(
+            title: NSLocalizedString(
+                "menu.presetManager", value: "Preset Manager…",
+                comment: "Menu item for opening preset manager window"),
+            action: #selector(MenuHandler.openPresetManagerWindow(_:)),
+            keyEquivalent: ""
+        )
+        presetManagerItem.target = Settings.target
+        submenu.addItem(presetManagerItem)
 
     }
 

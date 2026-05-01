@@ -23,12 +23,27 @@ func hide() {
     }
 }
 
+func showDialog(_ alert: NSAlert, focusing firstResponder: NSResponder? = nil) {
+    let window = alert.window
+    window.level = .modalPanel
+    window.initialFirstResponder = firstResponder as? NSView
+
+    NSApp.unhide(nil)
+    NSApp.activate(ignoringOtherApps: true)
+    window.makeKeyAndOrderFront(nil)
+
+    if let firstResponder {
+        window.makeFirstResponder(firstResponder)
+    }
+}
+
 func alert(_ title: String, _ message: String) {
     DispatchQueue.main.async {
         let alert = NSAlert()
         alert.alertStyle = .informational
         alert.messageText = title
         alert.informativeText = message
+        showDialog(alert)
         alert.runModal()
         return
     }
@@ -100,10 +115,7 @@ func askPrompt(value: String) -> (prompt: String, followUp: Bool)? {
 
     alert.accessoryView = accessoryView
 
-    DispatchQueue.main.async {
-        alert.window.makeFirstResponder(inputTextView)
-    }
-
+    showDialog(alert, focusing: inputTextView)
     let response = alert.runModal()
     hide()
     if response == .alertFirstButtonReturn {
