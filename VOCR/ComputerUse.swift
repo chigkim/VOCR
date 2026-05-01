@@ -1427,19 +1427,13 @@ extension ComputerUseController {
             default:
                 decision = .cancel
             }
-            self.dismissComputerUseDialog(alert)
+            hide()
             semaphore.signal()
         }
 
         semaphore.wait()
         Thread.sleep(forTimeInterval: 0.1)
         return decision
-    }
-
-    private func dismissComputerUseDialog(_ alert: NSAlert) {
-        let alertWindow = alert.window
-        NSApplication.shared.hide(nil)
-        alertWindow.close()
     }
 
     private func moveMouse(to point: CGPoint) {
