@@ -137,7 +137,7 @@ final class ComputerUseRunner: ObservableObject {
         let config = APIConfig(apiKey: apiKey, model: model, baseURL: baseURL)
 
         let input = """
-            You are testing this macOS app window. Operate only controls visible in this app.
+            You are testing this app window. Operate only controls visible in this app.
             Log-producing controls include buttons, drag and drop, text entry, popup menu, radio buttons, checkbox, slider, table cells, menu commands, and shortcut capture.
             User task: \(prompt)
             """
@@ -182,6 +182,7 @@ final class ComputerUseRunner: ObservableObject {
         if cancelled {
             logger.log("Computer Use", "Cancelled")
             cancelled = false
+            logFinalUsage(logger: logger)
             logConversationJSON(logger: logger, status: "Cancelled")
             quitIfNeededAfterRun(delay: 0.5)
             return
@@ -191,11 +192,7 @@ final class ComputerUseRunner: ObservableObject {
             logger.log("Computer Use Final", message)
         }
 
-        let total = totalInputTokens + totalOutputTokens
-        logger.log(
-            "Computer Use API",
-            "Final Usage - Total: \(total) [input: \(totalInputTokens) (cached: \(totalCachedTokens)), output: \(totalOutputTokens)]"
-        )
+        logFinalUsage(logger: logger)
 
         logger.log("Computer Use", "Finished")
 
@@ -213,6 +210,7 @@ final class ComputerUseRunner: ObservableObject {
         if cancelled || (error as NSError).code == NSURLErrorCancelled {
             logger.log("Computer Use", "Cancelled")
             cancelled = false
+            logFinalUsage(logger: logger)
             logConversationJSON(logger: logger, status: "Cancelled")
             quitIfNeededAfterRun(delay: 0.5)
             return
@@ -220,17 +218,21 @@ final class ComputerUseRunner: ObservableObject {
 
         logger.log("Computer Use Error", "\(error)")
 
-        let total = totalInputTokens + totalOutputTokens
-        logger.log(
-            "Computer Use API",
-            "Final Usage - Total: \(total) [input: \(totalInputTokens) (cached: \(totalCachedTokens)), output: \(totalOutputTokens)]"
-        )
+        logFinalUsage(logger: logger)
 
         copyLogToClipboard(logger: logger, status: "Error: \(error)")
         logConversationJSON(logger: logger, status: "Error: \(error)")
 
         showError("\(error)")
         quitIfNeededAfterRun(delay: 0.7)
+    }
+
+    private func logFinalUsage(logger: ActionLogger) {
+        let total = totalInputTokens + totalOutputTokens
+        logger.log(
+            "Computer Use API",
+            "Final Usage - Total: \(total) [input: \(totalInputTokens) (cached: \(totalCachedTokens)), output: \(totalOutputTokens)]"
+        )
     }
 
     private func quitIfNeededAfterRun(delay: TimeInterval) {
@@ -1133,11 +1135,9 @@ extension ComputerUseRunner {
     }
 
     fileprivate func latestScreenshotMetadata(targetWidth: Int, targetHeight: Int) -> String {
-        let osName = "macOS \(ProcessInfo.processInfo.operatingSystemVersionString)"
         let target = frontmostWindowMetadata()
 
         return """
-            OS: \(osName)
             App: \(target.appName) \(target.appVersion)
             Window title: \(target.windowTitle)
             Window size: \(targetWidth)x\(targetHeight) points
@@ -1592,51 +1592,6 @@ extension AXUIElement {
         let error = AXUIElementCopyAttributeValue(self, attribute as CFString, &value)
         guard error == .success else {
             return ""
-        }
-
-        if let stringValue = value as? String {
-            return stringValue
-        }
-
-        return String(reflecting: value).trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-}
-
-extension ComputerUseRunner {
-    fileprivate func promptDialog(defaultValue: String) -> String? {
-        let alert = NSAlert()
-        alert.messageText = "Ask Computer Use"
-        alert.informativeText = "Enter a task for the built-in computer-use loop."
-        alert.addButton(withTitle: "Perform")
-        alert.addButton(withTitle: "Cancel")
-
-        let textField = NSTextField(frame: NSRect(x: 0, y: 0, width: 420, height: 24))
-        textField.stringValue = defaultValue
-        textField.placeholderString = "Example: click cell 13, type hello, then press Send"
-        alert.accessoryView = textField
-
-        DispatchQueue.main.async {
-            alert.window.makeFirstResponder(textField)
-        }
-
-        guard alert.runModal() == .alertFirstButtonReturn else {
-            return nil
-        }
-
-        return textField.stringValue
-    }
-
-    fileprivate func showError(_ message: String) {
-        DispatchQueue.main.async {
-            let alert = NSAlert()
-            alert.messageText = "Computer Use Error"
-            alert.informativeText = message
-            alert.addButton(withTitle: "OK")
-            alert.runModal()
-        }
-    }
-}
-  return ""
         }
 
         if let stringValue = value as? String {

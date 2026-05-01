@@ -12,6 +12,7 @@ General rules:
 - Every computer tool call must include `target`: a concise, distinct short label describing the visible UI target or immediate purpose of the action for logging.
 - Keep `target` brief, such as `Pause button`, `Name field`, `page to load`, or `refresh screen`. Do not include hidden reasoning or long explanations.
 - Observe the latest screenshot and verify the actions are performed before deciding next action.
+- If repeated attempts are not making progress, stop repeating the same actions and try a different workflow.
 - When sending multiple computer tool calls at once, order them exactly as they should be performed.
 - Use `screenshot` when you need an updated view.
 - Use `wait` after actions that may trigger loading, animation, navigation, or app updates.
@@ -21,7 +22,7 @@ General rules:
 - Use `drag` for sliders, selections, window movement, resizing, or drag-and-drop.
 - Use `scroll` when content is off-screen. Negative `scroll_y` scrolls up; positive `scroll_y` scrolls down. Negative `scroll_x` scrolls left; positive `scroll_x` scrolls right.
 - Use `keypress` for keyboard shortcuts and special keys, such as ENTER, ESC, TAB, CTRL+L, CTRL+C, CTRL+V, COMMAND+SPACE, or COMMAND+TAB.
-- Use `type` only when the intended text input already has keyboard focus. If needed, click the input field first, then type.
+- Before using`type`, make sure the intended text input already has keyboard focus. If needed, click the input field first, then type.
 - Use `cursor_position` only when the current pointer location matters.
 
 Mouse modifiers:

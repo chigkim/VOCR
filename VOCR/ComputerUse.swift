@@ -197,6 +197,7 @@ final class ComputerUseController {
         if actionLog.last != cancelMsg {
             actionLog.append(cancelMsg)
         }
+        appendFinalUsage()
         copyLogToClipboard(status: "Cancelled")
         logConversationJSON(status: "Cancelled")
     }
@@ -1125,11 +1126,9 @@ extension ComputerUseController {
     }
 
     private func latestScreenshotMetadata(targetWidth: Int, targetHeight: Int) -> String {
-        let osName = "macOS \(ProcessInfo.processInfo.operatingSystemVersionString)"
         let target = frontmostWindowMetadata()
 
         return """
-            OS: \(osName)
             App: \(target.appName) \(target.appVersion)
             Window title: \(target.windowTitle)
             Window size: \(targetWidth)x\(targetHeight) points
