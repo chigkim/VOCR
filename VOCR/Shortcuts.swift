@@ -23,91 +23,108 @@ enum Shortcuts {
     static var hotkeys: [HotKey] = []
     static var shortcuts: [Shortcut] = []
     static var navigationActive = false
+    static var computerUseActive = false
+
+    enum Scope {
+        case global
+        case navigation
+        case computerUse
+    }
+
     struct Definition {
         let id: String
         let defaultName: String
-        let isNavigation: Bool
+        let scope: Scope
         let comment: String
     }
 
     static let definitions: [Definition] = [
         Definition(
-            id: "shortcut.settings", defaultName: "Settings", isNavigation: false,
+            id: "shortcut.settings", defaultName: "Settings", scope: .global,
             comment: "Shortcut name for opening settings menu"),
         Definition(
-            id: "shortcut.ocr_window", defaultName: "OCR Window", isNavigation: false,
+            id: "shortcut.ocr_window", defaultName: "OCR Window", scope: .global,
             comment: "Shortcut name for OCR window capture"),
         Definition(
-            id: "shortcut.ocr_vocursor", defaultName: "OCR VOCursor", isNavigation: false,
+            id: "shortcut.ocr_vocursor", defaultName: "OCR VOCursor", scope: .global,
             comment: "Shortcut name for OCR at VoiceOver cursor"),
         Definition(
-            id: "shortcut.capture_camera", defaultName: "Capture Camera", isNavigation: false,
+            id: "shortcut.capture_camera", defaultName: "Capture Camera", scope: .global,
             comment: "Shortcut name for capturing from camera"),
         Definition(
-            id: "shortcut.realtime_ocr", defaultName: "Realtime OCR", isNavigation: false,
+            id: "shortcut.realtime_ocr", defaultName: "Realtime OCR", scope: .global,
             comment: "Shortcut name for starting/stopping realtime OCR"),
         Definition(
-            id: "shortcut.computer_use", defaultName: "Computer Use", isNavigation: false,
+            id: "shortcut.computer_use", defaultName: "Computer Use", scope: .global,
             comment: "Shortcut name for starting computer use"),
         Definition(
-            id: "shortcut.ask", defaultName: "Ask", isNavigation: false,
+            id: "shortcut.ask", defaultName: "Ask", scope: .global,
             comment: "Shortcut name for asking questions"),
         Definition(
-            id: "shortcut.explore", defaultName: "Explore", isNavigation: false,
+            id: "shortcut.explore", defaultName: "Explore", scope: .global,
             comment: "Shortcut name for exploring content"),
         Definition(
-            id: "shortcut.right", defaultName: "Right", isNavigation: true,
+            id: "shortcut.toggle_assistant_speech", defaultName: "Toggle Assistant Speech",
+            scope: .computerUse,
+            comment: "Shortcut name for toggling spoken assistant messages during computer use"),
+        Definition(
+            id: "shortcut.toggle_computer_use_pause",
+            defaultName: "Pause or Resume Computer Use", scope: .computerUse,
+            comment: "Shortcut name for pausing or resuming computer use"),
+        Definition(
+            id: "shortcut.right", defaultName: "Right", scope: .navigation,
             comment: "Shortcut name for moving right in navigation"),
         Definition(
-            id: "shortcut.left", defaultName: "Left", isNavigation: true,
+            id: "shortcut.left", defaultName: "Left", scope: .navigation,
             comment: "Shortcut name for moving left in navigation"),
         Definition(
-            id: "shortcut.down", defaultName: "Down", isNavigation: true,
+            id: "shortcut.down", defaultName: "Down", scope: .navigation,
             comment: "Shortcut name for moving down in navigation"),
         Definition(
-            id: "shortcut.up", defaultName: "Up", isNavigation: true,
+            id: "shortcut.up", defaultName: "Up", scope: .navigation,
             comment: "Shortcut name for moving up in navigation"),
         Definition(
-            id: "shortcut.beginning", defaultName: "Beginning", isNavigation: true,
+            id: "shortcut.beginning", defaultName: "Beginning", scope: .navigation,
             comment: "Shortcut name for jumping to beginning"),
         Definition(
-            id: "shortcut.end", defaultName: "End", isNavigation: true,
+            id: "shortcut.end", defaultName: "End", scope: .navigation,
             comment: "Shortcut name for jumping to end"),
         Definition(
-            id: "shortcut.top", defaultName: "Top", isNavigation: true,
+            id: "shortcut.top", defaultName: "Top", scope: .navigation,
             comment: "Shortcut name for jumping to top"),
         Definition(
-            id: "shortcut.bottom", defaultName: "Bottom", isNavigation: true,
+            id: "shortcut.bottom", defaultName: "Bottom", scope: .navigation,
             comment: "Shortcut name for jumping to bottom"),
         Definition(
-            id: "shortcut.next_character", defaultName: "Next Character", isNavigation: true,
+            id: "shortcut.next_character", defaultName: "Next Character", scope: .navigation,
             comment: "Shortcut name for moving to next character"),
         Definition(
             id: "shortcut.previous_character", defaultName: "Previous Character",
-            isNavigation: true, comment: "Shortcut name for moving to previous character"),
+            scope: .navigation, comment: "Shortcut name for moving to previous character"),
         Definition(
-            id: "shortcut.report_location", defaultName: "Report Location", isNavigation: true,
+            id: "shortcut.report_location", defaultName: "Report Location", scope: .navigation,
             comment: "Shortcut name for reporting current location"),
         Definition(
-            id: "shortcut.identify_object", defaultName: "Identify Object", isNavigation: true,
+            id: "shortcut.identify_object", defaultName: "Identify Object", scope: .navigation,
             comment: "Shortcut name for identifying object"),
         Definition(
-            id: "shortcut.find_text", defaultName: "Find Text", isNavigation: true,
+            id: "shortcut.find_text", defaultName: "Find Text", scope: .navigation,
             comment: "Shortcut name for finding text"),
         Definition(
-            id: "shortcut.find_next", defaultName: "Find Next", isNavigation: true,
+            id: "shortcut.find_next", defaultName: "Find Next", scope: .navigation,
             comment: "Shortcut name for finding next occurrence"),
         Definition(
-            id: "shortcut.find_previous", defaultName: "Find Previous", isNavigation: true,
+            id: "shortcut.find_previous", defaultName: "Find Previous", scope: .navigation,
             comment: "Shortcut name for finding previous occurrence"),
         Definition(
-            id: "shortcut.exit_navigation", defaultName: "Exit Navigation", isNavigation: true,
+            id: "shortcut.exit_navigation", defaultName: "Exit Navigation", scope: .navigation,
             comment: "Shortcut name for exiting navigation mode"),
     ]
 
-    static let globalShortcuts = definitions.filter { !$0.isNavigation }.map { $0.id }
-    static let navigationShortcuts = definitions.filter { $0.isNavigation }.map { $0.id }
-    static let allShortcuts = globalShortcuts + navigationShortcuts
+    static let globalShortcuts = definitions.filter { $0.scope == .global }.map { $0.id }
+    static let navigationShortcuts = definitions.filter { $0.scope == .navigation }.map { $0.id }
+    static let computerUseShortcuts = definitions.filter { $0.scope == .computerUse }.map { $0.id }
+    static let allShortcuts = globalShortcuts + navigationShortcuts + computerUseShortcuts
 
     static func SetupShortcuts() {
         handlers["shortcut.settings"] = settingsHandler
@@ -127,6 +144,9 @@ enum Shortcuts {
         }
         handlers["shortcut.realtime_ocr"] = realTimeHandler
         handlers["shortcut.computer_use"] = ComputerUseController.shared.showPrompt
+        handlers["shortcut.toggle_assistant_speech"] =
+            ComputerUseController.shared.toggleAssistantSpeech
+        handlers["shortcut.toggle_computer_use_pause"] = ComputerUseController.shared.togglePause
         handlers["shortcut.explore"] = Navigation.explore
         handlers["shortcut.ask"] = {
             ask()
@@ -264,6 +284,9 @@ enum Shortcuts {
         if navigationActive {
             register(names: navigationShortcuts)
         }
+        if computerUseActive {
+            register(names: computerUseShortcuts)
+        }
 
     }
 
@@ -303,6 +326,17 @@ enum Shortcuts {
     static func activateNavigationShortcuts() {
         navigationActive = true
         register(names: navigationShortcuts)
+    }
+
+    static func deactivateComputerUseShortcuts() {
+        computerUseActive = false
+        deregister(names: computerUseShortcuts)
+    }
+
+    static func activateComputerUseShortcuts() {
+        deregister(names: computerUseShortcuts)
+        computerUseActive = true
+        register(names: computerUseShortcuts)
     }
 
     static func settingsHandler() {

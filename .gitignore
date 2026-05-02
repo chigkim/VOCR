@@ -130,3 +130,4 @@ translations/it.csv
 # End of https://www.toptal.com/developers/gitignore/api/swift,macos
 
 .env
+UIChallenge/*.app/

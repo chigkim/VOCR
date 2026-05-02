@@ -1614,6 +1614,30 @@
         }
       }
     },
+    "computerUse.assistantSpeechOff" : {
+      "comment" : "Speech when assistant text messages are disabled",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Assistant speech off."
+          }
+        }
+      }
+    },
+    "computerUse.assistantSpeechOn" : {
+      "comment" : "Speech when assistant text messages are enabled",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Assistant speech on."
+          }
+        }
+      }
+    },
     "computerUse.cancelled" : {
       "comment" : "Speech when computer use is cancelled",
       "extractionState" : "extracted_with_value",
@@ -1718,6 +1742,54 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Could not access the frontmost window."
+          }
+        }
+      }
+    },
+    "computerUse.paused" : {
+      "comment" : "Speech when computer use is paused",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Computer use paused."
+          }
+        }
+      }
+    },
+    "computerUse.resumed" : {
+      "comment" : "Speech when computer use resumes",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Computer use resumed."
+          }
+        }
+      }
+    },
+    "computerUse.resumePrompt.defaultValue" : {
+      "comment" : "Default text in the prompt dialog when resuming paused computer use",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Resume the task."
+          }
+        }
+      }
+    },
+    "computerUse.riskyWords" : {
+      "comment" : "Comma-separated words and phrases that trigger computer use action approval",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "buy, purchase, pay, checkout, order, submit, send, post, share, upload, delete, remove, archive, sign in, login, password, credential, confirm, transfer, unsubscribe"
           }
         }
       }

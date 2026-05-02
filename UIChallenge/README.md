@@ -8,12 +8,6 @@ Build the app bundle:
 ./build-app.sh
 ```
 
-Install the app bundle into `~/Applications`:
-
-```sh
-./build-app.sh debug "$HOME/Applications"
-```
-
 Set your OpenAI credentials before launching from a shell:
 
 ```sh
@@ -66,7 +60,6 @@ Human debugging controls are in the Levels menu:
 
 - Restart from Level 1
 - Reset Current Level
-- Jump to a specific level
 - Show Validation Details in UI
 
 The on-screen Visible Log is model-facing and intentionally concise. Full validation failures and internal state are written with `debugPrint` in the console.

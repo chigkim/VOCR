@@ -48,6 +48,18 @@
 		"name": "shortcut.computer_use"
 	},
 	{
+		"keyName": "\u2303\u2318S",
+		"key": 1,
+		"modifiers": 4352,
+		"name": "shortcut.toggle_assistant_speech"
+	},
+	{
+		"keyName": "\u2303\u2318P",
+		"key": 35,
+		"modifiers": 4352,
+		"name": "shortcut.toggle_computer_use_pause"
+	},
+	{
 		"keyName": "\u2303\u2318\uf703",
 		"key": 124,
 		"modifiers": 4352,

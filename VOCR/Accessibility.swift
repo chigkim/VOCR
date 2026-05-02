@@ -98,6 +98,14 @@ enum Accessibility {
         }
     }
 
+    static func stopSpeaking() {
+        DispatchQueue.main.async {
+            speech.stopSpeaking()
+            speechDelegate.onFinish?()
+            speechDelegate.onFinish = nil
+        }
+    }
+
     static func isVoiceOverRunning() -> Bool {
         let runningApplications = NSWorkspace.shared.runningApplications
         for app in runningApplications {
