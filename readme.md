@@ -3,6 +3,7 @@
 VOCR is an OCR and AI-powered screen recognition tool for macOS, designed to help VoiceOver users navigate inaccessible interfaces and understand visual content. It integrates directly with VoiceOver, allowing for seamless navigation of recognized text and AI-driven image analysis.
 
 [![Youtube Demo: VOCR 2.0 for Mac w/Chi Kim](https://img.youtube.com/vi/_9EIYUPyXao/maxresdefault.jpg)](https://www.youtube.com/watch?v=_9EIYUPyXao)
+{% include youtube.html id="_9EIYUPyXao" %}    
 
 ---
 
