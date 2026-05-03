@@ -1680,10 +1680,11 @@ extension ComputerUseController {
             let down = CGEvent(keyboardEventSource: nil, virtualKey: 0, keyDown: true)
             down?.keyboardSetUnicodeString(stringLength: 1, unicodeString: &value)
             down?.post(tap: .cghidEventTap)
-
+            Thread.sleep(forTimeInterval: 0.05)
             let up = CGEvent(keyboardEventSource: nil, virtualKey: 0, keyDown: false)
             up?.keyboardSetUnicodeString(stringLength: 1, unicodeString: &value)
             up?.post(tap: .cghidEventTap)
+            Thread.sleep(forTimeInterval: 0.05)
         }
     }
 
