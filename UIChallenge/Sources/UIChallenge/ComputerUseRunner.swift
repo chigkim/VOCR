@@ -376,6 +376,7 @@ extension ComputerUseRunner {
         enum CodingKeys: String, CodingKey {
             case type
             case action
+            case confirm
             case target
             case x
             case y
@@ -394,7 +395,8 @@ extension ComputerUseRunner {
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             type =
-                try container.decodeIfPresent(String.self, forKey: .action)
+                try container.decodeIfPresent(String.self, forKey: .confirm)
+                ?? container.decodeIfPresent(String.self, forKey: .action)
                 ?? container.decode(String.self, forKey: .type)
             target = try container.decodeIfPresent(String.self, forKey: .target)
             x = try container.decodeIfPresent(Double.self, forKey: .x)

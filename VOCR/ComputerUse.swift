@@ -51,6 +51,7 @@ final class ComputerUseController {
     private var totalInputTokens = 0
     private var totalOutputTokens = 0
     private var totalCachedTokens = 0
+    private var preApprovedByModel = false
 
     private lazy var riskyWords: [String] = localizedRiskyWordsString
         .split(separator: ",")
@@ -480,6 +481,7 @@ extension ComputerUseController {
         enum CodingKeys: String, CodingKey {
             case type
             case action
+            case confirm
             case target
             case x
             case y
@@ -498,7 +500,8 @@ extension ComputerUseController {
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             type =
-                try container.decodeIfPresent(String.self, forKey: .action)
+                try container.decodeIfPresent(String.self, forKey: .confirm)
+                ?? container.decodeIfPresent(String.self, forKey: .action)
                 ?? container.decode(String.self, forKey: .type)
             target = try container.decodeIfPresent(String.self, forKey: .target)
             x = try Self.decodeIntegerIfPresent(container, forKey: .x)
@@ -825,6 +828,7 @@ extension ComputerUseController {
 
         log(turnMsg)
         actionLog.append(turnMsg)
+        preApprovedByModel = false
 
         let assistantMessages = responseMessages(response)
         for message in assistantMessages {
@@ -964,6 +968,17 @@ extension ComputerUseController {
         }
 
         do {
+            if action.type == "confirm" {
+                let decision = approve(action: action.target ?? "Confirm action?")
+                if decision == .approveOnce || decision == .approveAll {
+                    preApprovedByModel = true
+                    return formatCompactResult(
+                        action: action, status: "pass",
+                        valueOverride: "User approved: \(action.target ?? "")")
+                } else {
+                    throw ComputerUseError.cancelled
+                }
+            }
             try perform(action)
         } catch {
             if case .cancelled = error as? ComputerUseError {
@@ -1387,14 +1402,18 @@ extension ComputerUseController {
         actionLog.append(logDescription)
 
         if requiresApproval(logDescription) && !approveAllActionsForCurrentTask {
-            switch approve(action: logDescription) {
-            case .cancel:
-                abort()
-                throw ComputerUseError.cancelled
-            case .approveOnce:
-                break
-            case .approveAll:
-                approveAllActionsForCurrentTask = true
+            if preApprovedByModel {
+                preApprovedByModel = false
+            } else {
+                switch approve(action: logDescription) {
+                case .cancel:
+                    abort()
+                    throw ComputerUseError.cancelled
+                case .approveOnce:
+                    break
+                case .approveAll:
+                    approveAllActionsForCurrentTask = true
+                }
             }
         }
 

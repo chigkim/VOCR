@@ -12,6 +12,7 @@
             "enum": [
               "screenshot",
               "wait",
+              "confirm",
               "cursor_position",
               "move",
               "click",
