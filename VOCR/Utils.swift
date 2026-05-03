@@ -49,6 +49,70 @@ func alert(_ title: String, _ message: String) {
     }
 }
 
+enum DialogBuilder {
+    /// Builds a scrollable text-input accessory view for use with `NSAlert.accessoryView`.
+    /// `extraView` is appended below the text view (e.g., a checkbox); when non-nil, the
+    /// accessory grows by `extraViewHeight` to fit it.
+    static func textInput(
+        initialText: String,
+        width: CGFloat = 760,
+        height: CGFloat = 320,
+        extraView: NSView? = nil,
+        extraViewHeight: CGFloat = 28
+    ) -> (accessoryView: NSView, textView: NSTextView) {
+        let stackView = NSStackView()
+        stackView.orientation = .vertical
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        let promptSize = NSSize(width: width, height: height)
+        let scrollView = NSScrollView(frame: NSRect(origin: .zero, size: promptSize))
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.hasVerticalScroller = true
+        scrollView.hasHorizontalScroller = false
+        scrollView.borderType = .bezelBorder
+
+        let textView = NSTextView(frame: scrollView.bounds)
+        textView.isRichText = false
+        textView.isEditable = true
+        textView.isSelectable = true
+        textView.isHorizontallyResizable = false
+        textView.isVerticallyResizable = true
+        textView.autoresizingMask = [.width]
+        textView.minSize = NSSize(width: 0, height: promptSize.height)
+        textView.maxSize = NSSize(
+            width: CGFloat.greatestFiniteMagnitude,
+            height: CGFloat.greatestFiniteMagnitude)
+        textView.string = initialText
+        textView.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
+        textView.textContainer?.containerSize = NSSize(
+            width: promptSize.width, height: CGFloat.greatestFiniteMagnitude)
+        textView.textContainer?.widthTracksTextView = true
+
+        scrollView.documentView = textView
+        stackView.addArrangedSubview(scrollView)
+        if let extraView = extraView {
+            stackView.addArrangedSubview(extraView)
+        }
+
+        let totalHeight = promptSize.height + (extraView == nil ? 0 : extraViewHeight)
+        let accessoryView = NSView(
+            frame: NSRect(x: 0, y: 0, width: promptSize.width, height: totalHeight))
+        accessoryView.addSubview(stackView)
+        NSLayoutConstraint.activate([
+            accessoryView.widthAnchor.constraint(equalToConstant: promptSize.width),
+            accessoryView.heightAnchor.constraint(equalToConstant: totalHeight),
+            stackView.leadingAnchor.constraint(equalTo: accessoryView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: accessoryView.trailingAnchor),
+            stackView.topAnchor.constraint(equalTo: accessoryView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: accessoryView.bottomAnchor),
+            scrollView.widthAnchor.constraint(equalToConstant: promptSize.width),
+            scrollView.heightAnchor.constraint(equalToConstant: promptSize.height),
+        ])
+        return (accessoryView, textView)
+    }
+}
+
 func askPrompt(value: String) -> (prompt: String, followUp: Bool)? {
     let alert = NSAlert()
     alert.messageText = NSLocalizedString(
@@ -60,67 +124,20 @@ func askPrompt(value: String) -> (prompt: String, followUp: Bool)? {
         withTitle: NSLocalizedString(
             "button.cancel", value: "Cancel", comment: "Button title to cancel an action"))
 
-    let stackView = NSStackView()
-    stackView.orientation = .vertical
-    stackView.spacing = 8
-    stackView.translatesAutoresizingMaskIntoConstraints = false
-
-    let promptSize = NSSize(width: 760, height: 320)
-    let scrollView = NSScrollView(frame: NSRect(origin: .zero, size: promptSize))
-    scrollView.translatesAutoresizingMaskIntoConstraints = false
-    scrollView.hasVerticalScroller = true
-    scrollView.hasHorizontalScroller = false
-    scrollView.borderType = .bezelBorder
-
-    let inputTextView = NSTextView(frame: scrollView.bounds)
-    inputTextView.isRichText = false
-    inputTextView.isEditable = true
-    inputTextView.isSelectable = true
-    inputTextView.isHorizontallyResizable = false
-    inputTextView.isVerticallyResizable = true
-    inputTextView.autoresizingMask = [.width]
-    inputTextView.minSize = NSSize(width: 0, height: promptSize.height)
-    inputTextView.maxSize = NSSize(
-        width: CGFloat.greatestFiniteMagnitude,
-        height: CGFloat.greatestFiniteMagnitude)
-    inputTextView.string = value
-    inputTextView.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
-    inputTextView.textContainer?.containerSize = NSSize(
-        width: promptSize.width,
-        height: CGFloat.greatestFiniteMagnitude)
-    inputTextView.textContainer?.widthTracksTextView = true
-
-    scrollView.documentView = inputTextView
-    stackView.addArrangedSubview(scrollView)
-
-    // Checkbox
     let followUpButton = NSButton(
         checkboxWithTitle: NSLocalizedString(
             "dialog.followup.checkbox", value: "Follow up",
             comment: "Checkbox label for enabling follow-up mode"), target: nil, action: nil)
-    stackView.addArrangedSubview(followUpButton)
 
-    let accessoryView = NSView(frame: NSRect(x: 0, y: 0, width: promptSize.width, height: promptSize.height + 28))
-    accessoryView.addSubview(stackView)
-    NSLayoutConstraint.activate([
-        accessoryView.widthAnchor.constraint(equalToConstant: promptSize.width),
-        accessoryView.heightAnchor.constraint(equalToConstant: promptSize.height + 28),
-        stackView.leadingAnchor.constraint(equalTo: accessoryView.leadingAnchor),
-        stackView.trailingAnchor.constraint(equalTo: accessoryView.trailingAnchor),
-        stackView.topAnchor.constraint(equalTo: accessoryView.topAnchor),
-        stackView.bottomAnchor.constraint(equalTo: accessoryView.bottomAnchor),
-        scrollView.widthAnchor.constraint(equalToConstant: promptSize.width),
-        scrollView.heightAnchor.constraint(equalToConstant: promptSize.height),
-    ])
-
+    let (accessoryView, inputTextView) = DialogBuilder.textInput(
+        initialText: value, extraView: followUpButton)
     alert.accessoryView = accessoryView
 
     showDialog(alert, focusing: inputTextView)
     let response = alert.runModal()
     hide()
     if response == .alertFirstButtonReturn {
-        let prompt = inputTextView.string
-        return (prompt, followUpButton.state == .on)
+        return (inputTextView.string, followUpButton.state == .on)
     }
     return nil
 }
@@ -174,8 +191,9 @@ func ask(image: CGImage? = nil) {
     OpenAIAPI.describe(image: cgImage, system: system, prompt: prompt, followUp: followUp) {
         description in
         NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
-        sleep(1)
-        Accessibility.speak(description)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            Accessibility.speak(description)
+        }
     }
 }
 

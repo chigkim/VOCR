@@ -52,22 +52,13 @@ enum Navigation {
     static var w = -1
     static var c = -1
 
+    /// Bounding-box midY tolerance used when grouping observations into lines and sorting them.
+    private static let lineBreakTolerance = 0.01
+
     static func getWindow() -> CGRect? {
         let currentApp = NSWorkspace.shared.frontmostApplication
         appName = currentApp!.localizedName!
         let windows = currentApp?.windows()
-
-        /*
-         // filter main window.
-         windows = windows!.filter {
-         var ref:CFTypeRef?
-         AXUIElementCopyAttributeValue($0, "AXMain" as CFString, &ref)
-         if let value = ref as? Int, value == 1 {
-         return true
-         }
-         return false
-         }
-         */
 
         if windows!.isEmpty {
             return nil
@@ -123,13 +114,6 @@ enum Navigation {
         return nil
     }
 
-    static func setWindow() {
-        if let rect = getWindow() {
-            cgPosition = rect.origin
-            cgSize = rect.size
-        }
-    }
-
     static func getVOCursor() -> CGRect? {
         if let output = runAppleScript(file: "VOCursor") {
             let strings = output.split(separator: ",")
@@ -142,12 +126,6 @@ enum Navigation {
             return CGRect(origin: position, size: size)
         }
         return nil
-    }
-    static func setVOCursor() {
-        if let rect = getVOCursor() {
-            cgPosition = rect.origin
-            cgSize = rect.size
-        }
     }
 
     static func prepare() {
@@ -172,10 +150,10 @@ enum Navigation {
         displayResults = []
         Shortcuts.deactivateNavigationShortcuts()
         NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
-        if mode == .WINDOW {
-            setWindow()
-        } else {
-            setVOCursor()
+        let rect = (mode == .WINDOW) ? getWindow() : getVOCursor()
+        if let rect = rect {
+            cgPosition = rect.origin
+            cgSize = rect.size
         }
         if cgSize != CGSize() {
             if let image = ScreenCapture.capture(rect: CGRect(origin: cgPosition, size: cgSize)) {
@@ -237,14 +215,14 @@ enum Navigation {
             self.process(result)
             Shortcuts.activateNavigationShortcuts()
             NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
-            sleep(1)
-            Accessibility.speak(
-                String(
-                    format: NSLocalizedString(
-                        "navigation.finished_scanning", value: "Finished scanning %@, %@",
-                        comment: "Message when scanning is complete"), self.appName, self.windowName
-                ))
-
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                Accessibility.speak(
+                    String(
+                        format: NSLocalizedString(
+                            "navigation.finished_scanning", value: "Finished scanning %@, %@",
+                            comment: "Message when scanning is complete"), self.appName,
+                        self.windowName))
+            }
         } else {
             Accessibility.speakWithSynthesizer(
                 NSLocalizedString(
@@ -274,8 +252,7 @@ enum Navigation {
         var line: [Observation] = []
         var y = sorted[0].boundingBox.midY
         for r in sorted {
-            //			 log("\(r.value): \(r.boundingBox.debugDescription)")
-            if abs(r.boundingBox.midY - y) > 0.01 {
+            if abs(r.boundingBox.midY - y) > lineBreakTolerance {
                 displayResults.append(line)
                 line = []
                 y = r.boundingBox.midY
@@ -307,16 +284,12 @@ enum Navigation {
     }
 
     static func sort(_ a: Observation, _ b: Observation) -> Bool {
-        if a.boundingBox.midY - b.boundingBox.midY > 0.01 {
+        if a.boundingBox.midY - b.boundingBox.midY > lineBreakTolerance {
             return true
-        } else if b.boundingBox.midY - a.boundingBox.midY > 0.01 {
+        } else if b.boundingBox.midY - a.boundingBox.midY > lineBreakTolerance {
             return false
         }
-        if a.boundingBox.midX < b.boundingBox.midX {
-            return true
-        } else {
-            return false
-        }
+        return a.boundingBox.midX < b.boundingBox.midX
     }
 
     static func location() {
@@ -385,7 +358,6 @@ enum Navigation {
             CGWarpMouseCursorPosition(convert2coordinates(displayResults[l][w].boundingBox))
         }
         Accessibility.speak(displayResults[l][w].value)
-        //		 identifyObject()
     }
 
     static func down() {
@@ -481,16 +453,6 @@ enum Navigation {
                 var box: CGRect
                 try box = candidate.boundingBox(for: range)!.boundingBox
                 CGWarpMouseCursorPosition(convert2coordinates(box))
-
-                /*
-                 str = String(character)
-                 let u = str.unicodeScalars
-                 let uName = u[u.startIndex].properties.name!
-                 if !uName.contains("LETTER") {
-                 str = uName
-                 }
-                 */
-
                 Accessibility.speak(str)
             } catch {
             }
@@ -520,15 +482,6 @@ enum Navigation {
                 try box = candidate.boundingBox(for: range)!.boundingBox
 
                 CGWarpMouseCursorPosition(convert2coordinates(box))
-
-                /*
-                 str = String(character).description
-                 let u = str.unicodeScalars
-                 let uName = u[u.startIndex].properties.name!
-                 if !uName.contains("LETTER") {
-                 str = uName
-                 }
-                 */
                 Accessibility.speak(str)
             } catch {
             }

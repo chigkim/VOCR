@@ -17,6 +17,12 @@ private enum ComputerUseApprovalDecision {
     case approveAll
 }
 
+/// Tunables for ComputerUseController. Grouped so behavior knobs are discoverable in one place.
+private enum ComputerUseConfig {
+    /// Per-request HTTP timeout. Long-running tool-call turns can take minutes; this caps a single call.
+    static let apiTimeoutSeconds: TimeInterval = 600
+}
+
 final class ComputerUseController {
 
     static let shared = ComputerUseController()
@@ -46,12 +52,10 @@ final class ComputerUseController {
     private var totalOutputTokens = 0
     private var totalCachedTokens = 0
 
-    private var riskyWords: [String] {
-        localizedRiskyWordsString
-            .split(separator: ",")
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
-            .filter { !$0.isEmpty }
-    }
+    private lazy var riskyWords: [String] = localizedRiskyWordsString
+        .split(separator: ",")
+        .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
+        .filter { !$0.isEmpty }
 
     private var localizedRiskyWordsString: String {
         NSLocalizedString(
@@ -211,9 +215,6 @@ final class ComputerUseController {
 
         if let message = message, !message.isEmpty {
             textContext.append("Assistant: \(message)")
-            if textContext.count > 8 {
-                textContext.removeFirst(textContext.count - 8)
-            }
             copyToClipboard(message)
             if readAssistantSpeech {
                 Accessibility.speakWithSynthesizer(message)
@@ -338,9 +339,6 @@ final class ComputerUseController {
         }
 
         textContext.append("User: \(instruction)")
-        if textContext.count > 8 {
-            textContext.removeFirst(textContext.count - 8)
-        }
 
         paused = false
         pauseRequested = false
@@ -406,50 +404,7 @@ final class ComputerUseController {
             withTitle: NSLocalizedString(
                 "button.cancel", value: "Cancel", comment: "Button title to cancel an action"))
 
-        let stackView = NSStackView()
-        stackView.orientation = .vertical
-        stackView.spacing = 8
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-
-        let promptSize = NSSize(width: 760, height: 320)
-        let scrollView = NSScrollView(frame: NSRect(origin: .zero, size: promptSize))
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.hasVerticalScroller = true
-        scrollView.hasHorizontalScroller = false
-        scrollView.borderType = .bezelBorder
-
-        let inputTextView = NSTextView(frame: scrollView.bounds)
-        inputTextView.isRichText = false
-        inputTextView.isEditable = true
-        inputTextView.isSelectable = true
-        inputTextView.isHorizontallyResizable = false
-        inputTextView.isVerticallyResizable = true
-        inputTextView.autoresizingMask = [.width]
-        inputTextView.minSize = NSSize(width: 0, height: promptSize.height)
-        inputTextView.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
-        inputTextView.string = value
-        inputTextView.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
-        inputTextView.textContainer?.containerSize = NSSize(
-            width: promptSize.width,
-            height: CGFloat.greatestFiniteMagnitude)
-        inputTextView.textContainer?.widthTracksTextView = true
-
-        scrollView.documentView = inputTextView
-        stackView.addArrangedSubview(scrollView)
-
-        let accessoryView = NSView(frame: NSRect(x: 0, y: 0, width: promptSize.width, height: promptSize.height))
-        accessoryView.addSubview(stackView)
-        NSLayoutConstraint.activate([
-            accessoryView.widthAnchor.constraint(equalToConstant: promptSize.width),
-            accessoryView.heightAnchor.constraint(equalToConstant: promptSize.height),
-            stackView.leadingAnchor.constraint(equalTo: accessoryView.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: accessoryView.trailingAnchor),
-            stackView.topAnchor.constraint(equalTo: accessoryView.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: accessoryView.bottomAnchor),
-            scrollView.widthAnchor.constraint(equalToConstant: promptSize.width),
-            scrollView.heightAnchor.constraint(equalToConstant: promptSize.height),
-        ])
-
+        let (accessoryView, inputTextView) = DialogBuilder.textInput(initialText: value)
         alert.accessoryView = accessoryView
 
         showDialog(alert, focusing: inputTextView)
@@ -653,8 +608,10 @@ extension ComputerUseController {
     }
 
     private var systemInstruction: String? {
-        guard var instruction = loadBundledText(
-            name: "portable_computer_use_system_message", ext: "txt")
+        guard
+            let data = loadBundledData(
+                name: "portable_computer_use_system_message", ext: "txt"),
+            var instruction = String(data: data, encoding: .utf8)
         else {
             return nil
         }
@@ -765,7 +722,7 @@ extension ComputerUseController {
         let url = chatCompletionsURL(base)
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.timeoutInterval = 600
+        request.timeoutInterval = ComputerUseConfig.apiTimeoutSeconds
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(preset.apiKey)", forHTTPHeaderField: "Authorization")
 
@@ -1225,11 +1182,6 @@ extension ComputerUseController {
         }
 
         return payload
-    }
-
-    private func loadBundledText(name: String, ext: String) -> String? {
-        guard let data = loadBundledData(name: name, ext: ext) else { return nil }
-        return String(data: data, encoding: .utf8)
     }
 
     private func loadBundledData(name: String, ext: String) -> Data? {
