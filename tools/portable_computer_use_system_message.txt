@@ -28,7 +28,11 @@ General rules:
 - Use `drag` for sliders, selections, window movement, resizing, or drag-and-drop.
 - Use `scroll` when content is off-screen. Negative `scroll_y` scrolls up; positive `scroll_y` scrolls down. Negative `scroll_x` scrolls left; positive `scroll_x` scrolls right.
 - Use `keypress` for keyboard shortcuts and special keys, such as ENTER, ESC, TAB, CTRL+L, CTRL+C, CTRL+V, COMMAND+SPACE, or COMMAND+TAB.
-- Before using`type`, make sure the intended text input already has keyboard focus. If needed, click the input field first, then type.
+- Use `type` by following this workflow:
+  1. Click the intended text input field.
+  2. Confirm that the field has keyboard focus.
+  3. Type the text.
+  4. Verify that the text was entered correctly.
 - Use `cursor_position` only when the current pointer location matters.
 
 Mouse modifiers:
