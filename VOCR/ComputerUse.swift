@@ -40,7 +40,6 @@ final class ComputerUseController {
     private var hasLoggedConversationForCurrentTask = false
     private var hasAcceptedCriticalWarning = false
     private var currentPreset: ActivePreset?
-    private var readAssistantSpeech = true
     private var paused = false
     private var pauseRequested = false
     private var resumePromptOpen = false
@@ -105,14 +104,15 @@ final class ComputerUseController {
 
     func toggleAssistantSpeech() {
         guard running else { return }
-        readAssistantSpeech.toggle()
+        Settings.readAssistantSpeech.toggle()
+        Settings.save()
 
-        if !readAssistantSpeech {
+        if !Settings.readAssistantSpeech {
             Accessibility.stopSpeaking()
         }
 
         Accessibility.speak(
-            readAssistantSpeech
+            Settings.readAssistantSpeech
                 ? NSLocalizedString(
                     "computerUse.assistantSpeechOn", value: "Assistant speech on.",
                     comment: "Speech when assistant text messages are enabled")
@@ -216,7 +216,7 @@ final class ComputerUseController {
         if let message = message, !message.isEmpty {
             textContext.append("Assistant: \(message)")
             copyToClipboard(message)
-            if readAssistantSpeech {
+            if Settings.readAssistantSpeech {
                 Accessibility.speakWithSynthesizer(message)
             }
         }
@@ -852,9 +852,9 @@ extension ComputerUseController {
             return
         }
 
-        if readAssistantSpeech {
+        if Settings.readAssistantSpeech {
             for message in assistantMessages {
-                if !readAssistantSpeech || pauseRequested || cancelled {
+                if !Settings.readAssistantSpeech || pauseRequested || cancelled {
                     break
                 }
                 Accessibility.speakWithSynthesizerSynchronous(message)

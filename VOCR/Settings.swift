@@ -68,6 +68,7 @@ enum Settings {
     static var writeLog = false
     static var preRelease = false
     static var camera = "Unknown"
+    static var readAssistantSpeech = true
 
     static var allSettings: [(title: String, action: Selector, value: Bool)] {
         return [
@@ -128,6 +129,18 @@ enum Settings {
         ]
     }
 
+    static var computerUseSettings: [(title: String, action: Selector, value: Bool)] {
+        return [
+            (
+                NSLocalizedString(
+                    "menu.settings.computerUse.speakAssistantMessage",
+                    value: "Speak Assistant Message",
+                    comment: "Menu item for toggling assistant speech during computer use"),
+                #selector(MenuHandler.toggleSetting(_:)), readAssistantSpeech
+            )
+        ]
+    }
+
 }
 
 enum StatusMenuController {
@@ -151,6 +164,22 @@ enum StatusMenuController {
             menuItem.state = setting.value ? .on : .off
             settingsMenu.addItem(menuItem)
         }
+
+        let computerUseMenu = NSMenu()
+        for setting in Settings.computerUseSettings {
+            let menuItem = NSMenuItem(
+                title: setting.title, action: setting.action, keyEquivalent: "")
+            menuItem.target = Settings.target
+            menuItem.state = setting.value ? .on : .off
+            computerUseMenu.addItem(menuItem)
+        }
+        let computerUseMenuItem = NSMenuItem(
+            title: NSLocalizedString(
+                "menu.settings.computerUse", value: "Computer Use",
+                comment: "Menu item for computer use settings submenu"),
+            action: nil, keyEquivalent: "")
+        computerUseMenuItem.submenu = computerUseMenu
+        settingsMenu.addItem(computerUseMenuItem)
 
         if Settings.autoScan {
             Settings.installMouseMonitor()
@@ -442,6 +471,7 @@ extension Settings {
         Settings.usePresetPrompt = defaults.bool(forKey: "usePresetPrompt")
         Settings.targetWindow = defaults.bool(forKey: "targetWindow")
         Settings.preRelease = defaults.bool(forKey: "preRelease")
+        Settings.readAssistantSpeech = defaults.object(forKey: "readAssistantSpeech") as? Bool ?? true
         if let camera = defaults.string(forKey: "camera") {
             Settings.camera = camera
         }
@@ -463,6 +493,7 @@ extension Settings {
         defaults.set(Settings.preRelease, forKey: "preRelease")
         defaults.set(Settings.usePresetPrompt, forKey: "usePresetPrompt")
         defaults.set(Settings.targetWindow, forKey: "targetWindow")
+        defaults.set(Settings.readAssistantSpeech, forKey: "readAssistantSpeech")
         defaults.set(Settings.camera, forKey: "camera")
         defaults.set(Settings.exploreSystemPrompt, forKey: "exploreSystemPrompt")
         defaults.set(Settings.exploreUserPrompt, forKey: "exploreUserPrompt")
@@ -565,6 +596,11 @@ class MenuHandler: NSObject {
             "menu.downloadBetaRelease", value: "Download Beta Release",
             comment: "Menu item for enabling beta release version downloads"):
             Settings.preRelease = sender.state == .on
+        case NSLocalizedString(
+            "menu.settings.computerUse.speakAssistantMessage",
+            value: "Speak Assistant Message",
+            comment: "Menu item for toggling assistant speech during computer use"):
+            Settings.readAssistantSpeech = sender.state == .on
         case NSLocalizedString(
             "menu.autoCheckForUpdates", value: "Automatically Check for Updates",
             comment: "Menu item for enabling automatic update checks"):
