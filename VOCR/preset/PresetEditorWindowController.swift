@@ -225,8 +225,19 @@ final class PresetEditorWindowController: NSWindowController {
         modelMenu.item(at: 0)?.isHidden = true
         modelPickerPopUpButton.selectItem(at: 0)
 
-        // Configure URL field delegate to detect manual changes
+        // Accessibility labels for popup buttons
+        providerPopUpButton.setAccessibilityLabel(
+            NSLocalizedString(
+                "label.provider.accessibility", value: "Provider",
+                comment: "Accessibility label for provider popup button"))
+        modelPickerPopUpButton.setAccessibilityLabel(
+            NSLocalizedString(
+                "label.modelPicker.accessibility", value: "Model",
+                comment: "Accessibility label for model picker popup button"))
+
+        // Configure URL and model field delegates to detect manual changes
         urlField.delegate = self
+        modelField.delegate = self
 
         // Scroll text views
         setupScrollTextView(
@@ -458,6 +469,20 @@ final class PresetEditorWindowController: NSWindowController {
         systemPromptTextView.string = preset.systemPrompt
         promptTextView.string = preset.prompt
         apiKeyField.stringValue = ""
+
+        updateProviderAccessibilityValue()
+        updateModelAccessibilityValue()
+    }
+
+    private func updateProviderAccessibilityValue() {
+        let currentURL = urlField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        let match = ModelProvider.predefinedProviders.first(where: { $0.apiURL == currentURL })
+        providerPopUpButton.setAccessibilityValue(match?.name)
+    }
+
+    private func updateModelAccessibilityValue() {
+        let currentModel = modelField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        modelPickerPopUpButton.setAccessibilityValue(currentModel.isEmpty ? nil : currentModel)
     }
 
     private func populateDefaultPromptsForNewPreset() {
@@ -483,6 +508,7 @@ final class PresetEditorWindowController: NSWindowController {
 
         // Populate the URL field
         urlField.stringValue = selectedProvider.apiURL
+        updateProviderAccessibilityValue()
 
         // Reset the button's selection to the title item
         sender.selectItem(at: 0)
@@ -613,6 +639,7 @@ final class PresetEditorWindowController: NSWindowController {
             return
         }
         modelField.stringValue = sender.title
+        updateModelAccessibilityValue()
         modelPickerPopUpButton.selectItem(at: 0)
         modelPickerPopUpButton.title = NSLocalizedString(
             "preset.editor.model", value: "Model", comment: "Title for model picker popup button")
@@ -680,12 +707,15 @@ extension PresetEditorWindowController: NSTextFieldDelegate {
     func controlTextDidChange(_ obj: Notification) {
         guard let textField = obj.object as? NSTextField else { return }
 
-        // Only handle URL field changes
-        guard textField == urlField else { return }
-
-        // Clear provider selection when URL is manually edited
-        providerPopUpButton.selectItem(at: 0)
-        providerPopUpButton.title = NSLocalizedString(
-            "preset.editor.provider", value: "Provider", comment: "Title for provider popup button")
+        if textField == urlField {
+            // Clear provider selection when URL is manually edited
+            providerPopUpButton.selectItem(at: 0)
+            providerPopUpButton.title = NSLocalizedString(
+                "preset.editor.provider", value: "Provider",
+                comment: "Title for provider popup button")
+            updateProviderAccessibilityValue()
+        } else if textField == modelField {
+            updateModelAccessibilityValue()
+        }
     }
 }

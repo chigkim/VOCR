@@ -5147,6 +5147,18 @@
         }
       }
     },
+    "label.modelPicker.accessibility" : {
+      "comment" : "Accessibility label for model picker popup button",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Model"
+          }
+        }
+      }
+    },
     "label.name" : {
       "comment" : "Label for preset name field",
       "extractionState" : "manual",
@@ -5311,6 +5323,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "名称"
+          }
+        }
+      }
+    },
+    "label.provider.accessibility" : {
+      "comment" : "Accessibility label for provider popup button",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Provider"
           }
         }
       }
