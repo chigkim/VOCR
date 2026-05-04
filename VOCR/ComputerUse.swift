@@ -1646,6 +1646,23 @@ extension ComputerUseController {
     }
 
     private func typeText(_ text: String) {
+        // Paste via clipboard so VoiceOver passes the input through even when it hasn't
+        // entered typing mode on the field (e.g. Spotlight, which ignores CGEvent key presses
+        // after a programmatic click but accepts Cmd+V).
+        let pasteboard = NSPasteboard.general
+        let previous = pasteboard.string(forType: .string)
+        pasteboard.clearContents()
+        if pasteboard.setString(text, forType: .string) {
+            pressKeyCombination(["cmd", "v"])
+            Thread.sleep(forTimeInterval: 0.1)
+            pasteboard.clearContents()
+            if let previous {
+                pasteboard.setString(previous, forType: .string)
+            }
+            return
+        }
+
+        // Fallback: character-by-character CGEvent input
         for scalar in text.unicodeScalars {
             var value = UniChar(scalar.value)
             let down = CGEvent(keyboardEventSource: nil, virtualKey: 0, keyDown: true)
