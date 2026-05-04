@@ -969,8 +969,18 @@ extension ComputerUseController {
 
         do {
             if action.type == "confirm" {
+                if approveAllActionsForCurrentTask {
+                    preApprovedByModel = true
+                    return formatCompactResult(
+                        action: action, status: "pass",
+                        valueOverride: "User approved (auto): \(action.target ?? "")")
+                }
+
                 let decision = approve(action: action.target ?? "Confirm action?")
                 if decision == .approveOnce || decision == .approveAll {
+                    if decision == .approveAll {
+                        approveAllActionsForCurrentTask = true
+                    }
                     preApprovedByModel = true
                     return formatCompactResult(
                         action: action, status: "pass",
@@ -979,6 +989,7 @@ extension ComputerUseController {
                     throw ComputerUseError.cancelled
                 }
             }
+
             try perform(action)
         } catch {
             if case .cancelled = error as? ComputerUseError {
