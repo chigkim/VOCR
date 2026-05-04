@@ -7247,6 +7247,30 @@
         }
       }
     },
+    "menu.settings.aiInteraction" : {
+      "comment" : "Menu item for AI settings submenu",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "AI"
+          }
+        }
+      }
+    },
+    "menu.settings.aiInteraction.speakAssistantMessage" : {
+      "comment" : "Menu item for toggling assistant speech during AI",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Speak Assistant Message"
+          }
+        }
+      }
+    },
     "menu.settings.detectObjects" : {
       "comment" : "Menu item for enabling object detection",
       "extractionState" : "manual",
@@ -7579,6 +7603,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "移动鼠标"
+          }
+        }
+      }
+    },
+    "menu.settings.ocrNavigation" : {
+      "comment" : "Menu item for OCR settings submenu",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OCR"
           }
         }
       }

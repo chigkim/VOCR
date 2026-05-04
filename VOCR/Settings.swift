@@ -74,6 +74,23 @@ enum Settings {
         return [
             (
                 NSLocalizedString(
+                    "menu.settings.log", value: "Log",
+                    comment: "Menu item for enabling debug logging"),
+                #selector(MenuHandler.toggleLaunch(_:)), writeLog
+            ),
+            (
+                NSLocalizedString(
+                    "menu.settings.launchOnLogin", value: "Launch on Login",
+                    comment: "Menu item for launching VOCR on system startup"),
+                #selector(MenuHandler.toggleLaunch(_:)), launchOnBoot
+            ),
+        ]
+    }
+
+    static var ocrNavigationSettings: [(title: String, action: Selector, value: Bool)] {
+        return [
+            (
+                NSLocalizedString(
                     "menu.settings.targetWindow", value: "Target Window",
                     comment: "Menu item for selecting target window"),
                 #selector(MenuHandler.toggleSetting(_:)), targetWindow
@@ -89,12 +106,6 @@ enum Settings {
                     "menu.settings.detectObjects", value: "Detect Objects",
                     comment: "Menu item for enabling object detection"),
                 #selector(MenuHandler.toggleSetting(_:)), detectObject
-            ),
-            (
-                NSLocalizedString(
-                    "menu.settings.usePresetPrompt", value: "Use Preset Prompt",
-                    comment: "Menu item for using preset prompt with AI"),
-                #selector(MenuHandler.toggleSetting(_:)), usePresetPrompt
             ),
             (
                 NSLocalizedString(
@@ -114,30 +125,24 @@ enum Settings {
                     comment: "Menu item for moving mouse cursor during navigation"),
                 #selector(MenuHandler.toggleSetting(_:)), moveMouse
             ),
-            (
-                NSLocalizedString(
-                    "menu.settings.launchOnLogin", value: "Launch on Login",
-                    comment: "Menu item for launching VOCR on system startup"),
-                #selector(MenuHandler.toggleLaunch(_:)), launchOnBoot
-            ),
-            (
-                NSLocalizedString(
-                    "menu.settings.log", value: "Log",
-                    comment: "Menu item for enabling debug logging"),
-                #selector(MenuHandler.toggleLaunch(_:)), writeLog
-            ),
         ]
     }
 
-    static var computerUseSettings: [(title: String, action: Selector, value: Bool)] {
+    static var aiInteractionSettings: [(title: String, action: Selector, value: Bool)] {
         return [
             (
                 NSLocalizedString(
-                    "menu.settings.computerUse.speakAssistantMessage",
+                    "menu.settings.usePresetPrompt", value: "Use Preset Prompt",
+                    comment: "Menu item for using preset prompt with AI"),
+                #selector(MenuHandler.toggleSetting(_:)), usePresetPrompt
+            ),
+            (
+                NSLocalizedString(
+                    "menu.settings.aiInteraction.speakAssistantMessage",
                     value: "Speak Assistant Message",
-                    comment: "Menu item for toggling assistant speech during computer use"),
+                    comment: "Menu item for toggling assistant speech during AI"),
                 #selector(MenuHandler.toggleSetting(_:)), readAssistantSpeech
-            )
+            ),
         ]
     }
 
@@ -157,6 +162,84 @@ enum StatusMenuController {
         menu.addItem(presetsMenuItem)
 
         let settingsMenu = NSMenu()
+
+        let ocrNavigationMenu = NSMenu()
+        for setting in Settings.ocrNavigationSettings {
+            let menuItem = NSMenuItem(
+                title: setting.title, action: setting.action, keyEquivalent: "")
+            menuItem.target = Settings.target
+            menuItem.state = setting.value ? .on : .off
+            ocrNavigationMenu.addItem(menuItem)
+        }
+        let ocrNavigationMenuItem = NSMenuItem(
+            title: NSLocalizedString(
+                "menu.settings.ocrNavigation", value: "OCR",
+                comment: "Menu item for OCR settings submenu"),
+            action: nil, keyEquivalent: "")
+        ocrNavigationMenuItem.submenu = ocrNavigationMenu
+        settingsMenu.addItem(ocrNavigationMenuItem)
+
+        let aiInteractionMenu = NSMenu()
+        for setting in Settings.aiInteractionSettings {
+            let menuItem = NSMenuItem(
+                title: setting.title, action: setting.action, keyEquivalent: "")
+            menuItem.target = Settings.target
+            menuItem.state = setting.value ? .on : .off
+            aiInteractionMenu.addItem(menuItem)
+        }
+        let aiInteractionMenuItem = NSMenuItem(
+            title: NSLocalizedString(
+                "menu.settings.aiInteraction", value: "AI",
+                comment: "Menu item for AI settings submenu"),
+            action: nil, keyEquivalent: "")
+        aiInteractionMenuItem.submenu = aiInteractionMenu
+        settingsMenu.addItem(aiInteractionMenuItem)
+
+        let languageMenu = NSMenu()
+        let currentLanguage =
+            UserDefaults.standard.array(forKey: "AppleLanguages")?.first as? String
+
+        let systemItem = NSMenuItem(
+            title: NSLocalizedString(
+                "menu.language.system", value: "System Default", comment: "Use system language"),
+            action: #selector(MenuHandler.selectLanguage(_:)),
+            keyEquivalent: ""
+        )
+        systemItem.target = Settings.target
+        systemItem.representedObject = "system"
+        systemItem.state = (currentLanguage == nil) ? .on : .off
+        languageMenu.addItem(systemItem)
+        languageMenu.addItem(NSMenuItem.separator())
+
+        let availableLanguages = Bundle.main.localizations
+            .filter { $0 != "Base" }
+            .sorted { a, b in
+                let nameA = Locale(identifier: a).localizedString(forIdentifier: a) ?? a
+                let nameB = Locale(identifier: b).localizedString(forIdentifier: b) ?? b
+                return nameA.localizedCompare(nameB) == .orderedAscending
+            }
+        for code in availableLanguages {
+            let nativeName = Locale(identifier: code).localizedString(forIdentifier: code) ?? code
+            let item = NSMenuItem(
+                title: nativeName.prefix(1).uppercased() + nativeName.dropFirst(),
+                action: #selector(MenuHandler.selectLanguage(_:)),
+                keyEquivalent: ""
+            )
+            item.target = Settings.target
+            item.representedObject = code
+            item.state = (currentLanguage == code) ? .on : .off
+            languageMenu.addItem(item)
+        }
+
+        let languageMenuItem = NSMenuItem(
+            title: NSLocalizedString(
+                "menu.language", value: "Language",
+                comment: "Menu item for choosing display language"),
+            action: nil, keyEquivalent: ""
+        )
+        languageMenuItem.submenu = languageMenu
+        settingsMenu.addItem(languageMenuItem)
+
         for setting in Settings.allSettings {
             let menuItem = NSMenuItem(
                 title: setting.title, action: setting.action, keyEquivalent: "")
@@ -164,22 +247,6 @@ enum StatusMenuController {
             menuItem.state = setting.value ? .on : .off
             settingsMenu.addItem(menuItem)
         }
-
-        let computerUseMenu = NSMenu()
-        for setting in Settings.computerUseSettings {
-            let menuItem = NSMenuItem(
-                title: setting.title, action: setting.action, keyEquivalent: "")
-            menuItem.target = Settings.target
-            menuItem.state = setting.value ? .on : .off
-            computerUseMenu.addItem(menuItem)
-        }
-        let computerUseMenuItem = NSMenuItem(
-            title: NSLocalizedString(
-                "menu.settings.computerUse", value: "Computer Use",
-                comment: "Menu item for computer use settings submenu"),
-            action: nil, keyEquivalent: "")
-        computerUseMenuItem.submenu = computerUseMenu
-        settingsMenu.addItem(computerUseMenuItem)
 
         if Settings.autoScan {
             Settings.installMouseMonitor()
@@ -218,51 +285,6 @@ enum StatusMenuController {
             action: #selector(MenuHandler.addShortcut(_:)), keyEquivalent: "")
         newShortcutMenuItem.target = Settings.target
         //		settingsMenu.addItem(newShortcutMenuItem)
-
-        let languageMenu = NSMenu()
-        let currentLanguage =
-            UserDefaults.standard.array(forKey: "AppleLanguages")?.first as? String
-
-        let systemItem = NSMenuItem(
-            title: NSLocalizedString(
-                "menu.language.system", value: "System Default", comment: "Use system language"),
-            action: #selector(MenuHandler.selectLanguage(_:)),
-            keyEquivalent: ""
-        )
-        systemItem.target = Settings.target
-        systemItem.representedObject = "system"
-        systemItem.state = (currentLanguage == nil) ? .on : .off
-        languageMenu.addItem(systemItem)
-        languageMenu.addItem(NSMenuItem.separator())
-
-        let availableLanguages = Bundle.main.localizations
-            .filter { $0 != "Base" }
-            .sorted { a, b in
-                let nameA = Locale(identifier: a).localizedString(forIdentifier: a) ?? a
-                let nameB = Locale(identifier: b).localizedString(forIdentifier: b) ?? b
-                return nameA.localizedCompare(nameB) == .orderedAscending
-            }
-        for code in availableLanguages {
-            let nativeName = Locale(identifier: code).localizedString(forIdentifier: code) ?? code
-            let item = NSMenuItem(
-                title: nativeName.prefix(1).uppercased() + nativeName.dropFirst(),
-                    action: #selector(MenuHandler.selectLanguage(_:)),
-                    keyEquivalent: ""
-                )
-            item.target = Settings.target
-            item.representedObject = code
-            item.state = (currentLanguage == code) ? .on : .off
-            languageMenu.addItem(item)
-        }
-
-        let languageMenuItem = NSMenuItem(
-            title: NSLocalizedString(
-                "menu.language", value: "Language",
-                comment: "Menu item for choosing display language"),
-            action: nil, keyEquivalent: ""
-        )
-        languageMenuItem.submenu = languageMenu
-        settingsMenu.addItem(languageMenuItem)
 
         let permissionsMenuItem = NSMenuItem(
             title: NSLocalizedString(
@@ -597,9 +619,9 @@ class MenuHandler: NSObject {
             comment: "Menu item for enabling beta release version downloads"):
             Settings.preRelease = sender.state == .on
         case NSLocalizedString(
-            "menu.settings.computerUse.speakAssistantMessage",
+            "menu.settings.aiInteraction.speakAssistantMessage",
             value: "Speak Assistant Message",
-            comment: "Menu item for toggling assistant speech during computer use"):
+            comment: "Menu item for toggling assistant speech during AI"):
             Settings.readAssistantSpeech = sender.state == .on
         case NSLocalizedString(
             "menu.autoCheckForUpdates", value: "Automatically Check for Updates",
