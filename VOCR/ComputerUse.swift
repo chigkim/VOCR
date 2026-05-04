@@ -169,7 +169,6 @@ final class ComputerUseController {
         running = true
         cancelled = false
         currentPreset = preset
-        readAssistantSpeech = true
         paused = false
         pauseRequested = false
         resumePromptOpen = false
