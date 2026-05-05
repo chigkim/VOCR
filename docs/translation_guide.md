@@ -18,7 +18,7 @@ VOCR is an accessibility application for macOS that provides OCR and AI-powered 
 
 ### What Needs Translation
 
-- **~150 strings** including:
+- Strings include:
   - Menu items and settings
   - Dialog messages and alerts
   - Button labels
@@ -72,21 +72,36 @@ python3 translations/export.py       # Export all languages + template
 
 This creates CSV files in `translations/csv/`. Each CSV has these columns:
 
-| key | comment | en | translation |
-|-----|---------|-----|-------------|
-| app.ready | Message when app is ready | VOCR Ready! | VOCR prêt ! |
+| Column | Description |
+|--------|-------------|
+| `key` | String identifier — do not edit |
+| `comment` | Context about where the string is used — do not edit |
+| `en` | The English source string — do not edit |
+| `translation` | Your translated string — **edit this** |
+| `state` | Translation status — see below |
+
+#### Understanding the `state` Column
+
+The `state` column tracks the review status of each string. There are four possible values:
+
+* `new`: No translation exists.
+* `needs_review`: An AI translation exists but hasn't been verified by human.
+* `translated`: Translation has been reviewed and confirmed by a human.
+* `stale`: The string is no longer used in code.
+
+**When editing a CSV:**
+- Set `state` to `translated` if you are providing a new translation or revising/confirming AI translation.
+- Rows where `translation` are empty are skipped on import.
 
 #### 3. Edit the CSV
 
-Open the CSV in your spreadsheet app and edit the **translation** column. The **comment** and **en** columns give you context.
+Open the CSV in your spreadsheet app and fill in the **translation** column. The **comment** and **en** columns give you context. Rows are sorted by state (`new` first), so untranslated strings appear at the top.
 
 #### 4. Import Back
 
 ```bash
 python3 translations/import.py translations/csv/fr.csv
 ```
-
-The script creates a backup of the xcstrings files before making changes.
 
 ### Adding a New Language
 
@@ -106,7 +121,7 @@ See [ISO 639-1 Language Codes](https://www.loc.gov/standards/iso639-2/php/Englis
 
 #### 3. Fill In Translations
 
-Open the CSV and fill in the **translation** column. You don't need to translate every string at once — empty rows are skipped during import.
+Open the CSV and fill in the **translation** column and change the state column to translated. You don't need to translate every string at once — empty rows are skipped during import.
 
 #### 4. Import
 
@@ -306,23 +321,6 @@ Make sure your translation doesn't break functionality:
 - No missing translations (untranslated strings will show key names)
 
 ## Submitting Your Translation
-
-#### Option 1: Pull Request (Preferred)
-
-If you used the CSV workflow, import your CSV first, then submit:
-
-```bash
-python3 translations/import.py translations/csv/<language>.csv
-git checkout -b translation-<language>
-git commit -m "Add <Language> translation"
-git push origin translation-<language>
-```
-
-Then open a Pull Request on GitHub.
-
-#### Option 2: Send Your CSV
-
-If you don't have Git set up, you can submit your CSV file directly:
 
 1. Go to the VOCR GitHub repository
 2. Create a new Issue titled "[Language] Translation"

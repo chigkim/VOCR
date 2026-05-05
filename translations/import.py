@@ -102,21 +102,26 @@ def main():
         print("Import aborted. Fix the errors above and try again.", file=sys.stderr)
         sys.exit(1)
 
-    # Backup all files
-    for path in XCSTRINGS_FILES:
-        backup_path = path + ".backup"
-        shutil.copy2(path, backup_path)
-        print(f"Backup saved to {backup_path}")
-
     updated = 0
     skipped = 0
+    warned = 0
+    modified = set()
     for row in rows:
         key = row["key"]
         translation = row.get("translation", "").strip()
+        state = row.get("state", "").strip()
 
         if not translation:
             skipped += 1
             continue
+
+        if state == "stale":
+            print(f"Warning: skipping stale key '{key}' — string no longer exists in source code", file=sys.stderr)
+            warned += 1
+            continue
+
+        if state in ("new", ""):
+            state = "needs_review"
 
         path = key_to_file[key]
         entry = file_data[path]["strings"][key]
@@ -125,23 +130,23 @@ def main():
 
         entry["localizations"][lang_code] = {
             "stringUnit": {
-                "state": "translated",
+                "state": state,
                 "value": translation,
             }
         }
+        modified.add(path)
         updated += 1
 
-    # Save only modified files
-    modified = set()
-    for row in rows:
-        key = row["key"]
-        if key in key_to_file and row.get("translation", "").strip():
-            modified.add(key_to_file[key])
-
     for path in modified:
+        backup_path = path + ".backup"
+        shutil.copy2(path, backup_path)
+        print(f"Backup saved to {backup_path}")
         save_xcstrings(path, file_data[path])
 
-    print(f"Imported {updated} translations for '{lang_code}' ({skipped} skipped)")
+    parts = [f"Imported {updated} translations for '{lang_code}'", f"{skipped} skipped"]
+    if warned:
+        parts.append(f"{warned} stale skipped")
+    print(", ".join(parts))
 
 
 if __name__ == "__main__":
