@@ -173,7 +173,7 @@ final class PresetManager {
 
         let newPreset = Preset(
             id: UUID(),
-            name: src.name + " Copy",
+            name: src.name + NSLocalizedString("preset.duplicate_suffix", value: " Copy", comment: "Suffix added to duplicated preset name"),
             url: src.url,
             model: src.model,
             systemPrompt: src.systemPrompt,

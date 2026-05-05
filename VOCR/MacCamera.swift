@@ -55,11 +55,13 @@ class MacCamera: NSObject, AVCapturePhotoCaptureDelegate {
 
     func takePicture() {
         guard let device = getCamera() else {
-            Accessibility.speakWithSynthesizer("No camera available.")
+            Accessibility.speakWithSynthesizer(
+                NSLocalizedString("camera.error.no_camera", value: "No camera available.", comment: "Error message when no camera is found"))
             return
         }
         deviceName = device.localizedName
-        Accessibility.speak("Using \(deviceName)")
+        Accessibility.speak(
+            String(format: NSLocalizedString("camera.using_camera", value: "Using %@", comment: "Speech message indicating which camera is being used"), deviceName))
         captureSession = AVCaptureSession()
         captureSession.sessionPreset = AVCaptureSession.Preset.photo
         cameraOutput = AVCapturePhotoOutput()
@@ -112,11 +114,11 @@ class MacCamera: NSObject, AVCapturePhotoCaptureDelegate {
 
                 // Present menu to the user
                 let alert = NSAlert()
-                alert.messageText = "Choose an action"
-                alert.addButton(withTitle: "Recognize Image")
-                alert.addButton(withTitle: "Recognize image with LLM")
-                alert.addButton(withTitle: "Recognize text in image")
-                alert.addButton(withTitle: "Close")
+                alert.messageText = NSLocalizedString("camera.action_menu.title", value: "Choose an action", comment: "Title for camera action selection dialog")
+                alert.addButton(withTitle: NSLocalizedString("camera.action.recognize_image", value: "Recognize Image", comment: "Button to classify image using Vision"))
+                alert.addButton(withTitle: NSLocalizedString("camera.action.recognize_llm", value: "Recognize image with LLM", comment: "Button to describe image using AI"))
+                alert.addButton(withTitle: NSLocalizedString("camera.action.recognize_text", value: "Recognize text in image", comment: "Button to perform OCR on image"))
+                alert.addButton(withTitle: NSLocalizedString("button.close", value: "Close", comment: "Close button title"))
                 alert.window.defaultButtonCell = alert.buttons[0].cell as? NSButtonCell
                 let response = alert.runModal()
 
@@ -139,11 +141,11 @@ class MacCamera: NSObject, AVCapturePhotoCaptureDelegate {
                     Navigation.startOCR()
                     if Navigation.displayResults.isEmpty {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            Accessibility.speak("Nothing found!")
+                            Accessibility.speak(NSLocalizedString("camera.status.nothing_found", value: "Nothing found!", comment: "Speech message when no text is found in camera image"))
                         }
                     } else {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            Accessibility.speak("Recognition finished.")
+                            Accessibility.speak(NSLocalizedString("camera.status.finished", value: "Recognition finished.", comment: "Speech message when camera OCR is complete"))
                             NSSound(
                                 contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true
                             )?.play()
