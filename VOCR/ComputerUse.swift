@@ -77,12 +77,12 @@ final class ComputerUseController {
             return
         }
 
-        guard let prompt = promptDialog(value: lastPrompt) else {
+        guard let result = promptDialog(value: lastPrompt) else {
             return
         }
 
-        lastPrompt = prompt
-        start(prompt: prompt)
+        lastPrompt = result.prompt
+        start(prompt: result.prompt, approveAll: result.approveAll)
     }
 
     func abort() {
@@ -139,7 +139,7 @@ final class ComputerUseController {
                 comment: "Speech when computer use is paused"))
     }
 
-    private func start(prompt: String) {
+    private func start(prompt: String, approveAll: Bool = false) {
         guard let preset = PresetManager.shared.activePreset() else {
             Accessibility.speakWithSynthesizer(
                 NSLocalizedString(
@@ -174,7 +174,7 @@ final class ComputerUseController {
         resumePromptOpen = false
         pendingInitialInput = nil
         currentTurn = 1
-        approveAllActionsForCurrentTask = false
+        approveAllActionsForCurrentTask = approveAll
         hasAnnouncedAIRequestForCurrentTask = false
         conversationMessages = []
         hasLoggedConversationForCurrentTask = false
@@ -327,13 +327,13 @@ final class ComputerUseController {
         let defaultResumePrompt = NSLocalizedString(
             "computerUse.resumePrompt.defaultValue", value: "Resume the task.",
             comment: "Default text in the prompt dialog when resuming paused computer use")
-        guard let request = promptDialog(value: defaultResumePrompt) else {
+        guard let result = promptDialog(value: defaultResumePrompt) else {
             resumePromptOpen = false
             return
         }
         resumePromptOpen = false
 
-        let instruction = request.trimmingCharacters(in: .whitespacesAndNewlines)
+        let instruction = result.prompt.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !instruction.isEmpty else {
             return
         }
@@ -392,7 +392,7 @@ final class ComputerUseController {
         return false
     }
 
-    private func promptDialog(value: String) -> String? {
+    private func promptDialog(value: String) -> (prompt: String, approveAll: Bool)? {
         let alert = NSAlert()
         alert.messageText = NSLocalizedString(
             "computerUse.dialog.title", value: "Computer Use",
@@ -404,7 +404,14 @@ final class ComputerUseController {
             withTitle: NSLocalizedString(
                 "button.cancel", value: "Cancel", comment: "Button title to cancel an action"))
 
-        let (accessoryView, inputTextView) = DialogBuilder.textInput(initialText: value)
+        let approveAllButton = NSButton(
+            checkboxWithTitle: NSLocalizedString(
+                "dialog.approveAll.checkbox", value: "Approve all",
+                comment: "Checkbox label for pre-approving all computer use actions"),
+            target: nil, action: nil)
+
+        let (accessoryView, inputTextView) = DialogBuilder.textInput(
+            initialText: value, extraView: approveAllButton)
         alert.accessoryView = accessoryView
 
         showDialog(alert, focusing: inputTextView)
@@ -415,7 +422,7 @@ final class ComputerUseController {
             return nil
         }
 
-        return inputTextView.string
+        return (inputTextView.string, approveAllButton.state == .on)
     }
 }
 
