@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Import translations from a CSV file back into xcstrings files."""
 
+import argparse
 import csv
 import json
 import os
@@ -68,39 +69,21 @@ def validate(rows, key_to_file, file_data):
     return errors
 
 
-def main():
-    if len(sys.argv) < 2:
-        print("Usage: python3 import.py <csv_file>", file=sys.stderr)
-        sys.exit(1)
-
-    csv_path = sys.argv[1]
-    if not os.path.exists(csv_path):
-        print(f"Error: File not found: {csv_path}", file=sys.stderr)
-        sys.exit(1)
-
+def import_csv(csv_path, file_data, key_to_file):
+    """Import a single CSV file. Returns (updated, skipped, warned) counts."""
     lang_code = os.path.splitext(os.path.basename(csv_path))[0]
 
     with open(csv_path, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         rows = list(reader)
 
-    # Load all xcstrings files and build key-to-file mapping
-    file_data = {}
-    key_to_file = {}
-    for path in XCSTRINGS_FILES:
-        data = load_xcstrings(path)
-        file_data[path] = data
-        for key in data["strings"]:
-            key_to_file[key] = path
-
-    # Validate before making any changes
     errors = validate(rows, key_to_file, file_data)
     if errors:
-        print("Validation errors found:\n", file=sys.stderr)
+        print(f"Validation errors in {csv_path}:\n", file=sys.stderr)
         for error in errors:
             print(f"  {error}\n", file=sys.stderr)
-        print("Import aborted. Fix the errors above and try again.", file=sys.stderr)
-        sys.exit(1)
+        print("Skipping this file. Fix the errors above and try again.", file=sys.stderr)
+        return 0, 0, 0, set()
 
     updated = 0
     skipped = 0
@@ -137,16 +120,60 @@ def main():
         modified.add(path)
         updated += 1
 
-    for path in modified:
-        backup_path = path + ".backup"
-        shutil.copy2(path, backup_path)
-        print(f"Backup saved to {backup_path}")
-        save_xcstrings(path, file_data[path])
-
     parts = [f"Imported {updated} translations for '{lang_code}'", f"{skipped} skipped"]
     if warned:
         parts.append(f"{warned} stale skipped")
     print(", ".join(parts))
+
+    return updated, skipped, warned, modified
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Import translations from a CSV file (or folder of CSVs) into xcstrings files.",
+    )
+    parser.add_argument(
+        "path",
+        metavar="csv_file_or_folder",
+        help="A single .csv file or a folder containing .csv files. "
+             "Each file must be named <language_code>.csv (e.g. fr.csv).",
+    )
+    args = parser.parse_args()
+
+    path_arg = args.path
+    if not os.path.exists(path_arg):
+        parser.error(f"Not found: {path_arg}")
+
+    if os.path.isdir(path_arg):
+        csv_files = sorted(
+            os.path.join(path_arg, f)
+            for f in os.listdir(path_arg)
+            if f.endswith(".csv")
+        )
+        if not csv_files:
+            parser.error(f"No CSV files found in {path_arg}")
+    else:
+        csv_files = [path_arg]
+
+    # Load all xcstrings files once and share across imports
+    file_data = {}
+    key_to_file = {}
+    for xcpath in XCSTRINGS_FILES:
+        data = load_xcstrings(xcpath)
+        file_data[xcpath] = data
+        for key in data["strings"]:
+            key_to_file[key] = xcpath
+
+    all_modified = set()
+    for csv_path in csv_files:
+        _, _, _, modified = import_csv(csv_path, file_data, key_to_file)
+        all_modified |= modified
+
+    for xcpath in all_modified:
+        backup_path = xcpath + ".backup"
+        shutil.copy2(xcpath, backup_path)
+        print(f"Backup saved to {backup_path}")
+        save_xcstrings(xcpath, file_data[xcpath])
 
 
 if __name__ == "__main__":

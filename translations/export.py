@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Export translations from xcstrings files to CSV."""
 
+import argparse
 import csv
 import json
 import os
@@ -94,10 +95,24 @@ def print_breakdown(breakdown):
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description="Export translations from xcstrings files to CSV. "
+                    "With no arguments, exports all languages plus a blank template.",
+    )
+    parser.add_argument(
+        "language",
+        nargs="?",
+        metavar="language_code",
+        help="Export a single language (e.g. fr, ja). "
+             "Use 'template' to export a blank template for new translators. "
+             "Omit to export all languages.",
+    )
+    args = parser.parse_args()
+
     strings = load_all_strings()
 
-    if len(sys.argv) > 1:
-        lang_code = sys.argv[1]
+    if args.language:
+        lang_code = args.language
         counts = export_language(strings, lang_code)
         if lang_code != "template":
             print_breakdown({lang_code: counts})
@@ -110,7 +125,7 @@ def main():
         for lang_code in get_all_languages(strings):
             breakdown[lang_code] = export_language(strings, lang_code)
         export_language(strings, "template")
-        print(f"Exported csv/template.csv")
+        print("Exported csv/template.csv")
         print_breakdown(breakdown)
 
 
