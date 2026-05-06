@@ -16,6 +16,72 @@
             "state" : "translated",
             "value" : "VOCR"
           }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR"
+          }
         }
       }
     },
@@ -286,6 +352,72 @@
             "state" : "translated",
             "value" : "Copyright © 2019 Chi Kim. Alle rettigheter forbeholdt."
           }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Copyright © 2019 Chi Kim. Alle Rechte vorbehalten."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Copyright © 2019 Chi Kim. Todos los derechos reservados."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Copyright © 2019 Chi Kim. Tous droits réservés."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Copyright © 2019 Chi Kim. Tutti i diritti riservati."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Copyright © 2019 Chi Kim. All rights reserved."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Copyright © 2019 Chi Kim. All rights reserved."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Copyright © 2019 Chi Kim. Wszelkie prawa zastrzeżone."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Copyright © 2019 Chi Kim. Todos os direitos reservados."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Copyright © 2019 Chi Kim. Все права защищены."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Copyright © 2019 Chi Kim. Усі права захищені."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Copyright © 2019 Chi Kim. 保留所有权利。"
+          }
         }
       }
     },
@@ -303,6 +435,72 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "VOCR trenger å ta skjermopptakfor å utføre OCR og hente ut tekst fra vinduer og apper."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR muss Ihren Bildschirminhalt erfassen, um OCR durchzuführen und Text aus Fenstern und Anwendungen zu extrahieren."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR necesita capturar el contenido de su pantalla para realizar OCR y extraer texto de ventanas y aplicaciones."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR doit capturer le contenu de votre écran pour effectuer l'OCR et extraire le texte des fenêtres et des applications."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR deve catturare il contenuto dello schermo per eseguire l'OCR ed estrarre il testo da finestre e applicazioni."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCRは、OCRを実行し、ウィンドウやアプリケーションからテキストを抽出するために、画面コンテンツをキャプチャする必要があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR은 OCR을 수행하고 창 및 응용 프로그램에서 텍스트를 추출하기 위해 화면 콘텐츠를 캡처해야 합니다."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR musi przechwytywać zawartość ekranu, aby wykonywać OCR i wyodrębniać tekst z okien i aplikacji."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O VOCR precisa capturar o conteúdo do seu ecrã para realizar o OCR e extrair texto de janelas e aplicações."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR необходимо захватывать содержимое экрана для выполнения OCR и извлечения текста из окон и приложений."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR потрібно захоплювати вміст вашого екрана для виконання OCR та вилучення тексту з вікон і програм."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR 需要捕获您的屏幕内容以执行 OCR 并从窗口和应用程序中提取文本。"
           }
         }
       }
