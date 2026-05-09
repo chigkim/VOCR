@@ -63,6 +63,7 @@ VOCR can communicate with any platform compatible with the OpenAI Chat Completio
 - **Camera Capture (`Cmd + Shift + Control + C`):** Take a photo with your webcam and analyze it with AI.
 - **Start/Stop Computer Use (`Cmd + Shift + Control + U`):** Let AI control apps using mouse and keyboard commands to perform a task.
 - **Pause/Resume Computer Use (`Cmd + Control + P`):** Only available during computer use.
+- **Toggle Speak Assistant Message:** Command+Control+S (Only Available during Computer Use)
 
 To manage models and API keys, go to the **VOCR Menu > Presets > Preset Manager**.
 
