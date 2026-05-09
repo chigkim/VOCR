@@ -6,7 +6,7 @@ VOCR is an OCR and AI-powered screen recognition tool for macOS, designed to hel
 
 ### OCR
 
-[![Youtube Demo: VOCR 1.0 for Mac w/Chi Kim](https://img.youtube.com/vi/_9EIYUPyXao/maxresdefault.jpg)](https://www.youtube.com/watch?v=_9EIYUPyXao)
+[![Youtube Demo: VOCR 2.0 for Mac w/Chi Kim](https://img.youtube.com/vi/_9EIYUPyXao/maxresdefault.jpg)](https://www.youtube.com/watch?v=_9EIYUPyXao)
 {% include youtube.html id="_9EIYUPyXao" %}    
 
 ### Computer Use
@@ -25,7 +25,7 @@ VOCR is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
 ## Download
 
-Get the latest version here: [VOCR v3.0.0-beta.3](https://github.com/chigkim/VOCR/releases/download/v3.0.0-beta.3/VOCR_v3.0.0-beta.3.zip).
+Get the latest version here: [VOCR v3.0.0-beta.4](https://github.com/chigkim/VOCR/releases/download/v3.0.0-beta.4/VOCR_v3.0.0-beta.4.zip).
 
 ---
 
