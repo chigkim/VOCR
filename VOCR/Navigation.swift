@@ -63,8 +63,7 @@ enum Navigation {
         if windows!.isEmpty {
             return nil
         }
-        var window = windows![0]
-
+        var window = currentApp?.focusedWindow() ?? windows![0]
         if Settings.targetWindow && windows!.count > 1 {
             let alert = NSAlert()
             alert.alertStyle = .informational

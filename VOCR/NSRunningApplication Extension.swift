@@ -15,4 +15,22 @@ extension NSRunningApplication {
         AXUIElementCopyAttributeValue(appRef, "AXWindows" as CFString, &windowList)
         return windowList as? [AXUIElement] ?? []
     }
+
+    func focusedWindow() -> AXUIElement? {
+        let appRef = AXUIElementCreateApplication(self.processIdentifier)
+        var focusedWindow: CFTypeRef?
+        let result = AXUIElementCopyAttributeValue(
+            appRef,
+            "AXFocusedWindow" as CFString,
+            &focusedWindow
+        )
+        guard result == .success else {
+            return nil
+        }
+        guard let focusedWindow else {
+            return nil
+        }
+        let window = focusedWindow as! AXUIElement
+        return window
+    }
 }
