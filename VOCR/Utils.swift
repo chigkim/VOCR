@@ -292,12 +292,13 @@ enum VisionOCR {
         return request.results ?? []
     }
 
-    static func observations(in cgImage: CGImage, detectObjects: Bool) -> [Observation] {
+    static func observations(in cgImage: CGImage, detectObjects: Bool) -> (observations: [Observation], qrCodes: [String]) {
         let textRecognitionRequest = textRecognitionRequest()
         let rectDetectRequest = rectangleDetectionRequest()
+        let barcodeRequest = VNDetectBarcodesRequest()
         let requests: [VNRequest] = detectObjects
-            ? [textRecognitionRequest, rectDetectRequest]
-            : [textRecognitionRequest]
+            ? [textRecognitionRequest, rectDetectRequest, barcodeRequest]
+            : [textRecognitionRequest, barcodeRequest]
 
         let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
         do {
@@ -306,13 +307,22 @@ enum VisionOCR {
             log("OCR failed: \(error)")
         }
 
+        var qrCodes: [String] = []
+        if let barcodes = barcodeRequest.results {
+            for barcode in barcodes {
+                if let payload = barcode.payloadStringValue {
+                    qrCodes.append(payload)
+                }
+            }
+        }
+
         guard let texts = textRecognitionRequest.results else {
-            return []
+            return ([], qrCodes)
         }
 
         var result = texts.map { Observation($0) }
         guard detectObjects, let boxes = rectDetectRequest.results else {
-            return result
+            return (result, qrCodes)
         }
 
         var boxesNoText: [Observation] = []
@@ -338,7 +348,7 @@ enum VisionOCR {
         log("Text Count: \(texts.count)")
         log("boxesNoText Count: \(boxesNoText.count)")
         log("boxesText count: \(boxesText.count)")
-        return result
+        return (result, qrCodes)
     }
 
     private static func textRecognitionRequest() -> VNRecognizeTextRequest {

@@ -119,6 +119,9 @@ enum Shortcuts {
         Definition(
             id: "shortcut.exit_navigation", defaultName: "Exit Navigation", scope: .navigation,
             comment: "Shortcut name for exiting navigation mode"),
+        Definition(
+            id: "shortcut.view_qrcodes", defaultName: "View QR Codes", scope: .global,
+            comment: "Shortcut name for viewing detected QR codes"),
     ]
 
     static let globalShortcuts = definitions.filter { $0.scope == .global }.map { $0.id }
@@ -128,6 +131,7 @@ enum Shortcuts {
 
     static func SetupShortcuts() {
         handlers["shortcut.settings"] = settingsHandler
+        handlers["shortcut.view_qrcodes"] = QRCodeDialogController.shared.show
         handlers["shortcut.ocr_window"] = {
             Navigation.mode = .WINDOW
             Navigation.startOCR()
