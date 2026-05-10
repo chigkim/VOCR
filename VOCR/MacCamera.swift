@@ -139,13 +139,8 @@ class MacCamera: NSObject, AVCapturePhotoCaptureDelegate {
                     Navigation.displayResults = []
                     Navigation.cgImage = cgImage
                     Navigation.startOCR()
-                    if Navigation.displayResults.isEmpty {
+                    if !Navigation.displayResults.isEmpty || !Navigation.detectedQRCodes.isEmpty {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            Accessibility.speak(NSLocalizedString("camera.status.nothing_found", value: "Nothing found!", comment: "Speech message when no text is found in camera image"))
-                        }
-                    } else {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            Accessibility.speak(NSLocalizedString("camera.status.finished", value: "Recognition finished.", comment: "Speech message when camera OCR is complete"))
                             NSSound(
                                 contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true
                             )?.play()

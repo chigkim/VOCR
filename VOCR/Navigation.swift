@@ -184,11 +184,21 @@ enum Navigation {
         guard let image = cgImage else { return }
         let result = VisionOCR.observations(in: image, detectObjects: Settings.detectObject)
         detectedQRCodes = result.qrCodes
+        let qrCodeDetected = !detectedQRCodes.isEmpty
         if result.observations.count == 0 {
-            Accessibility.speak(
-                NSLocalizedString(
-                    "navigation.nothing_found", value: "Nothing found",
-                    comment: "Message when no text is found during OCR"))
+            if qrCodeDetected {
+                var announcement = NSLocalizedString(
+                    "navigation.finished_scanning_qrcode_detected", value: "Finished scanning",
+                    comment: "Message when scanning is complete and a QR code was found")
+                announcement += ".\n" + qrCodeAnnouncement()
+                Accessibility.speak(announcement)
+                Shortcuts.activateNavigationShortcuts()
+            } else {
+                Accessibility.speak(
+                    NSLocalizedString(
+                        "navigation.nothing_found", value: "Nothing found",
+                        comment: "Message when no text is found during OCR"))
+            }
             return
         }
         process(result.observations)
@@ -196,15 +206,29 @@ enum Navigation {
             format: NSLocalizedString(
                 "navigation.finished_scanning", value: "Finished scanning %@, %@",
                 comment: "Message when scanning is complete"), appName, windowName)
-        if !detectedQRCodes.isEmpty {
-            let qrCodeMessage = String(
-                format: NSLocalizedString(
-                    "navigation.qrcodes_detected", value: "%d QR code(s) detected. Press Control+Shift+Command+Q to view.",
-                    comment: "Message when QR codes are detected"), detectedQRCodes.count)
-            announcement += " " + qrCodeMessage
+        if qrCodeDetected {
+            announcement += ".\n" + qrCodeAnnouncement()
         }
         Accessibility.speak(announcement)
         Shortcuts.activateNavigationShortcuts()
+    }
+
+    private static func qrCodeAnnouncement() -> String {
+        let shortcutKeyName = Shortcuts.spokenKeyName(for: "shortcut.view_qrcodes")
+            ?? "Control Shift Command Q"
+        let qrCodeCount = detectedQRCodes.count
+        let qrCodeCountPhrase = qrCodeCount == 1
+            ? NSLocalizedString(
+                "navigation.qrcode_count_singular", value: "1 QR code",
+                comment: "Singular QR code count phrase")
+            : String(
+                format: NSLocalizedString(
+                    "navigation.qrcode_count_plural", value: "%d QR codes",
+                    comment: "Plural QR code count phrase"), qrCodeCount)
+        return String(
+            format: NSLocalizedString(
+                "navigation.qrcodes_detected", value: "%@ detected. Press %@ to view.",
+                comment: "Message when QR codes are detected"), qrCodeCountPhrase, shortcutKeyName)
     }
 
     static func explore() {

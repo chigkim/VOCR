@@ -120,7 +120,7 @@ enum Shortcuts {
             id: "shortcut.exit_navigation", defaultName: "Exit Navigation", scope: .navigation,
             comment: "Shortcut name for exiting navigation mode"),
         Definition(
-            id: "shortcut.view_qrcodes", defaultName: "View QR Codes", scope: .global,
+            id: "shortcut.view_qrcodes", defaultName: "View QR Codes", scope: .navigation,
             comment: "Shortcut name for viewing detected QR codes"),
     ]
 
@@ -262,6 +262,60 @@ enum Shortcuts {
             return userShortcuts
         }
         return nil
+    }
+
+    static func keyName(for id: String) -> String? {
+        return shortcuts.first { $0.name == id }?.keyName
+    }
+
+    static func spokenKeyName(for id: String) -> String? {
+        guard let keyName = keyName(for: id) else {
+            return nil
+        }
+        return spokenKeyName(keyName)
+    }
+
+    private static func spokenKeyName(_ keyName: String) -> String {
+        var parts: [String] = []
+        for character in keyName {
+            switch character {
+            case "⌘":
+                parts.append("Command")
+            case "⌃":
+                parts.append("Control")
+            case "⌥":
+                parts.append("Option")
+            case "⇧":
+                parts.append("Shift")
+            case "\u{F700}":
+                parts.append("Up Arrow")
+            case "\u{F701}":
+                parts.append("Down Arrow")
+            case "\u{F702}":
+                parts.append("Left Arrow")
+            case "\u{F703}":
+                parts.append("Right Arrow")
+            case "\u{F729}":
+                parts.append("Home")
+            case "\u{F72B}":
+                parts.append("End")
+            case "\u{F72C}":
+                parts.append("Page Up")
+            case "\u{F72D}":
+                parts.append("Page Down")
+            case "\u{1B}":
+                parts.append("Escape")
+            case "\t":
+                parts.append("Tab")
+            case "\r":
+                parts.append("Return")
+            case " ":
+                parts.append("Space")
+            default:
+                parts.append(String(character).uppercased())
+            }
+        }
+        return parts.joined(separator: " ")
     }
 
     static func loadShortcuts() {

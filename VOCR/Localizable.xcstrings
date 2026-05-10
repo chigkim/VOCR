@@ -2294,7 +2294,7 @@
     },
     "camera.status.finished" : {
       "comment" : "Speech message when camera OCR is complete",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2378,7 +2378,7 @@
     },
     "camera.status.nothing_found" : {
       "comment" : "Speech message when no text is found in camera image",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12455,6 +12455,18 @@
         }
       }
     },
+    "navigation.finished_scanning_qrcode_detected" : {
+      "comment" : "Message when scanning is complete and a QR code was found",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Finished scanning"
+          }
+        }
+      }
+    },
     "navigation.no_qrcodes" : {
       "comment" : "Message when no QR codes are found",
       "extractionState" : "extracted_with_value",
@@ -12551,6 +12563,30 @@
         }
       }
     },
+    "navigation.qrcode_count_plural" : {
+      "comment" : "Plural QR code count phrase",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%d QR codes"
+          }
+        }
+      }
+    },
+    "navigation.qrcode_count_singular" : {
+      "comment" : "Singular QR code count phrase",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "1 QR code"
+          }
+        }
+      }
+    },
     "navigation.qrcodes_detected" : {
       "comment" : "Message when QR codes are detected",
       "extractionState" : "extracted_with_value",
@@ -12558,7 +12594,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%d QR code(s) detected. Press Control+Shift+Command+Q to view."
+            "value" : "%1$@ detected. Press %2$@ to view."
           }
         }
       }
