@@ -1,3 +1,11 @@
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "markdown",
+#     "requests",
+# ]
+# ///
+
 import argparse
 import getpass
 import json
@@ -7,9 +15,12 @@ import shlex
 import shutil
 import subprocess
 import sys
+import tempfile
+import time
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+import markdown
 import requests
 
 
@@ -21,6 +32,7 @@ GENERATE_APPCAST = Path(
 	"~/Library/Developer/Xcode/DerivedData/VOCR-gjsqmtcgzvvuvfcpuxtfgxerxtyc/"
 	"SourcePackages/artifacts/sparkle/Sparkle/bin/generate_appcast"
 ).expanduser()
+TRANSIENT_GITHUB_STATUS_CODES = {403, 404, 409, 422, 429, 500, 502, 503, 504}
 
 
 def run(cmd):
@@ -42,11 +54,40 @@ def github_headers(token, content_type="application/json"):
 	}
 
 
-def github_request(method, url, token, **kwargs):
-	response = requests.request(method, url, headers=github_headers(token), **kwargs)
-	if not response.ok:
-		sys.exit(f"GitHub API request failed: {response_json(response)}")
-	return response
+def retry_delay(response, attempt):
+	retry_after = response.headers.get("Retry-After")
+	if retry_after:
+		try:
+			return max(1, int(retry_after))
+		except ValueError:
+			pass
+	return min(2**attempt, 10)
+
+
+def github_request(method, url, token, retries=0, retry_statuses=None, **kwargs):
+	if retry_statuses is None:
+		retry_statuses = set()
+
+	for attempt in range(retries + 1):
+		response = requests.request(method, url, headers=github_headers(token), **kwargs)
+		if response.ok:
+			return response
+
+		if attempt < retries and response.status_code in retry_statuses:
+			delay = retry_delay(response, attempt)
+			print(
+				f"GitHub API {method} {url} failed with {response.status_code}; "
+				f"retrying in {delay}s..."
+			)
+			time.sleep(delay)
+			continue
+
+		sys.exit(
+			f"GitHub API {method} {url} failed "
+			f"({response.status_code} {response.reason}): {response_json(response)}"
+		)
+
+	raise RuntimeError("unreachable")
 
 
 def normalize_tag(tag):
@@ -157,17 +198,21 @@ def archives_release_note_path(tag):
 
 
 def render_release_note(changelog, note):
-	run(["pandoc", "-s", str(changelog), "-o", str(note)])
+	md = changelog.read_text()
+	html = markdown.markdown(md, extensions=["extra", "codehilite", "toc"])
+	note.write_text(html)
 	return note
-
-
-def render_docs_release_note(changelog, tag):
-	return render_release_note(changelog, docs_release_note_path(tag))
 
 
 def get_release_by_tag(token, tag):
 	url = f"https://api.github.com/repos/{OWNER}/{REPO}/releases/tags/{tag}"
-	response = github_request("GET", url, token)
+	response = github_request(
+		"GET",
+		url,
+		token,
+		retries=3,
+		retry_statuses=TRANSIENT_GITHUB_STATUS_CODES,
+	)
 	return response.json()
 
 
@@ -190,7 +235,14 @@ def update_github_release(token, tag, release_body):
 	release = get_release_by_tag(token, tag)
 	url = f"https://api.github.com/repos/{OWNER}/{REPO}/releases/{release['id']}"
 	data = {"body": release_body}
-	github_request("PATCH", url, token, json=data)
+	github_request(
+		"PATCH",
+		url,
+		token,
+		json=data,
+		retries=3,
+		retry_statuses=TRANSIENT_GITHUB_STATUS_CODES,
+	)
 	print("GitHub release notes updated successfully!")
 	return release
 
@@ -311,8 +363,13 @@ def update_release_notes(args):
 	print("Release:", release_name(tag))
 
 	token = get_token(args)
-	note = render_docs_release_note(changelog, tag)
-	update_github_release(token, tag, release_body)
+	note = docs_release_note_path(tag)
+	with tempfile.TemporaryDirectory() as temp_dir:
+		temp_note = Path(temp_dir) / note.name
+		render_release_note(changelog, temp_note)
+		update_github_release(token, tag, release_body)
+		shutil.move(temp_note, note)
+
 	commit_docs(tag, args.no_commit)
 	print(f"Docs release notes updated: {note}")
 	print("Done!")
