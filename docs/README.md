@@ -2,8 +2,16 @@
 
 VOCR is an OCR and AI-powered screen recognition tool for macOS, designed to help VoiceOver users navigate inaccessible interfaces and understand visual content. It integrates directly with VoiceOver, allowing for seamless navigation of recognized text and AI-driven image analysis.
 
+## Demo
+
+### OCR
+
 [![Youtube Demo: VOCR 2.0 for Mac w/Chi Kim](https://img.youtube.com/vi/_9EIYUPyXao/maxresdefault.jpg)](https://www.youtube.com/watch?v=_9EIYUPyXao)
 {% include youtube.html id="_9EIYUPyXao" %}    
+
+### Computer Use
+
+Check out the [demo for Computer Use](https://github.com/user-attachments/assets/c465d6e8-236c-4a93-980b-ef237f5c87ef) where I put VOCR through a series of different UI tasks.
 
 ---
 
@@ -45,13 +53,21 @@ To ensure VOCR works properly, follow these steps in order:
 - **Real-Time OCR (`Cmd + Shift + Control + R`):** Continuously monitors the screen and reports new content, such as live subtitles.
 
 ### AI Integration
-VOCR supports several AI models (Claude, Gemini, OpenAI, and local Ollama) via a flexible **Preset** system.
+
+VOCR can communicate with any platform compatible with the OpenAI Chat Completion API. Examples include Claude, Gemini, OpenAI, OpenRouter, and local engines such as Ollama and Llama.cpp.
 
 - **Ask AI (`Cmd + Shift + Control + A`):** Ask a question about the last scan or an image file in Finder.
 - **Explore with AI (`Cmd + Shift + Control + E`):** Analyzes the image to identify and describe different layout areas.
 - **Camera Capture (`Cmd + Shift + Control + C`):** Take a photo with your webcam and analyze it with AI.
+- **Start/Stop Computer Use (`Cmd + Shift + Control + U`):** Let AI control apps using mouse and keyboard commands to perform a task.
+- **Pause/Resume Computer Use (`Cmd + Control + P`):** Only available during computer use.
+- **Toggle Speak Assistant Message:** Command+Control+S (Only Available during Computer Use)
 
 To manage models and API keys, go to the **VOCR Menu > Presets > Preset Manager**.
+
+When the task is completed, the token usage and trace log will be copied to the clipboard.
+
+If you notice Computer Use enters a loop while attempting the same task, either cancel the task or pause and resume it with a different instruction.
 
 ---
 
@@ -82,9 +98,11 @@ To manage models and API keys, go to the **VOCR Menu > Presets > Preset Manager*
 ## Settings
 
 Access the VOCR Menu with `Cmd + Control + Shift + S` to customize:
-- **Autoscan:** Automatically scan after clicking an item.
-- **Detect Object:** Locate icons and objects without text.
-- **Positional Audio:** Audio feedback that maps mouse location to sound frequency and panning.
+- **OCR > Autoscan:** Automatically scan after clicking an item.
+- **OCR > Detect Object:** Locate icons and objects without text.
+- **OCR > Positional Audio:** Audio feedback that maps mouse location to sound frequency and panning.
+- **AI > Use Preset Prompt:** Use the prompt from the selected preset without opening the Ask AI dialog.
+- **AI > Speak Assistant Message:** To hear more detail from the assistant during Computer Use.
 - **Launch on Login:** Automatically start VOCR when you log in.
 
 ---
@@ -101,8 +119,9 @@ Access the VOCR Menu with `Cmd + Control + Shift + S` to customize:
   Alternatively, you can manually reset via terminal:
   ```bash
   tccutil reset All com.chikim.VOCR
+  sudo tccutil reset All com.chikim.VOCR
   ```
-- **Local AI:** If using Ollama, ensure you have pulled a vision model first: `ollama pull qwen3-vl`.
+- **Local AI:** If using Ollama, ensure you have pulled a vision model first: `ollama pull qwen3.5`.
 
 ---
 Enjoy using VOCR!

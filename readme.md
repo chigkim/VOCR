@@ -11,9 +11,7 @@ VOCR is an OCR and AI-powered screen recognition tool for macOS, designed to hel
 
 ### Computer Use
 
-Please click **Unmute** on the player in order to hear the speech in the video.
-
-https://github.com/user-attachments/assets/c465d6e8-236c-4a93-980b-ef237f5c87ef
+Check out the [demo for Computer Use](https://github.com/user-attachments/assets/c465d6e8-236c-4a93-980b-ef237f5c87ef) where I put VOCR through a series of different UI tasks.
 
 ---
 
@@ -66,6 +64,8 @@ VOCR can communicate with any platform compatible with the OpenAI Chat Completio
 - **Toggle Speak Assistant Message:** Command+Control+S (Only Available during Computer Use)
 
 To manage models and API keys, go to the **VOCR Menu > Presets > Preset Manager**.
+
+When the task is completed, the token usage and trace log will be copied to the clipboard.
 
 If you notice Computer Use enters a loop while attempting the same task, either cancel the task or pause and resume it with a different instruction.
 
