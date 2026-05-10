@@ -29,6 +29,13 @@ final class ComputerUseRunner: ObservableObject {
     ) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             self.lastPrompt = prompt
+            // First attempt: never quit on failure so the retry below can fire.
+            self.start(prompt: prompt, logger: logger, quitWhenDone: false)
+        }
+        // Retry once: the first attempt sets accessibilityRequested = true,
+        // allowing this attempt to bypass the stale TCC cache check.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 12.0) {
+            guard !self.isRunning else { return }
             self.start(prompt: prompt, logger: logger, quitWhenDone: quitWhenDone)
         }
     }

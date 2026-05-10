@@ -8,6 +8,7 @@ struct UIChallengeApp: App {
     @StateObject private var computerUse = ComputerUseRunner()
     @StateObject private var levels = LevelController()
     private let launchPrompt = LaunchArguments.prompt
+    private let launchLevel = LaunchArguments.level
 
     var body: some Scene {
         WindowGroup("UI Challenge") {
@@ -19,6 +20,9 @@ struct UIChallengeApp: App {
                     NSApp.activate(ignoringOtherApps: true)
 
                     logger.log("App", "App launched and activated")
+                    if let launchLevel {
+                        levels.jump(to: launchLevel, logger: logger)
+                    }
                     if let launchPrompt {
                         logger.log("Computer Use", "Launch prompt queued: \(launchPrompt)")
                         computerUse.startAfterWindowAppears(
@@ -120,15 +124,25 @@ struct UIChallengeApp: App {
 
 enum LaunchArguments {
     static var prompt: String? {
-        let arguments = CommandLine.arguments
-        guard let index = arguments.firstIndex(of: "--prompt") else {
-            return nil
+        stringValue(for: "--prompt")
+    }
+
+    static var level: LevelID? {
+        guard let raw = stringValue(for: "--level") else { return nil }
+        if let number = Int(raw) {
+            return LevelID(rawValue: number - 1)
         }
-        let valueIndex = arguments.index(after: index)
-        guard valueIndex < arguments.endIndex else {
-            return nil
+        return LevelID.allCases.first {
+            $0.title.lowercased() == raw.lowercased()
         }
-        return arguments[valueIndex]
+    }
+
+    private static func stringValue(for flag: String) -> String? {
+        let args = CommandLine.arguments
+        guard let index = args.firstIndex(of: flag) else { return nil }
+        let next = args.index(after: index)
+        guard next < args.endIndex else { return nil }
+        return args[next]
     }
 }
 
@@ -149,6 +163,22 @@ final class ActionLogger: ObservableObject {
         return formatter
     }()
 
+    private let logFileURL: URL = {
+        let dir = FileManager.default.temporaryDirectory
+        return dir.appendingPathComponent("UIChallenge.log")
+    }()
+
+    private func writeToFile(_ line: String) {
+        let data = (line + "\n").data(using: .utf8) ?? Data()
+        if let handle = try? FileHandle(forWritingTo: logFileURL) {
+            handle.seekToEndOfFile()
+            handle.write(data)
+            try? handle.close()
+        } else {
+            try? data.write(to: logFileURL)
+        }
+    }
+
     func log(_ category: String, _ message: String) {
         let timestamp = formatter.string(from: Date())
         let entry = Entry(
@@ -156,6 +186,7 @@ final class ActionLogger: ObservableObject {
             category: category,
             message: message
         )
+        let line = "[\(entry.timestamp)] \(category): \(message)"
 
         DispatchQueue.main.async {
             self.entries.insert(entry, at: 0)
@@ -167,12 +198,15 @@ final class ActionLogger: ObservableObject {
                 self.entries.map { "[\($0.timestamp)] \($0.category): \($0.message)" }.joined(
                     separator: "\n") + (self.entries.isEmpty ? "" : "\n")
         }
-        debugPrint("[\(entry.timestamp)] \(category): \(message)")
+        writeToFile(line)
+        debugPrint(line)
     }
 
     func developerLog(_ category: String, _ message: String) {
         let timestamp = formatter.string(from: Date())
-        debugPrint("[\(timestamp)] \(category): \(message)")
+        let line = "[\(timestamp)] \(category): \(message)"
+        writeToFile(line)
+        debugPrint(line)
     }
 
     func clear() {
@@ -195,6 +229,7 @@ enum LevelID: Int, CaseIterable, Identifiable {
     case scrollTask
     case pointerTask
     case stress
+    case analogClock
     case summary
 
     var id: Int { rawValue }
@@ -214,6 +249,7 @@ enum LevelID: Int, CaseIterable, Identifiable {
         case .scrollTask: return "Scroll"
         case .pointerTask: return "Pointer Actions"
         case .stress: return "Stress"
+        case .analogClock: return "Analog Clock"
         case .summary: return "Results Summary"
         }
     }
@@ -250,6 +286,8 @@ enum LevelID: Int, CaseIterable, Identifiable {
         case .stress:
             return
                 "Set the popup to Delta, type final check in the small field, select cell 24, enable Ready, click the lower Confirm button, then click Next."
+        case .analogClock:
+            return "Drag each hand to set the clock to 9:00:15, then click Next."
         case .summary:
             return "Review your overall performance in the UI Challenge."
         }
@@ -288,6 +326,9 @@ final class LevelController: ObservableObject {
     @Published var stressCell: Int? { didSet { updateResults() } }
     @Published var stressReady = false { didSet { updateResults() } }
     @Published var stressLowerConfirmClicked = false { didSet { updateResults() } }
+    @Published var clockHour: Int = 3 { didSet { updateResults() } }
+    @Published var clockMinute: Int = 30 { didSet { updateResults() } }
+    @Published var clockSecond: Int = 45 { didSet { updateResults() } }
 
     init() {
         updateResults()
@@ -387,6 +428,7 @@ final class LevelController: ObservableObject {
         case .scrollTask: scrollTargetClicked = false
         case .pointerTask: dropReceived = false; dropIsTargeted = false
         case .stress: stressPopup = "Alpha"; stressText = ""; stressCell = nil; stressReady = false; stressLowerConfirmClicked = false
+        case .analogClock: clockHour = 3; clockMinute = 30; clockSecond = 45
         case .summary: break
         }
         updateResults()
@@ -406,6 +448,7 @@ final class LevelController: ObservableObject {
         case .scrollTask: return ["Target 18 clicked"]
         case .pointerTask: return ["Drag and drop complete"]
         case .stress: return ["Popup Delta", "Text 'final check'", "Cell 24", "Ready enabled", "Lower Confirm clicked"]
+        case .analogClock: return ["Hour is 9", "Minute is 0", "Second is 15"]
         case .summary: return []
         }
     }
@@ -449,6 +492,10 @@ final class LevelController: ObservableObject {
             if requirement.contains("Cell") { return stressCell == 24 }
             if requirement.contains("Ready") { return stressReady }
             return stressLowerConfirmClicked
+        case .analogClock:
+            if requirement.contains("Hour") { return clockHour == 9 }
+            if requirement.contains("Minute") { return clockMinute == 0 }
+            return clockSecond == 15
         case .summary:
             return true
         }
@@ -534,6 +581,7 @@ struct ContentView: View {
         case .scrollTask: scrollTaskLevel
         case .pointerTask: pointerTaskLevel
         case .stress: stressLevel
+        case .analogClock: analogClockLevel
         case .summary: summaryLevel
         }
     }
@@ -991,6 +1039,30 @@ struct ContentView: View {
             }
     }
 
+    private var analogClockLevel: some View {
+        GroupBox("Analog Clock") {
+            VStack(spacing: 16) {
+                Text(String(format: "%d:%02d:%02d", levels.clockHour, levels.clockMinute, levels.clockSecond))
+                    .font(.system(size: 36, weight: .medium, design: .monospaced))
+                    .accessibilityLabel("Clock Time")
+                    .accessibilityValue(String(format: "%d:%02d:%02d", levels.clockHour, levels.clockMinute, levels.clockSecond))
+
+                AnalogClockWidget(
+                    hour: $levels.clockHour,
+                    minute: $levels.clockMinute,
+                    second: $levels.clockSecond
+                ) {
+                    logger.log(
+                        "Clock",
+                        String(format: "Time set to %d:%02d:%02d", levels.clockHour, levels.clockMinute, levels.clockSecond)
+                    )
+                }
+            }
+            .padding(.vertical, 8)
+            .frame(maxWidth: .infinity)
+        }
+    }
+
     private var stressLevel: some View {
         GroupBox("Crowded Mixed Controls") {
             VStack(alignment: .leading, spacing: 10) {
@@ -1097,6 +1169,170 @@ struct ShortcutCaptureView: NSViewRepresentable {
                 nsView.needsDisplay = true
             }
         }
+    }
+}
+
+struct AnalogClockWidget: View {
+    @Binding var hour: Int
+    @Binding var minute: Int
+    @Binding var second: Int
+    let onChange: () -> Void
+
+    private let size: CGFloat = 220
+    private var center: CGFloat { size / 2 }
+    private var radius: CGFloat { size / 2 - 8 }
+
+    private var hourAngle: Double {
+        (Double(hour % 12) / 12.0 + Double(minute) / 720.0) * 2 * .pi
+    }
+    private var minuteAngle: Double { Double(minute) / 60.0 * 2 * .pi }
+    private var secondAngle: Double { Double(second) / 60.0 * 2 * .pi }
+
+    private func tip(angle: Double, length: CGFloat) -> CGPoint {
+        CGPoint(
+            x: center + CGFloat(sin(angle)) * length,
+            y: center - CGFloat(cos(angle)) * length
+        )
+    }
+
+    private func clockAngle(from location: CGPoint) -> Double {
+        let dx = Double(location.x - center)
+        let dy = Double(location.y - center)
+        var a = atan2(dx, -dy)
+        if a < 0 { a += 2 * .pi }
+        return a
+    }
+
+    var body: some View {
+        ZStack {
+            Canvas { ctx, canvasSize in
+                let c = CGPoint(x: canvasSize.width / 2, y: canvasSize.height / 2)
+                let r = min(canvasSize.width, canvasSize.height) / 2 - 8
+
+                // Face
+                let faceRect = CGRect(x: c.x - r, y: c.y - r, width: r * 2, height: r * 2)
+                ctx.fill(Path(ellipseIn: faceRect), with: .color(Color(nsColor: .windowBackgroundColor)))
+                ctx.stroke(Path(ellipseIn: faceRect), with: .color(.secondary.opacity(0.5)), lineWidth: 2)
+
+                // Tick marks
+                for i in 0..<60 {
+                    let a = Double(i) * 2 * .pi / 60 - .pi / 2
+                    let major = i % 5 == 0
+                    var tick = Path()
+                    tick.move(to: CGPoint(x: c.x + cos(a) * (r - (major ? 10 : 5)), y: c.y + sin(a) * (r - (major ? 10 : 5))))
+                    tick.addLine(to: CGPoint(x: c.x + cos(a) * r, y: c.y + sin(a) * r))
+                    ctx.stroke(tick, with: .color(major ? .primary : .secondary.opacity(0.4)),
+                               style: StrokeStyle(lineWidth: major ? 2 : 1))
+                }
+
+                // Hour numbers
+                for h in 1...12 {
+                    let a = Double(h) * 2 * .pi / 12 - .pi / 2
+                    ctx.draw(
+                        Text("\(h)").font(.system(size: 11, weight: .medium)),
+                        at: CGPoint(x: c.x + cos(a) * (r - 18), y: c.y + sin(a) * (r - 18))
+                    )
+                }
+
+                // Hour hand
+                var hPath = Path()
+                hPath.move(to: c)
+                hPath.addLine(to: CGPoint(
+                    x: c.x + CGFloat(sin(hourAngle)) * r * 0.55,
+                    y: c.y - CGFloat(cos(hourAngle)) * r * 0.55
+                ))
+                ctx.stroke(hPath, with: .color(.primary), style: StrokeStyle(lineWidth: 6, lineCap: .round))
+
+                // Minute hand
+                var mPath = Path()
+                mPath.move(to: c)
+                mPath.addLine(to: CGPoint(
+                    x: c.x + CGFloat(sin(minuteAngle)) * r * 0.75,
+                    y: c.y - CGFloat(cos(minuteAngle)) * r * 0.75
+                ))
+                ctx.stroke(mPath, with: .color(.primary), style: StrokeStyle(lineWidth: 3.5, lineCap: .round))
+
+                // Second hand with tail
+                var sPath = Path()
+                sPath.move(to: CGPoint(
+                    x: c.x - CGFloat(sin(secondAngle)) * r * 0.15,
+                    y: c.y + CGFloat(cos(secondAngle)) * r * 0.15
+                ))
+                sPath.addLine(to: CGPoint(
+                    x: c.x + CGFloat(sin(secondAngle)) * r * 0.88,
+                    y: c.y - CGFloat(cos(secondAngle)) * r * 0.88
+                ))
+                ctx.stroke(sPath, with: .color(.red), style: StrokeStyle(lineWidth: 1.5, lineCap: .round))
+
+                // Center cap
+                ctx.fill(
+                    Path(ellipseIn: CGRect(x: c.x - 5, y: c.y - 5, width: 10, height: 10)),
+                    with: .color(.primary)
+                )
+            }
+
+            // Hour hand drag handle
+            let hTip = tip(angle: hourAngle, length: radius * 0.55)
+            Circle()
+                .fill(Color.primary.opacity(0.65))
+                .overlay(Circle().stroke(Color.white.opacity(0.9), lineWidth: 2))
+                .frame(width: 44, height: 44)
+                .contentShape(Circle())
+                .position(hTip)
+                .accessibilityLabel("Hour Hand")
+                .accessibilityValue("\(hour) o'clock")
+                .gesture(
+                    DragGesture(minimumDistance: 0, coordinateSpace: .named("clockFace"))
+                        .onChanged { v in
+                            let a = clockAngle(from: v.location)
+                            let h = Int(round(a / (2 * .pi / 12))) % 12
+                            hour = h == 0 ? 12 : h
+                            onChange()
+                        }
+                )
+
+            // Minute hand drag handle
+            let mTip = tip(angle: minuteAngle, length: radius * 0.75)
+            Circle()
+                .fill(Color.gray.opacity(0.7))
+                .overlay(Circle().stroke(Color.white.opacity(0.9), lineWidth: 2))
+                .frame(width: 40, height: 40)
+                .contentShape(Circle())
+                .position(mTip)
+                .accessibilityLabel("Minute Hand")
+                .accessibilityValue("\(minute) minutes")
+                .gesture(
+                    DragGesture(minimumDistance: 0, coordinateSpace: .named("clockFace"))
+                        .onChanged { v in
+                            let a = clockAngle(from: v.location)
+                            minute = Int(round(a / (2 * .pi / 60))) % 60
+                            onChange()
+                        }
+                )
+
+            // Second hand drag handle
+            let sTip = tip(angle: secondAngle, length: radius * 0.88)
+            Circle()
+                .fill(Color.red.opacity(0.8))
+                .overlay(Circle().stroke(Color.white.opacity(0.9), lineWidth: 2))
+                .frame(width: 36, height: 36)
+                .contentShape(Circle())
+                .position(sTip)
+                .accessibilityLabel("Second Hand")
+                .accessibilityValue("\(second) seconds")
+                .gesture(
+                    DragGesture(minimumDistance: 0, coordinateSpace: .named("clockFace"))
+                        .onChanged { v in
+                            let a = clockAngle(from: v.location)
+                            second = Int(round(a / (2 * .pi / 60))) % 60
+                            onChange()
+                        }
+                )
+        }
+        .frame(width: size, height: size)
+        .coordinateSpace(name: "clockFace")
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Analog Clock")
     }
 }
 
