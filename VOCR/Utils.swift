@@ -65,6 +65,8 @@ func hide() {
 }
 
 func showDialog(_ alert: NSAlert, focusing firstResponder: NSResponder? = nil) {
+    alert.layout()
+
     let window = alert.window
     window.level = .modalPanel
     window.initialFirstResponder = firstResponder as? NSView
@@ -73,7 +75,18 @@ func showDialog(_ alert: NSAlert, focusing firstResponder: NSResponder? = nil) {
     NSApp.activate(ignoringOtherApps: true)
     window.makeKeyAndOrderFront(nil)
 
-    if let firstResponder {
+    guard let firstResponder else {
+        return
+    }
+
+    if let view = firstResponder as? NSView, view.window !== window {
+        DispatchQueue.main.async { [weak view, weak window] in
+            guard let view, let window, view.window === window else {
+                return
+            }
+            window.makeFirstResponder(view)
+        }
+    } else {
         window.makeFirstResponder(firstResponder)
     }
 }
