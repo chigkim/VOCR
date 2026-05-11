@@ -589,6 +589,18 @@
         }
       }
     },
+    "button.copy_to_clipboard" : {
+      "comment" : "Button to copy text to the clipboard",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Copy to Clipboard"
+          }
+        }
+      }
+    },
     "button.create" : {
       "comment" : "Button to create a new item",
       "extractionState" : "manual",
@@ -1344,18 +1356,6 @@
         }
       }
     },
-    "button.open" : {
-      "comment" : "Open button",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Open"
-          }
-        }
-      }
-    },
     "button.open_copy" : {
       "comment" : "Button to open or copy QR code",
       "extractionState" : "extracted_with_value",
@@ -1364,6 +1364,18 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Open / Copy"
+          }
+        }
+      }
+    },
+    "button.open_in_browser" : {
+      "comment" : "Button to open a URL in the default browser",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open in Browser"
           }
         }
       }
@@ -16824,25 +16836,25 @@
       }
     },
     "qrcodes.dialog.open_url_message" : {
-      "comment" : "Message for URL confirmation",
+      "comment" : "Message for URL action dialog",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Do you want to open the following URL in your default browser?\n\n%@"
+            "value" : "Choose how to handle the following URL:\n\n%@"
           }
         }
       }
     },
     "qrcodes.dialog.open_url_title" : {
-      "comment" : "Title for URL confirmation",
+      "comment" : "Title for URL action dialog",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Open URL?"
+            "value" : "QR Code URL"
           }
         }
       }

@@ -615,14 +615,18 @@ class QRCodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDelega
         
         if let url = URL(string: payload), let scheme = url.scheme, ["http", "https"].contains(scheme.lowercased()) {
             let confirmAlert = NSAlert()
-            confirmAlert.messageText = NSLocalizedString("qrcodes.dialog.open_url_title", value: "Open URL?", comment: "Title for URL confirmation")
-            confirmAlert.informativeText = String(format: NSLocalizedString("qrcodes.dialog.open_url_message", value: "Do you want to open the following URL in your default browser?\n\n%@", comment: "Message for URL confirmation"), payload)
-            confirmAlert.addButton(withTitle: NSLocalizedString("button.open", value: "Open", comment: "Open button"))
-            confirmAlert.addButton(withTitle: NSLocalizedString("button.cancel", value: "Cancel", comment: "Cancel button"))
+            confirmAlert.messageText = NSLocalizedString("qrcodes.dialog.open_url_title", value: "QR Code URL", comment: "Title for URL action dialog")
+            confirmAlert.informativeText = String(format: NSLocalizedString("qrcodes.dialog.open_url_message", value: "Choose how to handle the following URL:\n\n%@", comment: "Message for URL action dialog"), payload)
+            confirmAlert.addButton(withTitle: NSLocalizedString("button.open_in_browser", value: "Open in Browser", comment: "Button to open a URL in the default browser"))
+            confirmAlert.addButton(withTitle: NSLocalizedString("button.copy_to_clipboard", value: "Copy to Clipboard", comment: "Button to copy text to the clipboard"))
             
             showDialog(confirmAlert)
-            if confirmAlert.runModal() == .alertFirstButtonReturn {
+            let response = confirmAlert.runModal()
+            if response == .alertFirstButtonReturn {
                 NSWorkspace.shared.open(url)
+            } else if response == .alertSecondButtonReturn {
+                copyToClipboard(payload)
+                Accessibility.speak(NSLocalizedString("qrcodes.copied", value: "Copied to clipboard.", comment: "Message when text is copied"))
             }
         } else {
             copyToClipboard(payload)
