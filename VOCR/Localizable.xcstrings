@@ -12114,7 +12114,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%d barcodes"
+            "value" : "%d codes"
           }
         }
       }
@@ -12126,7 +12126,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "1 barcode"
+            "value" : "1 code"
           }
         }
       }
@@ -12138,7 +12138,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$@ detected: %2$@. Press %3$@ to view."
+            "value" : "%1$@ detected. Press %2$@ to view."
           }
         }
       }

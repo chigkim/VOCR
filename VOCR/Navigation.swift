@@ -219,27 +219,16 @@ enum Navigation {
         let barcodeCount = detectedBarcodes.count
         let barcodeCountPhrase = barcodeCount == 1
             ? NSLocalizedString(
-                "navigation.barcode_count_singular", value: "1 barcode",
+                "navigation.barcode_count_singular", value: "1 code",
                 comment: "Singular barcode count phrase")
             : String(
                 format: NSLocalizedString(
-                    "navigation.barcode_count_plural", value: "%d barcodes",
+                    "navigation.barcode_count_plural", value: "%d codes",
                     comment: "Plural barcode count phrase"), barcodeCount)
-        let barcodeTypes = uniqueBarcodeTypes().joined(separator: ", ")
         return String(
             format: NSLocalizedString(
-                "navigation.barcodes_detected", value: "%1$@ detected: %2$@. Press %3$@ to view.",
-                comment: "Message when barcodes are detected"), barcodeCountPhrase, barcodeTypes, shortcutKeyName)
-    }
-
-    private static func uniqueBarcodeTypes() -> [String] {
-        var seen: Set<String> = []
-        var types: [String] = []
-        for barcode in detectedBarcodes where !seen.contains(barcode.symbologyName) {
-            seen.insert(barcode.symbologyName)
-            types.append(barcode.symbologyName)
-        }
-        return types
+                "navigation.barcodes_detected", value: "%1$@ detected. Press %2$@ to view.",
+                comment: "Message when barcodes are detected"), barcodeCountPhrase, shortcutKeyName)
     }
 
     static func explore() {
