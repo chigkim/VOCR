@@ -16842,7 +16842,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Choose how to handle the following URL:\n\n%@"
+            "value" : "%@"
           }
         }
       }
