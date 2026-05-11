@@ -549,6 +549,11 @@ class QRCodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDelega
             Accessibility.speak(NSLocalizedString("navigation.no_qrcodes", value: "No QR codes found in the last scan.", comment: "Message when no QR codes are found"))
             return
         }
+
+        if qrCodes.count == 1 {
+            handleSelection(index: 0)
+            return
+        }
         
         let alert = NSAlert()
         alert.messageText = NSLocalizedString("qrcodes.dialog.title", value: "Detected QR Codes", comment: "Title for QR codes dialog")
