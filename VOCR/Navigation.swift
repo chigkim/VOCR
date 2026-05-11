@@ -40,7 +40,7 @@ enum Navigation {
     static var mode = Mode.WINDOW
 
     static var displayResults: [[Observation]] = []
-    static var detectedQRCodes: [String] = []
+    static var detectedBarcodes: [DetectedBarcode] = []
     static var cgPosition = CGPoint()
     static var cgSize = CGSize()
     static var cgImage: CGImage?
@@ -148,7 +148,7 @@ enum Navigation {
             c = -1
         }
         displayResults = []
-        detectedQRCodes = []
+        detectedBarcodes = []
         Shortcuts.deactivateNavigationShortcuts()
         NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
         let rect = (mode == .WINDOW) ? getWindow() : getVOCursor()
@@ -183,14 +183,14 @@ enum Navigation {
         }
         guard let image = cgImage else { return }
         let result = VisionOCR.observations(in: image, detectObjects: Settings.detectObject)
-        detectedQRCodes = result.qrCodes
-        let qrCodeDetected = !detectedQRCodes.isEmpty
+        detectedBarcodes = result.barcodes
+        let barcodeDetected = !detectedBarcodes.isEmpty
         if result.observations.count == 0 {
-            if qrCodeDetected {
+            if barcodeDetected {
                 var announcement = NSLocalizedString(
-                    "navigation.finished_scanning_qrcode_detected", value: "Finished scanning",
-                    comment: "Message when scanning is complete and a QR code was found")
-                announcement += ".\n" + qrCodeAnnouncement()
+                    "navigation.finished_scanning_barcode_detected", value: "Finished scanning",
+                    comment: "Message when scanning is complete and a barcode was found")
+                announcement += ".\n" + barcodeAnnouncement()
                 Accessibility.speak(announcement)
                 Shortcuts.activateNavigationShortcuts()
             } else {
@@ -206,29 +206,40 @@ enum Navigation {
             format: NSLocalizedString(
                 "navigation.finished_scanning", value: "Finished scanning %@, %@",
                 comment: "Message when scanning is complete"), appName, windowName)
-        if qrCodeDetected {
-            announcement += ".\n" + qrCodeAnnouncement()
+        if barcodeDetected {
+            announcement += ".\n" + barcodeAnnouncement()
         }
         Accessibility.speak(announcement)
         Shortcuts.activateNavigationShortcuts()
     }
 
-    private static func qrCodeAnnouncement() -> String {
+    private static func barcodeAnnouncement() -> String {
         let shortcutKeyName = Shortcuts.spokenKeyName(for: "shortcut.view_qrcodes")
             ?? "Control Shift Command Q"
-        let qrCodeCount = detectedQRCodes.count
-        let qrCodeCountPhrase = qrCodeCount == 1
+        let barcodeCount = detectedBarcodes.count
+        let barcodeCountPhrase = barcodeCount == 1
             ? NSLocalizedString(
-                "navigation.qrcode_count_singular", value: "1 QR code",
-                comment: "Singular QR code count phrase")
+                "navigation.barcode_count_singular", value: "1 barcode",
+                comment: "Singular barcode count phrase")
             : String(
                 format: NSLocalizedString(
-                    "navigation.qrcode_count_plural", value: "%d QR codes",
-                    comment: "Plural QR code count phrase"), qrCodeCount)
+                    "navigation.barcode_count_plural", value: "%d barcodes",
+                    comment: "Plural barcode count phrase"), barcodeCount)
+        let barcodeTypes = uniqueBarcodeTypes().joined(separator: ", ")
         return String(
             format: NSLocalizedString(
-                "navigation.qrcodes_detected", value: "%@ detected. Press %@ to view.",
-                comment: "Message when QR codes are detected"), qrCodeCountPhrase, shortcutKeyName)
+                "navigation.barcodes_detected", value: "%1$@ detected: %2$@. Press %3$@ to view.",
+                comment: "Message when barcodes are detected"), barcodeCountPhrase, barcodeTypes, shortcutKeyName)
+    }
+
+    private static func uniqueBarcodeTypes() -> [String] {
+        var seen: Set<String> = []
+        var types: [String] = []
+        for barcode in detectedBarcodes where !seen.contains(barcode.symbologyName) {
+            seen.insert(barcode.symbologyName)
+            types.append(barcode.symbologyName)
+        }
+        return types
     }
 
     static func explore() {
@@ -530,37 +541,37 @@ enum Navigation {
 
 }
 
-class QRCodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDelegate {
-    static let shared = QRCodeDialogController()
+class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDelegate {
+    static let shared = BarcodeDialogController()
     
-    private var qrCodes: [String] = []
+    private var barcodes: [DetectedBarcode] = []
     
     private override init() {
         super.init()
     }
     
     func show() {
-        self.qrCodes = Navigation.detectedQRCodes
-        if qrCodes.isEmpty {
-            Accessibility.speak(NSLocalizedString("navigation.no_qrcodes", value: "No QR codes found in the last scan.", comment: "Message when no QR codes are found"))
+        self.barcodes = Navigation.detectedBarcodes
+        if barcodes.isEmpty {
+            Accessibility.speak(NSLocalizedString("navigation.no_barcodes", value: "No barcodes found in the last scan.", comment: "Message when no barcodes are found"))
             return
         }
 
-        if qrCodes.count == 1 {
+        if barcodes.count == 1 {
             handleSelection(index: 0)
             return
         }
         
         let alert = NSAlert()
-        alert.messageText = NSLocalizedString("qrcodes.dialog.title", value: "Detected QR Codes", comment: "Title for QR codes dialog")
-        alert.informativeText = NSLocalizedString("qrcodes.dialog.message", value: "Select a QR code to interact with it.", comment: "Message for QR codes dialog")
+        alert.messageText = NSLocalizedString("barcodes.dialog.title", value: "Detected Barcodes", comment: "Title for barcodes dialog")
+        alert.informativeText = NSLocalizedString("barcodes.dialog.message", value: "Select a barcode to interact with it.", comment: "Message for barcodes dialog")
         
         let scrollView = NSScrollView(frame: NSRect(x: 0, y: 0, width: 400, height: 150))
         scrollView.hasVerticalScroller = true
         
         let tableView = NSTableView(frame: scrollView.bounds)
-        let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("QRCodeColumn"))
-        column.title = "QR Code"
+        let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("BarcodeColumn"))
+        column.title = NSLocalizedString("barcodes.dialog.column", value: "Barcode", comment: "Column title for detected barcodes")
         column.width = 380
         tableView.addTableColumn(column)
         tableView.headerView = nil
@@ -574,7 +585,7 @@ class QRCodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDelega
         scrollView.documentView = tableView
         alert.accessoryView = scrollView
         
-        alert.addButton(withTitle: NSLocalizedString("button.open_copy", value: "Open / Copy", comment: "Button to open or copy QR code"))
+        alert.addButton(withTitle: NSLocalizedString("button.open_copy", value: "Open / Copy", comment: "Button to open or copy barcode"))
         alert.addButton(withTitle: NSLocalizedString("button.cancel", value: "Cancel", comment: "Cancel button"))
         
         showDialog(alert, focusing: tableView)
@@ -583,35 +594,39 @@ class QRCodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDelega
         
         if response == .alertFirstButtonReturn {
             let selectedRow = tableView.selectedRow
-            if selectedRow >= 0 && selectedRow < qrCodes.count {
+            if selectedRow >= 0 && selectedRow < barcodes.count {
                 handleSelection(index: selectedRow)
             }
         }
     }
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return qrCodes.count
+        return barcodes.count
     }
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-        return qrCodes[row]
+        return barcodes[row].displayValue
     }
     
     @objc private func handleDoubleClick(_ sender: AnyObject) {
         if let tableView = sender as? NSTableView {
             let row = tableView.clickedRow
-            if row >= 0 && row < qrCodes.count {
+            if row >= 0 && row < barcodes.count {
                 NSApplication.shared.stopModal(withCode: .alertFirstButtonReturn)
             }
         }
     }
     
     private func handleSelection(index: Int) {
-        let payload = qrCodes[index]
+        let barcode = barcodes[index]
+        let payload = barcode.payload
         
         if let url = URL(string: payload), let scheme = url.scheme, ["http", "https"].contains(scheme.lowercased()) {
             let confirmAlert = NSAlert()
-            confirmAlert.messageText = NSLocalizedString("qrcodes.dialog.open_url_title", value: "QR Code URL", comment: "Title for URL action dialog")
+            confirmAlert.messageText = String(
+                format: NSLocalizedString(
+                    "barcodes.dialog.open_url_title", value: "%@ URL",
+                    comment: "Title for barcode URL action dialog"), barcode.symbologyName)
             confirmAlert.informativeText = payload
             confirmAlert.addButton(withTitle: NSLocalizedString("button.open_in_browser", value: "Open in Browser", comment: "Button to open a URL in the default browser"))
             confirmAlert.addButton(withTitle: NSLocalizedString("button.copy_to_clipboard", value: "Copy to Clipboard", comment: "Button to copy text to the clipboard"))
@@ -621,12 +636,20 @@ class QRCodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDelega
             if response == .alertFirstButtonReturn {
                 NSWorkspace.shared.open(url)
             } else if response == .alertSecondButtonReturn {
-                copyToClipboard(payload)
-                Accessibility.speak(NSLocalizedString("qrcodes.copied", value: "Copied to clipboard.", comment: "Message when text is copied"))
+                copyToClipboard(barcode.displayValue)
+                speakCopied(barcode)
             }
         } else {
-            copyToClipboard(payload)
-            Accessibility.speak(NSLocalizedString("qrcodes.copied", value: "Copied to clipboard.", comment: "Message when text is copied"))
+            copyToClipboard(barcode.displayValue)
+            speakCopied(barcode)
         }
+    }
+
+    private func speakCopied(_ barcode: DetectedBarcode) {
+        Accessibility.speak(
+            String(
+                format: NSLocalizedString(
+                    "barcodes.copied_with_type", value: "%@ copied to clipboard.",
+                    comment: "Message when a barcode payload is copied"), barcode.symbologyName))
     }
 }

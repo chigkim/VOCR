@@ -139,7 +139,7 @@ class MacCamera: NSObject, AVCapturePhotoCaptureDelegate {
                     Navigation.displayResults = []
                     Navigation.cgImage = cgImage
                     Navigation.startOCR()
-                    if !Navigation.displayResults.isEmpty || !Navigation.detectedQRCodes.isEmpty {
+                    if !Navigation.displayResults.isEmpty || !Navigation.detectedBarcodes.isEmpty {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                             NSSound(
                                 contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true

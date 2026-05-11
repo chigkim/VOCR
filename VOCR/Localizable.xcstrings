@@ -85,6 +85,66 @@
         }
       }
     },
+    "barcodes.copied_with_type" : {
+      "comment" : "Message when a barcode payload is copied",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%@ copied to clipboard."
+          }
+        }
+      }
+    },
+    "barcodes.dialog.column" : {
+      "comment" : "Column title for detected barcodes",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Barcode"
+          }
+        }
+      }
+    },
+    "barcodes.dialog.message" : {
+      "comment" : "Message for barcodes dialog",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Select a barcode to interact with it."
+          }
+        }
+      }
+    },
+    "barcodes.dialog.open_url_title" : {
+      "comment" : "Title for barcode URL action dialog",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%@ URL"
+          }
+        }
+      }
+    },
+    "barcodes.dialog.title" : {
+      "comment" : "Title for barcodes dialog",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Detected Barcodes"
+          }
+        }
+      }
+    },
     "button.add" : {
       "comment" : "Button to add a new preset",
       "extractionState" : "manual",
@@ -1357,7 +1417,7 @@
       }
     },
     "button.open_copy" : {
-      "comment" : "Button to open or copy QR code",
+      "comment" : "Button to open or copy barcode",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -12047,6 +12107,42 @@
         }
       }
     },
+    "navigation.barcode_count_plural" : {
+      "comment" : "Plural barcode count phrase",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%d barcodes"
+          }
+        }
+      }
+    },
+    "navigation.barcode_count_singular" : {
+      "comment" : "Singular barcode count phrase",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "1 barcode"
+          }
+        }
+      }
+    },
+    "navigation.barcodes_detected" : {
+      "comment" : "Message when barcodes are detected",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ detected: %2$@. Press %3$@ to view."
+          }
+        }
+      }
+    },
     "navigation.choose_window" : {
       "comment" : "Alert message for choosing target window",
       "extractionState" : "manual",
@@ -12383,8 +12479,8 @@
         }
       }
     },
-    "navigation.finished_scanning_qrcode_detected" : {
-      "comment" : "Message when scanning is complete and a QR code was found",
+    "navigation.finished_scanning_barcode_detected" : {
+      "comment" : "Message when scanning is complete and a barcode was found",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
@@ -12395,14 +12491,14 @@
         }
       }
     },
-    "navigation.no_qrcodes" : {
-      "comment" : "Message when no QR codes are found",
+    "navigation.no_barcodes" : {
+      "comment" : "Message when no barcodes are found",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "No QR codes found in the last scan."
+            "value" : "No barcodes found in the last scan."
           }
         }
       }
@@ -12487,42 +12583,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "未找到内容"
-          }
-        }
-      }
-    },
-    "navigation.qrcode_count_plural" : {
-      "comment" : "Plural QR code count phrase",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%d QR codes"
-          }
-        }
-      }
-    },
-    "navigation.qrcode_count_singular" : {
-      "comment" : "Singular QR code count phrase",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "1 QR code"
-          }
-        }
-      }
-    },
-    "navigation.qrcodes_detected" : {
-      "comment" : "Message when QR codes are detected",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ detected. Press %2$@ to view."
           }
         }
       }
@@ -16723,54 +16783,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "预设管理器"
-          }
-        }
-      }
-    },
-    "qrcodes.copied" : {
-      "comment" : "Message when text is copied",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Copied to clipboard."
-          }
-        }
-      }
-    },
-    "qrcodes.dialog.message" : {
-      "comment" : "Message for QR codes dialog",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Select a QR code to interact with it."
-          }
-        }
-      }
-    },
-    "qrcodes.dialog.open_url_title" : {
-      "comment" : "Title for URL action dialog",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "QR Code URL"
-          }
-        }
-      }
-    },
-    "qrcodes.dialog.title" : {
-      "comment" : "Title for QR codes dialog",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Detected QR Codes"
           }
         }
       }
