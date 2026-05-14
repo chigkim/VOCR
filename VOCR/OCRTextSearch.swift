@@ -138,8 +138,7 @@ class OCRTextSearch {
         // Set "From Current" as the default button
         alert.window.defaultButtonCell = alert.buttons[1].cell as? NSButtonCell
 
-        showDialog(alert, focusing: textField)
-        let response = alert.runModal()
+        let response = showDialog(alert, focusing: textField)
 
         if response == .alertFirstButtonReturn {  // From Beginning
             lastSearchQuery = textField.stringValue

@@ -15,7 +15,6 @@ import UserNotifications
 final class PermissionsManager {
     static let shared = PermissionsManager()
 
-    private let onboardingDefaultsKey = "VOCR.hasSeenPermissionsOnboarding"
 
     // Set to true within a session once the user has been sent to grant screen recording.
     // CGPreflightScreenCaptureAccess() caches its result per process and won't reflect a
@@ -392,18 +391,4 @@ final class PermissionsManager {
         }
     }
 
-    // MARK: - Onboarding State
-
-    var hasSeenPermissionsOnboarding: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: onboardingDefaultsKey)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: onboardingDefaultsKey)
-        }
-    }
-
-    func markOnboardingComplete() {
-        hasSeenPermissionsOnboarding = true
-    }
 }

@@ -57,14 +57,12 @@ struct DetectedBarcode: Equatable {
 }
 
 func hide() {
-    let windows = NSApplication.shared.windows
     NSApplication.shared.hide(nil)
-    if windows.indices.contains(1) {
-        windows[1].close()
-    }
+    NSApplication.shared.windows.forEach { $0.close() }
 }
 
-func showDialog(_ alert: NSAlert, focusing firstResponder: NSResponder? = nil) {
+@discardableResult
+func showDialog(_ alert: NSAlert, focusing firstResponder: NSResponder? = nil) -> NSApplication.ModalResponse {
     alert.layout()
 
     let window = alert.window
@@ -75,20 +73,18 @@ func showDialog(_ alert: NSAlert, focusing firstResponder: NSResponder? = nil) {
     NSApp.activate(ignoringOtherApps: true)
     window.makeKeyAndOrderFront(nil)
 
-    guard let firstResponder else {
-        return
-    }
-
     if let view = firstResponder as? NSView, view.window !== window {
         DispatchQueue.main.async { [weak view, weak window] in
-            guard let view, let window, view.window === window else {
-                return
-            }
+            guard let view, let window, view.window === window else { return }
             window.makeFirstResponder(view)
         }
-    } else {
+    } else if let firstResponder {
         window.makeFirstResponder(firstResponder)
     }
+
+    let response = alert.runModal()
+    hide()
+    return response
 }
 
 func alert(_ title: String, _ message: String) {
@@ -98,8 +94,6 @@ func alert(_ title: String, _ message: String) {
         alert.messageText = title
         alert.informativeText = message
         showDialog(alert)
-        alert.runModal()
-        return
     }
 }
 
@@ -187,9 +181,7 @@ func askPrompt(value: String) -> (prompt: String, followUp: Bool)? {
         initialText: value, extraView: followUpButton)
     alert.accessoryView = accessoryView
 
-    showDialog(alert, focusing: inputTextView)
-    let response = alert.runModal()
-    hide()
+    let response = showDialog(alert, focusing: inputTextView)
     if response == .alertFirstButtonReturn {
         return (inputTextView.string, followUpButton.state == .on)
     }

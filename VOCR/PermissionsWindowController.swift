@@ -8,7 +8,7 @@
 
 import Cocoa
 
-final class PermissionsWindowController: NSWindowController {
+final class PermissionsWindowController: NSWindowController, NSWindowDelegate {
 
     static let shared = PermissionsWindowController()
 
@@ -28,11 +28,16 @@ final class PermissionsWindowController: NSWindowController {
 
         super.init(window: window)
 
+        window.delegate = self
         window.contentViewController = rootVC
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func windowWillClose(_ notification: Notification) {
+        NSApplication.shared.hide(nil)
     }
 
     override func showWindow(_ sender: Any?) {

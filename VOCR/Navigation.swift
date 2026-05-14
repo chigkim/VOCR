@@ -577,11 +577,7 @@ class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDeleg
         alert.addButton(withTitle: NSLocalizedString("button.open_copy", value: "Open / Copy", comment: "Button to open or copy barcode"))
         alert.addButton(withTitle: NSLocalizedString("button.cancel", value: "Cancel", comment: "Cancel button"))
         
-        showDialog(alert, focusing: tableView)
-        
-        let response = alert.runModal()
-        
-        if response == .alertFirstButtonReturn {
+        if showDialog(alert, focusing: tableView) == .alertFirstButtonReturn {
             let selectedRow = tableView.selectedRow
             if selectedRow >= 0 && selectedRow < barcodes.count {
                 handleSelection(index: selectedRow)
@@ -620,8 +616,7 @@ class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDeleg
             confirmAlert.addButton(withTitle: NSLocalizedString("button.open_in_browser", value: "Open in Browser", comment: "Button to open a URL in the default browser"))
             confirmAlert.addButton(withTitle: NSLocalizedString("button.copy_to_clipboard", value: "Copy to Clipboard", comment: "Button to copy text to the clipboard"))
             
-            showDialog(confirmAlert)
-            let response = confirmAlert.runModal()
+            let response = showDialog(confirmAlert)
             if response == .alertFirstButtonReturn {
                 NSWorkspace.shared.open(url)
             } else if response == .alertSecondButtonReturn {

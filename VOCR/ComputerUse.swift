@@ -414,11 +414,7 @@ final class ComputerUseController {
             initialText: value, extraView: approveAllButton)
         alert.accessoryView = accessoryView
 
-        showDialog(alert, focusing: inputTextView)
-        let response = alert.runModal()
-        hide()
-
-        guard response == .alertFirstButtonReturn else {
+        guard showDialog(alert, focusing: inputTextView) == .alertFirstButtonReturn else {
             return nil
         }
 
@@ -1587,9 +1583,7 @@ extension ComputerUseController {
                     "button.cancel", value: "Cancel", comment: "Button title to cancel an action"))
             alert.buttons[0].keyEquivalent = "\r"
             alert.buttons[2].keyEquivalent = "\u{1b}"
-            showDialog(alert, focusing: alert.buttons[0])
-
-            switch alert.runModal() {
+            switch showDialog(alert, focusing: alert.buttons[0]) {
             case .alertFirstButtonReturn:
                 decision = .approveOnce
             case .alertSecondButtonReturn:
@@ -1597,7 +1591,6 @@ extension ComputerUseController {
             default:
                 decision = .cancel
             }
-            hide()
             semaphore.signal()
         }
 

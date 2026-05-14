@@ -11,6 +11,7 @@ import Cocoa
 final class PermissionsViewController: NSViewController {
 
     // UI Components
+    private let headerLabel = NSTextField()
     private let scrollView = NSScrollView()
     private let tableView = NSTableView()
 
@@ -62,6 +63,20 @@ final class PermissionsViewController: NSViewController {
     }
 
     private func setupUI() {
+        headerLabel.isEditable = false
+        headerLabel.isSelectable = true
+        headerLabel.isBordered = false
+        headerLabel.drawsBackground = false
+        headerLabel.font = .systemFont(ofSize: 13)
+        headerLabel.textColor = .labelColor
+        headerLabel.maximumNumberOfLines = 0
+        headerLabel.stringValue = NSLocalizedString(
+            "permissions.window.instructions",
+            value: "Please grant the following permissions for VOCR to work properly.",
+            comment: "Instruction text at the top of the permissions window")
+        headerLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(headerLabel)
+
         // Configure table columns
         let permissionColumn = NSTableColumn(identifier: ColumnID.permission)
         permissionColumn.title = NSLocalizedString(
@@ -100,8 +115,13 @@ final class PermissionsViewController: NSViewController {
 
         // Layout constraints
         NSLayoutConstraint.activate([
-            // Table view at top
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            // Instruction text at top
+            headerLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            headerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            headerLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+
+            // Table view below instruction text
+            scrollView.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 12),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             scrollView.heightAnchor.constraint(equalToConstant: 120),

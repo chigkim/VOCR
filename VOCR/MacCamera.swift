@@ -149,11 +149,11 @@ class MacCamera: NSObject, AVCapturePhotoCaptureDelegate {
 
                 case NSApplication.ModalResponse(rawValue: 1003):
                     log("Close button selected")
-                    return
 
                 default:
                     log("Invalid or unexpected menu response: \(response.rawValue)")
                 }
+                hide()
 
             } else {
                 log("Error: could not create CGIImage from photo.")

@@ -12925,7 +12925,7 @@
     },
     "onboarding.permissions.message" : {
       "comment" : "Message for permissions onboarding alert",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13009,7 +13009,7 @@
     },
     "onboarding.permissions.setup" : {
       "comment" : "Button to set up permissions",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13093,7 +13093,7 @@
     },
     "onboarding.permissions.skip" : {
       "comment" : "Button to skip permissions setup",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13177,7 +13177,7 @@
     },
     "onboarding.permissions.title" : {
       "comment" : "Title for permissions onboarding alert",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -15527,9 +15527,21 @@
         }
       }
     },
+    "permissions.window.instructions" : {
+      "comment" : "Instruction text at the top of the permissions window",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please grant the following permissions for VOCR to work properly."
+          }
+        }
+      }
+    },
     "permissions.missing.later" : {
       "comment" : "Button to dismiss missing permissions alert",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -15613,7 +15625,7 @@
     },
     "permissions.missing.message" : {
       "comment" : "Message for missing permissions alert",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -15697,7 +15709,7 @@
     },
     "permissions.missing.open" : {
       "comment" : "Button to open permissions window",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -15781,7 +15793,7 @@
     },
     "permissions.missing.title" : {
       "comment" : "Title for missing permissions alert",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
