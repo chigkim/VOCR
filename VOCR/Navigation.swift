@@ -40,6 +40,7 @@ enum Navigation {
     static var mode = Mode.WINDOW
 
     static var displayResults: [[Observation]] = []
+    static var detectedBarcodes: [DetectedBarcode] = []
     static var cgPosition = CGPoint()
     static var cgSize = CGSize()
     static var cgImage: CGImage?
@@ -147,6 +148,7 @@ enum Navigation {
             c = -1
         }
         displayResults = []
+        detectedBarcodes = []
         Shortcuts.deactivateNavigationShortcuts()
         NSSound(contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true)?.play()
         let rect = (mode == .WINDOW) ? getWindow() : getVOCursor()
@@ -181,20 +183,52 @@ enum Navigation {
         }
         guard let image = cgImage else { return }
         let result = VisionOCR.observations(in: image, detectObjects: Settings.detectObject)
-        if result.count == 0 {
-            Accessibility.speak(
-                NSLocalizedString(
-                    "navigation.nothing_found", value: "Nothing found",
-                    comment: "Message when no text is found during OCR"))
+        detectedBarcodes = result.barcodes
+        let barcodeDetected = !detectedBarcodes.isEmpty
+        if result.observations.count == 0 {
+            if barcodeDetected {
+                var announcement = NSLocalizedString(
+                    "navigation.finished_scanning_barcode_detected", value: "Finished scanning",
+                    comment: "Message when scanning is complete and a barcode was found")
+                announcement += ".\n" + barcodeAnnouncement()
+                Accessibility.speak(announcement)
+                Shortcuts.activateNavigationShortcuts()
+            } else {
+                Accessibility.speak(
+                    NSLocalizedString(
+                        "navigation.nothing_found", value: "Nothing found",
+                        comment: "Message when no text is found during OCR"))
+            }
             return
         }
-        process(result)
-        Accessibility.speak(
-            String(
-                format: NSLocalizedString(
-                    "navigation.finished_scanning", value: "Finished scanning %@, %@",
-                    comment: "Message when scanning is complete"), appName, windowName))
+        process(result.observations)
+        var announcement = String(
+            format: NSLocalizedString(
+                "navigation.finished_scanning", value: "Finished scanning %@, %@",
+                comment: "Message when scanning is complete"), appName, windowName)
+        if barcodeDetected {
+            announcement += ".\n" + barcodeAnnouncement()
+        }
+        Accessibility.speak(announcement)
         Shortcuts.activateNavigationShortcuts()
+    }
+
+    private static func barcodeAnnouncement() -> String {
+        let shortcutKeyName = Shortcuts.spokenKeyName(for: "shortcut.view_qrcodes")
+            ?? "Control Shift Command Q"
+        let barcodeCount = detectedBarcodes.count
+        let barcodeCountPhrase = barcodeCount == 1
+            ? NSLocalizedString(
+                "navigation.barcode_count_singular", value: "1 code",
+                comment: "Singular barcode count phrase")
+            : String(
+                format: NSLocalizedString(
+                    "navigation.barcode_count_plural", value: "%d codes",
+                    comment: "Plural barcode count phrase"), barcodeCount)
+        return String(
+            format: NSLocalizedString(
+                "navigation.barcodes_detected", value: "%1$@ detected. Press %2$@ to view.",
+                comment: "Message when barcodes are detected"), barcodeCountPhrase, shortcutKeyName)
     }
 
     static func explore() {
@@ -295,11 +329,7 @@ enum Navigation {
         var center = convert2coordinates(displayResults[l][w].boundingBox)
         center.x -= cgPosition.x
         center.y -= cgPosition.y
-        Accessibility.speak(
-            String(
-                format: NSLocalizedString(
-                    "navigation.coordinates", value: "%d, %d", comment: "Coordinate position format"
-                ), Int(center.x), Int(center.y)))
+        Accessibility.speak(String(format: "%d, %d", Int(center.x), Int(center.y)))
     }
 
     static func correctLimit() {
@@ -498,4 +528,117 @@ enum Navigation {
         return text
     }
 
+}
+
+class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDelegate {
+    static let shared = BarcodeDialogController()
+    
+    private var barcodes: [DetectedBarcode] = []
+    
+    private override init() {
+        super.init()
+    }
+    
+    func show() {
+        self.barcodes = Navigation.detectedBarcodes
+        if barcodes.isEmpty {
+            Accessibility.speak(NSLocalizedString("navigation.no_barcodes", value: "No barcodes found in the last scan.", comment: "Message when no barcodes are found"))
+            return
+        }
+
+        if barcodes.count == 1 {
+            handleSelection(index: 0)
+            return
+        }
+        
+        let alert = NSAlert()
+        alert.messageText = NSLocalizedString("barcodes.dialog.title", value: "Detected Barcodes", comment: "Title for barcodes dialog")
+        alert.informativeText = NSLocalizedString("barcodes.dialog.message", value: "Select a barcode to interact with it.", comment: "Message for barcodes dialog")
+        
+        let scrollView = NSScrollView(frame: NSRect(x: 0, y: 0, width: 400, height: 150))
+        scrollView.hasVerticalScroller = true
+        
+        let tableView = NSTableView(frame: scrollView.bounds)
+        let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("BarcodeColumn"))
+        column.title = NSLocalizedString("barcodes.dialog.column", value: "Barcode", comment: "Column title for detected barcodes")
+        column.width = 380
+        tableView.addTableColumn(column)
+        tableView.headerView = nil
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.allowsEmptySelection = false
+        tableView.allowsMultipleSelection = false
+        tableView.target = self
+        tableView.doubleAction = #selector(handleDoubleClick(_:))
+        
+        scrollView.documentView = tableView
+        alert.accessoryView = scrollView
+        
+        alert.addButton(withTitle: NSLocalizedString("button.open_copy", value: "Open / Copy", comment: "Button to open or copy barcode"))
+        alert.addButton(withTitle: NSLocalizedString("button.cancel", value: "Cancel", comment: "Cancel button"))
+        
+        showDialog(alert, focusing: tableView)
+        
+        let response = alert.runModal()
+        
+        if response == .alertFirstButtonReturn {
+            let selectedRow = tableView.selectedRow
+            if selectedRow >= 0 && selectedRow < barcodes.count {
+                handleSelection(index: selectedRow)
+            }
+        }
+    }
+    
+    func numberOfRows(in tableView: NSTableView) -> Int {
+        return barcodes.count
+    }
+    
+    func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
+        return barcodes[row].displayValue
+    }
+    
+    @objc private func handleDoubleClick(_ sender: AnyObject) {
+        if let tableView = sender as? NSTableView {
+            let row = tableView.clickedRow
+            if row >= 0 && row < barcodes.count {
+                NSApplication.shared.stopModal(withCode: .alertFirstButtonReturn)
+            }
+        }
+    }
+    
+    private func handleSelection(index: Int) {
+        let barcode = barcodes[index]
+        let payload = barcode.payload
+        
+        if let url = URL(string: payload), let scheme = url.scheme, ["http", "https"].contains(scheme.lowercased()) {
+            let confirmAlert = NSAlert()
+            confirmAlert.messageText = String(
+                format: NSLocalizedString(
+                    "barcodes.dialog.open_url_title", value: "%@ URL",
+                    comment: "Title for barcode URL action dialog"), barcode.symbologyName)
+            confirmAlert.informativeText = payload
+            confirmAlert.addButton(withTitle: NSLocalizedString("button.open_in_browser", value: "Open in Browser", comment: "Button to open a URL in the default browser"))
+            confirmAlert.addButton(withTitle: NSLocalizedString("button.copy_to_clipboard", value: "Copy to Clipboard", comment: "Button to copy text to the clipboard"))
+            
+            showDialog(confirmAlert)
+            let response = confirmAlert.runModal()
+            if response == .alertFirstButtonReturn {
+                NSWorkspace.shared.open(url)
+            } else if response == .alertSecondButtonReturn {
+                copyToClipboard(barcode.displayValue)
+                speakCopied(barcode)
+            }
+        } else {
+            copyToClipboard(barcode.displayValue)
+            speakCopied(barcode)
+        }
+    }
+
+    private func speakCopied(_ barcode: DetectedBarcode) {
+        Accessibility.speak(
+            String(
+                format: NSLocalizedString(
+                    "barcodes.copied_with_type", value: "%@ copied to clipboard.",
+                    comment: "Message when a barcode payload is copied"), barcode.symbologyName))
+    }
 }

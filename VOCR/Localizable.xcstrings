@@ -85,6 +85,66 @@
         }
       }
     },
+    "barcodes.copied_with_type" : {
+      "comment" : "Message when a barcode payload is copied",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%@ copied to clipboard."
+          }
+        }
+      }
+    },
+    "barcodes.dialog.column" : {
+      "comment" : "Column title for detected barcodes",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Barcode"
+          }
+        }
+      }
+    },
+    "barcodes.dialog.message" : {
+      "comment" : "Message for barcodes dialog",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Select a barcode to interact with it."
+          }
+        }
+      }
+    },
+    "barcodes.dialog.open_url_title" : {
+      "comment" : "Title for barcode URL action dialog",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%@ URL"
+          }
+        }
+      }
+    },
+    "barcodes.dialog.title" : {
+      "comment" : "Title for barcodes dialog",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Detected Barcodes"
+          }
+        }
+      }
+    },
     "button.add" : {
       "comment" : "Button to add a new preset",
       "extractionState" : "manual",
@@ -173,16 +233,16 @@
       "comment" : "Button title to approve all remaining computer use actions",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Approve All"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Alle genehmigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Approve All"
           }
         },
         "es" : {
@@ -257,16 +317,16 @@
       "comment" : "Button title to approve one computer use action",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Approve Once"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Einmal genehmigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Approve Once"
           }
         },
         "es" : {
@@ -509,16 +569,16 @@
       "comment" : "Close button title",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Close"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Schließen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Close"
           }
         },
         "es" : {
@@ -585,6 +645,18 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "关闭"
+          }
+        }
+      }
+    },
+    "button.copy_to_clipboard" : {
+      "comment" : "Button to copy text to the clipboard",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Copy to Clipboard"
           }
         }
       }
@@ -761,16 +833,16 @@
       "comment" : "Button title to reject a warning",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Disagree"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ablehnen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Disagree"
           }
         },
         "es" : {
@@ -887,6 +959,12 @@
             "value" : "복제"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dupliser"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -915,12 +993,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "复制"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Dupliser"
           }
         }
       }
@@ -1181,16 +1253,16 @@
       "comment" : "Button title to accept a warning",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "I Agree"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ich stimme zu"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "I Agree"
           }
         },
         "es" : {
@@ -1344,20 +1416,44 @@
         }
       }
     },
-    "button.perform" : {
-      "comment" : "Button title to perform a task",
+    "button.open_copy" : {
+      "comment" : "Button to open or copy barcode",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Perform"
+            "value" : "Open / Copy"
           }
-        },
+        }
+      }
+    },
+    "button.open_in_browser" : {
+      "comment" : "Button to open a URL in the default browser",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open in Browser"
+          }
+        }
+      }
+    },
+    "button.perform" : {
+      "comment" : "Button title to perform a task",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ausführen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Perform"
           }
         },
         "es" : {
@@ -1432,22 +1528,16 @@
       "comment" : "Button text to enable permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Enable"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tillat"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Aktivieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Enable"
           }
         },
         "es" : {
@@ -1478,6 +1568,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "활성화"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tillat"
           }
         },
         "pl" : {
@@ -1516,22 +1612,16 @@
       "comment" : "Button text when permission is granted",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "✓ Granted"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "✓ Tillatelse gitt"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "✓ Erteilt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "✓ Granted"
           }
         },
         "es" : {
@@ -1562,6 +1652,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "✓ 허용됨"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Tillatelse gitt"
           }
         },
         "pl" : {
@@ -1600,22 +1696,16 @@
       "comment" : "Button text to open system settings",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Open System Settings"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Åpne Systeminnstillinger"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Systemeinstellungen öffnen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open System Settings"
           }
         },
         "es" : {
@@ -1646,6 +1736,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "시스템 설정 열기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åpne Systeminnstillinger"
           }
         },
         "pl" : {
@@ -1852,16 +1948,16 @@
       "comment" : "Title for camera action selection dialog",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Choose an action"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Aktion wählen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Choose an action"
           }
         },
         "es" : {
@@ -1936,16 +2032,16 @@
       "comment" : "Button to classify image using Vision",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Recognize Image"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bild erkennen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Recognize Image"
           }
         },
         "es" : {
@@ -2020,16 +2116,16 @@
       "comment" : "Button to describe image using AI",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Recognize image with LLM"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bild mit KI beschreiben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Recognize image with LLM"
           }
         },
         "es" : {
@@ -2104,16 +2200,16 @@
       "comment" : "Button to perform OCR on image",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Recognize text in image"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Text im Bild erkennen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Recognize text in image"
           }
         },
         "es" : {
@@ -2188,16 +2284,16 @@
       "comment" : "Error message when no camera is found",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "No camera available."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Keine Kamera verfügbar."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "No camera available."
           }
         },
         "es" : {
@@ -2270,18 +2366,18 @@
     },
     "camera.status.finished" : {
       "comment" : "Speech message when camera OCR is complete",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Recognition finished."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Erkennung abgeschlossen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Recognition finished."
           }
         },
         "es" : {
@@ -2354,18 +2450,18 @@
     },
     "camera.status.nothing_found" : {
       "comment" : "Speech message when no text is found in camera image",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Nothing found!"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Nichts gefunden!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Nothing found!"
           }
         },
         "es" : {
@@ -2440,16 +2536,16 @@
       "comment" : "Speech message indicating which camera is being used",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Using %@"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Verwende %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Using %@"
           }
         },
         "es" : {
@@ -2524,22 +2620,16 @@
       "comment" : "Table column header for permission action",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Action"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Handling"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Aktion"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Action"
           }
         },
         "es" : {
@@ -2570,6 +2660,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "작업"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handling"
           }
         },
         "pl" : {
@@ -2860,22 +2956,16 @@
       "comment" : "Table column header for permission name",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Permission"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tillatelse"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Berechtigung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Permission"
           }
         },
         "es" : {
@@ -2906,6 +2996,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "권한"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tillatelse"
           }
         },
         "pl" : {
@@ -2944,21 +3040,15 @@
       "comment" : "Table column header for permission status",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Status"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Status"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
+            "value" : "Status"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
             "value" : "Status"
           }
         },
@@ -2990,6 +3080,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "상태"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
           }
         },
         "pl" : {
@@ -3028,16 +3124,16 @@
       "comment" : "Speech when accessibility permission is missing",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Accessibility permission is required for computer use."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Für die Computernutzung ist eine Bedienungshilfen-Berechtigung erforderlich."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Accessibility permission is required for computer use."
           }
         },
         "es" : {
@@ -3112,16 +3208,16 @@
       "comment" : "Title for computer use approval dialog",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Approve Computer Use Action?"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Computernutzungsaktion genehmigen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Approve Computer Use Action?"
           }
         },
         "es" : {
@@ -3196,16 +3292,16 @@
       "comment" : "Speech when assistant text messages are disabled",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Assistant speech off."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Assistentensprache aus."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Assistant speech off."
           }
         },
         "es" : {
@@ -3280,16 +3376,16 @@
       "comment" : "Speech when assistant text messages are enabled",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Assistant speech on."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Assistentensprache ein."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Assistant speech on."
           }
         },
         "es" : {
@@ -3364,16 +3460,16 @@
       "comment" : "Speech when computer use is cancelled",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Computer use cancelled."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Computernutzung abgebrochen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Computer use cancelled."
           }
         },
         "es" : {
@@ -3448,16 +3544,16 @@
       "comment" : "Message for computer use critical warning dialog",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "This add-on uses an AI model to control your computer's mouse and keyboard. The author is not responsible for any irreversible actions, data loss, or other damages this add-on may perform or cause. Please use this tool responsibly and always monitor the add-on while it is running."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Dieses Add-on verwendet ein KI-Modell, um die Maus und Tastatur Ihres Computers zu steuern. Der Autor ist nicht verantwortlich für irreversible Aktionen, Datenverlust oder andere Schäden, die dieses Add-on ausführen oder verursachen kann. Bitte verwenden Sie dieses Tool verantwortungsbewusst und überwachen Sie das Add-on immer, während es ausgeführt wird."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This add-on uses an AI model to control your computer's mouse and keyboard. The author is not responsible for any irreversible actions, data loss, or other damages this add-on may perform or cause. Please use this tool responsibly and always monitor the add-on while it is running."
           }
         },
         "es" : {
@@ -3532,16 +3628,16 @@
       "comment" : "Title for computer use critical warning dialog",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "USE AT YOUR OWN RISK"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "NUTZUNG AUF EIGENE GEFAHR"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "USE AT YOUR OWN RISK"
           }
         },
         "es" : {
@@ -3616,16 +3712,16 @@
       "comment" : "Title for computer use prompt dialog",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Computer Use"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Computernutzung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Computer Use"
           }
         },
         "es" : {
@@ -3700,16 +3796,16 @@
       "comment" : "Alert title for computer use errors",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Computer Use Error"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Computernutzungsfehler"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Computer Use Error"
           }
         },
         "es" : {
@@ -3784,16 +3880,16 @@
       "comment" : "Speech when computer use fails",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Computer use failed: %@"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Computernutzung fehlgeschlagen: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Computer use failed: %@"
           }
         },
         "es" : {
@@ -3868,16 +3964,16 @@
       "comment" : "Speech when computer use finishes",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Computer use finished."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Computernutzung abgeschlossen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Computer use finished."
           }
         },
         "es" : {
@@ -3952,16 +4048,16 @@
       "comment" : "Speech when computer use has no preset",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "No active AI preset is selected."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Keine aktive KI-Vorlage ausgewählt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "No active AI preset is selected."
           }
         },
         "es" : {
@@ -4036,16 +4132,16 @@
       "comment" : "Speech when frontmost window is unavailable",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Could not access the frontmost window."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Zugriff auf das vorderste Fenster nicht möglich."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Could not access the frontmost window."
           }
         },
         "es" : {
@@ -4120,16 +4216,16 @@
       "comment" : "Speech when computer use is paused",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Computer use paused."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Computernutzung pausiert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Computer use paused."
           }
         },
         "es" : {
@@ -4204,16 +4300,16 @@
       "comment" : "Speech when computer use resumes",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Computer use resumed."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Computernutzung fortgesetzt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Computer use resumed."
           }
         },
         "es" : {
@@ -4288,16 +4384,16 @@
       "comment" : "Default text in the prompt dialog when resuming paused computer use",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Resume the task."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Aufgabe fortsetzen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Resume the task."
           }
         },
         "es" : {
@@ -4372,16 +4468,16 @@
       "comment" : "Comma-separated words and phrases that trigger computer use action approval",
       "extractionState" : "manual",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "buy, purchase, pay, checkout, order, submit, send, post, share, upload, delete, remove, archive, sign in, login, password, credential, confirm, transfer, unsubscribe"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "kaufen, Erwerb, bezahlen, Kasse, Bestellung, absenden, senden, posten, teilen, hochladen, löschen, entfernen, archivieren, anmelden, Login, Passwort, Zugangsdaten, bestätigen, überweisen, abbestellen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "buy, purchase, pay, checkout, order, submit, send, post, share, upload, delete, remove, archive, sign in, login, password, credential, confirm, transfer, unsubscribe"
           }
         },
         "es" : {
@@ -4456,15 +4552,15 @@
       "comment" : "Speech before computer use takes a screenshot",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Screenshot."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
+            "value" : "Screenshot."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
             "value" : "Screenshot."
           }
         },
@@ -4532,6 +4628,90 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "截图。"
+          }
+        }
+      }
+    },
+    "dialog.approveAll.checkbox" : {
+      "comment" : "Checkbox label for pre-approving all computer use actions",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alle genehmigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Approve all"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aprobar todo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tout approuver"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Approva tutto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "すべて承認"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "모두 승인"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Godkjenn alle"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zatwierdź wszystko"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aprovar tudo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Одобрить всё"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Схвалити все"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "全部批准"
           }
         }
       }
@@ -5288,90 +5468,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "跟进"
-          }
-        }
-      }
-    },
-    "dialog.approveAll.checkbox" : {
-      "comment" : "Checkbox label for pre-approving all computer use actions",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Alle genehmigen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Approve all"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Aprobar todo"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tout approuver"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Approva tutto"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "すべて承認"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "모두 승인"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Godkjenn alle"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zatwierdź wszystko"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Aprovar tudo"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Одобрить всё"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Схвалити все"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "全部批准"
           }
         }
       }
@@ -7059,16 +7155,16 @@
       "comment" : "Alert message when a preset API key cannot be decrypted",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "VOCR could not decrypt the API key for the \"%@\" preset. Please open Preset Manager, edit this preset, re-enter the API key, and save it."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VOCR konnte den API-Schlüssel für die Vorlage \"%@\" nicht entschlüsseln. Bitte öffnen Sie die Vorlagenverwaltung, bearbeiten Sie diese Vorlage, geben Sie den API-Schlüssel erneut ein und speichern Sie ihn."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "VOCR could not decrypt the API key for the \"%@\" preset. Please open Preset Manager, edit this preset, re-enter the API key, and save it."
           }
         },
         "es" : {
@@ -7143,16 +7239,16 @@
       "comment" : "Alert title when a preset API key cannot be decrypted",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Cannot Decrypt API Key"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "API-Schlüssel kann nicht entschlüsselt werden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Cannot Decrypt API Key"
           }
         },
         "es" : {
@@ -7287,12 +7383,6 @@
             "value" : "Não foi possível recuperar a lista de modelos do servidor. Digite manualmente o nome do modelo a usar."
           }
         },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "无法从服务器获取模型列表。请手动输入要使用的模型名称。"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7303,6 +7393,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Не вдалося отримати список моделей із сервера. Будь ласка, введіть назву моделі вручну."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "无法从服务器获取模型列表。请手动输入要使用的模型名称。"
           }
         }
       }
@@ -7371,12 +7467,6 @@
             "value" : "Falha ao obter modelos."
           }
         },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "获取模型失败。"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7387,6 +7477,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Не вдалося отримати список моделей."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "获取模型失败。"
           }
         }
       }
@@ -7689,6 +7785,12 @@
             "value" : "%@, %@의 스크린샷을 찍지 못했습니다"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kunne ikke ta skjermbilde av %@, %@"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7701,18 +7803,6 @@
             "value" : "Falha ao capturar a tela de %@, %@"
           }
         },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "截取 %@, %@ 的屏幕失败"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kunne ikke ta skjermbilde av %@, %@"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7723,6 +7813,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Не вдалося зробити знімок екрана %@, %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "截取 %@, %@ 的屏幕失败"
           }
         }
       }
@@ -7983,16 +8079,16 @@
       "comment" : "Accessibility label for model picker popup button",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Model"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Modell"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Model"
           }
         },
         "es" : {
@@ -8235,16 +8331,16 @@
       "comment" : "Accessibility label for provider popup button",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Provider"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Anbieter"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Provider"
           }
         },
         "es" : {
@@ -9411,34 +9507,16 @@
       "comment" : "Menu item for choosing display language",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Language"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lingua"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Språk"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Język"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Sprache"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Language"
           }
         },
         "es" : {
@@ -9453,6 +9531,12 @@
             "value" : "Langue"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lingua"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9463,6 +9547,18 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "언어"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Språk"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Język"
           }
         },
         "pt" : {
@@ -9495,34 +9591,16 @@
       "comment" : "Use system language",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "System Default"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Predefinita del sistema"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Systemstandard"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Domyślny systemowy"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Systemstandard"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "System Default"
           }
         },
         "es" : {
@@ -9537,6 +9615,12 @@
             "value" : "Par défaut du système"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Predefinita del sistema"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9547,6 +9631,18 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "시스템 기본값"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Systemstandard"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Domyślny systemowy"
           }
         },
         "pt" : {
@@ -10251,16 +10347,16 @@
       "comment" : "Menu item for AI settings submenu",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "AI"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "KI"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "AI"
           }
         },
         "es" : {
@@ -10335,16 +10431,16 @@
       "comment" : "Menu item for toggling assistant speech during AI",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Speak Assistant Message"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Assistentennachricht sprechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Speak Assistant Message"
           }
         },
         "es" : {
@@ -10839,15 +10935,15 @@
       "comment" : "Menu item for OCR settings submenu",
       "extractionState" : "manual",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OCR"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
+            "value" : "OCR"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "OCR"
           }
         },
@@ -10923,22 +11019,16 @@
       "comment" : "Menu item for managing app permissions",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Permissions…"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tillatelser"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Berechtigungen…"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Permissions…"
           }
         },
         "es" : {
@@ -10969,6 +11059,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "권한…"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tillatelser"
           }
         },
         "pl" : {
@@ -12011,6 +12107,42 @@
         }
       }
     },
+    "navigation.barcode_count_plural" : {
+      "comment" : "Plural barcode count phrase",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%d codes"
+          }
+        }
+      }
+    },
+    "navigation.barcode_count_singular" : {
+      "comment" : "Singular barcode count phrase",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "1 code"
+          }
+        }
+      }
+    },
+    "navigation.barcodes_detected" : {
+      "comment" : "Message when barcodes are detected",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ detected. Press %2$@ to view."
+          }
+        }
+      }
+    },
     "navigation.choose_window" : {
       "comment" : "Alert message for choosing target window",
       "extractionState" : "manual",
@@ -12179,90 +12311,6 @@
         }
       }
     },
-    "navigation.coordinates" : {
-      "comment" : "Coordinate position format",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%d, %d"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d, %d"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%d, %d"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%d, %d"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d, %d"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%d, %d"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%d, %d"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d, %d"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%d, %d"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%d, %d"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%d, %d"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%d, %d"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%d, %d"
-          }
-        }
-      }
-    },
     "navigation.exit" : {
       "comment" : "Message announced when exiting navigation mode",
       "extractionState" : "manual",
@@ -12427,6 +12475,30 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%@, %@ 扫描完成"
+          }
+        }
+      }
+    },
+    "navigation.finished_scanning_barcode_detected" : {
+      "comment" : "Message when scanning is complete and a barcode was found",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Finished scanning"
+          }
+        }
+      }
+    },
+    "navigation.no_barcodes" : {
+      "comment" : "Message when no barcodes are found",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "No barcodes found in the last scan."
           }
         }
       }
@@ -12855,22 +12927,16 @@
       "comment" : "Message for permissions onboarding alert",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "VOCR needs permissions to provide OCR and accessibility features. Would you like to set them up now?"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VOCR trenger tillatelser for å kunne bruke OCR og tilgjengelighetsfunksjoner. Vil du konfigurere dem nå?"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VOCR benötigt Berechtigungen, um OCR- und Bedienungshilfen-Funktionen bereitzustellen. Möchten Sie diese jetzt einrichten?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "VOCR needs permissions to provide OCR and accessibility features. Would you like to set them up now?"
           }
         },
         "es" : {
@@ -12901,6 +12967,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VOCR이 OCR 및 손쉬운 사용 기능을 제공하려면 권한이 필요합니다. 지금 설정하시겠습니까?"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR trenger tillatelser for å kunne bruke OCR og tilgjengelighetsfunksjoner. Vil du konfigurere dem nå?"
           }
         },
         "pl" : {
@@ -12939,22 +13011,16 @@
       "comment" : "Button to set up permissions",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Set Up Permissions"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Konfigurer tillatelser"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Berechtigungen einrichten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Set Up Permissions"
           }
         },
         "es" : {
@@ -12985,6 +13051,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "권한 설정"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konfigurer tillatelser"
           }
         },
         "pl" : {
@@ -13023,22 +13095,16 @@
       "comment" : "Button to skip permissions setup",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Skip for Now"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hopp over for nå"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Vorerst überspringen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Skip for Now"
           }
         },
         "es" : {
@@ -13069,6 +13135,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "나중에 하기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hopp over for nå"
           }
         },
         "pl" : {
@@ -13107,22 +13179,16 @@
       "comment" : "Title for permissions onboarding alert",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Welcome to VOCR"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Velkommen til VOCR"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Willkommen bei VOCR"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Welcome to VOCR"
           }
         },
         "es" : {
@@ -13153,6 +13219,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VOCR에 오신 것을 환영합니다"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velkommen til VOCR"
           }
         },
         "pl" : {
@@ -13191,22 +13263,16 @@
       "comment" : "Description header for accessibility permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "VOCR needs Accessibility access to:"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VOCR trenger tilgang til Tilgjengelighet for å:"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VOCR benötigt Zugriff auf Bedienungshilfen für:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "VOCR needs Accessibility access to:"
           }
         },
         "es" : {
@@ -13237,6 +13303,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VOCR은 다음을 위해 손쉬운 사용 권한이 필요합니다:"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR trenger tilgang til Tilgjengelighet for å:"
           }
         },
         "pl" : {
@@ -13275,22 +13347,16 @@
       "comment" : "Accessibility permission feature",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Read text from your screen for OCR"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Read text from your screen for OCR"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Text von Ihrem Bildschirm für OCR lesen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Read text from your screen for OCR"
           }
         },
         "es" : {
@@ -13321,6 +13387,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "OCR을 위해 화면에서 텍스트 읽기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Read text from your screen for OCR"
           }
         },
         "pl" : {
@@ -13359,22 +13431,16 @@
       "comment" : "Accessibility permission feature",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Control VoiceOver cursor position"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sty­re VoiceOver-markøren"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Position des VoiceOver-Cursors steuern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Control VoiceOver cursor position"
           }
         },
         "es" : {
@@ -13405,6 +13471,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VoiceOver 커서 위치 제어"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sty­re VoiceOver-markøren"
           }
         },
         "pl" : {
@@ -13443,22 +13515,16 @@
       "comment" : "Accessibility permission feature",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Take screenshots under the VoiceOver cursor"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ta skjermbilde ved VoiceOver-markøren"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Screenshots unter dem VoiceOver-Cursor aufnehmen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Take screenshots under the VoiceOver cursor"
           }
         },
         "es" : {
@@ -13489,6 +13555,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VoiceOver 커서 아래의 스크린샷 캡처"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta skjermbilde ved VoiceOver-markøren"
           }
         },
         "pl" : {
@@ -13527,22 +13599,16 @@
       "comment" : "Accessibility permission feature",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Interact with window content"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Håndtere vindusinnhold"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Mit Fensterinhalt interagieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Interact with window content"
           }
         },
         "es" : {
@@ -13573,6 +13639,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "창 콘텐츠와 상호 작용"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Håndtere vindusinnhold"
           }
         },
         "pl" : {
@@ -13611,22 +13683,16 @@
       "comment" : "Name for accessibility permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Accessibility"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tilgjengelighet"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bedienungshilfen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Accessibility"
           }
         },
         "es" : {
@@ -13657,6 +13723,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "손쉬운 사용"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilgjengelighet"
           }
         },
         "pl" : {
@@ -13695,22 +13767,16 @@
       "comment" : "Description header for notifications permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "VOCR needs Notifications to:"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VOCR trenger å sende varsler for å:"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VOCR benötigt Mitteilungen für:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "VOCR needs Notifications to:"
           }
         },
         "es" : {
@@ -13741,6 +13807,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VOCR은 다음을 위해 알림 권한이 필요합니다:"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR trenger å sende varsler for å:"
           }
         },
         "pl" : {
@@ -13779,22 +13851,16 @@
       "comment" : "Notifications permission feature",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Alert you when updates are available"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Varsle deg når oppdateringer er tilgjengelige"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Benachrichtigung bei verfügbaren Updates"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Alert you when updates are available"
           }
         },
         "es" : {
@@ -13825,6 +13891,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "업데이트가 가능할 때 알림"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varsle deg når oppdateringer er tilgjengelige"
           }
         },
         "pl" : {
@@ -13863,22 +13935,16 @@
       "comment" : "Notifications permission feature",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Show OCR completion notifications"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vise varsler når OCR er fullført"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Anzeige von OCR-Abschlussbenachrichtigungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Show OCR completion notifications"
           }
         },
         "es" : {
@@ -13909,6 +13975,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "OCR 완료 알림 표시"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vise varsler når OCR er fullført"
           }
         },
         "pl" : {
@@ -13947,22 +14019,16 @@
       "comment" : "Notifications permission feature",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Provide background task updates"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gi oppdateringer om oppgaver i bakgrunnen"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bereitstellung von Hintergrundaufgaben-Updates"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Provide background task updates"
           }
         },
         "es" : {
@@ -13993,6 +14059,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "백그라운드 작업 업데이트 제공"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gi oppdateringer om oppgaver i bakgrunnen"
           }
         },
         "pl" : {
@@ -14031,22 +14103,16 @@
       "comment" : "Name for notifications permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Notifications"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Varslinger"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Mitteilungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Notifications"
           }
         },
         "es" : {
@@ -14077,6 +14143,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "알림"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varslinger"
           }
         },
         "pl" : {
@@ -14115,22 +14187,16 @@
       "comment" : "Text indicating permission is optional",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "This permission is optional but enhances functionality."
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Denne tillatelsen er valgfri"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Diese Berechtigung ist optional, verbessert aber die Funktionalität."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This permission is optional but enhances functionality."
           }
         },
         "es" : {
@@ -14161,6 +14227,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "이 권한은 선택 사항이지만 기능을 향상시킵니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denne tillatelsen er valgfri"
           }
         },
         "pl" : {
@@ -14199,22 +14271,16 @@
       "comment" : "Text indicating permission is required",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "This permission is required for core OCR functionality."
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Denne tillatelsen er påkrevd for grunnleggende OCR-funksjonalitet."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Diese Berechtigung ist für die Kern-OCR-Funktionalität erforderlich."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This permission is required for core OCR functionality."
           }
         },
         "es" : {
@@ -14245,6 +14311,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "이 권한은 핵심 OCR 기능에 필요합니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denne tillatelsen er påkrevd for grunnleggende OCR-funksjonalitet."
           }
         },
         "pl" : {
@@ -14283,22 +14355,16 @@
       "comment" : "Description header for screen recording permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "VOCR needs Screen Recording access to:"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VOCR trenger tilgang til Skjermopptak for å:"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VOCR benötigt Zugriff auf Bildschirmaufnahme für:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "VOCR needs Screen Recording access to:"
           }
         },
         "es" : {
@@ -14329,6 +14395,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VOCR은 다음을 위해 화면 기록 권한이 필요합니다:"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR trenger tilgang til Skjermopptak for å:"
           }
         },
         "pl" : {
@@ -14367,22 +14439,16 @@
       "comment" : "Screen recording permission feature",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Capture screen content for OCR"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ta opp skjerminnhold for OCR"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bildschirminhalt für OCR erfassen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Capture screen content for OCR"
           }
         },
         "es" : {
@@ -14413,6 +14479,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "OCR을 위해 화면 콘텐츠 캡처"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta opp skjerminnhold for OCR"
           }
         },
         "pl" : {
@@ -14451,22 +14523,16 @@
       "comment" : "Screen recording permission feature",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Take screenshots of windows and displays"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ta skjermbilder av vinduer og skjermer"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Screenshots von Fenstern und Displays aufnehmen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Take screenshots of windows and displays"
           }
         },
         "es" : {
@@ -14497,6 +14563,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "창 및 디스플레이의 스크린샷 캡처"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta skjermbilder av vinduer og skjermer"
           }
         },
         "pl" : {
@@ -14535,22 +14607,16 @@
       "comment" : "Screen recording permission feature",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Extract text from screen regions"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hente ut tekst fra områder på skjermen"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Text aus Bildschirmbereichen extrahieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Extract text from screen regions"
           }
         },
         "es" : {
@@ -14581,6 +14647,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "화면 영역에서 텍스트 추출"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hente ut tekst fra områder på skjermen"
           }
         },
         "pl" : {
@@ -14619,22 +14691,16 @@
       "comment" : "Name for screen recording permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Screen Recording"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Skjermopptak"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bildschirmaufnahme"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Screen Recording"
           }
         },
         "es" : {
@@ -14665,6 +14731,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "화면 기록"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skjermopptak"
           }
         },
         "pl" : {
@@ -14703,22 +14775,16 @@
       "comment" : "Status text for denied permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "✗ Unset"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ikke angitt"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "✗ Nicht gesetzt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "✗ Unset"
           }
         },
         "es" : {
@@ -14749,6 +14815,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "✗ 설정되지 않음"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikke angitt"
           }
         },
         "pl" : {
@@ -14787,22 +14859,16 @@
       "comment" : "Status text for granted permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "✓ Granted"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tillatt"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "✓ Erteilt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "✓ Granted"
           }
         },
         "es" : {
@@ -14833,6 +14899,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "✓ 허용됨"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tillatt"
           }
         },
         "pl" : {
@@ -14871,22 +14943,16 @@
       "comment" : "Status text for not determined permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "⚠️ Not Set"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "⚠️ Ikke angitt"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "⚠️ Nicht gesetzt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "⚠️ Not Set"
           }
         },
         "es" : {
@@ -14917,6 +14983,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "⚠️ 설정되지 않음"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ Ikke angitt"
           }
         },
         "pl" : {
@@ -14955,22 +15027,16 @@
       "comment" : "Status text for restricted permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "🚫 Restricted"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🚫 Begrenset"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "🚫 Eingeschränkt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "🚫 Restricted"
           }
         },
         "es" : {
@@ -15001,6 +15067,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "🚫 제한됨"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚫 Begrenset"
           }
         },
         "pl" : {
@@ -15039,22 +15111,16 @@
       "comment" : "Description header for VoiceOver automation permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "VOCR needs VoiceOver access to:"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VOCR trenger tilgang til VoiceOver for å:"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VOCR benötigt Zugriff auf VoiceOver für:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "VOCR needs VoiceOver access to:"
           }
         },
         "es" : {
@@ -15085,6 +15151,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VOCR은 다음을 위해 VoiceOver 권한이 필요합니다:"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR trenger tilgang til VoiceOver for å:"
           }
         },
         "pl" : {
@@ -15123,22 +15195,16 @@
       "comment" : "VoiceOver automation permission feature",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Speak announcements through VoiceOver"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lese opp varslinger med VoiceOver"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ansagen über VoiceOver sprechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Speak announcements through VoiceOver"
           }
         },
         "es" : {
@@ -15169,6 +15235,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VoiceOver를 통해 안내 방송 읽기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lese opp varslinger med VoiceOver"
           }
         },
         "pl" : {
@@ -15207,22 +15279,16 @@
       "comment" : "VoiceOver automation permission feature",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Control VoiceOver cursor and navigation"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sty­re VoiceOver-markøren og navigasjonen"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VoiceOver-Cursor und Navigation steuern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Control VoiceOver cursor and navigation"
           }
         },
         "es" : {
@@ -15253,6 +15319,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VoiceOver 커서 및 탐색 제어"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sty­re VoiceOver-markøren og navigasjonen"
           }
         },
         "pl" : {
@@ -15291,22 +15363,16 @@
       "comment" : "VoiceOver automation permission feature",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Read the currently focused element via VoiceOver"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lese det fokuserte elementet med VoiceOver"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Das aktuell fokussierte Element über VoiceOver lesen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Read the currently focused element via VoiceOver"
           }
         },
         "es" : {
@@ -15337,6 +15403,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VoiceOver를 통해 현재 포커스된 항목 읽기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lese det fokuserte elementet med VoiceOver"
           }
         },
         "pl" : {
@@ -15375,21 +15447,15 @@
       "comment" : "Name for VoiceOver automation permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "VoiceOver"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VoiceOver"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
+            "value" : "VoiceOver"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
             "value" : "VoiceOver"
           }
         },
@@ -15420,6 +15486,12 @@
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
+            "value" : "VoiceOver"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "VoiceOver"
           }
         },
@@ -15459,22 +15531,16 @@
       "comment" : "Button to dismiss missing permissions alert",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Later"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Senere"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Später"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Later"
           }
         },
         "es" : {
@@ -15505,6 +15571,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "나중에"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senere"
           }
         },
         "pl" : {
@@ -15543,22 +15615,16 @@
       "comment" : "Message for missing permissions alert",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Some required permissions are not set up. VOCR may not function correctly."
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Noen nødvendige tillatelser er ikke konfigurert. VOCR fungerer kanskje ikke som den skal."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Einige erforderliche Berechtigungen sind nicht eingerichtet. VOCR funktioniert möglicherweise nicht korrekt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Some required permissions are not set up. VOCR may not function correctly."
           }
         },
         "es" : {
@@ -15589,6 +15655,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "일부 필수 권한이 설정되지 않았습니다. VOCR이 올바르게 작동하지 않을 수 있습니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noen nødvendige tillatelser er ikke konfigurert. VOCR fungerer kanskje ikke som den skal."
           }
         },
         "pl" : {
@@ -15627,22 +15699,16 @@
       "comment" : "Button to open permissions window",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Open Permissions"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Åpne Tillatelser"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Berechtigungen öffnen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open Permissions"
           }
         },
         "es" : {
@@ -15673,6 +15739,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "권한 열기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åpne Tillatelser"
           }
         },
         "pl" : {
@@ -15711,22 +15783,16 @@
       "comment" : "Title for missing permissions alert",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Permissions Required"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tillatelser er påkrevd"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Berechtigungen erforderlich"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Permissions Required"
           }
         },
         "es" : {
@@ -15757,6 +15823,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "권한 필요"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tillatelser er påkrevd"
           }
         },
         "pl" : {
@@ -15855,12 +15927,6 @@
             "value" : "Não será exibido após salvar."
           }
         },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "保存后不会显示。"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -15871,6 +15937,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Не буде відображатися після збереження."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "保存后不会显示。"
           }
         }
       }
@@ -16023,12 +16095,6 @@
             "value" : "Você é um assistente útil."
           }
         },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "你是一个有帮助的助手。"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -16039,6 +16105,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ви — корисний помічник."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "你是一个有帮助的助手。"
           }
         }
       }
@@ -16107,12 +16179,6 @@
             "value" : "Analise a imagem de forma completa e detalhada."
           }
         },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "请对图像进行全面而详细的分析。"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -16124,6 +16190,12 @@
             "state" : "needs_review",
             "value" : "Проаналізуйте зображення всебічно та детально."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "请对图像进行全面而详细的分析。"
+          }
         }
       }
     },
@@ -16131,16 +16203,16 @@
       "comment" : "Suffix added to duplicated preset name",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : " Copy"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Kopie"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : " Copy"
           }
         },
         "es" : {
@@ -19155,22 +19227,16 @@
       "comment" : "Window title for permissions window",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "VOCR Permissions"
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VOCR tillatelser"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VOCR-Berechtigungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "VOCR Permissions"
           }
         },
         "es" : {
@@ -19201,6 +19267,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "VOCR 권한"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOCR tillatelser"
           }
         },
         "pl" : {

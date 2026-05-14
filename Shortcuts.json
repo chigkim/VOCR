@@ -154,5 +154,11 @@
 		"key": 53,
 		"modifiers": 0,
 		"name": "shortcut.exit_navigation"
+	},
+	{
+		"keyName": "\u2303\u21e7\u2318Q",
+		"key": 12,
+		"modifiers": 4864,
+		"name": "shortcut.view_qrcodes"
 	}
 ]

@@ -15,6 +15,47 @@ func log<T>(_ object: T, _ level: OSLogType = .info) {
     logger.log("\(String(describing: object))")
 }
 
+struct DetectedBarcode: Equatable {
+    let payload: String
+    let symbology: VNBarcodeSymbology
+
+    var symbologyName: String {
+        Self.symbologyNames[symbology.rawValue] ?? symbology.rawValue.replacingOccurrences(
+            of: "VNBarcodeSymbology", with: "")
+    }
+
+    var displayValue: String {
+        "\(symbologyName): \(payload)"
+    }
+
+    private static let symbologyNames: [String: String] = [
+        "VNBarcodeSymbologyAztec": "Aztec",
+        "VNBarcodeSymbologyCodabar": "Codabar",
+        "VNBarcodeSymbologyCode128": "Code 128",
+        "VNBarcodeSymbologyCode39": "Code 39",
+        "VNBarcodeSymbologyCode39Checksum": "Code 39 Checksum",
+        "VNBarcodeSymbologyCode39FullASCII": "Code 39 Full ASCII",
+        "VNBarcodeSymbologyCode39FullASCIIChecksum": "Code 39 Full ASCII Checksum",
+        "VNBarcodeSymbologyCode93": "Code 93",
+        "VNBarcodeSymbologyCode93i": "Code 93i",
+        "VNBarcodeSymbologyDataMatrix": "Data Matrix",
+        "VNBarcodeSymbologyEAN13": "EAN-13",
+        "VNBarcodeSymbologyEAN8": "EAN-8",
+        "VNBarcodeSymbologyGS1DataBar": "GS1 DataBar",
+        "VNBarcodeSymbologyGS1DataBarExpanded": "GS1 DataBar Expanded",
+        "VNBarcodeSymbologyGS1DataBarLimited": "GS1 DataBar Limited",
+        "VNBarcodeSymbologyI2of5": "Interleaved 2 of 5",
+        "VNBarcodeSymbologyI2of5Checksum": "Interleaved 2 of 5 Checksum",
+        "VNBarcodeSymbologyITF14": "ITF-14",
+        "VNBarcodeSymbologyMicroPDF417": "MicroPDF417",
+        "VNBarcodeSymbologyMicroQR": "Micro QR code",
+        "VNBarcodeSymbologyMSIPlessey": "MSI Plessey",
+        "VNBarcodeSymbologyPDF417": "PDF417",
+        "VNBarcodeSymbologyQR": "QR code",
+        "VNBarcodeSymbologyUPCE": "UPC-E",
+    ]
+}
+
 func hide() {
     let windows = NSApplication.shared.windows
     NSApplication.shared.hide(nil)
@@ -24,6 +65,8 @@ func hide() {
 }
 
 func showDialog(_ alert: NSAlert, focusing firstResponder: NSResponder? = nil) {
+    alert.layout()
+
     let window = alert.window
     window.level = .modalPanel
     window.initialFirstResponder = firstResponder as? NSView
@@ -32,7 +75,18 @@ func showDialog(_ alert: NSAlert, focusing firstResponder: NSResponder? = nil) {
     NSApp.activate(ignoringOtherApps: true)
     window.makeKeyAndOrderFront(nil)
 
-    if let firstResponder {
+    guard let firstResponder else {
+        return
+    }
+
+    if let view = firstResponder as? NSView, view.window !== window {
+        DispatchQueue.main.async { [weak view, weak window] in
+            guard let view, let window, view.window === window else {
+                return
+            }
+            window.makeFirstResponder(view)
+        }
+    } else {
         window.makeFirstResponder(firstResponder)
     }
 }
@@ -292,12 +346,13 @@ enum VisionOCR {
         return request.results ?? []
     }
 
-    static func observations(in cgImage: CGImage, detectObjects: Bool) -> [Observation] {
+    static func observations(in cgImage: CGImage, detectObjects: Bool) -> (observations: [Observation], barcodes: [DetectedBarcode]) {
         let textRecognitionRequest = textRecognitionRequest()
         let rectDetectRequest = rectangleDetectionRequest()
+        let barcodeRequest = VNDetectBarcodesRequest()
         let requests: [VNRequest] = detectObjects
-            ? [textRecognitionRequest, rectDetectRequest]
-            : [textRecognitionRequest]
+            ? [textRecognitionRequest, rectDetectRequest, barcodeRequest]
+            : [textRecognitionRequest, barcodeRequest]
 
         let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
         do {
@@ -306,13 +361,22 @@ enum VisionOCR {
             log("OCR failed: \(error)")
         }
 
+        var barcodes: [DetectedBarcode] = []
+        if let detectedBarcodes = barcodeRequest.results {
+            for barcode in detectedBarcodes {
+                if let payload = barcode.payloadStringValue {
+                    barcodes.append(DetectedBarcode(payload: payload, symbology: barcode.symbology))
+                }
+            }
+        }
+
         guard let texts = textRecognitionRequest.results else {
-            return []
+            return ([], barcodes)
         }
 
         var result = texts.map { Observation($0) }
         guard detectObjects, let boxes = rectDetectRequest.results else {
-            return result
+            return (result, barcodes)
         }
 
         var boxesNoText: [Observation] = []
@@ -338,7 +402,7 @@ enum VisionOCR {
         log("Text Count: \(texts.count)")
         log("boxesNoText Count: \(boxesNoText.count)")
         log("boxesText count: \(boxesText.count)")
-        return result
+        return (result, barcodes)
     }
 
     private static func textRecognitionRequest() -> VNRecognizeTextRequest {
