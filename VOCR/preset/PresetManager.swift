@@ -149,7 +149,9 @@ final class PresetManager {
         }
 
         presets[idx] = updated
-        log("PresetManager: updated preset \(presetSummary(updated)); keyRotated=\(apiKeyPlaintext?.isEmpty == false)")
+        log(
+            "PresetManager: updated preset \(presetSummary(updated)); keyRotated=\(apiKeyPlaintext?.isEmpty == false)"
+        )
         saveToDisk()
     }
 
@@ -173,7 +175,10 @@ final class PresetManager {
 
         let newPreset = Preset(
             id: UUID(),
-            name: src.name + NSLocalizedString("preset.duplicate_suffix", value: " Copy", comment: "Suffix added to duplicated preset name"),
+            name: src.name
+                + NSLocalizedString(
+                    "preset.duplicate_suffix", value: " Copy",
+                    comment: "Suffix added to duplicated preset name"),
             url: src.url,
             model: src.model,
             systemPrompt: src.systemPrompt,
@@ -186,7 +191,9 @@ final class PresetManager {
         // make the duplicate the selected preset in memory
         selectedPresetID = newPreset.id
 
-        log("PresetManager: duplicated preset \(originalID.uuidString) as \(presetSummary(newPreset))")
+        log(
+            "PresetManager: duplicated preset \(originalID.uuidString) as \(presetSummary(newPreset))"
+        )
         saveToDisk()
         return newPreset.id
     }
@@ -216,7 +223,9 @@ final class PresetManager {
         }
 
         guard let preset = selectedPreset ?? defaultPreset else {
-            log("PresetManager: active preset unavailable; presets=\(presets.count), selected=\(selectedPresetID?.uuidString ?? "nil")")
+            log(
+                "PresetManager: active preset unavailable; presets=\(presets.count), selected=\(selectedPresetID?.uuidString ?? "nil")"
+            )
             return nil
         }
 
@@ -224,7 +233,9 @@ final class PresetManager {
 
         do {
             let apiKey = try SecureCrypto.decryptAPIKey(preset.encryptedKeyCombinedBase64)
-            log("PresetManager: active preset key decrypted for \(preset.name) id=\(preset.id.uuidString)")
+            log(
+                "PresetManager: active preset key decrypted for \(preset.name) id=\(preset.id.uuidString)"
+            )
             return ActivePreset(
                 id: preset.id,
                 name: preset.name,
@@ -235,7 +246,9 @@ final class PresetManager {
                 apiKey: apiKey
             )
         } catch {
-            log("PresetManager: failed to decrypt active preset key for \(presetSummary(preset)): \(error)")
+            log(
+                "PresetManager: failed to decrypt active preset key for \(presetSummary(preset)): \(error)"
+            )
             alertPresetKeyDecryptionFailure(presetName: preset.name)
             return nil
         }

@@ -20,8 +20,9 @@ struct DetectedBarcode: Equatable {
     let symbology: VNBarcodeSymbology
 
     var symbologyName: String {
-        Self.symbologyNames[symbology.rawValue] ?? symbology.rawValue.replacingOccurrences(
-            of: "VNBarcodeSymbology", with: "")
+        Self.symbologyNames[symbology.rawValue]
+            ?? symbology.rawValue.replacingOccurrences(
+                of: "VNBarcodeSymbology", with: "")
     }
 
     var displayValue: String {
@@ -62,7 +63,9 @@ func hide() {
 }
 
 @discardableResult
-func showDialog(_ alert: NSAlert, focusing firstResponder: NSResponder? = nil) -> NSApplication.ModalResponse {
+func showDialog(_ alert: NSAlert, focusing firstResponder: NSResponder? = nil)
+    -> NSApplication.ModalResponse
+{
     alert.layout()
 
     let window = alert.window
@@ -338,11 +341,14 @@ enum VisionOCR {
         return request.results ?? []
     }
 
-    static func observations(in cgImage: CGImage, detectObjects: Bool) -> (observations: [Observation], barcodes: [DetectedBarcode]) {
+    static func observations(in cgImage: CGImage, detectObjects: Bool) -> (
+        observations: [Observation], barcodes: [DetectedBarcode]
+    ) {
         let textRecognitionRequest = textRecognitionRequest()
         let rectDetectRequest = rectangleDetectionRequest()
         let barcodeRequest = VNDetectBarcodesRequest()
-        let requests: [VNRequest] = detectObjects
+        let requests: [VNRequest] =
+            detectObjects
             ? [textRecognitionRequest, rectDetectRequest, barcodeRequest]
             : [textRecognitionRequest, barcodeRequest]
 

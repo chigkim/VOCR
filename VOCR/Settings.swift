@@ -343,8 +343,8 @@ enum StatusMenuController {
                 title: NSLocalizedString(
                     "menu.saveLatestImage", value: "Save Latest Image",
                     comment: "Menu item for saving the most recent captured image"),
-                    action: #selector(MenuHandler.saveLastImage(_:)),
-                    keyEquivalent: "s")
+                action: #selector(MenuHandler.saveLastImage(_:)),
+                keyEquivalent: "s")
             saveScreenshotMenuItem.target = Settings.target
             menu.addItem(saveScreenshotMenuItem)
         }
@@ -354,8 +354,8 @@ enum StatusMenuController {
                 title: NSLocalizedString(
                     "menu.saveOCRResult", value: "Save OCR Result...",
                     comment: "Menu item for saving OCR text results to file"),
-                    action: #selector(MenuHandler.saveResult(_:)),
-                    keyEquivalent: "")
+                action: #selector(MenuHandler.saveResult(_:)),
+                keyEquivalent: "")
             saveMenuItem.target = Settings.target
             menu.addItem(saveMenuItem)
         }
@@ -509,7 +509,8 @@ extension Settings {
         Settings.usePresetPrompt = defaults.bool(forKey: "usePresetPrompt")
         Settings.targetWindow = defaults.bool(forKey: "targetWindow")
         Settings.preRelease = defaults.bool(forKey: "preRelease")
-        Settings.readAssistantSpeech = defaults.object(forKey: "readAssistantSpeech") as? Bool ?? true
+        Settings.readAssistantSpeech =
+            defaults.object(forKey: "readAssistantSpeech") as? Bool ?? true
         if let camera = defaults.string(forKey: "camera") {
             Settings.camera = camera
         }

@@ -17,8 +17,9 @@ final class AboutWindowController: NSObject, NSWindowDelegate {
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
         let storyboardID = NSStoryboard.SceneIdentifier("aboutWindowStoryboardID")
 
-        guard let windowController = storyboard.instantiateController(withIdentifier: storyboardID)
-            as? NSWindowController
+        guard
+            let windowController = storyboard.instantiateController(withIdentifier: storyboardID)
+                as? NSWindowController
         else {
             fatalError("Unable to load About window controller")
         }

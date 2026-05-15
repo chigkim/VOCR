@@ -16,7 +16,6 @@ import UserNotifications
 final class PermissionsManager {
     static let shared = PermissionsManager()
 
-
     // Set to true within a session once the user has been sent to grant screen recording.
     // CGPreflightScreenCaptureAccess() caches its result per process and won't reflect a
     // mid-session grant until the app is restarted; this flag suppresses the false-negative.

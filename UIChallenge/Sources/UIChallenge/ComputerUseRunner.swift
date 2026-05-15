@@ -457,8 +457,9 @@ extension ComputerUseRunner {
 
 extension ComputerUseRunner {
     fileprivate var systemInstruction: String? {
-        guard var instruction = loadToolsText(
-            name: "portable_computer_use_system_message", ext: "txt")
+        guard
+            var instruction = loadToolsText(
+                name: "portable_computer_use_system_message", ext: "txt")
         else {
             return nil
         }
@@ -471,8 +472,10 @@ extension ComputerUseRunner {
         let timezoneString = TimeZone.current.abbreviation() ?? ""
         let fullDateString = "\(dateString) \(timezoneString)"
 
-        instruction = instruction.replacingOccurrences(of: "{os}", with: osName, options: .caseInsensitive)
-        instruction = instruction.replacingOccurrences(of: "{date}", with: fullDateString, options: .caseInsensitive)
+        instruction = instruction.replacingOccurrences(
+            of: "{os}", with: osName, options: .caseInsensitive)
+        instruction = instruction.replacingOccurrences(
+            of: "{date}", with: fullDateString, options: .caseInsensitive)
         instruction = instruction.replacingOccurrences(
             of: "{risky_words}", with: localizedRiskyWordsString, options: .caseInsensitive)
 
@@ -665,7 +668,8 @@ extension ComputerUseRunner {
         logger: ActionLogger,
         turn: Int
     ) throws {
-        guard let screenshotMessage = makeScreenshotUserMessage(text: screenshotText(for: messages)) else {
+        guard let screenshotMessage = makeScreenshotUserMessage(text: screenshotText(for: messages))
+        else {
             throw RunnerError.screenshotFailed
         }
 
@@ -789,7 +793,9 @@ extension ComputerUseRunner {
             let restoredContent = Array(sanitizedContent.reversed())
             if removedImage, isRefreshScreenshotMessage(restoredContent) {
                 sanitizedMessages.remove(at: index)
-            } else if removedImage, let compactedContent = compactedScreenshotContent(restoredContent) {
+            } else if removedImage,
+                let compactedContent = compactedScreenshotContent(restoredContent)
+            {
                 sanitizedMessages[index]["content"] = compactedContent
             } else if removedImage, restoredContent.count == 1,
                 let first = restoredContent.first,
@@ -850,10 +856,12 @@ extension ComputerUseRunner {
     }
 
     fileprivate func latestToolResults(in messages: [[String: Any]]) -> [String] {
-        guard let latestToolCallIndex = messages.indices.last(where: { index in
-            guard messages[index]["role"] as? String == "assistant" else { return false }
-            return messages[index]["tool_calls"] != nil
-        }) else {
+        guard
+            let latestToolCallIndex = messages.indices.last(where: { index in
+                guard messages[index]["role"] as? String == "assistant" else { return false }
+                return messages[index]["tool_calls"] != nil
+            })
+        else {
             return []
         }
         guard latestToolCallIndex + 1 < messages.endIndex else {

@@ -52,7 +52,8 @@ final class ComputerUseController {
     private var totalCachedTokens = 0
     private var preApprovedByModel = false
 
-    private lazy var riskyWords: [String] = localizedRiskyWordsString
+    private lazy var riskyWords: [String] =
+        localizedRiskyWordsString
         .split(separator: ",")
         .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
         .filter { !$0.isEmpty }
@@ -629,8 +630,10 @@ extension ComputerUseController {
         let timezoneString = TimeZone.current.abbreviation() ?? ""
         let fullDateString = "\(dateString) \(timezoneString)"
 
-        instruction = instruction.replacingOccurrences(of: "{os}", with: osName, options: .caseInsensitive)
-        instruction = instruction.replacingOccurrences(of: "{date}", with: fullDateString, options: .caseInsensitive)
+        instruction = instruction.replacingOccurrences(
+            of: "{os}", with: osName, options: .caseInsensitive)
+        instruction = instruction.replacingOccurrences(
+            of: "{date}", with: fullDateString, options: .caseInsensitive)
         instruction = instruction.replacingOccurrences(
             of: "{risky_words}", with: localizedRiskyWordsString, options: .caseInsensitive)
 
@@ -653,7 +656,8 @@ extension ComputerUseController {
         input: String
     ) {
         guard let systemInstruction else {
-            fail(ComputerUseError.missingBundledResource("portable_computer_use_system_message.txt"))
+            fail(
+                ComputerUseError.missingBundledResource("portable_computer_use_system_message.txt"))
             return
         }
 
@@ -907,9 +911,12 @@ extension ComputerUseController {
         }
     }
 
-    private func appendCancelledToolResults(for toolCalls: [ToolCall], to messages: inout [[String: Any]]) {
+    private func appendCancelledToolResults(
+        for toolCalls: [ToolCall], to messages: inout [[String: Any]]
+    ) {
         for toolCall in toolCalls {
-            let result = "cancelled|computer_use_paused||Tool call was canceled because the user paused computer use."
+            let result =
+                "cancelled|computer_use_paused||Tool call was canceled because the user paused computer use."
             actionLog.append(result)
             messages.append([
                 "role": "tool",
@@ -923,7 +930,9 @@ extension ComputerUseController {
         response.choices.compactMap { $0.message.content }.filter { !$0.isEmpty }
     }
 
-    private func formatCompactResult(action: ComputerAction, status: String, valueOverride: String? = nil) -> String {
+    private func formatCompactResult(
+        action: ComputerAction, status: String, valueOverride: String? = nil
+    ) -> String {
         let actionType = action.type
         let target = action.target ?? ""
         var value = valueOverride ?? ""
@@ -966,7 +975,8 @@ extension ComputerUseController {
         let action = try JSONDecoder().decode(ComputerAction.self, from: data)
 
         if pauseRequested {
-            return formatCompactResult(action: action, status: "cancelled", valueOverride: "User paused computer use")
+            return formatCompactResult(
+                action: action, status: "cancelled", valueOverride: "User paused computer use")
         }
 
         do {
@@ -998,7 +1008,8 @@ extension ComputerUseController {
                 throw error
             }
             if case .paused = error as? ComputerUseError {
-                return formatCompactResult(action: action, status: "cancelled", valueOverride: "User paused computer use")
+                return formatCompactResult(
+                    action: action, status: "cancelled", valueOverride: "User paused computer use")
             }
             return formatCompactResult(action: action, status: "fail")
         }
@@ -1009,7 +1020,8 @@ extension ComputerUseController {
             let value = "\(Int(position.x)),\(Int(position.y))"
             return formatCompactResult(action: action, status: "pass", valueOverride: value)
         case "screenshot":
-            return formatCompactResult(action: action, status: "pass", valueOverride: "Fresh screenshot attached")
+            return formatCompactResult(
+                action: action, status: "pass", valueOverride: "Fresh screenshot attached")
         default:
             return formatCompactResult(action: action, status: "pass")
         }
@@ -1071,7 +1083,9 @@ extension ComputerUseController {
             let restoredContent = Array(sanitizedContent.reversed())
             if removedImage, isRefreshScreenshotMessage(restoredContent) {
                 sanitizedMessages.remove(at: index)
-            } else if removedImage, let compactedContent = compactedScreenshotContent(restoredContent) {
+            } else if removedImage,
+                let compactedContent = compactedScreenshotContent(restoredContent)
+            {
                 sanitizedMessages[index]["content"] = compactedContent
             } else if removedImage, restoredContent.count == 1,
                 let first = restoredContent.first,
@@ -1117,7 +1131,8 @@ extension ComputerUseController {
         return prefix
     }
 
-    private func screenshotText(for messages: [[String: Any]], instruction: String? = nil) -> String {
+    private func screenshotText(for messages: [[String: Any]], instruction: String? = nil) -> String
+    {
         let toolResults = latestToolResults(in: messages)
         let trimmedInstruction = instruction?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         guard !toolResults.isEmpty else {
@@ -1153,10 +1168,12 @@ extension ComputerUseController {
     }
 
     private func latestToolResults(in messages: [[String: Any]]) -> [String] {
-        guard let latestToolCallIndex = messages.indices.last(where: { index in
-            guard messages[index]["role"] as? String == "assistant" else { return false }
-            return messages[index]["tool_calls"] != nil
-        }) else {
+        guard
+            let latestToolCallIndex = messages.indices.last(where: { index in
+                guard messages[index]["role"] as? String == "assistant" else { return false }
+                return messages[index]["tool_calls"] != nil
+            })
+        else {
             return []
         }
         guard latestToolCallIndex + 1 < messages.endIndex else {

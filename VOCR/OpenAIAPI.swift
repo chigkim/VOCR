@@ -193,7 +193,8 @@ enum OpenAIAPI {
             ]
         }
 
-        guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonBody, options: []) else {
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonBody, options: [])
+        else {
             completion("")
             return
         }

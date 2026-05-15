@@ -214,10 +214,12 @@ enum Navigation {
     }
 
     private static func barcodeAnnouncement() -> String {
-        let shortcutKeyName = Shortcuts.spokenKeyName(for: "shortcut.view_qrcodes")
+        let shortcutKeyName =
+            Shortcuts.spokenKeyName(for: "shortcut.view_qrcodes")
             ?? "Control Shift Command Q"
         let barcodeCount = detectedBarcodes.count
-        let barcodeCountPhrase = barcodeCount == 1
+        let barcodeCountPhrase =
+            barcodeCount == 1
             ? NSLocalizedString(
                 "navigation.barcode_count_singular", value: "1 code",
                 comment: "Singular barcode count phrase")
@@ -532,17 +534,20 @@ enum Navigation {
 
 class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDelegate {
     static let shared = BarcodeDialogController()
-    
+
     private var barcodes: [DetectedBarcode] = []
-    
+
     private override init() {
         super.init()
     }
-    
+
     func show() {
         self.barcodes = Navigation.detectedBarcodes
         if barcodes.isEmpty {
-            Accessibility.speak(NSLocalizedString("navigation.no_barcodes", value: "No barcodes found in the last scan.", comment: "Message when no barcodes are found"))
+            Accessibility.speak(
+                NSLocalizedString(
+                    "navigation.no_barcodes", value: "No barcodes found in the last scan.",
+                    comment: "Message when no barcodes are found"))
             return
         }
 
@@ -550,17 +555,23 @@ class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDeleg
             handleSelection(index: 0)
             return
         }
-        
+
         let alert = NSAlert()
-        alert.messageText = NSLocalizedString("barcodes.dialog.title", value: "Detected Barcodes", comment: "Title for barcodes dialog")
-        alert.informativeText = NSLocalizedString("barcodes.dialog.message", value: "Select a barcode to interact with it.", comment: "Message for barcodes dialog")
-        
+        alert.messageText = NSLocalizedString(
+            "barcodes.dialog.title", value: "Detected Barcodes",
+            comment: "Title for barcodes dialog")
+        alert.informativeText = NSLocalizedString(
+            "barcodes.dialog.message", value: "Select a barcode to interact with it.",
+            comment: "Message for barcodes dialog")
+
         let scrollView = NSScrollView(frame: NSRect(x: 0, y: 0, width: 400, height: 150))
         scrollView.hasVerticalScroller = true
-        
+
         let tableView = NSTableView(frame: scrollView.bounds)
         let column = NSTableColumn(identifier: NSUserInterfaceItemIdentifier("BarcodeColumn"))
-        column.title = NSLocalizedString("barcodes.dialog.column", value: "Barcode", comment: "Column title for detected barcodes")
+        column.title = NSLocalizedString(
+            "barcodes.dialog.column", value: "Barcode",
+            comment: "Column title for detected barcodes")
         column.width = 380
         tableView.addTableColumn(column)
         tableView.headerView = nil
@@ -570,13 +581,18 @@ class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDeleg
         tableView.allowsMultipleSelection = false
         tableView.target = self
         tableView.doubleAction = #selector(handleDoubleClick(_:))
-        
+
         scrollView.documentView = tableView
         alert.accessoryView = scrollView
-        
-        alert.addButton(withTitle: NSLocalizedString("button.open_copy", value: "Open / Copy", comment: "Button to open or copy barcode"))
-        alert.addButton(withTitle: NSLocalizedString("button.cancel", value: "Cancel", comment: "Cancel button"))
-        
+
+        alert.addButton(
+            withTitle: NSLocalizedString(
+                "button.open_copy", value: "Open / Copy", comment: "Button to open or copy barcode")
+        )
+        alert.addButton(
+            withTitle: NSLocalizedString("button.cancel", value: "Cancel", comment: "Cancel button")
+        )
+
         if showDialog(alert, focusing: tableView) == .alertFirstButtonReturn {
             let selectedRow = tableView.selectedRow
             if selectedRow >= 0 && selectedRow < barcodes.count {
@@ -584,15 +600,17 @@ class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDeleg
             }
         }
     }
-    
+
     func numberOfRows(in tableView: NSTableView) -> Int {
         return barcodes.count
     }
-    
-    func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
+
+    func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int)
+        -> Any?
+    {
         return barcodes[row].displayValue
     }
-    
+
     @objc private func handleDoubleClick(_ sender: AnyObject) {
         if let tableView = sender as? NSTableView {
             let row = tableView.clickedRow
@@ -601,21 +619,29 @@ class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDeleg
             }
         }
     }
-    
+
     private func handleSelection(index: Int) {
         let barcode = barcodes[index]
         let payload = barcode.payload
-        
-        if let url = URL(string: payload), let scheme = url.scheme, ["http", "https"].contains(scheme.lowercased()) {
+
+        if let url = URL(string: payload), let scheme = url.scheme,
+            ["http", "https"].contains(scheme.lowercased())
+        {
             let confirmAlert = NSAlert()
             confirmAlert.messageText = String(
                 format: NSLocalizedString(
                     "barcodes.dialog.open_url_title", value: "%@ URL",
                     comment: "Title for barcode URL action dialog"), barcode.symbologyName)
             confirmAlert.informativeText = payload
-            confirmAlert.addButton(withTitle: NSLocalizedString("button.open_in_browser", value: "Open in Browser", comment: "Button to open a URL in the default browser"))
-            confirmAlert.addButton(withTitle: NSLocalizedString("button.copy_to_clipboard", value: "Copy to Clipboard", comment: "Button to copy text to the clipboard"))
-            
+            confirmAlert.addButton(
+                withTitle: NSLocalizedString(
+                    "button.open_in_browser", value: "Open in Browser",
+                    comment: "Button to open a URL in the default browser"))
+            confirmAlert.addButton(
+                withTitle: NSLocalizedString(
+                    "button.copy_to_clipboard", value: "Copy to Clipboard",
+                    comment: "Button to copy text to the clipboard"))
+
             let response = showDialog(confirmAlert)
             if response == .alertFirstButtonReturn {
                 NSWorkspace.shared.open(url)

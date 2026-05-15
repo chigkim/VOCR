@@ -347,7 +347,8 @@ final class LevelController: ObservableObject {
             if level == .summary { continue }
             let requirements = levelRequirements(for: level)
             totalPossible += requirements.count
-            totalMet += requirements.filter { checkRequirement(level: level, requirement: $0) }.count
+            totalMet +=
+                requirements.filter { checkRequirement(level: level, requirement: $0) }.count
         }
         return (totalMet, totalPossible)
     }
@@ -359,7 +360,8 @@ final class LevelController: ObservableObject {
         }
         let current = currentScore
         let total = totalScore
-        return "Level: \(currentLevel.number)/\(LevelID.allCases.count) | Level Score: \(current.met)/\(current.total) | Total Score: \(total.met)/\(total.total)"
+        return
+            "Level: \(currentLevel.number)/\(LevelID.allCases.count) | Level Score: \(current.met)/\(current.total) | Total Score: \(total.met)/\(total.total)"
     }
 
     func updateResults() {
@@ -417,18 +419,45 @@ final class LevelController: ObservableObject {
     private func resetState(for level: LevelID) {
         switch level {
         case .acceptChallenge: challengeAccepted = false
-        case .textEntry: messageText = ""; messageSent = false
-        case .modalTask: modalReviewer = ""; modalDecision = "Review"; modalConfirmed = false
-        case .selectionControls: selectedPopup = "Alpha"; selectedRadio = "One"; checkboxEnabled = false
-        case .tableList: selectedCell = nil; selectedListRow = ""
-        case .numericControls: sliderValue = 50; stepperValue = 0
+        case .textEntry:
+            messageText = ""
+            messageSent = false
+        case .modalTask:
+            modalReviewer = ""
+            modalDecision = "Review"
+            modalConfirmed = false
+        case .selectionControls:
+            selectedPopup = "Alpha"
+            selectedRadio = "One"
+            checkboxEnabled = false
+        case .tableList:
+            selectedCell = nil
+            selectedListRow = ""
+        case .numericControls:
+            sliderValue = 50
+            stepperValue = 0
         case .contextMenu: contextChoice = ""
-        case .keyboardShortcut: shortcutCaptureRequest = 0; shortcutPressed = ""
-        case .textEditing: notesText = ""; wordDoubleClicked = false; paragraphTripleClicked = false
+        case .keyboardShortcut:
+            shortcutCaptureRequest = 0
+            shortcutPressed = ""
+        case .textEditing:
+            notesText = ""
+            wordDoubleClicked = false
+            paragraphTripleClicked = false
         case .scrollTask: scrollTargetClicked = false
-        case .pointerTask: dropReceived = false; dropIsTargeted = false
-        case .stress: stressPopup = "Alpha"; stressText = ""; stressCell = nil; stressReady = false; stressLowerConfirmClicked = false
-        case .analogClock: clockHour = 3; clockMinute = 30; clockSecond = 45
+        case .pointerTask:
+            dropReceived = false
+            dropIsTargeted = false
+        case .stress:
+            stressPopup = "Alpha"
+            stressText = ""
+            stressCell = nil
+            stressReady = false
+            stressLowerConfirmClicked = false
+        case .analogClock:
+            clockHour = 3
+            clockMinute = 30
+            clockSecond = 45
         case .summary: break
         }
         updateResults()
@@ -444,10 +473,17 @@ final class LevelController: ObservableObject {
         case .numericControls: return ["Slider 70-80", "Stepper 3-5"]
         case .contextMenu: return ["Choice is Archive"]
         case .keyboardShortcut: return ["Cmd+Shift+M pressed"]
-        case .textEditing: return ["Text is 'Alpha beta gamma.'", "Word double-clicked", "Paragraph triple-clicked"]
+        case .textEditing:
+            return [
+                "Text is 'Alpha beta gamma.'", "Word double-clicked", "Paragraph triple-clicked",
+            ]
         case .scrollTask: return ["Target 18 clicked"]
         case .pointerTask: return ["Drag and drop complete"]
-        case .stress: return ["Popup Delta", "Text 'final check'", "Cell 24", "Ready enabled", "Lower Confirm clicked"]
+        case .stress:
+            return [
+                "Popup Delta", "Text 'final check'", "Cell 24", "Ready enabled",
+                "Lower Confirm clicked",
+            ]
         case .analogClock: return ["Hour is 9", "Minute is 0", "Second is 15"]
         case .summary: return []
         }
@@ -687,8 +723,10 @@ struct ContentView: View {
     private var acceptChallengeLevel: some View {
         GroupBox("Challenge") {
             VStack(alignment: .leading, spacing: 20) {
-                Text("This test harness validates VOCR computer-use capabilities across various macOS UI controls.")
-                    .font(.body)
+                Text(
+                    "This test harness validates VOCR computer-use capabilities across various macOS UI controls."
+                )
+                .font(.body)
 
                 Toggle("I Accept Challenge", isOn: $levels.challengeAccepted)
                     .toggleStyle(.button)
@@ -1042,10 +1080,17 @@ struct ContentView: View {
     private var analogClockLevel: some View {
         GroupBox("Analog Clock") {
             VStack(spacing: 16) {
-                Text(String(format: "%d:%02d:%02d", levels.clockHour, levels.clockMinute, levels.clockSecond))
-                    .font(.system(size: 36, weight: .medium, design: .monospaced))
-                    .accessibilityLabel("Clock Time")
-                    .accessibilityValue(String(format: "%d:%02d:%02d", levels.clockHour, levels.clockMinute, levels.clockSecond))
+                Text(
+                    String(
+                        format: "%d:%02d:%02d", levels.clockHour, levels.clockMinute,
+                        levels.clockSecond)
+                )
+                .font(.system(size: 36, weight: .medium, design: .monospaced))
+                .accessibilityLabel("Clock Time")
+                .accessibilityValue(
+                    String(
+                        format: "%d:%02d:%02d", levels.clockHour, levels.clockMinute,
+                        levels.clockSecond))
 
                 AnalogClockWidget(
                     hour: $levels.clockHour,
@@ -1054,7 +1099,9 @@ struct ContentView: View {
                 ) {
                     logger.log(
                         "Clock",
-                        String(format: "Time set to %d:%02d:%02d", levels.clockHour, levels.clockMinute, levels.clockSecond)
+                        String(
+                            format: "Time set to %d:%02d:%02d", levels.clockHour,
+                            levels.clockMinute, levels.clockSecond)
                     )
                 }
             }
@@ -1211,18 +1258,24 @@ struct AnalogClockWidget: View {
 
                 // Face
                 let faceRect = CGRect(x: c.x - r, y: c.y - r, width: r * 2, height: r * 2)
-                ctx.fill(Path(ellipseIn: faceRect), with: .color(Color(nsColor: .windowBackgroundColor)))
-                ctx.stroke(Path(ellipseIn: faceRect), with: .color(.secondary.opacity(0.5)), lineWidth: 2)
+                ctx.fill(
+                    Path(ellipseIn: faceRect), with: .color(Color(nsColor: .windowBackgroundColor)))
+                ctx.stroke(
+                    Path(ellipseIn: faceRect), with: .color(.secondary.opacity(0.5)), lineWidth: 2)
 
                 // Tick marks
                 for i in 0..<60 {
                     let a = Double(i) * 2 * .pi / 60 - .pi / 2
                     let major = i % 5 == 0
                     var tick = Path()
-                    tick.move(to: CGPoint(x: c.x + cos(a) * (r - (major ? 10 : 5)), y: c.y + sin(a) * (r - (major ? 10 : 5))))
+                    tick.move(
+                        to: CGPoint(
+                            x: c.x + cos(a) * (r - (major ? 10 : 5)),
+                            y: c.y + sin(a) * (r - (major ? 10 : 5))))
                     tick.addLine(to: CGPoint(x: c.x + cos(a) * r, y: c.y + sin(a) * r))
-                    ctx.stroke(tick, with: .color(major ? .primary : .secondary.opacity(0.4)),
-                               style: StrokeStyle(lineWidth: major ? 2 : 1))
+                    ctx.stroke(
+                        tick, with: .color(major ? .primary : .secondary.opacity(0.4)),
+                        style: StrokeStyle(lineWidth: major ? 2 : 1))
                 }
 
                 // Hour numbers
@@ -1237,32 +1290,41 @@ struct AnalogClockWidget: View {
                 // Hour hand
                 var hPath = Path()
                 hPath.move(to: c)
-                hPath.addLine(to: CGPoint(
-                    x: c.x + CGFloat(sin(hourAngle)) * r * 0.55,
-                    y: c.y - CGFloat(cos(hourAngle)) * r * 0.55
-                ))
-                ctx.stroke(hPath, with: .color(.primary), style: StrokeStyle(lineWidth: 6, lineCap: .round))
+                hPath.addLine(
+                    to: CGPoint(
+                        x: c.x + CGFloat(sin(hourAngle)) * r * 0.55,
+                        y: c.y - CGFloat(cos(hourAngle)) * r * 0.55
+                    ))
+                ctx.stroke(
+                    hPath, with: .color(.primary), style: StrokeStyle(lineWidth: 6, lineCap: .round)
+                )
 
                 // Minute hand
                 var mPath = Path()
                 mPath.move(to: c)
-                mPath.addLine(to: CGPoint(
-                    x: c.x + CGFloat(sin(minuteAngle)) * r * 0.75,
-                    y: c.y - CGFloat(cos(minuteAngle)) * r * 0.75
-                ))
-                ctx.stroke(mPath, with: .color(.primary), style: StrokeStyle(lineWidth: 3.5, lineCap: .round))
+                mPath.addLine(
+                    to: CGPoint(
+                        x: c.x + CGFloat(sin(minuteAngle)) * r * 0.75,
+                        y: c.y - CGFloat(cos(minuteAngle)) * r * 0.75
+                    ))
+                ctx.stroke(
+                    mPath, with: .color(.primary),
+                    style: StrokeStyle(lineWidth: 3.5, lineCap: .round))
 
                 // Second hand with tail
                 var sPath = Path()
-                sPath.move(to: CGPoint(
-                    x: c.x - CGFloat(sin(secondAngle)) * r * 0.15,
-                    y: c.y + CGFloat(cos(secondAngle)) * r * 0.15
-                ))
-                sPath.addLine(to: CGPoint(
-                    x: c.x + CGFloat(sin(secondAngle)) * r * 0.88,
-                    y: c.y - CGFloat(cos(secondAngle)) * r * 0.88
-                ))
-                ctx.stroke(sPath, with: .color(.red), style: StrokeStyle(lineWidth: 1.5, lineCap: .round))
+                sPath.move(
+                    to: CGPoint(
+                        x: c.x - CGFloat(sin(secondAngle)) * r * 0.15,
+                        y: c.y + CGFloat(cos(secondAngle)) * r * 0.15
+                    ))
+                sPath.addLine(
+                    to: CGPoint(
+                        x: c.x + CGFloat(sin(secondAngle)) * r * 0.88,
+                        y: c.y - CGFloat(cos(secondAngle)) * r * 0.88
+                    ))
+                ctx.stroke(
+                    sPath, with: .color(.red), style: StrokeStyle(lineWidth: 1.5, lineCap: .round))
 
                 // Center cap
                 ctx.fill(
