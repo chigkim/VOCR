@@ -16,7 +16,7 @@ final class PermissionsWindowController: NSWindowController, NSWindowDelegate {
 
     private init() {
         let window = NSWindow(
-            contentRect: NSRect(x: 200, y: 200, width: 600, height: 500),
+            contentRect: NSRect(x: 200, y: 200, width: 600, height: 280),
             styleMask: [.titled, .closable, .resizable],
             backing: .buffered,
             defer: false

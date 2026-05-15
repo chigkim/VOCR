@@ -89,16 +89,16 @@
       "comment" : "Message when a barcode payload is copied",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%@ copied to clipboard."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%@ in die Zwischenablage kopiert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%@ copied to clipboard."
           }
         },
         "es" : {
@@ -173,15 +173,15 @@
       "comment" : "Column title for detected barcodes",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Barcode"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
+            "value" : "Barcode"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
             "value" : "Barcode"
           }
         },
@@ -257,16 +257,16 @@
       "comment" : "Message for barcodes dialog",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Select a barcode to interact with it."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Wählen Sie einen Barcode aus, um damit zu interagieren."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Select a barcode to interact with it."
           }
         },
         "es" : {
@@ -341,16 +341,16 @@
       "comment" : "Title for barcode URL action dialog",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%@ URL"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%@-URL"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%@ URL"
           }
         },
         "es" : {
@@ -425,16 +425,16 @@
       "comment" : "Title for barcodes dialog",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Detected Barcodes"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Erkannte Barcodes"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Detected Barcodes"
           }
         },
         "es" : {
@@ -1013,16 +1013,16 @@
       "comment" : "Button to copy text to the clipboard",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Copy to Clipboard"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "In die Zwischenablage kopieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Copy to Clipboard"
           }
         },
         "es" : {
@@ -1852,16 +1852,16 @@
       "comment" : "Button to open or copy barcode",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Open / Copy"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Öffnen / Kopieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open / Copy"
           }
         },
         "es" : {
@@ -1936,16 +1936,16 @@
       "comment" : "Button to open a URL in the default browser",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Open in Browser"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Im Browser öffnen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open in Browser"
           }
         },
         "es" : {
@@ -3612,9 +3612,21 @@
         }
       }
     },
+    "column.reason" : {
+      "comment" : "Table column header for permission reason",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Reason"
+          }
+        }
+      }
+    },
     "column.status" : {
       "comment" : "Table column header for permission status",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12687,16 +12699,16 @@
       "comment" : "Plural barcode count phrase",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%d codes"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%d Codes"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%d codes"
           }
         },
         "es" : {
@@ -12771,16 +12783,16 @@
       "comment" : "Singular barcode count phrase",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "1 code"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "1 Code"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "1 code"
           }
         },
         "es" : {
@@ -12855,16 +12867,16 @@
       "comment" : "Message when barcodes are detected",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ detected. Press %2$@ to view."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%1$@ erkannt. Drücken Sie %2$@ zum Anzeigen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ detected. Press %2$@ to view."
           }
         },
         "es" : {
@@ -13275,16 +13287,16 @@
       "comment" : "Message when scanning is complete and a barcode was found",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Finished scanning"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Scan abgeschlossen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Finished scanning"
           }
         },
         "es" : {
@@ -13359,16 +13371,16 @@
       "comment" : "Message when no barcodes are found",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "No barcodes found in the last scan."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Im letzten Scan wurden keine Barcodes gefunden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "No barcodes found in the last scan."
           }
         },
         "es" : {
@@ -14197,7 +14209,7 @@
     },
     "permission.accessibility.description" : {
       "comment" : "Description header for accessibility permission",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -14281,7 +14293,7 @@
     },
     "permission.accessibility.feature1" : {
       "comment" : "Accessibility permission feature",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -14365,7 +14377,7 @@
     },
     "permission.accessibility.feature2" : {
       "comment" : "Accessibility permission feature",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -14449,7 +14461,7 @@
     },
     "permission.accessibility.feature3" : {
       "comment" : "Accessibility permission feature",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -14533,7 +14545,7 @@
     },
     "permission.accessibility.feature4" : {
       "comment" : "Accessibility permission feature",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -14699,9 +14711,57 @@
         }
       }
     },
+    "permission.accessibility.reason" : {
+      "comment" : "Short reason for accessibility permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Capture global shortcuts"
+          }
+        }
+      }
+    },
+    "permission.camera.name" : {
+      "comment" : "Name for camera permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Camera"
+          }
+        }
+      }
+    },
+    "permission.camera.optional_name" : {
+      "comment" : "Name for optional camera permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Camera (Optional)"
+          }
+        }
+      }
+    },
+    "permission.camera.reason" : {
+      "comment" : "Short reason for camera permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Describe images from camera"
+          }
+        }
+      }
+    },
     "permission.notifications.description" : {
       "comment" : "Description header for notifications permission",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -14785,7 +14845,7 @@
     },
     "permission.notifications.feature1" : {
       "comment" : "Notifications permission feature",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -14869,7 +14929,7 @@
     },
     "permission.notifications.feature2" : {
       "comment" : "Notifications permission feature",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -14953,7 +15013,7 @@
     },
     "permission.notifications.feature3" : {
       "comment" : "Notifications permission feature",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -15119,9 +15179,33 @@
         }
       }
     },
+    "permission.notifications.optional_name" : {
+      "comment" : "Name for optional notification permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Notification (Optional)"
+          }
+        }
+      }
+    },
+    "permission.notifications.reason" : {
+      "comment" : "Short reason for notifications permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Notify for updates"
+          }
+        }
+      }
+    },
     "permission.optional" : {
       "comment" : "Text indicating permission is optional",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -15205,7 +15289,7 @@
     },
     "permission.required" : {
       "comment" : "Text indicating permission is required",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -15289,7 +15373,7 @@
     },
     "permission.screenrecording.description" : {
       "comment" : "Description header for screen recording permission",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -15373,7 +15457,7 @@
     },
     "permission.screenrecording.feature1" : {
       "comment" : "Screen recording permission feature",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -15457,7 +15541,7 @@
     },
     "permission.screenrecording.feature2" : {
       "comment" : "Screen recording permission feature",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -15541,7 +15625,7 @@
     },
     "permission.screenrecording.feature3" : {
       "comment" : "Screen recording permission feature",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -15703,6 +15787,18 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "屏幕录制"
+          }
+        }
+      }
+    },
+    "permission.screenrecording.reason" : {
+      "comment" : "Short reason for screen recording permission",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Capture screenshots for OCR"
           }
         }
       }
@@ -16045,7 +16141,7 @@
     },
     "permission.voiceover.description" : {
       "comment" : "Description header for VoiceOver automation permission",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -16129,7 +16225,7 @@
     },
     "permission.voiceover.feature1" : {
       "comment" : "VoiceOver automation permission feature",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -16213,7 +16309,7 @@
     },
     "permission.voiceover.feature2" : {
       "comment" : "VoiceOver automation permission feature",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -16297,7 +16393,7 @@
     },
     "permission.voiceover.feature3" : {
       "comment" : "VoiceOver automation permission feature",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -16463,86 +16559,14 @@
         }
       }
     },
-    "permissions.window.instructions" : {
-      "comment" : "Instruction text at the top of the permissions window",
-      "extractionState" : "manual",
+    "permission.voiceover.reason" : {
+      "comment" : "Short reason for VoiceOver permission",
+      "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Please grant the following permissions for VOCR to work properly."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bitte erteilen Sie die folgenden Berechtigungen, damit VOCR ordnungsgemäß funktioniert."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Concede los siguientes permisos para que VOCR funcione correctamente."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Veuillez accorder les autorisations suivantes pour que VOCR fonctionne correctement."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Concedi le seguenti autorizzazioni per consentire a VOCR di funzionare correttamente."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "VOCRが正しく動作するように、次の権限を許可してください。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "VOCR이 제대로 작동하도록 다음 권한을 허용하세요."
-          }
-        },
-        "nb" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Gi følgende tillatelser for at VOCR skal fungere riktig."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Przyznaj następujące uprawnienia, aby VOCR działał poprawnie."
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Conceda as seguintes permissões para que o VOCR funcione corretamente."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Предоставьте следующие разрешения, чтобы VOCR работал правильно."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Надайте такі дозволи, щоб VOCR працював належним чином."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "请授予以下权限，以便 VOCR 正常工作。"
+            "state" : "new",
+            "value" : "Read announcements with VoiceOver"
           }
         }
       }
@@ -16879,6 +16903,90 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "需要权限"
+          }
+        }
+      }
+    },
+    "permissions.window.instructions" : {
+      "comment" : "Instruction text at the top of the permissions window",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bitte erteilen Sie die folgenden Berechtigungen, damit VOCR ordnungsgemäß funktioniert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please grant the following permissions for VOCR to work properly."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Concede los siguientes permisos para que VOCR funcione correctamente."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Veuillez accorder les autorisations suivantes pour que VOCR fonctionne correctement."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Concedi le seguenti autorizzazioni per consentire a VOCR di funzionare correttamente."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCRが正しく動作するように、次の権限を許可してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "VOCR이 제대로 작동하도록 다음 권한을 허용하세요."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Gi følgende tillatelser for at VOCR skal fungere riktig."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Przyznaj następujące uprawnienia, aby VOCR działał poprawnie."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Conceda as seguintes permissões para que o VOCR funcione corretamente."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Предоставьте следующие разрешения, чтобы VOCR работал правильно."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Надайте такі дозволи, щоб VOCR працював належним чином."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "请授予以下权限，以便 VOCR 正常工作。"
           }
         }
       }

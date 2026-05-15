@@ -6,6 +6,7 @@
 //  Copyright © 2026 Chi Kim. All rights reserved.
 //
 
+import AVFoundation
 import Carbon
 import Cocoa
 import UserNotifications
@@ -28,6 +29,7 @@ final class PermissionsManager {
     enum Permission: String, CaseIterable {
         case accessibility
         case screenRecording
+        case camera
         case notifications
         case voiceOver
 
@@ -43,6 +45,11 @@ final class PermissionsManager {
                     "permission.screenrecording.name",
                     value: "Screen Recording",
                     comment: "Name for screen recording permission")
+            case .camera:
+                return NSLocalizedString(
+                    "permission.camera.name",
+                    value: "Camera",
+                    comment: "Name for camera permission")
             case .notifications:
                 return NSLocalizedString(
                     "permission.notifications.name",
@@ -56,137 +63,18 @@ final class PermissionsManager {
             }
         }
 
-        var statusEmoji: String {
-            switch self {
-            case .accessibility:
-                return "⚙️"
-            case .screenRecording:
-                return "🖥️"
-            case .notifications:
-                return "🔔"
-            case .voiceOver:
-                return "♿️"
-            }
-        }
-
-        var description: String {
-            switch self {
-            case .accessibility:
-                return NSLocalizedString(
-                    "permission.accessibility.description",
-                    value: "VOCR needs Accessibility access to:",
-                    comment: "Description header for accessibility permission")
-            case .screenRecording:
-                return NSLocalizedString(
-                    "permission.screenrecording.description",
-                    value: "VOCR needs Screen Recording access to:",
-                    comment: "Description header for screen recording permission")
-            case .notifications:
-                return NSLocalizedString(
-                    "permission.notifications.description",
-                    value: "VOCR needs Notifications to:",
-                    comment: "Description header for notifications permission")
-            case .voiceOver:
-                return NSLocalizedString(
-                    "permission.voiceover.description",
-                    value: "VOCR needs VoiceOver access to:",
-                    comment: "Description header for VoiceOver automation permission")
-            }
-        }
-
-        var featuresList: [String] {
-            switch self {
-            case .accessibility:
-                return [
-                    NSLocalizedString(
-                        "permission.accessibility.feature1",
-                        value: "Read text from your screen for OCR",
-                        comment: "Accessibility permission feature"),
-                    NSLocalizedString(
-                        "permission.accessibility.feature2",
-                        value: "Control VoiceOver cursor position",
-                        comment: "Accessibility permission feature"),
-                    NSLocalizedString(
-                        "permission.accessibility.feature3",
-                        value: "Take screenshots under the VoiceOver cursor",
-                        comment: "Accessibility permission feature"),
-                    NSLocalizedString(
-                        "permission.accessibility.feature4",
-                        value: "Interact with window content",
-                        comment: "Accessibility permission feature"),
-                ]
-            case .screenRecording:
-                return [
-                    NSLocalizedString(
-                        "permission.screenrecording.feature1",
-                        value: "Capture screen content for OCR",
-                        comment: "Screen recording permission feature"),
-                    NSLocalizedString(
-                        "permission.screenrecording.feature2",
-                        value: "Take screenshots of windows and displays",
-                        comment: "Screen recording permission feature"),
-                    NSLocalizedString(
-                        "permission.screenrecording.feature3",
-                        value: "Extract text from screen regions",
-                        comment: "Screen recording permission feature"),
-                ]
-            case .notifications:
-                return [
-                    NSLocalizedString(
-                        "permission.notifications.feature1",
-                        value: "Alert you when updates are available",
-                        comment: "Notifications permission feature"),
-                    NSLocalizedString(
-                        "permission.notifications.feature2",
-                        value: "Show OCR completion notifications",
-                        comment: "Notifications permission feature"),
-                    NSLocalizedString(
-                        "permission.notifications.feature3",
-                        value: "Provide background task updates",
-                        comment: "Notifications permission feature"),
-                ]
-            case .voiceOver:
-                return [
-                    NSLocalizedString(
-                        "permission.voiceover.feature1",
-                        value: "Speak announcements through VoiceOver",
-                        comment: "VoiceOver automation permission feature"),
-                    NSLocalizedString(
-                        "permission.voiceover.feature2",
-                        value: "Control VoiceOver cursor and navigation",
-                        comment: "VoiceOver automation permission feature"),
-                    NSLocalizedString(
-                        "permission.voiceover.feature3",
-                        value: "Read the currently focused element via VoiceOver",
-                        comment: "VoiceOver automation permission feature"),
-                ]
-            }
-        }
-
         var isRequired: Bool {
             switch self {
             case .accessibility:
                 return true
             case .screenRecording:
                 return true
+            case .camera:
+                return false
             case .notifications:
                 return false
             case .voiceOver:
                 return true
-            }
-        }
-
-        var requirementText: String {
-            if isRequired {
-                return NSLocalizedString(
-                    "permission.required",
-                    value: "This permission is required for core OCR functionality.",
-                    comment: "Text indicating permission is required")
-            } else {
-                return NSLocalizedString(
-                    "permission.optional",
-                    value: "This permission is optional but enhances functionality.",
-                    comment: "Text indicating permission is optional")
             }
         }
     }
@@ -233,6 +121,8 @@ final class PermissionsManager {
             return accessibilityStatus()
         case .screenRecording:
             return screenRecordingStatus()
+        case .camera:
+            return cameraStatus()
         case .notifications:
             return notificationsStatus()
         case .voiceOver:
@@ -262,6 +152,21 @@ final class PermissionsManager {
         // If the user was sent to grant this permission in the current session, treat it as
         // granted so the warning is suppressed until restart (when the API reflects correctly).
         return screenRecordingRequested ? .granted : .denied
+    }
+
+    private func cameraStatus() -> PermissionStatus {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            return .granted
+        case .denied:
+            return .denied
+        case .notDetermined:
+            return .notDetermined
+        case .restricted:
+            return .restricted
+        @unknown default:
+            return .notDetermined
+        }
     }
 
     private func notificationsStatus() -> PermissionStatus {
@@ -324,6 +229,14 @@ final class PermissionsManager {
         CGRequestScreenCaptureAccess()
     }
 
+    func requestCamera(completion: @escaping (Bool) -> Void) {
+        AVCaptureDevice.requestAccess(for: .video) { granted in
+            DispatchQueue.main.async {
+                completion(granted)
+            }
+        }
+    }
+
     func requestVoiceOver() {
         // Trigger TCC prompts for both System Events (used internally to detect if VoiceOver
         // is running) and VoiceOver itself by sending harmless real Apple Events.
@@ -374,6 +287,9 @@ final class PermissionsManager {
                 prefPane =
                     "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture"
             }
+
+        case .camera:
+            prefPane = "x-apple.systempreferences:com.apple.preference.security?Privacy_Camera"
 
         case .notifications:
             if #available(macOS 13, *) {
