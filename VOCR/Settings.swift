@@ -148,7 +148,33 @@ enum Settings {
 
 }
 
+private final class ShortcutSettingsMenuDelegate: NSObject, NSMenuDelegate {
+    private var suspendedNavigationShortcuts = false
+
+    func menuWillOpen(_ menu: NSMenu) {
+        suspendedNavigationShortcuts = Shortcuts.navigationActive
+        if suspendedNavigationShortcuts {
+            Shortcuts.deactivateNavigationShortcuts()
+        }
+    }
+
+    func menuDidClose(_ menu: NSMenu) {
+        if suspendedNavigationShortcuts {
+            suspendedNavigationShortcuts = false
+            Shortcuts.activateNavigationShortcuts()
+        }
+    }
+}
+
 enum StatusMenuController {
+    private static let shortcutSettingsMenuDelegate = ShortcutSettingsMenuDelegate()
+
+    static func makeShortcutPopupMenu() -> NSMenu {
+        let menu = makeMenu()
+        menu.delegate = shortcutSettingsMenuDelegate
+        return menu
+    }
+
     static func makeMenu() -> NSMenu {
         Settings.load()
         let menu = NSMenu()
@@ -391,16 +417,6 @@ enum StatusMenuController {
             keyEquivalent: "")
         updateMenuItem.submenu = updateMenu
         menu.addItem(updateMenuItem)
-
-        if Shortcuts.navigationActive {
-            let dismissMenuItem = NSMenuItem(
-                title: NSLocalizedString(
-                    "menu.dismiss", value: "Dismiss Menu",
-                    comment: "Menu item for dismissing the menu"),
-                action: #selector(MenuHandler.dismiss(_:)), keyEquivalent: "z")
-            dismissMenuItem.target = Settings.target
-            menu.addItem(dismissMenuItem)
-        }
 
         menu.addItem(
             NSMenuItem(
@@ -735,10 +751,6 @@ class MenuHandler: NSObject {
                 windows[1].close()
             }
         }
-    }
-
-    @objc func dismiss(_ sender: NSMenuItem) {
-
     }
 
     @objc func saveLastImage(_ sender: NSMenuItem) {

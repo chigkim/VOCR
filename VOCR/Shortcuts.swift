@@ -392,7 +392,8 @@ enum Shortcuts {
     static func settingsHandler() {
         let mouseLocation = NSEvent.mouseLocation
         let rect = CGRect(x: mouseLocation.x, y: mouseLocation.y, width: 1, height: 1)
-        StatusMenuController.makeMenu().popUp(positioning: nil, at: rect.origin, in: nil)
+        let menu = StatusMenuController.makeShortcutPopupMenu()
+        menu.popUp(positioning: nil, at: rect.origin, in: nil)
     }
     static func realTimeHandler() {
         if RealTime.run {
