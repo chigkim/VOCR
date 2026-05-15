@@ -21,6 +21,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         NSApp.setActivationPolicy(.accessory)
         setupAutoLaunch()
         hide()
+        DispatchQueue.main.async { [weak self] in
+            self?.releaseWindowlessFocus()
+        }
         Accessibility.speak(
             NSLocalizedString(
                 "app.ready", value: "VOCR Ready!", comment: "Message when app is ready"))
@@ -97,6 +100,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
             if hasMissing {
                 self?.openPermissionsWindow()
+            } else {
+                self?.releaseWindowlessFocus()
             }
         }
     }
@@ -104,6 +109,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc func openPermissionsWindow() {
         PermissionsWindowController.shared.showWindow(nil)
         NSApp.activate(ignoringOtherApps: true)
+    }
+
+    private func releaseWindowlessFocus() {
+        guard NSApp.windows.allSatisfy({ !$0.isVisible }) else { return }
+        NSApp.hide(nil)
+        NSApp.deactivate()
     }
 
 }

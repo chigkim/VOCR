@@ -656,16 +656,8 @@ class MenuHandler: NSObject {
     }
 
     @objc func displayAboutWindow(_ sender: Any?) {
-        let storyboardName = NSStoryboard.Name(stringLiteral: "Main")
-        let storyboard = NSStoryboard(name: storyboardName, bundle: nil)
-        let storyboardID = NSStoryboard.SceneIdentifier(stringLiteral: "aboutWindowStoryboardID")
-        if let aboutWindowController = storyboard.instantiateController(
-            withIdentifier: storyboardID)
-            as? NSWindowController
-        {
-            NSApplication.shared.activate(ignoringOtherApps: true)
-            aboutWindowController.showWindow(nil)
-        }
+        AboutWindowController.shared.showWindow(nil)
+        NSApplication.shared.activate(ignoringOtherApps: true)
     }
 
     @objc func chooseOutput(_ sender: Any?) {

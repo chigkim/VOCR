@@ -8,7 +8,38 @@
 
 import Cocoa
 
-class AboutViewController: NSViewController, NSWindowDelegate {
+final class AboutWindowController: NSObject, NSWindowDelegate {
+    static let shared = AboutWindowController()
+
+    private let windowController: NSWindowController
+
+    private override init() {
+        let storyboard = NSStoryboard(name: "Main", bundle: nil)
+        let storyboardID = NSStoryboard.SceneIdentifier("aboutWindowStoryboardID")
+
+        guard let windowController = storyboard.instantiateController(withIdentifier: storyboardID)
+            as? NSWindowController
+        else {
+            fatalError("Unable to load About window controller")
+        }
+
+        self.windowController = windowController
+        super.init()
+        windowController.window?.delegate = self
+    }
+
+    func showWindow(_ sender: Any?) {
+        windowController.showWindow(sender)
+        windowController.window?.center()
+        windowController.window?.makeKeyAndOrderFront(sender)
+    }
+
+    func windowWillClose(_ notification: Notification) {
+        NSApplication.shared.hide(nil)
+    }
+}
+
+class AboutViewController: NSViewController {
 
     @IBOutlet var info: NSTextField!
 
@@ -18,21 +49,9 @@ class AboutViewController: NSViewController, NSWindowDelegate {
         // Do any additional setup after loading the view.
     }
 
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        if let window = self.view.window {
-            window.delegate = self
-        }
-    }
-
     override var representedObject: Any? {
         didSet {
             // Update the view, if already loaded.
         }
     }
-
-    func windowWillClose(_ notification: Notification) {
-        NSApplication.shared.hide(nil)
-    }
-
 }
