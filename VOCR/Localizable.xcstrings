@@ -339,7 +339,7 @@
     },
     "barcodes.dialog.open_url_title" : {
       "comment" : "Title for barcode URL action dialog",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1850,7 +1850,7 @@
     },
     "button.open_copy" : {
       "comment" : "Button to open or copy barcode",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1933,7 +1933,7 @@
       }
     },
     "button.open_in_browser" : {
-      "comment" : "Button to open a URL in the default browser",
+      "comment" : "Button to open a barcode in the default browser",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -2516,6 +2516,90 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "保存"
+          }
+        }
+      }
+    },
+    "button.search_in_browser" : {
+      "comment" : "Button to search for a barcode in the default browser",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Search in Browser"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Im Browser suchen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Buscar en el navegador"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Rechercher dans le navigateur"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cerca nel browser"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ブラウザで検索"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "브라우저에서 검색"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Søk i nettleseren"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Szukaj w przeglądarce"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pesquisar no navegador"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Искать в браузере"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Шукати в браузері"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "在浏览器中搜索"
           }
         }
       }
@@ -3616,16 +3700,16 @@
       "comment" : "Table column header for permission reason",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Reason"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Grund"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Reason"
           }
         },
         "es" : {
@@ -14703,16 +14787,16 @@
       "comment" : "Short reason for accessibility permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Capture global shortcuts"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Globale Kurzbefehle erfassen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Capture global shortcuts"
           }
         },
         "es" : {
@@ -14787,16 +14871,16 @@
       "comment" : "Name for camera permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Camera"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Kamera"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Camera"
           }
         },
         "es" : {
@@ -14871,16 +14955,16 @@
       "comment" : "Name for optional camera permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Camera (Optional)"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Kamera (optional)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Camera (Optional)"
           }
         },
         "es" : {
@@ -14955,16 +15039,16 @@
       "comment" : "Short reason for camera permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Describe images from camera"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bilder von der Kamera beschreiben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Describe images from camera"
           }
         },
         "es" : {
@@ -15459,16 +15543,16 @@
       "comment" : "Name for optional notification permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Notification (Optional)"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Mitteilung (optional)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Notification (Optional)"
           }
         },
         "es" : {
@@ -15543,16 +15627,16 @@
       "comment" : "Short reason for notifications permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Notify for updates"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bei Updates benachrichtigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Notify for updates"
           }
         },
         "es" : {
@@ -16215,16 +16299,16 @@
       "comment" : "Short reason for screen recording permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Capture screenshots for OCR"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Screenshots für OCR erfassen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Capture screenshots for OCR"
           }
         },
         "es" : {
@@ -17055,16 +17139,16 @@
       "comment" : "Short reason for VoiceOver permission",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Read announcements with VoiceOver"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ansagen mit VoiceOver vorlesen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Read announcements with VoiceOver"
           }
         },
         "es" : {

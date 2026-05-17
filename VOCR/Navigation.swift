@@ -551,11 +551,6 @@ class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDeleg
             return
         }
 
-        if barcodes.count == 1 {
-            handleSelection(index: 0)
-            return
-        }
-
         let alert = NSAlert()
         alert.messageText = NSLocalizedString(
             "barcodes.dialog.title", value: "Detected Barcodes",
@@ -587,17 +582,38 @@ class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDeleg
 
         alert.addButton(
             withTitle: NSLocalizedString(
-                "button.open_copy", value: "Open / Copy", comment: "Button to open or copy barcode")
+                "button.search_in_browser", value: "Search in Browser",
+                comment: "Button to search for a barcode in the default browser")
+        )
+        alert.addButton(
+            withTitle: NSLocalizedString(
+                "button.open_in_browser", value: "Open in Browser",
+                comment: "Button to open a barcode in the default browser")
+        )
+        alert.addButton(
+            withTitle: NSLocalizedString(
+                "button.copy_to_clipboard", value: "Copy to Clipboard",
+                comment: "Button to copy text to the clipboard")
         )
         alert.addButton(
             withTitle: NSLocalizedString("button.cancel", value: "Cancel", comment: "Cancel button")
         )
 
-        if showDialog(alert, focusing: tableView) == .alertFirstButtonReturn {
-            let selectedRow = tableView.selectedRow
-            if selectedRow >= 0 && selectedRow < barcodes.count {
-                handleSelection(index: selectedRow)
-            }
+        tableView.selectRowIndexes(IndexSet(integer: 0), byExtendingSelection: false)
+        let response = showDialog(alert, focusing: tableView)
+        let selectedRow = tableView.selectedRow
+        guard selectedRow >= 0 && selectedRow < barcodes.count else {
+            return
+        }
+
+        let barcode = barcodes[selectedRow]
+        if response == .alertFirstButtonReturn {
+            searchInBrowser(barcode)
+        } else if response == .alertSecondButtonReturn {
+            openInBrowser(barcode)
+        } else if response == .alertThirdButtonReturn {
+            copyToClipboard(barcode.displayValue)
+            speakCopied(barcode)
         }
     }
 
@@ -620,39 +636,54 @@ class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDeleg
         }
     }
 
-    private func handleSelection(index: Int) {
-        let barcode = barcodes[index]
-        let payload = barcode.payload
+    private func searchInBrowser(_ barcode: DetectedBarcode) {
+        openInDefaultBrowser(searchURL(for: barcode))
+    }
 
-        if let url = URL(string: payload), let scheme = url.scheme,
-            ["http", "https"].contains(scheme.lowercased())
-        {
-            let confirmAlert = NSAlert()
-            confirmAlert.messageText = String(
-                format: NSLocalizedString(
-                    "barcodes.dialog.open_url_title", value: "%@ URL",
-                    comment: "Title for barcode URL action dialog"), barcode.symbologyName)
-            confirmAlert.informativeText = payload
-            confirmAlert.addButton(
-                withTitle: NSLocalizedString(
-                    "button.open_in_browser", value: "Open in Browser",
-                    comment: "Button to open a URL in the default browser"))
-            confirmAlert.addButton(
-                withTitle: NSLocalizedString(
-                    "button.copy_to_clipboard", value: "Copy to Clipboard",
-                    comment: "Button to copy text to the clipboard"))
+    private func openInBrowser(_ barcode: DetectedBarcode) {
+        let url = uri(from: barcode.payload) ?? searchURL(for: barcode)
+        openInDefaultBrowser(url)
+    }
 
-            let response = showDialog(confirmAlert)
-            if response == .alertFirstButtonReturn {
-                NSWorkspace.shared.open(url)
-            } else if response == .alertSecondButtonReturn {
-                copyToClipboard(barcode.displayValue)
-                speakCopied(barcode)
-            }
-        } else {
-            copyToClipboard(barcode.displayValue)
-            speakCopied(barcode)
+    private func uri(from payload: String) -> URL? {
+        guard
+            let schemeSeparator = payload.firstIndex(of: ":"),
+            payload[..<schemeSeparator].range(
+                of: #"^[A-Za-z][A-Za-z0-9+.-]*$"#, options: .regularExpression) != nil,
+            let url = URL(string: payload),
+            url.scheme != nil
+        else {
+            return nil
         }
+
+        return url
+    }
+
+    private func searchURL(for barcode: DetectedBarcode) -> URL {
+        var components = URLComponents(string: "https://www.google.com/search")!
+        components.queryItems = [
+            URLQueryItem(name: "q", value: "\(barcode.symbologyName) \(barcode.payload)")
+        ]
+        return components.url!
+    }
+
+    private func openInDefaultBrowser(_ url: URL) {
+        guard let browserURL = defaultBrowserApplicationURL() else {
+            NSWorkspace.shared.open(url)
+            return
+        }
+
+        let configuration = NSWorkspace.OpenConfiguration()
+        NSWorkspace.shared.open([url], withApplicationAt: browserURL, configuration: configuration)
+    }
+
+    private func defaultBrowserApplicationURL() -> URL? {
+        guard let webURL = URL(string: "https://example.com") else {
+            return nil
+        }
+
+        return LSCopyDefaultApplicationURLForURL(webURL as CFURL, .viewer, nil)?.takeRetainedValue()
+            as URL?
     }
 
     private func speakCopied(_ barcode: DetectedBarcode) {

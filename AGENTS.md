@@ -18,9 +18,10 @@ When implementing or revising a feature:
 ## Translation
 
 1. Export all translations by running `python translations/export.py`.
-2. Update the translation CSV files in `translations/csv/*.csv`, excluding `template.csv`. For each non-template CSV:
+2. Git does not track `translations/csv/*.csv`, so do not add them.
+3. Update the translation CSV files in `translations/csv/*.csv`, excluding `template.csv`. For each non-template CSV:
   - Only modify rows where `state` is exactly `new`.
   - Fill in the `translation` column for those rows.
   - Change those rows' `state` to `needs_review`.
   - Do not modify any row whose `state` is not `new`.
-3. Run: `python translations/breakdown.py` and confirm that the output shows zero rows with `new` state for every language.
+4. Run: `python translations/breakdown.py` and confirm that the output shows zero rows with `new` state for every language.
