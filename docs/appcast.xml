@@ -3,6 +3,88 @@
     <channel>
         <title>VOCR</title>
         <item>
+            <title>3.0.0-beta.5</title>
+            <pubDate>Sun, 17 May 2026 18:37:27 -0400</pubDate>
+            <sparkle:version>67</sparkle:version>
+            <sparkle:shortVersionString>3.0.0-beta.5</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <description>&lt;h2 id="changelog"&gt;Changelog&lt;/h2&gt;
+&lt;p&gt;This is a major update focusing on flexibility, customization, and making VOCR accessible to more users around the world.&lt;/p&gt;
+&lt;p&gt;Make sure to read below to find more about exciting features introduced in this release!&lt;/p&gt;
+&lt;p&gt;There are many internal changes, so we need your help with comprehensive testing to ensure nothing is broken and the new features are working as expected.&lt;/p&gt;
+&lt;p&gt;We also need help from the community to improve the translations which are done by AI as a starting point. Please check out the &lt;a href="https://chigkim.github.io/VOCR/translation_guide"&gt;translation guide&lt;/a&gt; for more information.&lt;/p&gt;
+&lt;h2 id="300-beta5"&gt;3.0.0-beta.5&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;VOCR can now detect QR codes and 24 barcode types during a scan, including product codes, URLs, Wi‑Fi QR codes, passes, shipping labels, etc. View detected codes with Command+Shift+Control+Q. ()@vic08)&lt;/li&gt;
+&lt;li&gt;You can use escape dismiss the settings menu regardless whether the navigation is active or not.&lt;/li&gt;
+&lt;li&gt;VOCR no longers steals focus after closing dialogs/windows.&lt;/li&gt;
+&lt;li&gt;The permissions window has better UI and includes Camera permission as optional&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="300-beta4"&gt;3.0.0-beta.4&lt;/h2&gt;
+&lt;h3 id="computer-use"&gt;Computer Use&lt;/h3&gt;
+&lt;p&gt;You can now ask AI to control Apps using Mouse and Keyboard commands. &lt;a href="https://github.com/user-attachments/assets/c465d6e8-236c-4a93-980b-ef237f5c87ef"&gt;Check out the demo.&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Start/Stop Computer Use: Command+Control+Shift+u&lt;/li&gt;
+&lt;li&gt;Pause/Resume Computer Use: Command+Control+P (Only Available during the Computer Use)&lt;/li&gt;
+&lt;li&gt;Toggle Speak Assistant Message: Command+Control+S (Only Available during the Computer Use)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you notice Computer Use enters a loop while attempting the same task, either cancel the task or pause and resume it with a different instruction.&lt;/p&gt;
+&lt;p&gt;Token usage and trace log will be copied to the clipboard at the end.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;ul&gt;
+&lt;li&gt;Use focused window instead of first window.&lt;/li&gt;
+&lt;li&gt;When a dialog opens keyboard focus is now in the dialog.&lt;/li&gt;
+&lt;li&gt;Made prompt boxes bigger for easy editing.&lt;/li&gt;
+&lt;li&gt;Reorganized the settings menu: Submenus for OCR and AI&lt;/li&gt;
+&lt;li&gt;Clearer accessible labels in the preset editor (@vic08)&lt;/li&gt;
+&lt;li&gt;Norwegian Bokmål translation ()@SuperCliff)&lt;/li&gt;
+&lt;li&gt;Translation scripts now report which ones are New, Needs_Review, Translated or Stale.&lt;/li&gt;
+&lt;li&gt;Bug fixes and optimizations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="300-beta3"&gt;3.0.0-beta.3&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Permission Wizard (@vic08)&lt;/li&gt;
+&lt;li&gt;New Italian Translation (Giovanni lo Monaco)&lt;/li&gt;
+&lt;li&gt;Polish translation Fix (@pitermach)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="300-beta2"&gt;3.0.0-beta.2&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Fix the bug where it would trigger beta updates even though it was not checked.&lt;/li&gt;
+&lt;li&gt;Added languages submenu to choose Language for UI&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="300-beta1"&gt;3.0.0-beta.1&lt;/h2&gt;
+&lt;h3 id="preset-system"&gt;Preset System&lt;/h3&gt;
+&lt;p&gt;The old engine selection (GPT / Ollama / LlamaCpp) has been replaced with a flexible &lt;strong&gt;Preset&lt;/strong&gt; system. Each preset stores its own API URL, API key, model, and prompts, so you can set up as many AI configurations as you like and switch between them instantly from the new &lt;strong&gt;Presets&lt;/strong&gt; menu.&lt;/p&gt;
+&lt;p&gt;A &lt;strong&gt;Preset Manager&lt;/strong&gt; window lets you create, edit, duplicate, and delete presets.&lt;/p&gt;
+&lt;p&gt;API keys are encrypted and stored securely using the macOS Keychain, and are only displayed in plain text when creating a preset.&lt;/p&gt;
+&lt;p&gt;Built-in provider URLs are included for &lt;strong&gt;Claude, Gemini, Ollama, OpenAI, and OpenRouter&lt;/strong&gt;. Any service that offers an OpenAI-compatible API will work.&lt;/p&gt;
+&lt;h3 id="follow-up-conversations"&gt;Follow-up Conversations&lt;/h3&gt;
+&lt;p&gt;A new &lt;strong&gt;Follow up&lt;/strong&gt; checkbox in the Ask dialog lets you carry on a multi-turn conversation with the AI instead of starting fresh each time.&lt;/p&gt;
+&lt;h3 id="customizable-explore-prompts"&gt;Customizable Explore Prompts&lt;/h3&gt;
+&lt;p&gt;Explore mode uses a structured json-schema response format for more reliable results, and you can now edit the system prompt and user prompt used by Explore mode via &lt;strong&gt;Presets &amp;gt; Edit Explore Prompts&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id="reset-option"&gt;Reset Option&lt;/h3&gt;
+&lt;p&gt;A &lt;strong&gt;Reset&lt;/strong&gt; item in the Settings menu lets you erase all settings and presets and start fresh.&lt;/p&gt;
+&lt;h3 id="11-languages"&gt;11 Languages&lt;/h3&gt;
+&lt;p&gt;VOCR is now localized in English, German, Spanish, French, Japanese, Korean, Polish, Portuguese, Russian, Ukrainian, and Simplified Chinese.&lt;/p&gt;
+&lt;p&gt;The translations are done by AI, so we need help from the community to improve. See the &lt;a href="https://chigkim.github.io/VOCR/translation_guide"&gt;translation guide&lt;/a&gt; for more information.&lt;/p&gt;
+&lt;h3 id="changed"&gt;Changed&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;"Use Last Prompt"&lt;/strong&gt; has been replaced by &lt;strong&gt;"Use Preset Prompt"&lt;/strong&gt;, which sends the prompt saved in the active preset without showing the dialog.&lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;Ask&lt;/strong&gt; dialog button is now labeled "Ask" instead of "Ok".&lt;/li&gt;
+&lt;li&gt;AI status messages now show the name of the preset being used (e.g., "Asking Claude... Please wait...").&lt;/li&gt;
+&lt;li&gt;Error messages are now shown as alert dialogs.&lt;/li&gt;
+&lt;li&gt;Token usage information is now copied to the clipboard along with the AI response.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="removed"&gt;Removed&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;The &lt;strong&gt;Engine&lt;/strong&gt; submenu (GPT / Ollama / LlamaCpp) -- replaced by presets.&lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;OpenAI API Key&lt;/strong&gt; dialog in Settings -- API keys are now managed per-preset.&lt;/li&gt;
+&lt;li&gt;The &lt;strong&gt;Set System Prompt&lt;/strong&gt; dialog in Settings -- prompts are now managed per-preset.&lt;/li&gt;
+&lt;/ul&gt;</description>
+            <enclosure url="https://github.com/chigkim/VOCR/releases/download/v3.0.0-beta.5/VOCR_v3.0.0-beta.5.zip" length="3888312" type="application/octet-stream" sparkle:edSignature="u+/p1bOSsMWtJSYwgscjs3EP9sApECbpoLZMC3MdFCcnvsnqoaxnXa/LAgbNSvNLyOgAjQij62dD6gd0+eTvCg==" />
+            <sparkle:channel>beta</sparkle:channel>
+        </item>
+        <item>
             <title>3.0.0-beta.4</title>
             <pubDate>Sat, 09 May 2026 13:36:41 -0400</pubDate>
             <sparkle:version>63</sparkle:version>
