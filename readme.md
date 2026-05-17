@@ -7,7 +7,7 @@ VOCR is an OCR and AI-powered screen recognition tool for macOS, designed to hel
 ### OCR
 
 [![Youtube Demo: VOCR 2.0 for Mac w/Chi Kim](https://img.youtube.com/vi/_9EIYUPyXao/maxresdefault.jpg)](https://www.youtube.com/watch?v=_9EIYUPyXao)
-{% include youtube.html id="_9EIYUPyXao" %}    
+{% include youtube.html id="_9EIYUPyXao" %}
 
 ### Computer Use
 
@@ -32,16 +32,18 @@ Get the latest version here: [VOCR v3.0.0-beta.4](https://github.com/chigkim/VOC
 To ensure VOCR works properly, follow these steps in order:
 
 1. **Install:** Unzip the downloaded file and move the VOCR application to your **Applications** folder.
-2. **Launch & Grant Permissions:** Launch VOCR. A permissions window will appear. Click the action buttons for each row to grant the following:
+2. Open VoiceOver Utility and check allow VoiceOver to be controlled with AppleScript in the general category.
+3. **Launch & Grant Permissions:** Launch VOCR. A permissions window will appear. Click the action buttons for each row to grant the following:
    - **Accessibility:** Required for OCR and window interaction.
    - **Screen Recording:** Required to capture screen content.
    - **VoiceOver (Automation):** Required for cursor control and speaking results.
+   - **Camera:** Optional for capturing images with camera.
    - **Notifications:** Optional for update alerts.
    - Note that for each permission, you will be directed to the System Settings window, as required by macOS.
-3. **Screen Configuration:** 
+4. **Screen Configuration:** 
    - Ensure the **Screen Curtain** is OFF (`VO + Shift + F11`).
    - Hide **VoiceOver Visuals** (`VO + Command + F11`) to prevent them from interfering with scans.
-4. **Restart & Verify:** Once Accessibility and Screen Recording permissions are granted, restart VOCR. Press `Command + Shift + Control + W` to perform your first scan. You should hear a beep followed by "finished."
+5. **Restart & Verify:** Once Accessibility and Screen Recording permissions are granted, restart VOCR. Press `Command + Shift + Control + W` to perform your first scan. You should hear a beep followed by "finished."
 
 ---
 
@@ -92,6 +94,7 @@ If you notice Computer Use enters a loop while attempting the same task, either 
 | `Cmd + Shift + Control + Arrows` | Move by character |
 | `Cmd + Control + L` | Report current coordinates |
 | `Cmd + Control + I` | Identify current object with AI |
+| `Cmd + Control + Shift + Q` | View recognized QR codes and barcodes |
 | `Escape` | Exit navigation |
 
 ---

@@ -32,16 +32,18 @@ Get the latest version here: [VOCR v3.0.0-beta.4](https://github.com/chigkim/VOC
 To ensure VOCR works properly, follow these steps in order:
 
 1. **Install:** Unzip the downloaded file and move the VOCR application to your **Applications** folder.
-2. **Launch & Grant Permissions:** Launch VOCR. A permissions window will appear. Click the action buttons for each row in the table  to grant the following:
+2. Open VoiceOver Utility and check allow VoiceOver to be controlled with AppleScript in the general category.
+3. **Launch & Grant Permissions:** Launch VOCR. A permissions window will appear. Click the action buttons for each row to grant the following:
    - **Accessibility:** Required for OCR and window interaction.
    - **Screen Recording:** Required to capture screen content.
    - **VoiceOver (Automation):** Required for cursor control and speaking results.
+   - **Camera:** Optional for capturing images with camera.
    - **Notifications:** Optional for update alerts.
-   - Please note that for each permission you will be sent to the SYstem Settings window per Apple's requirements.
-3. **Screen Configuration:** 
+   - Note that for each permission, you will be directed to the System Settings window, as required by macOS.
+4. **Screen Configuration:** 
    - Ensure the **Screen Curtain** is OFF (`VO + Shift + F11`).
    - Hide **VoiceOver Visuals** (`VO + Command + F11`) to prevent them from interfering with scans.
-4. **Restart & Verify:** Once Accessibility and Screen Recording permissions are granted, restart VOCR. Press `Command + Shift + Control + W` to perform your first scan. You should hear a beep followed by "finished."
+5. **Restart & Verify:** Once Accessibility and Screen Recording permissions are granted, restart VOCR. Press `Command + Shift + Control + W` to perform your first scan. You should hear a beep followed by "finished."
 
 ---
 
@@ -82,6 +84,7 @@ If you notice Computer Use enters a loop while attempting the same task, either 
 | `Cmd + Shift + Control + A` | Ask AI a Question |
 | `Cmd + Shift + Control + R` | Toggle Real-Time OCR |
 | `Cmd + Shift + Control + E` | Explore with AI |
+| `Cmd + Shift + Control + U` | Computer Use |
 | `Cmd + Shift + Control + C` | Camera Capture |
 
 ### Navigation Shortcuts (Active after a scan)
@@ -91,6 +94,7 @@ If you notice Computer Use enters a loop while attempting the same task, either 
 | `Cmd + Shift + Control + Arrows` | Move by character |
 | `Cmd + Control + L` | Report current coordinates |
 | `Cmd + Control + I` | Identify current object with AI |
+| `Cmd + Control + Shift + Q` | View recognized QR codes and barcodes |
 | `Escape` | Exit navigation |
 
 ---
@@ -121,7 +125,7 @@ Access the VOCR Menu with `Cmd + Control + Shift + S` to customize:
   tccutil reset All com.chikim.VOCR
   sudo tccutil reset All com.chikim.VOCR
   ```
-- **Local AI:** If using Ollama, ensure you have pulled a vision model first: `ollama pull qwen3.5`.
+- **Local AI:** If using Ollama, ensure you have pulled a vision model: `ollama pull qwen3.5`.
 
 ---
 Enjoy using VOCR!
