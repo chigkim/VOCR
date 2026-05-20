@@ -133,8 +133,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ kopiert til utklippstavlen."
+            "state" : "translated",
+            "value" : "%@ ble kopiert til utklippstavlen."
           }
         },
         "pl" : {
@@ -217,7 +217,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Strekkode"
           }
         },
@@ -301,8 +301,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Velg en strekkode for å samhandle med den."
+            "state" : "translated",
+            "value" : "Velg en strekkode for å bruke den."
           }
         },
         "pl" : {
@@ -385,7 +385,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%@-URL"
           }
         },
@@ -469,7 +469,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Oppdagede strekkoder"
           }
         },
@@ -637,7 +637,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Godkjenn alle"
           }
         },
@@ -721,7 +721,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Godkjenn én gang"
           }
         },
@@ -973,7 +973,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Lukk"
           }
         },
@@ -1057,7 +1057,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Kopier til utklippstavlen"
           }
         },
@@ -1309,7 +1309,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Uenig"
           }
         },
@@ -1393,7 +1393,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Dupliser"
           }
         },
@@ -1729,8 +1729,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jeg er enig"
+            "state" : "translated",
+            "value" : "Jeg godtar"
           }
         },
         "pl" : {
@@ -1896,7 +1896,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Åpne / kopier"
           }
         },
@@ -1980,7 +1980,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Åpne i nettleser"
           }
         },
@@ -2064,7 +2064,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Utfør"
           }
         },
@@ -2568,8 +2568,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Søk i nettleseren"
+            "state" : "translated",
+            "value" : "Søk i nettleser"
           }
         },
         "pl" : {
@@ -2652,7 +2652,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Velg en handling"
           }
         },
@@ -2736,7 +2736,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Gjenkjenn bilde"
           }
         },
@@ -2820,7 +2820,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Beskriv bilde med AI"
           }
         },
@@ -2904,7 +2904,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Gjenkjenn tekst i bilde"
           }
         },
@@ -2988,7 +2988,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ingen kamera tilgjengelig."
           }
         },
@@ -3072,8 +3072,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Gjenkjenning ferdig."
+            "state" : "translated",
+            "value" : "Gjenkjenning fullført."
           }
         },
         "pl" : {
@@ -3156,7 +3156,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ingenting funnet!"
           }
         },
@@ -3240,7 +3240,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Bruker %@"
           }
         },
@@ -3744,7 +3744,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Årsak"
           }
         },
@@ -3912,8 +3912,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tilgjengelighetstillatelse kreves for datamaskinbruk."
+            "state" : "translated",
+            "value" : "Tilgjengelighetstillatelse kreves for AI-styring av datamaskinen."
           }
         },
         "pl" : {
@@ -3996,8 +3996,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Godkjenn datamaskinbrukshandling?"
+            "state" : "translated",
+            "value" : "Godkjenn AI-styring?"
           }
         },
         "pl" : {
@@ -4080,8 +4080,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Assistenttale av."
+            "state" : "translated",
+            "value" : "Opplesing av assistentmeldinger av.."
           }
         },
         "pl" : {
@@ -4164,8 +4164,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Assistenttale på."
+            "state" : "translated",
+            "value" : "Opplesing av assistentmeldinger på."
           }
         },
         "pl" : {
@@ -4248,8 +4248,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Datamaskinbruk avbrutt."
+            "state" : "translated",
+            "value" : "AI-styring stoppet."
           }
         },
         "pl" : {
@@ -4332,8 +4332,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Dette tillegget bruker en AI-modell for å kontrollere datamaskinens mus og tastatur. Forfatteren er ikke ansvarlig for eventuelle irreversible handlinger, datatap eller andre skader dette tillegget kan utføre eller forårsake. Bruk dette verktøyet ansvarlig og overvåk alltid tillegget mens det kjører."
+            "state" : "translated",
+            "value" : "Dette tillegget bruker en AI-modell for å kontrollere datamaskinens mus og tastatur. Utvikleren er ikke ansvarlig for handlinger som ikke kan reverseres, datatap eller andre skader som tillegget kan utføre eller forårsake. Bruk verktøyet ansvarlig, og følg med på tillegget mens det kjører."
           }
         },
         "pl" : {
@@ -4416,8 +4416,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "BRUK PÅ EGEN RISIKO"
+            "state" : "translated",
+            "value" : "BRUK PÅ eget ansvar"
           }
         },
         "pl" : {
@@ -4500,8 +4500,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Datamaskinbruk"
+            "state" : "translated",
+            "value" : "AI-styring av datamaskinen"
           }
         },
         "pl" : {
@@ -4584,8 +4584,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Feil ved datamaskinbruk"
+            "state" : "translated",
+            "value" : "Feil ved AI-styring av datamaskin"
           }
         },
         "pl" : {
@@ -4668,8 +4668,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Datamaskinbruk feilet: %@"
+            "state" : "translated",
+            "value" : "AI-styring mislyktes: %@"
           }
         },
         "pl" : {
@@ -4752,8 +4752,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Datamaskinbruk ferdig."
+            "state" : "translated",
+            "value" : "AI-styring av datamaskinen fullført."
           }
         },
         "pl" : {
@@ -4836,7 +4836,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ingen aktiv AI-forhåndsinnstilling er valgt."
           }
         },
@@ -4920,8 +4920,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kunne ikke få tilgang til det fremste vinduet."
+            "state" : "translated",
+            "value" : "Fikk ikke tilgang til det fremste vinduet."
           }
         },
         "pl" : {
@@ -5004,8 +5004,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Datamaskinbruk satt på pause."
+            "state" : "translated",
+            "value" : "AI-styring pauset."
           }
         },
         "pl" : {
@@ -5088,8 +5088,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Datamaskinbruk gjenopptatt."
+            "state" : "translated",
+            "value" : "AI-styring gjenopptatt."
           }
         },
         "pl" : {
@@ -5172,7 +5172,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Gjenoppta oppgaven."
           }
         },
@@ -5256,8 +5256,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "kjøp, betal, utsjekking, bestilling, send, post, del, last opp, slett, fjern, arkiver, logg inn, passord, påloggingsinformasjon, bekreft, overfør, avslutt abonnement"
+            "state" : "translated",
+            "value" : "kjøp, betal, utsjekking, bestilling, send, publiser, del, last opp, slett, fjern, arkiver, logg inn, passord, påloggingsinformasjon, bekreft, overfør, avslutt abonnement"
           }
         },
         "pl" : {
@@ -5340,7 +5340,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Skjermbilde."
           }
         },
@@ -5424,7 +5424,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Godkjenn alle"
           }
         },
@@ -5845,7 +5845,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oppdater system- og brukerpromptene som brukes i Utforsker-modus."
+            "value" : "Oppdater system- og brukerpromptene som brukes i Utforsk-modus."
           }
         },
         "pl" : {
@@ -6013,7 +6013,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rediger prompts for Utforsker"
+            "value" : "Rediger Prompts for Utforsk."
           }
         },
         "pl" : {
@@ -6181,7 +6181,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Følg opp"
+            "value" : "Følg opp samtale"
           }
         },
         "pl" : {
@@ -6348,7 +6348,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ny snarvei"
+            "value" : "Ny snarvei..."
           }
         },
         "pl" : {
@@ -6852,7 +6852,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lagre filen."
+            "value" : "Lagre fil."
           }
         },
         "pl" : {
@@ -6936,7 +6936,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Velg lydutgang for retningsbasert lyd"
+            "value" : "Velg lydutgang for retningsbasert lyd."
           }
         },
         "pl" : {
@@ -7524,7 +7524,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HTTP Feil"
+            "value" : "HTTP-Feil"
           }
         },
         "pl" : {
@@ -7776,7 +7776,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ingen data mottat fra server."
+            "value" : "Ingen data mottatt fra server."
           }
         },
         "pl" : {
@@ -7943,8 +7943,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "VOCR kunne ikke dekryptere API-nøkkelen for forhåndsinnstillingen \"%@\". Åpne forhåndsinnstillingsbehandling, rediger denne forhåndsinnstillingen, skriv inn API-nøkkelen på nytt og lagre den."
+            "state" : "translated",
+            "value" : "VOCR kunne ikke dekryptere API-nøkkelen for forhåndsinnstillingen \"%@\". Åpne Forhåndsinnstillinger, rediger forhåndsinnstillingen, skriv inn API-nøkkelen på nytt og lagre den."
           }
         },
         "pl" : {
@@ -8027,7 +8027,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Kan ikke dekryptere API-nøkkel"
           }
         },
@@ -8531,7 +8531,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Kunne ikke ta skjermbilde av %@, %@"
           }
         },
@@ -8867,7 +8867,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Modell"
           }
         },
@@ -9119,7 +9119,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Leverandør"
           }
         },
@@ -9624,7 +9624,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Om"
+            "value" : "Om…"
           }
         },
         "pl" : {
@@ -9960,7 +9960,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Velg Kamera."
+            "value" : "Velg kamera..."
           }
         },
         "pl" : {
@@ -10128,7 +10128,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rediger Utforsker-prompts"
+            "value" : "Rediger Utforsk-prompter"
           }
         },
         "pl" : {
@@ -10464,7 +10464,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Behandle forhåndsinnstillinger..."
+            "value" : "Forhåndsinnstillinger…"
           }
         },
         "pl" : {
@@ -10800,7 +10800,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lagre Siste Bilde"
+            "value" : "Lagre siste bilde"
           }
         },
         "pl" : {
@@ -11051,7 +11051,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "AI"
           }
         },
@@ -11135,8 +11135,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Snakk assistentmelding"
+            "state" : "translated",
+            "value" : "Les opp assistentmeldinger"
           }
         },
         "pl" : {
@@ -11220,7 +11220,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scan Automatisk"
+            "value" : "Skann automatisk"
           }
         },
         "pl" : {
@@ -11388,7 +11388,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Starte ved pålogging"
+            "value" : "Start ved pålogging"
           }
         },
         "pl" : {
@@ -11639,7 +11639,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "OCR"
           }
         },
@@ -12648,7 +12648,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VoiceOver markør"
+            "value" : "VoiceOver-markør"
           }
         },
         "pl" : {
@@ -12815,7 +12815,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%d koder"
           }
         },
@@ -12899,7 +12899,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "1 kode"
           }
         },
@@ -12983,8 +12983,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ oppdaget. Trykk på %2$@ for å vise."
+            "state" : "translated",
+            "value" : "%1$@ oppdaget. Trykk %2$@ for å vise."
           }
         },
         "pl" : {
@@ -13068,7 +13068,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Velg vinduet som skal scannes."
+            "value" : "Velg et vindu som skal skannes."
           }
         },
         "pl" : {
@@ -13236,7 +13236,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avslutter OCR navigasjon."
+            "value" : "Avslutter VOCR-navigasjon."
           }
         },
         "pl" : {
@@ -13320,7 +13320,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ferdig å scanne %@, %@"
+            "value" : "Skanning fullført for %@, %@"
           }
         },
         "pl" : {
@@ -13403,7 +13403,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Skanning fullført"
           }
         },
@@ -13487,8 +13487,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ingen strekkoder funnet i forrige skanning."
+            "state" : "translated",
+            "value" : "Ingen strekkoder funnet i siste skanning."
           }
         },
         "pl" : {
@@ -14412,7 +14412,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Read text from your screen for OCR"
+            "value" : "Lese tekst fra skjermen for OCR"
           }
         },
         "pl" : {
@@ -14664,7 +14664,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Håndtere vindusinnhold"
+            "value" : "Samhandle med vindusinnhold"
           }
         },
         "pl" : {
@@ -14831,8 +14831,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fange globale snarveier"
+            "state" : "translated",
+            "value" : "Registrere globale snarveier"
           }
         },
         "pl" : {
@@ -14915,7 +14915,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Kamera"
           }
         },
@@ -14999,7 +14999,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Kamera (valgfritt)"
           }
         },
@@ -15083,8 +15083,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Beskrive bilder fra kameraet"
+            "state" : "translated",
+            "value" : "Beskriv bilder fra kamera"
           }
         },
         "pl" : {
@@ -15587,8 +15587,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Varsling (valgfritt)"
+            "state" : "translated",
+            "value" : "Varslinger (valgfritt)"
           }
         },
         "pl" : {
@@ -15671,7 +15671,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Varsle om oppdateringer"
           }
         },
@@ -16008,7 +16008,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ta opp skjerminnhold for OCR"
+            "value" : "Ta skjermbilder for OCR"
           }
         },
         "pl" : {
@@ -16343,7 +16343,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ta skjermbilder for OCR"
           }
         },
@@ -17183,8 +17183,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Lese opp kunngjøringer med VoiceOver"
+            "state" : "translated",
+            "value" : "Lese opp varsler med VoiceOver"
           }
         },
         "pl" : {
@@ -17603,7 +17603,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Gi følgende tillatelser for at VOCR skal fungere riktig."
           }
         },
@@ -18023,7 +18023,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "kopi"
           }
         },
@@ -18612,7 +18612,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avbrudt"
+            "value" : "Avbrutt"
           }
         },
         "pl" : {
@@ -18696,7 +18696,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Søk i OCR tekst"
+            "value" : "Søk i OCR-tekst"
           }
         },
         "pl" : {
@@ -18780,7 +18780,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ikke funnet"
+            "value" : "Ikke funnet."
           }
         },
         "pl" : {
@@ -19032,7 +19032,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bunden"
+            "value" : "Bunnen"
           }
         },
         "pl" : {
@@ -19368,7 +19368,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Går ut av navigasjon"
+            "value" : "Avslutt navigasjon"
           }
         },
         "pl" : {
@@ -19788,7 +19788,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Identifiser objekter"
+            "value" : "Identifiser objekt"
           }
         },
         "pl" : {
@@ -20040,7 +20040,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OCR av VoiceOver markør"
+            "value" : "OCR ved VoiceOver-markøren"
           }
         },
         "pl" : {
@@ -21048,7 +21048,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VOCR tillatelser"
+            "value" : "VOCR-tillatelser"
           }
         },
         "pl" : {
