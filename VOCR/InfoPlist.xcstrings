@@ -37,7 +37,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "VOCR"
           }
         },
@@ -242,7 +242,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Leggi gli annunci e acquisisci uno screenshot in corrispondenza del cursore di VoiceOver"
+            "value" : "Legge gli annunci e acquisisce uno screenshot in corrispondenza del cursore VoiceOver"
           }
         },
         "nb" : {
@@ -373,7 +373,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Copyright © 2019 Chi Kim. Tutti i diritti riservati."
           }
         },
@@ -457,7 +457,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "VOCR deve catturare il contenuto dello schermo per eseguire l'OCR ed estrarre il testo da finestre e applicazioni."
           }
         },
