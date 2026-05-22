@@ -15,6 +15,7 @@ XCSTRINGS_FILES = [
     os.path.join(PROJECT_DIR, "VOCR", "Localizable.xcstrings"),
     os.path.join(PROJECT_DIR, "VOCR", "InfoPlist.xcstrings"),
 ]
+KNOWN_STATES = ("new", "needs_review", "translated", "stale")
 
 
 def load_xcstrings(path):
@@ -69,8 +70,45 @@ def validate(rows, key_to_file, file_data):
     return errors
 
 
+def count_language(file_data, lang_code):
+    """Return translation state counts for a language from loaded xcstrings data."""
+    counts = {s: 0 for s in KNOWN_STATES}
+    counts["other"] = 0
+
+    for data in file_data.values():
+        for entry in data["strings"].values():
+            lang_loc = entry.get("localizations", {}).get(lang_code, {})
+            if not lang_loc:
+                counts["new"] += 1
+                continue
+
+            state = lang_loc.get("stringUnit", {}).get("state", "new")
+            if state in counts:
+                counts[state] += 1
+            else:
+                counts["other"] += 1
+
+    return counts
+
+
+def print_breakdown(breakdown):
+    """Print a breakdown table of translation states per language."""
+    header = (
+        f"{'Language':<12} | {'New':<6} | {'Needs Review':<12} | "
+        f"{'Translated':<10} | {'Stale':<6} | {'Total':<6}"
+    )
+    print("\n" + header)
+    print("-" * len(header))
+    for lang, counts in sorted(breakdown.items()):
+        total = sum(counts.values())
+        print(
+            f"{lang:<12} | {counts['new']:<6} | {counts['needs_review']:<12} | "
+            f"{counts['translated']:<10} | {counts['stale']:<6} | {total:<6}"
+        )
+
+
 def import_csv(csv_path, file_data, key_to_file):
-    """Import a single CSV file. Returns (updated, skipped, warned) counts."""
+    """Import a single CSV file. Returns (updated, skipped, warned, modified, imported)."""
     lang_code = os.path.splitext(os.path.basename(csv_path))[0]
 
     with open(csv_path, "r", encoding="utf-8") as f:
@@ -83,7 +121,7 @@ def import_csv(csv_path, file_data, key_to_file):
         for error in errors:
             print(f"  {error}\n", file=sys.stderr)
         print("Skipping this file. Fix the errors above and try again.", file=sys.stderr)
-        return 0, 0, 0, set()
+        return 0, 0, 0, set(), False
 
     updated = 0
     skipped = 0
@@ -125,7 +163,7 @@ def import_csv(csv_path, file_data, key_to_file):
         parts.append(f"{warned} stale skipped")
     print(", ".join(parts))
 
-    return updated, skipped, warned, modified
+    return updated, skipped, warned, modified, True
 
 
 def main():
@@ -165,15 +203,26 @@ def main():
             key_to_file[key] = xcpath
 
     all_modified = set()
+    imported_languages = set()
     for csv_path in csv_files:
-        _, _, _, modified = import_csv(csv_path, file_data, key_to_file)
+        _, _, _, modified, imported = import_csv(csv_path, file_data, key_to_file)
         all_modified |= modified
+        if imported:
+            imported_languages.add(os.path.splitext(os.path.basename(csv_path))[0])
 
     for xcpath in all_modified:
         backup_path = xcpath + ".backup"
         shutil.copy2(xcpath, backup_path)
         print(f"Backup saved to {backup_path}")
         save_xcstrings(xcpath, file_data[xcpath])
+
+    breakdown = {
+        lang_code: count_language(file_data, lang_code)
+        for lang_code in imported_languages
+        if lang_code != "template"
+    }
+    if breakdown:
+        print_breakdown(breakdown)
 
 
 if __name__ == "__main__":
