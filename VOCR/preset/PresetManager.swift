@@ -25,19 +25,26 @@ final class PresetManager {
     }
 
     private func makeDefaultPresets() {
-        log("PresetManager: creating default preset")
+        log("PresetManager: creating default presets")
         do {
             try addPreset(
                 name: "Default", url: "https://api.openai.com/v1", model: "gpt-5.2",
                 systemPrompt: DefaultPrompts.system,
                 prompt: DefaultPrompts.user,
                 apiKeyPlaintext: "your-api-key")
-            if let lastID = presets.last?.id {
-                selectPreset(id: lastID)
+            try addPreset(
+                name: "Gemini 3.5 Flash",
+                url: "https://generativelanguage.googleapis.com/v1beta/openai/",
+                model: "gemini-3.5-flash",
+                systemPrompt: DefaultPrompts.system,
+                prompt: DefaultPrompts.user,
+                apiKeyPlaintext: "your-api-key")
+            if let firstID = presets.first?.id {
+                selectPreset(id: firstID)
             }
         } catch {
             // If creating default presets fails (e.g., encryption error), start with empty presets.
-            log("PresetManager: failed to create default preset: \(error)")
+            log("PresetManager: failed to create default presets: \(error)")
             self.presets = []
         }
     }
