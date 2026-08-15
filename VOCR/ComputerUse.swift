@@ -711,6 +711,7 @@ extension ComputerUseController {
             "messages": requestMessages,
             "tools": computerTools,
             "tool_choice": "auto",
+            "reasoning_effort": "none",
         ]
 
         send(body: body, preset: preset) { [weak self] result in
