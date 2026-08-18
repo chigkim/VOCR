@@ -19,6 +19,7 @@
 &lt;li&gt;You can use escape dismiss the settings menu regardless whether the navigation is active or not.&lt;/li&gt;
 &lt;li&gt;VOCR no longers steals focus after closing dialogs/windows.&lt;/li&gt;
 &lt;li&gt;The permissions window has better UI and includes Camera permission as optional&lt;/li&gt;
+&lt;li&gt;Norwegian Bokmål translation update (@SuperCliff)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id="300-beta4"&gt;3.0.0-beta.4&lt;/h2&gt;
 &lt;h3 id="computer-use"&gt;Computer Use&lt;/h3&gt;
