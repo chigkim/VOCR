@@ -2,12 +2,10 @@
 # requires-python = ">=3.12"
 # dependencies = [
 #     "markdown",
-#     "requests",
 # ]
 # ///
 
 import argparse
-import getpass
 import json
 import os
 import re
@@ -21,71 +19,46 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import markdown
-import requests
 
 
 OWNER = "chigkim"
 REPO = "VOCR"
+REPO_SLUG = f"{OWNER}/{REPO}"
 ARCHIVES = Path("archives")
 DOCS = Path("docs")
 GENERATE_APPCAST = Path(
 	"~/Library/Developer/Xcode/DerivedData/VOCR-gjsqmtcgzvvuvfcpuxtfgxerxtyc/"
 	"SourcePackages/artifacts/sparkle/Sparkle/bin/generate_appcast"
 ).expanduser()
-TRANSIENT_GITHUB_STATUS_CODES = {403, 404, 409, 422, 429, 500, 502, 503, 504}
+GH_RETRIES = 3
+
+
+def format_cmd(cmd):
+	return " ".join(shlex.quote(str(part)) for part in cmd)
 
 
 def run(cmd):
-	print("$", " ".join(shlex.quote(str(part)) for part in cmd))
+	print("$", format_cmd(cmd))
 	subprocess.run(cmd, check=True)
 
 
-def response_json(response):
-	try:
-		return response.json()
-	except ValueError:
-		return response.text
-
-
-def github_headers(token, content_type="application/json"):
-	return {
-		"Authorization": f"token {token}",
-		"Content-Type": content_type,
-	}
-
-
-def retry_delay(response, attempt):
-	retry_after = response.headers.get("Retry-After")
-	if retry_after:
-		try:
-			return max(1, int(retry_after))
-		except ValueError:
-			pass
-	return min(2**attempt, 10)
-
-
-def github_request(method, url, token, retries=0, retry_statuses=None, **kwargs):
-	if retry_statuses is None:
-		retry_statuses = set()
-
+def gh(args, capture=False, retries=0):
+	cmd = ["gh", *[str(arg) for arg in args]]
+	print("$", format_cmd(cmd))
 	for attempt in range(retries + 1):
-		response = requests.request(method, url, headers=github_headers(token), **kwargs)
-		if response.ok:
-			return response
+		result = subprocess.run(cmd, capture_output=capture, text=True)
+		if result.returncode == 0:
+			return result.stdout
 
-		if attempt < retries and response.status_code in retry_statuses:
-			delay = retry_delay(response, attempt)
-			print(
-				f"GitHub API {method} {url} failed with {response.status_code}; "
-				f"retrying in {delay}s..."
-			)
+		if attempt < retries:
+			delay = min(2**attempt, 10)
+			print(f"{format_cmd(cmd)} failed (exit {result.returncode}); retrying in {delay}s...")
 			time.sleep(delay)
 			continue
 
-		sys.exit(
-			f"GitHub API {method} {url} failed "
-			f"({response.status_code} {response.reason}): {response_json(response)}"
-		)
+		if result.stderr:
+			print(result.stderr, end="", file=sys.stderr)
+		sys.exit(f"Error: {format_cmd(cmd)} failed (exit {result.returncode})")
 
 	raise RuntimeError("unreachable")
 
@@ -169,16 +142,16 @@ def read_changelog(args):
 	if not changelog.exists():
 		sys.exit(f"Error: Changelog not found: {changelog}")
 
-	return changelog, changelog.read_text()
+	return changelog
 
 
-def get_token(args):
+def ensure_auth(args):
 	if args.token:
-		return args.token
-	token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
-	if token:
-		return token
-	return getpass.getpass("GitHub Token: ")
+		os.environ["GH_TOKEN"] = args.token
+		return
+	if os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN"):
+		return
+	gh(["auth", "status"], capture=True)
 
 
 def release_name(tag):
@@ -204,59 +177,59 @@ def render_release_note(changelog, note):
 	return note
 
 
-def get_release_by_tag(token, tag):
-	url = f"https://api.github.com/repos/{OWNER}/{REPO}/releases/tags/{tag}"
-	response = github_request(
-		"GET",
-		url,
-		token,
-		retries=3,
-		retry_statuses=TRANSIENT_GITHUB_STATUS_CODES,
-	)
-	return response.json()
-
-
-def create_github_release(token, tag, release_body):
-	url = f"https://api.github.com/repos/{OWNER}/{REPO}/releases"
-	data = {
-		"tag_name": tag,
-		"name": release_name(tag),
-		"body": release_body,
-		"draft": False,
-		"prerelease": is_beta(tag),
-	}
-	print(json.dumps(data, indent="\t"))
-	response = github_request("POST", url, token, json=data)
+def create_github_release(tag, changelog):
+	args = [
+		"release",
+		"create",
+		tag,
+		"--repo",
+		REPO_SLUG,
+		"--title",
+		release_name(tag),
+		"--notes-file",
+		changelog,
+	]
+	if is_beta(tag):
+		args.append("--prerelease")
+	gh(args)
 	print("Release created successfully!")
-	return response.json()
 
 
-def update_github_release(token, tag, release_body):
-	release = get_release_by_tag(token, tag)
-	url = f"https://api.github.com/repos/{OWNER}/{REPO}/releases/{release['id']}"
-	data = {"body": release_body}
-	github_request(
-		"PATCH",
-		url,
-		token,
-		json=data,
-		retries=3,
-		retry_statuses=TRANSIENT_GITHUB_STATUS_CODES,
+def update_github_release(tag, changelog):
+	gh(
+		[
+			"release",
+			"edit",
+			tag,
+			"--repo",
+			REPO_SLUG,
+			"--notes-file",
+			changelog,
+		],
+		retries=GH_RETRIES,
 	)
 	print("GitHub release notes updated successfully!")
-	return release
 
 
-def upload_release_asset(token, release_info, zip_file):
-	asset_name = zip_file.name
-	upload_url = release_info["upload_url"].split("{")[0] + "?name=" + asset_name
-	headers_asset = github_headers(token, "application/octet-stream")
-	data_asset = zip_file.read_bytes()
-	response = requests.post(upload_url, headers=headers_asset, data=data_asset)
-	if not response.ok:
-		sys.exit(f"Failed to upload asset: {response_json(response)}")
+def asset_download_url(tag, asset_name):
+	output = gh(
+		["release", "view", tag, "--repo", REPO_SLUG, "--json", "assets"],
+		capture=True,
+		retries=GH_RETRIES,
+	)
+	for asset in json.loads(output)["assets"]:
+		if asset["name"] == asset_name:
+			return asset["url"]
+	sys.exit(f"Error: Asset {asset_name} not found in release {tag}")
+
+
+def upload_release_asset(tag, zip_file):
+	gh(
+		["release", "upload", tag, zip_file, "--repo", REPO_SLUG, "--clobber"],
+		retries=GH_RETRIES,
+	)
 	print("Asset uploaded successfully!")
-	return response.json()["browser_download_url"]
+	return asset_download_url(tag, zip_file.name)
 
 
 def merge_appcast(tag, download):
@@ -335,26 +308,26 @@ def create_release(args):
 	print("Beta:", is_beta(tag))
 	print("Release:", release_name(tag))
 
-	changelog, release_body = read_changelog(args)
-	token = get_token(args)
+	changelog = read_changelog(args)
+	ensure_auth(args)
 
 	zip_file = ARCHIVES / f"{app}_{tag}.zip"
 	run(["ditto", "-c", "-k", "--sequesterRsrc", "--keepParent", str(app_file), str(zip_file)])
 	shutil.rmtree(app_file)
 
-	release_info = create_github_release(token, tag, release_body)
+	create_github_release(tag, changelog)
 	note = render_release_note(changelog, archives_release_note_path(tag))
 	run([str(GENERATE_APPCAST), str(ARCHIVES)])
 	note.rename(docs_release_note_path(tag))
 
-	download = upload_release_asset(token, release_info, zip_file)
+	download = upload_release_asset(tag, zip_file)
 	merge_appcast(tag, download)
 	commit_docs(tag, args.no_commit)
 	print("Done!")
 
 
 def update_release_notes(args):
-	changelog, release_body = read_changelog(args)
+	changelog = read_changelog(args)
 	tag = detect_tag(args)
 	if not tag:
 		sys.exit("Error: Could not determine release tag. Pass --tag.")
@@ -362,12 +335,12 @@ def update_release_notes(args):
 	print("Tag:", tag)
 	print("Release:", release_name(tag))
 
-	token = get_token(args)
+	ensure_auth(args)
 	note = docs_release_note_path(tag)
 	with tempfile.TemporaryDirectory() as temp_dir:
 		temp_note = Path(temp_dir) / note.name
 		render_release_note(changelog, temp_note)
-		update_github_release(token, tag, release_body)
+		update_github_release(tag, changelog)
 		shutil.move(temp_note, note)
 
 	commit_docs(tag, args.no_commit)
@@ -392,7 +365,7 @@ def parse_args():
 	)
 	parser.add_argument(
 		"--token",
-		help="GitHub token. Defaults to GITHUB_TOKEN, GH_TOKEN, or an interactive prompt.",
+		help="GitHub token for gh. Defaults to GH_TOKEN, GITHUB_TOKEN, or the gh CLI login.",
 	)
 	parser.add_argument(
 		"--no-commit",
