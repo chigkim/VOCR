@@ -1,0 +1,52 @@
+<h2 id="changelog">Changelog</h2>
+<p>This is a major update focusing on flexibility, customization, and making VOCR accessible to more users around the world.</p>
+<p>Read below to learn all the exciting changes introduced in this release since v2.3.1!</p>
+<h3 id="computer-use">Computer Use</h3>
+<p>You can now ask AI to control Apps using Mouse and Keyboard commands. <a href="https://github.com/user-attachments/assets/c465d6e8-236c-4a93-980b-ef237f5c87ef">Check out the demo.</a></p>
+<ul>
+<li>Start/Stop Computer Use: Command+Control+Shift+u</li>
+<li>Pause/Resume Computer Use: Command+Control+P (Only Available during the Computer Use)</li>
+<li>Toggle Speak Assistant Message: Command+Control+S (Only Available during the Computer Use)</li>
+</ul>
+<p>If you notice Computer Use enters a loop while attempting the same task, either cancel the task or pause and resume it with a different instruction.</p>
+<p>Token usage and trace log will be copied to the clipboard at the end.</p>
+<h3 id="preset">Preset</h3>
+<p>The old engine selection (GPT / Ollama / LlamaCpp) has been replaced with a flexible <strong>Preset</strong> system. Each preset stores its own API URL, API key, model, and prompts, so you can set up as many AI configurations as you like and switch between them instantly from the new <strong>Presets</strong> menu.</p>
+<p>A <strong>Preset Manager</strong> window lets you create, edit, duplicate, and delete presets.</p>
+<p>API keys are encrypted and stored securely using the macOS Keychain, and are only displayed in plain text when creating a preset.</p>
+<p>Built-in provider URLs are included for <strong>Claude, Gemini, Ollama, OpenAI, and OpenRouter</strong>. Any service that offers an OpenAI-compatible API will work.</p>
+<h3 id="11-languages">11 Languages</h3>
+<p>VOCR is now localized in English, German, Spanish, French, Japanese, Korean, Polish, Portuguese, Russian, Ukrainian, and Simplified Chinese.</p>
+<p>The translations are done by AI, so we need help from the community to improve. See the <a href="https://chigkim.github.io/VOCR/translation_guide">translation guide</a> for more information.</p>
+<ul>
+<li>Italian Translation proofread by Giovanni lo Monaco.</li>
+<li>Polish translation proofread by @pitermach.</li>
+<li>Norwegian Bokmål translation proofread by @SuperCliff.</li>
+<li>Spanish translation proofread by  @CarlosEstebanMartinez.</li>
+</ul>
+<h3 id="more-improvements-and-fixes">More Improvements and Fixes</h3>
+<ul>
+<li>VOCR can now detect QR codes and 24 barcode types during a scan, including product codes, URLs, Wi‑Fi QR codes, passes, shipping labels, etc. View detected codes with Command+Shift+Control+Q. ()@vic08)</li>
+<li>A new <strong>Follow up</strong> checkbox in the Ask dialog lets you carry on a multi-turn conversation with the AI instead of starting fresh each time.</li>
+<li>The permission wizard now can guide you through the required permissions. Thanks @vic08.</li>
+<li>You can now edit the system prompt and user prompt used by Explore mode via <strong>Presets &gt; Edit Explore Prompts</strong>.
+A <strong>Reset</strong> item in the Settings menu lets you erase all settings and presets and start fresh.</li>
+<li>Fix the bug where it would trigger beta updates even though it was not checked.</li>
+<li>Added languages submenu to choose Language for UI</li>
+<li>You can use escape dismiss the settings menu regardless whether the navigation is active or not.</li>
+<li>VOCR no longers steals focus after closing dialogs/windows.</li>
+<li>Scan window uses focused window instead of the first window.</li>
+<li>When a dialog opens keyboard focus is now in the dialog.</li>
+<li>Made prompt boxes bigger for easy editing.</li>
+<li>Reorganized the settings menu: Submenus for OCR and AI</li>
+<li>Explore mode uses a structured json-schema response format for more reliable results, and </li>
+<li><strong>"Use Last Prompt"</strong> has been replaced by <strong>"Use Preset Prompt"</strong>, which sends the prompt saved in the active preset without showing the dialog.</li>
+<li>The <strong>Ask</strong> dialog button is now labeled "Ask" instead of "Ok".</li>
+<li>AI status messages now show the name of the preset being used (e.g., "Asking Claude... Please wait...").</li>
+<li>Error messages are now shown as alert dialogs.</li>
+<li>Token usage information is now copied to the clipboard along with the AI response.</li>
+<li>The <strong>Engine</strong> submenu (GPT / Ollama / LlamaCpp) -- replaced by presets.</li>
+<li>The <strong>OpenAI API Key</strong> dialog in Settings -- API keys are now managed per-preset.</li>
+<li>The <strong>Set System Prompt</strong> dialog in Settings -- prompts are now managed per-preset.</li>
+<li>Various bug fixes and optimizations</li>
+</ul>
