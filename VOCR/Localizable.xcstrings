@@ -19,7 +19,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "¡VOCR listo!"
           }
         },
@@ -103,7 +103,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Se copió %@ al portapapeles."
           }
         },
@@ -115,7 +115,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Copiato negli appunti: %@"
           }
         },
@@ -133,8 +133,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ kopiert til utklippstavlen."
+            "state" : "translated",
+            "value" : "%@ ble kopiert til utklippstavlen."
           }
         },
         "pl" : {
@@ -187,7 +187,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Código de barras"
           }
         },
@@ -199,7 +199,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Codice a barre"
           }
         },
@@ -217,7 +217,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Strekkode"
           }
         },
@@ -271,8 +271,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Selecciona un código de barras para interactuar con él."
+            "state" : "translated",
+            "value" : "Selecciona un código de barras para interactuar."
           }
         },
         "fr" : {
@@ -283,7 +283,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Seleziona un codice a barre per interagire con esso."
           }
         },
@@ -301,8 +301,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Velg en strekkode for å samhandle med den."
+            "state" : "translated",
+            "value" : "Velg en strekkode for å bruke den."
           }
         },
         "pl" : {
@@ -355,7 +355,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "URL de %@"
           }
         },
@@ -367,7 +367,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "URL %@"
           }
         },
@@ -385,7 +385,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%@-URL"
           }
         },
@@ -439,8 +439,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Códigos de barras detectados"
+            "state" : "translated",
+            "value" : "Se encontraron los códigos de barras"
           }
         },
         "fr" : {
@@ -451,7 +451,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Codici a barre rilevati"
           }
         },
@@ -469,7 +469,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Oppdagede strekkoder"
           }
         },
@@ -523,7 +523,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Añadir"
           }
         },
@@ -607,7 +607,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Aprobar todo"
           }
         },
@@ -619,8 +619,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Approva tutto"
+            "state" : "translated",
+            "value" : "Consenti tutto"
           }
         },
         "ja" : {
@@ -637,7 +637,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Godkjenn alle"
           }
         },
@@ -691,7 +691,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Aprobar una vez"
           }
         },
@@ -703,8 +703,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Approva una volta"
+            "state" : "translated",
+            "value" : "Consenti una volta"
           }
         },
         "ja" : {
@@ -721,7 +721,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Godkjenn én gang"
           }
         },
@@ -775,7 +775,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Preguntar"
           }
         },
@@ -859,7 +859,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Cancelar"
           }
         },
@@ -943,7 +943,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Cerrar"
           }
         },
@@ -955,7 +955,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Chiudi"
           }
         },
@@ -973,7 +973,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Lukk"
           }
         },
@@ -1027,7 +1027,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Copiar al portapapeles"
           }
         },
@@ -1039,7 +1039,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Copia negli appunti"
           }
         },
@@ -1057,7 +1057,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Kopier til utklippstavlen"
           }
         },
@@ -1111,7 +1111,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Crear"
           }
         },
@@ -1195,7 +1195,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Eliminar"
           }
         },
@@ -1279,8 +1279,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "No estoy de acuerdo"
+            "state" : "translated",
+            "value" : "Descartar"
           }
         },
         "fr" : {
@@ -1291,7 +1291,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Rifiuta"
           }
         },
@@ -1309,7 +1309,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Uenig"
           }
         },
@@ -1363,7 +1363,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Duplicar"
           }
         },
@@ -1393,7 +1393,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Dupliser"
           }
         },
@@ -1447,7 +1447,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Editar"
           }
         },
@@ -1531,7 +1531,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Desde el inicio"
           }
         },
@@ -1615,8 +1615,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Desde posición actual"
+            "state" : "translated",
+            "value" : "Desde la posición actual"
           }
         },
         "fr" : {
@@ -1699,8 +1699,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Estoy de acuerdo"
+            "state" : "translated",
+            "value" : "aceptar"
           }
         },
         "fr" : {
@@ -1711,8 +1711,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Accetto"
+            "state" : "translated",
+            "value" : "Accetta"
           }
         },
         "ja" : {
@@ -1729,8 +1729,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jeg er enig"
+            "state" : "translated",
+            "value" : "Jeg godtar"
           }
         },
         "pl" : {
@@ -1782,7 +1782,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Aceptar"
           }
         },
@@ -1866,7 +1866,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Abrir / Copiar"
           }
         },
@@ -1878,7 +1878,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Apri / Copia"
           }
         },
@@ -1896,7 +1896,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Åpne / kopier"
           }
         },
@@ -1950,7 +1950,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Abrir en el navegador"
           }
         },
@@ -1962,7 +1962,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Apri nel browser"
           }
         },
@@ -1980,7 +1980,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Åpne i nettleser"
           }
         },
@@ -2034,7 +2034,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Realizar"
           }
         },
@@ -2046,7 +2046,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Esegui"
           }
         },
@@ -2064,7 +2064,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Utfør"
           }
         },
@@ -2118,7 +2118,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Habilitar"
           }
         },
@@ -2130,7 +2130,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Abilita"
           }
         },
@@ -2202,7 +2202,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "✓ Concedido"
           }
         },
@@ -2214,8 +2214,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "✓ Concesso"
+            "state" : "translated",
+            "value" : "✓ Concessa"
           }
         },
         "ja" : {
@@ -2286,7 +2286,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Abrir configuración del sistema"
           }
         },
@@ -2298,8 +2298,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Apri impostazioni di sistema"
+            "state" : "translated",
+            "value" : "Apri impostazioni di Sistema"
           }
         },
         "ja" : {
@@ -2370,7 +2370,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Restablecer y reiniciar"
           }
         },
@@ -2454,7 +2454,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Guardar"
           }
         },
@@ -2538,7 +2538,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Buscar en el navegador"
           }
         },
@@ -2550,7 +2550,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Cerca nel browser"
           }
         },
@@ -2568,8 +2568,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Søk i nettleseren"
+            "state" : "translated",
+            "value" : "Søk i nettleser"
           }
         },
         "pl" : {
@@ -2622,8 +2622,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Elija una acción"
+            "state" : "translated",
+            "value" : "Elije una acción"
           }
         },
         "fr" : {
@@ -2634,7 +2634,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Scegli un'azione"
           }
         },
@@ -2652,7 +2652,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Velg en handling"
           }
         },
@@ -2706,7 +2706,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Reconocer imagen"
           }
         },
@@ -2718,8 +2718,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Riconosci immagine"
+            "state" : "translated",
+            "value" : "Riconosci Immagine"
           }
         },
         "ja" : {
@@ -2736,7 +2736,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Gjenkjenn bilde"
           }
         },
@@ -2790,7 +2790,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Describir imagen con IA"
           }
         },
@@ -2802,8 +2802,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Descrivi immagine con IA"
+            "state" : "translated",
+            "value" : "Descrivi Immagine con IA"
           }
         },
         "ja" : {
@@ -2820,7 +2820,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Beskriv bilde med AI"
           }
         },
@@ -2874,7 +2874,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Reconocer texto en imagen"
           }
         },
@@ -2886,7 +2886,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Riconosci testo nell'immagine"
           }
         },
@@ -2904,7 +2904,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Gjenkjenn tekst i bilde"
           }
         },
@@ -2958,8 +2958,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Cámara no disponible."
+            "state" : "translated",
+            "value" : "No se ha encontrado ninguna cámara."
           }
         },
         "fr" : {
@@ -2970,7 +2970,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nessuna fotocamera disponibile."
           }
         },
@@ -2988,7 +2988,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ingen kamera tilgjengelig."
           }
         },
@@ -3042,7 +3042,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Reconocimiento finalizado."
           }
         },
@@ -3054,7 +3054,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Riconoscimento terminato."
           }
         },
@@ -3072,8 +3072,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Gjenkjenning ferdig."
+            "state" : "translated",
+            "value" : "Gjenkjenning fullført."
           }
         },
         "pl" : {
@@ -3126,8 +3126,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "¡No se encontró nada!"
+            "state" : "translated",
+            "value" : "¡No se ha encontrado!"
           }
         },
         "fr" : {
@@ -3138,7 +3138,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nessun risultato trovato!"
           }
         },
@@ -3156,7 +3156,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ingenting funnet!"
           }
         },
@@ -3210,7 +3210,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Usando %@"
           }
         },
@@ -3222,7 +3222,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Utilizzo di %@"
           }
         },
@@ -3240,7 +3240,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Bruker %@"
           }
         },
@@ -3294,7 +3294,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Acción"
           }
         },
@@ -3306,7 +3306,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Azione"
           }
         },
@@ -3378,8 +3378,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Atajo"
+            "state" : "translated",
+            "value" : "Atajo de teclado"
           }
         },
         "fr" : {
@@ -3462,7 +3462,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Modelo"
           }
         },
@@ -3546,7 +3546,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nombre"
           }
         },
@@ -3630,7 +3630,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Permiso"
           }
         },
@@ -3642,8 +3642,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Permesso"
+            "state" : "translated",
+            "value" : "Autorizzazione"
           }
         },
         "ja" : {
@@ -3714,7 +3714,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Motivo"
           }
         },
@@ -3726,7 +3726,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Motivo"
           }
         },
@@ -3744,7 +3744,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Årsak"
           }
         },
@@ -3798,7 +3798,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Estado"
           }
         },
@@ -3810,7 +3810,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Stato"
           }
         },
@@ -3882,7 +3882,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Se requiere permiso de accesibilidad para el uso de la computadora."
           }
         },
@@ -3894,8 +3894,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Il permesso di accessibilità è richiesto per l'uso del computer."
+            "state" : "translated",
+            "value" : "È necessaria l'autorizzazione di accessibilità per l'uso del computer."
           }
         },
         "ja" : {
@@ -3912,8 +3912,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tilgjengelighetstillatelse kreves for datamaskinbruk."
+            "state" : "translated",
+            "value" : "Tilgjengelighetstillatelse kreves for AI-styring av datamaskinen."
           }
         },
         "pl" : {
@@ -3966,7 +3966,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "¿Aprobar acción de uso de la computadora?"
           }
         },
@@ -3978,8 +3978,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Approvare l'azione di uso del computer?"
+            "state" : "translated",
+            "value" : "Consenti l'azione di utilizzo del computer?"
           }
         },
         "ja" : {
@@ -3996,8 +3996,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Godkjenn datamaskinbrukshandling?"
+            "state" : "translated",
+            "value" : "Godkjenn AI-styring?"
           }
         },
         "pl" : {
@@ -4050,7 +4050,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Voz del asistente desactivada."
           }
         },
@@ -4062,7 +4062,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Voce dell'assistente disattivata."
           }
         },
@@ -4080,8 +4080,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Assistenttale av."
+            "state" : "translated",
+            "value" : "Opplesing av assistentmeldinger av.."
           }
         },
         "pl" : {
@@ -4134,7 +4134,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Voz del asistente activada."
           }
         },
@@ -4146,7 +4146,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Voce dell'assistente attivata."
           }
         },
@@ -4164,8 +4164,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Assistenttale på."
+            "state" : "translated",
+            "value" : "Opplesing av assistentmeldinger på."
           }
         },
         "pl" : {
@@ -4218,8 +4218,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Uso de la computadora cancelado."
+            "state" : "translated",
+            "value" : "Se canceló el uso de la computadora."
           }
         },
         "fr" : {
@@ -4230,7 +4230,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Uso del computer annullato."
           }
         },
@@ -4248,8 +4248,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Datamaskinbruk avbrutt."
+            "state" : "translated",
+            "value" : "AI-styring stoppet."
           }
         },
         "pl" : {
@@ -4302,8 +4302,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Este complemento utiliza un modelo de IA para controlar el ratón y el teclado de su computadora. El autor no es responsable de ninguna acción irreversible, pérdida de datos u otros daños que este complemento pueda realizar o causar. Utilice esta herramienta de forma responsable y supervise siempre el complemento mientras se esté ejecutando."
+            "state" : "translated",
+            "value" : "Este complemento utiliza un modelo de IA para controlar el ratón y el teclado de su computadora. El autor no es responsable de ninguna acción irreversible, pérdida de datos u otros daños que este complemento pueda realizar o causar. Utiliza esta herramienta de forma responsable y siempre supervisa el complemento mientras se esté ejecutando."
           }
         },
         "fr" : {
@@ -4314,7 +4314,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Questo componente aggiuntivo utilizza un modello di IA per controllare il mouse e la tastiera del computer. L'autore non è responsabile per eventuali azioni irreversibili, perdita di dati o altri danni che questo componente aggiuntivo potrebbe compiere o causare. Si prega di utilizzare questo strumento in modo responsabile e di monitorare sempre il componente aggiuntivo mentre è in esecuzione."
           }
         },
@@ -4332,8 +4332,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Dette tillegget bruker en AI-modell for å kontrollere datamaskinens mus og tastatur. Forfatteren er ikke ansvarlig for eventuelle irreversible handlinger, datatap eller andre skader dette tillegget kan utføre eller forårsake. Bruk dette verktøyet ansvarlig og overvåk alltid tillegget mens det kjører."
+            "state" : "translated",
+            "value" : "Dette tillegget bruker en AI-modell for å kontrollere datamaskinens mus og tastatur. Utvikleren er ikke ansvarlig for handlinger som ikke kan reverseres, datatap eller andre skader som tillegget kan utføre eller forårsake. Bruk verktøyet ansvarlig, og følg med på tillegget mens det kjører."
           }
         },
         "pl" : {
@@ -4386,7 +4386,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "USE BAJO SU PROPIO RIESGO"
           }
         },
@@ -4398,7 +4398,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "USARE A PROPRIO RISCHIO"
           }
         },
@@ -4416,8 +4416,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "BRUK PÅ EGEN RISIKO"
+            "state" : "translated",
+            "value" : "BRUK PÅ eget ansvar"
           }
         },
         "pl" : {
@@ -4470,7 +4470,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Uso de la computadora"
           }
         },
@@ -4482,7 +4482,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Uso del computer"
           }
         },
@@ -4500,8 +4500,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Datamaskinbruk"
+            "state" : "translated",
+            "value" : "AI-styring av datamaskinen"
           }
         },
         "pl" : {
@@ -4554,7 +4554,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Error de uso de la computadora"
           }
         },
@@ -4566,8 +4566,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Errore uso del computer"
+            "state" : "translated",
+            "value" : "Errore Uso del Computer"
           }
         },
         "ja" : {
@@ -4584,8 +4584,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Feil ved datamaskinbruk"
+            "state" : "translated",
+            "value" : "Feil ved AI-styring av datamaskin"
           }
         },
         "pl" : {
@@ -4638,7 +4638,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Error en el uso de la computadora: %@"
           }
         },
@@ -4650,8 +4650,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Uso del computer fallito: %@"
+            "state" : "translated",
+            "value" : "Uso del Computer fallito: %@"
           }
         },
         "ja" : {
@@ -4668,8 +4668,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Datamaskinbruk feilet: %@"
+            "state" : "translated",
+            "value" : "AI-styring mislyktes: %@"
           }
         },
         "pl" : {
@@ -4722,7 +4722,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Uso de la computadora finalizado."
           }
         },
@@ -4734,8 +4734,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Uso del computer terminato."
+            "state" : "translated",
+            "value" : "Uso del Computer terminato."
           }
         },
         "ja" : {
@@ -4752,8 +4752,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Datamaskinbruk ferdig."
+            "state" : "translated",
+            "value" : "AI-styring av datamaskinen fullført."
           }
         },
         "pl" : {
@@ -4806,8 +4806,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "No hay ningún ajuste preestablecido de IA activo seleccionado."
+            "state" : "translated",
+            "value" : "No ha seleccionado ningún ajuste preestablecido de IA que esté activo."
           }
         },
         "fr" : {
@@ -4818,8 +4818,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nessun preset IA attivo selezionato."
+            "state" : "translated",
+            "value" : "Nessun preset IA attivo è selezionato."
           }
         },
         "ja" : {
@@ -4836,7 +4836,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ingen aktiv AI-forhåndsinnstilling er valgt."
           }
         },
@@ -4890,7 +4890,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "No se pudo acceder a la ventana principal."
           }
         },
@@ -4902,7 +4902,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Impossibile accedere alla finestra in primo piano."
           }
         },
@@ -4920,8 +4920,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kunne ikke få tilgang til det fremste vinduet."
+            "state" : "translated",
+            "value" : "Fikk ikke tilgang til det fremste vinduet."
           }
         },
         "pl" : {
@@ -4974,8 +4974,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Uso de la computadora pausado."
+            "state" : "translated",
+            "value" : "Se pausó el uso de la computadora."
           }
         },
         "fr" : {
@@ -4986,8 +4986,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Uso del computer in pausa."
+            "state" : "translated",
+            "value" : "Uso del Computer in pausa."
           }
         },
         "ja" : {
@@ -5004,8 +5004,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Datamaskinbruk satt på pause."
+            "state" : "translated",
+            "value" : "AI-styring pauset."
           }
         },
         "pl" : {
@@ -5058,7 +5058,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Uso de la computadora reanudado."
           }
         },
@@ -5070,8 +5070,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Uso del computer ripreso."
+            "state" : "translated",
+            "value" : "Uso del Computer ripreso."
           }
         },
         "ja" : {
@@ -5088,8 +5088,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Datamaskinbruk gjenopptatt."
+            "state" : "translated",
+            "value" : "AI-styring gjenopptatt."
           }
         },
         "pl" : {
@@ -5142,7 +5142,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Reanudar la tarea."
           }
         },
@@ -5154,7 +5154,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Riprendi l'attività."
           }
         },
@@ -5172,7 +5172,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Gjenoppta oppgaven."
           }
         },
@@ -5226,8 +5226,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "comprar, compra, pagar, pagar, pedido, enviar, enviar, publicar, compartir, cargar, eliminar, quitar, archivar, iniciar sesión, login, contraseña, credencial, confirmar, transferir, cancelar suscripción"
+            "state" : "translated",
+            "value" : "comprar, compra, pagar, finalizar compra, pedido, subir, enviar, publicar, compartir, cargar, eliminar, quitar, archivar, iniciar sesión, login, contraseña, credencial, confirmar, transferir, cancelar suscripción"
           }
         },
         "fr" : {
@@ -5238,8 +5238,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "comprare, acquisto, pagare, pagamento, ordine, invia, spedisci, pubblica, condividi, carica, elimina, rimuovi, archivia, accedi, login, password, credenziale, conferma, trasferisci, disiscriviti"
+            "state" : "translated",
+            "value" : "comprare, acquisto, pagare, pagamento, ordine, invia, inviare, pubblica, condividi, carica, elimina, rimuovi, archivia, accedi, login, password, credenziale, conferma, trasferisci, disiscriviti"
           }
         },
         "ja" : {
@@ -5256,8 +5256,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "kjøp, betal, utsjekking, bestilling, send, post, del, last opp, slett, fjern, arkiver, logg inn, passord, påloggingsinformasjon, bekreft, overfør, avslutt abonnement"
+            "state" : "translated",
+            "value" : "kjøp, betal, utsjekking, bestilling, send, publiser, del, last opp, slett, fjern, arkiver, logg inn, passord, påloggingsinformasjon, bekreft, overfør, avslutt abonnement"
           }
         },
         "pl" : {
@@ -5310,7 +5310,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Captura de pantalla."
           }
         },
@@ -5322,7 +5322,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Screenshot."
           }
         },
@@ -5340,7 +5340,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Skjermbilde."
           }
         },
@@ -5394,7 +5394,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Aprobar todo"
           }
         },
@@ -5406,8 +5406,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Approva tutto"
+            "state" : "translated",
+            "value" : "Consenti tutto"
           }
         },
         "ja" : {
@@ -5424,7 +5424,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Godkjenn alle"
           }
         },
@@ -5478,8 +5478,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Preguntando a %@... Espere..."
+            "state" : "translated",
+            "value" : "Preguntando a %@... Por favor espera..."
           }
         },
         "fr" : {
@@ -5562,8 +5562,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Elija una cámara para VOCR."
+            "state" : "translated",
+            "value" : "Elije una cámara para utilizarla con VOCR."
           }
         },
         "fr" : {
@@ -5646,7 +5646,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Cámara"
           }
         },
@@ -5730,7 +5730,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Desconocido"
           }
         },
@@ -5814,8 +5814,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Actualizar las instrucciones del sistema y usuario para el modo Explorar."
+            "state" : "translated",
+            "value" : "Actualizar el prompt del sistema y del usuario para el modo Explorar."
           }
         },
         "fr" : {
@@ -5845,7 +5845,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Oppdater system- og brukerpromptene som brukes i Utforsker-modus."
+            "value" : "Oppdater system- og brukerpromptene som brukes i Utforsk-modus."
           }
         },
         "pl" : {
@@ -5898,8 +5898,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Instrucción del sistema"
+            "state" : "translated",
+            "value" : "prompt del sistema"
           }
         },
         "fr" : {
@@ -5982,8 +5982,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Editar instrucciones de explorar"
+            "state" : "translated",
+            "value" : "Editar prompt del modo explorar"
           }
         },
         "fr" : {
@@ -6013,7 +6013,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rediger prompts for Utforsker"
+            "value" : "Rediger Prompts for Utforsk."
           }
         },
         "pl" : {
@@ -6066,8 +6066,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Instrucción del usuario"
+            "state" : "translated",
+            "value" : "Prompt del usuario"
           }
         },
         "fr" : {
@@ -6150,8 +6150,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Seguimiento"
+            "state" : "translated",
+            "value" : "Habilitar seguimiento"
           }
         },
         "fr" : {
@@ -6181,7 +6181,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Følg opp"
+            "value" : "Følg opp samtale"
           }
         },
         "pl" : {
@@ -6233,8 +6233,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Todos los atajos ya se han añadido."
+            "state" : "translated",
+            "value" : "Se agregaron todos los atajos."
           }
         },
         "fr" : {
@@ -6317,7 +6317,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nuevo atajo"
           }
         },
@@ -6348,7 +6348,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ny snarvei"
+            "value" : "Ny snarvei..."
           }
         },
         "pl" : {
@@ -6401,7 +6401,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Sin asignar"
           }
         },
@@ -6485,8 +6485,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Instrucción"
+            "state" : "translated",
+            "value" : "prompt"
           }
         },
         "fr" : {
@@ -6569,8 +6569,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Esto borrará todos los ajustes y preajustes. No se puede deshacer."
+            "state" : "translated",
+            "value" : "Esto borrará todas las opciones y presets. No se puede deshacer."
           }
         },
         "fr" : {
@@ -6653,7 +6653,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "¿Restablecer?"
           }
         },
@@ -6737,8 +6737,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Elija un destino y guarde su archivo."
+            "state" : "translated",
+            "value" : "Elije un destino y guarda tu archivo."
           }
         },
         "fr" : {
@@ -6821,7 +6821,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Guardar archivo"
           }
         },
@@ -6852,7 +6852,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lagre filen."
+            "value" : "Lagre fil."
           }
         },
         "pl" : {
@@ -6905,8 +6905,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Elija una salida para audio posicional."
+            "state" : "translated",
+            "value" : "Elije un dispositivo de salida para el audio posicional."
           }
         },
         "fr" : {
@@ -6936,7 +6936,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Velg lydutgang for retningsbasert lyd"
+            "value" : "Velg lydutgang for retningsbasert lyd."
           }
         },
         "pl" : {
@@ -6989,7 +6989,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Salida de sonido"
           }
         },
@@ -7073,7 +7073,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Error al acceder a %@, %@"
           }
         },
@@ -7157,7 +7157,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Error al acceder a %@, %@"
           }
         },
@@ -7241,7 +7241,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Error de conexión"
           }
         },
@@ -7325,7 +7325,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Error al decodificar JSON"
           }
         },
@@ -7409,7 +7409,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Código de estado %d: %@"
           }
         },
@@ -7493,7 +7493,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Error HTTP"
           }
         },
@@ -7524,7 +7524,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HTTP Feil"
+            "value" : "HTTP-Feil"
           }
         },
         "pl" : {
@@ -7577,7 +7577,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "URL no válida"
           }
         },
@@ -7661,8 +7661,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "No se puede analizar el JSON. Intente de nuevo."
+            "state" : "translated",
+            "value" : "No se puede analizar el JSON. Vuelve a intentarlo."
           }
         },
         "fr" : {
@@ -7745,7 +7745,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "No se recibieron datos del servidor."
           }
         },
@@ -7776,7 +7776,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ingen data mottat fra server."
+            "value" : "Ingen data mottatt fra server."
           }
         },
         "pl" : {
@@ -7829,7 +7829,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Error: No se pudo analizar el JSON."
           }
         },
@@ -7913,8 +7913,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "VOCR no pudo descifrar la clave API para el ajuste preestablecido \"%@\". Abra el Administrador de ajustes preestablecidos, edite este ajuste, vuelva a introducir la clave API y guárdelo."
+            "state" : "translated",
+            "value" : "VOCR no pudo descifrar la clave API para el ajuste preestablecido \"%@\". Abre el Administrador de ajustes preestablecidos, edítalo, vuelve a introducir la clave API y guárdalo."
           }
         },
         "fr" : {
@@ -7925,8 +7925,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "VOCR non ha potuto decriptare la chiave API per il preset \"%@\". Aprire il Gestore Preset, modificare questo preset, reinserire la chiave API e salvarla."
+            "state" : "translated",
+            "value" : "VOCR non è riuscito a decriptare la chiave API per il preset \"%@\". Apri Gestione Preset, modifica questo preset, reinserisci la chiave API e salvala."
           }
         },
         "ja" : {
@@ -7943,8 +7943,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "VOCR kunne ikke dekryptere API-nøkkelen for forhåndsinnstillingen \"%@\". Åpne forhåndsinnstillingsbehandling, rediger denne forhåndsinnstillingen, skriv inn API-nøkkelen på nytt og lagre den."
+            "state" : "translated",
+            "value" : "VOCR kunne ikke dekryptere API-nøkkelen for forhåndsinnstillingen \"%@\". Åpne Forhåndsinnstillinger, rediger forhåndsinnstillingen, skriv inn API-nøkkelen på nytt og lagre den."
           }
         },
         "pl" : {
@@ -7997,7 +7997,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "No se puede descifrar la clave API"
           }
         },
@@ -8009,7 +8009,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Impossibile decriptare la chiave API"
           }
         },
@@ -8027,7 +8027,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Kan ikke dekryptere API-nøkkel"
           }
         },
@@ -8081,8 +8081,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "No se puede recuperar la lista de modelos del servidor. Por favor, escriba manualmente el nombre del modelo a utilizar."
+            "state" : "translated",
+            "value" : "No se puede recuperar la lista de modelos del servidor. Por favor, escribe manualmente el nombre del modelo a utilizar."
           }
         },
         "fr" : {
@@ -8165,7 +8165,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Error al obtener los modelos."
           }
         },
@@ -8249,8 +8249,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Error al guardar preajuste."
+            "state" : "translated",
+            "value" : "Error al guardar el preset."
           }
         },
         "fr" : {
@@ -8333,8 +8333,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "No hay objeto de respuesta HTTP válido"
+            "state" : "translated",
+            "value" : "No se encontró un objeto de respuesta HTTP válido"
           }
         },
         "fr" : {
@@ -8417,8 +8417,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Respuesta no válida del servidor"
+            "state" : "translated",
+            "value" : "La respuesta del servidor no es válida"
           }
         },
         "fr" : {
@@ -8501,7 +8501,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Error al capturar pantalla de %@, %@"
           }
         },
@@ -8531,7 +8531,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Kunne ikke ta skjermbilde av %@, %@"
           }
         },
@@ -8585,7 +8585,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Clave API:"
           }
         },
@@ -8669,7 +8669,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Clave API"
           }
         },
@@ -8753,7 +8753,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nombre del modelo"
           }
         },
@@ -8837,7 +8837,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Modelo"
           }
         },
@@ -8849,7 +8849,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Modello"
           }
         },
@@ -8867,7 +8867,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Modell"
           }
         },
@@ -8921,7 +8921,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nombre:"
           }
         },
@@ -9005,7 +9005,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nombre"
           }
         },
@@ -9089,7 +9089,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Proveedor"
           }
         },
@@ -9101,7 +9101,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Provider"
           }
         },
@@ -9119,7 +9119,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Leverandør"
           }
         },
@@ -9173,8 +9173,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Instrucción del sistema:"
+            "state" : "translated",
+            "value" : "Prompt del sistema:"
           }
         },
         "fr" : {
@@ -9257,8 +9257,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Instrucción del sistema"
+            "state" : "translated",
+            "value" : "Prompt del sistema"
           }
         },
         "fr" : {
@@ -9341,7 +9341,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "URL del proveedor"
           }
         },
@@ -9425,8 +9425,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Instrucción del usuario:"
+            "state" : "translated",
+            "value" : "Prompt del usuario:"
           }
         },
         "fr" : {
@@ -9509,8 +9509,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Instrucción del usuario"
+            "state" : "translated",
+            "value" : "Prompt del usuario"
           }
         },
         "fr" : {
@@ -9593,7 +9593,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Acerca de…"
           }
         },
@@ -9624,7 +9624,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Om"
+            "value" : "Om…"
           }
         },
         "pl" : {
@@ -9677,7 +9677,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Buscar actualizaciones automáticamente"
           }
         },
@@ -9761,7 +9761,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Instalar actualizaciones automáticamente"
           }
         },
@@ -9845,7 +9845,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Buscar actualizaciones"
           }
         },
@@ -9929,7 +9929,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Elegir cámara…"
           }
         },
@@ -9960,7 +9960,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Velg Kamera."
+            "value" : "Velg kamera..."
           }
         },
         "pl" : {
@@ -10013,7 +10013,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Descargar versión beta"
           }
         },
@@ -10097,8 +10097,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Editar instrucciones de explorar…"
+            "state" : "translated",
+            "value" : "Editar prompt del modo explorar…"
           }
         },
         "fr" : {
@@ -10128,7 +10128,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rediger Utforsker-prompts"
+            "value" : "Rediger Utforsk-prompter"
           }
         },
         "pl" : {
@@ -10181,7 +10181,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Idioma"
           }
         },
@@ -10265,7 +10265,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Predeterminado del sistema"
           }
         },
@@ -10349,7 +10349,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nuevos atajos"
           }
         },
@@ -10433,8 +10433,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Gestor de preajustes…"
+            "state" : "translated",
+            "value" : "Gestor de ajustes preestablecidos…"
           }
         },
         "fr" : {
@@ -10464,7 +10464,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Behandle forhåndsinnstillinger..."
+            "value" : "Forhåndsinnstillinger…"
           }
         },
         "pl" : {
@@ -10517,8 +10517,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Preajustes"
+            "state" : "translated",
+            "value" : "ajustes preestablecidos"
           }
         },
         "fr" : {
@@ -10601,7 +10601,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Salir"
           }
         },
@@ -10685,7 +10685,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Restablecer…"
           }
         },
@@ -10769,8 +10769,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Guardar última imagen"
+            "state" : "translated",
+            "value" : "Guardar la última imagen"
           }
         },
         "fr" : {
@@ -10800,7 +10800,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lagre Siste Bilde"
+            "value" : "Lagre siste bilde"
           }
         },
         "pl" : {
@@ -10853,8 +10853,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Guardar resultado OCR…"
+            "state" : "translated",
+            "value" : "Guardar resultado del OCR…"
           }
         },
         "fr" : {
@@ -10937,7 +10937,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ajustes"
           }
         },
@@ -11021,7 +11021,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "IA"
           }
         },
@@ -11033,7 +11033,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "IA"
           }
         },
@@ -11051,7 +11051,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "AI"
           }
         },
@@ -11105,8 +11105,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hablar mensaje del asistente"
+            "state" : "translated",
+            "value" : "Verbalizar mensaje del asistente"
           }
         },
         "fr" : {
@@ -11117,7 +11117,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Leggi messaggio assistente"
           }
         },
@@ -11135,8 +11135,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Snakk assistentmelding"
+            "state" : "translated",
+            "value" : "Les opp assistentmeldinger"
           }
         },
         "pl" : {
@@ -11189,7 +11189,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Escaneo automático"
           }
         },
@@ -11220,7 +11220,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scan Automatisk"
+            "value" : "Skann automatisk"
           }
         },
         "pl" : {
@@ -11273,7 +11273,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Detectar objetos"
           }
         },
@@ -11357,8 +11357,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Iniciar al inicio de sesión"
+            "state" : "translated",
+            "value" : "Abrir al iniciar sesión"
           }
         },
         "fr" : {
@@ -11388,7 +11388,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Starte ved pålogging"
+            "value" : "Start ved pålogging"
           }
         },
         "pl" : {
@@ -11441,7 +11441,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Registro"
           }
         },
@@ -11525,8 +11525,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Mover ratón"
+            "state" : "translated",
+            "value" : "Mover el ratón"
           }
         },
         "fr" : {
@@ -11609,7 +11609,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "OCR"
           }
         },
@@ -11621,7 +11621,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "OCR"
           }
         },
@@ -11639,7 +11639,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "OCR"
           }
         },
@@ -11693,7 +11693,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Permisos…"
           }
         },
@@ -11705,8 +11705,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Permessi…"
+            "state" : "translated",
+            "value" : "Autorizzazioni…"
           }
         },
         "ja" : {
@@ -11777,7 +11777,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Audio posicional"
           }
         },
@@ -11861,7 +11861,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Restablecer posición al escanear"
           }
         },
@@ -11945,7 +11945,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ventana objetivo"
           }
         },
@@ -12029,8 +12029,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Usar instrucción predefinida"
+            "state" : "translated",
+            "value" : "Usar prompt predefinido"
           }
         },
         "fr" : {
@@ -12113,8 +12113,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Atajos…"
+            "state" : "translated",
+            "value" : "Atajos de teclado…"
           }
         },
         "fr" : {
@@ -12197,8 +12197,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Salida de sonido…"
+            "state" : "translated",
+            "value" : "Seleccionar dispositivo de salida de sonido…"
           }
         },
         "fr" : {
@@ -12281,7 +12281,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Actualizaciones"
           }
         },
@@ -12365,8 +12365,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "OCR en tiempo real iniciado."
+            "state" : "translated",
+            "value" : "Se inició el OCR en tiempo real."
           }
         },
         "fr" : {
@@ -12449,7 +12449,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Deteniendo OCR en tiempo real."
           }
         },
@@ -12462,7 +12462,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Arresto dell'OCR in tempo reale."
+            "value" : "Arresto l'OCR in tempo reale."
           }
         },
         "ja" : {
@@ -12533,7 +12533,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Cámara"
           }
         },
@@ -12617,7 +12617,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "VOCursor"
           }
         },
@@ -12648,7 +12648,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VoiceOver markør"
+            "value" : "VoiceOver-markør"
           }
         },
         "pl" : {
@@ -12701,7 +12701,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ventana"
           }
         },
@@ -12785,7 +12785,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%d códigos"
           }
         },
@@ -12797,7 +12797,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%d codici"
           }
         },
@@ -12815,7 +12815,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%d koder"
           }
         },
@@ -12869,8 +12869,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "1 código"
+            "state" : "translated",
+            "value" : "código"
           }
         },
         "fr" : {
@@ -12881,7 +12881,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "1 codice"
           }
         },
@@ -12899,7 +12899,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "1 kode"
           }
         },
@@ -12953,8 +12953,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Detectado: %1$@. Pulsa %2$@ para ver."
+            "state" : "translated",
+            "value" : "Se detectó %1$@. Pulsa %2$@ para visualizar."
           }
         },
         "fr" : {
@@ -12965,7 +12965,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Rilevamento: %1$@. Premi %2$@ per visualizzare."
           }
         },
@@ -12983,8 +12983,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ oppdaget. Trykk på %2$@ for å vise."
+            "state" : "translated",
+            "value" : "%1$@ oppdaget. Trykk %2$@ for å vise."
           }
         },
         "pl" : {
@@ -13037,8 +13037,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Elija una ventana para escanear."
+            "state" : "translated",
+            "value" : "Elije una ventana para escanear."
           }
         },
         "fr" : {
@@ -13068,7 +13068,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Velg vinduet som skal scannes."
+            "value" : "Velg et vindu som skal skannes."
           }
         },
         "pl" : {
@@ -13121,7 +13121,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Cerrar"
           }
         },
@@ -13205,8 +13205,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Salir de navegación VOCR."
+            "state" : "translated",
+            "value" : "Salir de navegación de VOCR."
           }
         },
         "fr" : {
@@ -13236,7 +13236,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avslutter OCR navigasjon."
+            "value" : "Avslutter VOCR-navigasjon."
           }
         },
         "pl" : {
@@ -13289,7 +13289,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Escaneo de %@, %@ completado"
           }
         },
@@ -13320,7 +13320,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ferdig å scanne %@, %@"
+            "value" : "Skanning fullført for %@, %@"
           }
         },
         "pl" : {
@@ -13373,7 +13373,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Escaneo finalizado"
           }
         },
@@ -13385,7 +13385,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Scansione completata"
           }
         },
@@ -13403,7 +13403,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Skanning fullført"
           }
         },
@@ -13457,7 +13457,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "No se encontraron códigos de barras en el último escaneo."
           }
         },
@@ -13469,7 +13469,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nessun codice a barre trovato nell'ultima scansione."
           }
         },
@@ -13487,8 +13487,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ingen strekkoder funnet i forrige skanning."
+            "state" : "translated",
+            "value" : "Ingen strekkoder funnet i siste skanning."
           }
         },
         "pl" : {
@@ -13541,7 +13541,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "No se encontró nada"
           }
         },
@@ -13625,7 +13625,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ventana objetivo"
           }
         },
@@ -13709,7 +13709,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Aplicación desconocida"
           }
         },
@@ -13793,7 +13793,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ventana desconocida"
           }
         },
@@ -13877,7 +13877,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Sin título"
           }
         },
@@ -13961,8 +13961,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "VOCR necesita permisos para proporcionar funciones de OCR y accesibilidad. ¿Le gustaría configurarlos ahora?"
+            "state" : "translated",
+            "value" : "VOCR necesita permisos para proporcionar funciones de OCR y accesibilidad. ¿Te gustaría configurarlos ahora?"
           }
         },
         "fr" : {
@@ -13973,8 +13973,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "VOCR ha bisogno dei permessi per fornire le funzioni OCR e di accessibilità. Vuoi configurarli ora?"
+            "state" : "translated",
+            "value" : "VOCR necessita delle Autorizzazioni per fornire le funzioni OCR e di accessibilità. Vuoi configurarle ora?"
           }
         },
         "ja" : {
@@ -14045,7 +14045,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Configurar permisos"
           }
         },
@@ -14057,8 +14057,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Configura permessi"
+            "state" : "translated",
+            "value" : "Configura autorizzazioni"
           }
         },
         "ja" : {
@@ -14129,7 +14129,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Omitir por ahora"
           }
         },
@@ -14141,7 +14141,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Salta per ora"
           }
         },
@@ -14213,7 +14213,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Bienvenido a VOCR"
           }
         },
@@ -14225,7 +14225,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Benvenuto in VOCR"
           }
         },
@@ -14297,8 +14297,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "VOCR necesita acceso a Accesibilidad para:"
+            "state" : "translated",
+            "value" : "VOCR necesita acceso de Accesibilidad para:"
           }
         },
         "fr" : {
@@ -14309,8 +14309,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "VOCR ha bisogno dell'accesso all'Accessibilità per:"
+            "state" : "translated",
+            "value" : "VOCR necessita dell'accesso alle funzioni di Accessibilità per:"
           }
         },
         "ja" : {
@@ -14381,8 +14381,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Leer texto de su pantalla para OCR"
+            "state" : "translated",
+            "value" : "Leer texto de su pantalla para el OCR"
           }
         },
         "fr" : {
@@ -14393,7 +14393,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Leggere il testo dallo schermo per l'OCR"
           }
         },
@@ -14412,7 +14412,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Read text from your screen for OCR"
+            "value" : "Lese tekst fra skjermen for OCR"
           }
         },
         "pl" : {
@@ -14465,7 +14465,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Controlar la posición del cursor de VoiceOver"
           }
         },
@@ -14477,7 +14477,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Controllare la posizione del cursore VoiceOver"
           }
         },
@@ -14549,7 +14549,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Tomar capturas de pantalla bajo el cursor de VoiceOver"
           }
         },
@@ -14561,8 +14561,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Scattare screenshot sotto il cursore VoiceOver"
+            "state" : "translated",
+            "value" : "Catturare screenshot in corrispondenza del cursore VoiceOver"
           }
         },
         "ja" : {
@@ -14633,7 +14633,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Interactuar con el contenido de la ventana"
           }
         },
@@ -14645,7 +14645,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Interagire con il contenuto delle finestre"
           }
         },
@@ -14664,7 +14664,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Håndtere vindusinnhold"
+            "value" : "Samhandle med vindusinnhold"
           }
         },
         "pl" : {
@@ -14717,7 +14717,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Accesibilidad"
           }
         },
@@ -14729,7 +14729,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Accessibilità"
           }
         },
@@ -14801,7 +14801,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Capturar atajos globales"
           }
         },
@@ -14813,7 +14813,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Acquisire le scorciatoie globali"
           }
         },
@@ -14831,8 +14831,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fange globale snarveier"
+            "state" : "translated",
+            "value" : "Registrere globale snarveier"
           }
         },
         "pl" : {
@@ -14885,7 +14885,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Cámara"
           }
         },
@@ -14897,7 +14897,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Fotocamera"
           }
         },
@@ -14915,7 +14915,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Kamera"
           }
         },
@@ -14969,7 +14969,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Cámara (opcional)"
           }
         },
@@ -14981,7 +14981,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Fotocamera (facoltativa)"
           }
         },
@@ -14999,7 +14999,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Kamera (valgfritt)"
           }
         },
@@ -15053,7 +15053,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Describir imágenes de la cámara"
           }
         },
@@ -15065,7 +15065,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Descrivere le immagini dalla fotocamera"
           }
         },
@@ -15083,8 +15083,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Beskrive bilder fra kameraet"
+            "state" : "translated",
+            "value" : "Beskriv bilder fra kamera"
           }
         },
         "pl" : {
@@ -15137,8 +15137,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "VOCR necesita Notificaciones para:"
+            "state" : "translated",
+            "value" : "VOCR necesita enviar Notificaciones para:"
           }
         },
         "fr" : {
@@ -15149,8 +15149,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "VOCR ha bisogno delle Notifiche per:"
+            "state" : "translated",
+            "value" : "VOCR necessita delle Notifiche per:"
           }
         },
         "ja" : {
@@ -15221,7 +15221,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Avisarle cuando haya actualizaciones disponibles"
           }
         },
@@ -15233,8 +15233,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Avvisarti quando sono disponibili aggiornamenti"
+            "state" : "translated",
+            "value" : "Avvisare quando sono disponibili aggiornamenti"
           }
         },
         "ja" : {
@@ -15305,7 +15305,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mostrar notificaciones de finalización de OCR"
           }
         },
@@ -15317,7 +15317,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mostrare le notifiche di completamento OCR"
           }
         },
@@ -15389,7 +15389,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Proporcionar actualizaciones de tareas en segundo plano"
           }
         },
@@ -15401,7 +15401,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Fornire aggiornamenti sulle attività in background"
           }
         },
@@ -15473,7 +15473,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Notificaciones"
           }
         },
@@ -15485,7 +15485,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Notifiche"
           }
         },
@@ -15557,7 +15557,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Notificación (opcional)"
           }
         },
@@ -15569,7 +15569,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Notifica (facoltativa)"
           }
         },
@@ -15587,8 +15587,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Varsling (valgfritt)"
+            "state" : "translated",
+            "value" : "Varslinger (valgfritt)"
           }
         },
         "pl" : {
@@ -15641,7 +15641,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Notificar sobre actualizaciones"
           }
         },
@@ -15653,7 +15653,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Notificare gli aggiornamenti"
           }
         },
@@ -15671,7 +15671,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Varsle om oppdateringer"
           }
         },
@@ -15725,7 +15725,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Este permiso es opcional pero mejora la funcionalidad."
           }
         },
@@ -15737,8 +15737,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Questo permesso è opzionale ma migliora le funzionalità."
+            "state" : "translated",
+            "value" : "Questa autorizzazione è opzionale ma migliora le funzionalità."
           }
         },
         "ja" : {
@@ -15809,7 +15809,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Este permiso es necesario para la funcionalidad principal de OCR."
           }
         },
@@ -15821,8 +15821,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Questo permesso è richiesto per la funzionalità OCR principale."
+            "state" : "translated",
+            "value" : "Questa autorizzazione è richiesta per la funzionalità OCR principale."
           }
         },
         "ja" : {
@@ -15893,7 +15893,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "VOCR necesita acceso a Grabación de pantalla para:"
           }
         },
@@ -15905,8 +15905,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "VOCR ha bisogno dell'accesso alla Registrazione schermo per:"
+            "state" : "translated",
+            "value" : "VOCR necessita dell'accesso alla Registrazione Schermo per:"
           }
         },
         "ja" : {
@@ -15977,7 +15977,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Capturar contenido de la pantalla para OCR"
           }
         },
@@ -15989,7 +15989,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Catturare il contenuto dello schermo per l'OCR"
           }
         },
@@ -16008,7 +16008,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ta opp skjerminnhold for OCR"
+            "value" : "Ta skjermbilder for OCR"
           }
         },
         "pl" : {
@@ -16061,8 +16061,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tomar capturas de pantalla de ventanas y pantallas"
+            "state" : "translated",
+            "value" : "Tomar capturas de pantalla de ventanas y pantalla"
           }
         },
         "fr" : {
@@ -16073,8 +16073,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Scattare screenshot di finestre e display"
+            "state" : "translated",
+            "value" : "Aquisire Screenshot di finestre e schermi"
           }
         },
         "ja" : {
@@ -16145,7 +16145,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Extraer texto de regiones de la pantalla"
           }
         },
@@ -16157,8 +16157,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Estrarre testo da regioni dello schermo"
+            "state" : "translated",
+            "value" : "Estrarre testo da aree dello schermo"
           }
         },
         "ja" : {
@@ -16229,7 +16229,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Grabación de pantalla"
           }
         },
@@ -16241,8 +16241,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Registrazione schermo"
+            "state" : "translated",
+            "value" : "Registrazione Schermo"
           }
         },
         "ja" : {
@@ -16313,8 +16313,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Capturar capturas de pantalla para OCR"
+            "state" : "translated",
+            "value" : "tomar capturas de pantalla para OCR"
           }
         },
         "fr" : {
@@ -16325,8 +16325,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Acquisire schermate per OCR"
+            "state" : "translated",
+            "value" : "Acquisire schermate per l'OCR"
           }
         },
         "ja" : {
@@ -16343,7 +16343,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ta skjermbilder for OCR"
           }
         },
@@ -16397,7 +16397,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "✗ No establecido"
           }
         },
@@ -16409,8 +16409,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "✗ Non impostato"
+            "state" : "translated",
+            "value" : "✗ Negata"
           }
         },
         "ja" : {
@@ -16481,7 +16481,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "✓ Concedido"
           }
         },
@@ -16493,8 +16493,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "✓ Concesso"
+            "state" : "translated",
+            "value" : "✓ Concessa"
           }
         },
         "ja" : {
@@ -16565,7 +16565,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "⚠️ No establecido"
           }
         },
@@ -16577,8 +16577,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "⚠️ Non impostato"
+            "state" : "translated",
+            "value" : "⚠️ Non impostata"
           }
         },
         "ja" : {
@@ -16649,7 +16649,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "🚫 Restringido"
           }
         },
@@ -16661,8 +16661,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🚫 Limitato"
+            "state" : "translated",
+            "value" : "🚫 Limitata"
           }
         },
         "ja" : {
@@ -16733,7 +16733,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "VOCR necesita acceso a VoiceOver para:"
           }
         },
@@ -16745,8 +16745,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "VOCR ha bisogno dell'accesso a VoiceOver per:"
+            "state" : "translated",
+            "value" : "VOCR necessita dell'accesso a VoiceOver per:"
           }
         },
         "ja" : {
@@ -16817,8 +16817,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hablar anuncios a través de VoiceOver"
+            "state" : "translated",
+            "value" : "Verbalizar anuncios a través de VoiceOver"
           }
         },
         "fr" : {
@@ -16829,7 +16829,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Riprodurre annunci tramite VoiceOver"
           }
         },
@@ -16901,7 +16901,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Controlar el cursor y la navegación de VoiceOver"
           }
         },
@@ -16913,7 +16913,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Controllare il cursore e la navigazione di VoiceOver"
           }
         },
@@ -16985,7 +16985,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Leer el elemento enfocado actualmente a través de VoiceOver"
           }
         },
@@ -16997,7 +16997,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Leggere l'elemento attualmente focalizzato tramite VoiceOver"
           }
         },
@@ -17069,7 +17069,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "VoiceOver"
           }
         },
@@ -17081,7 +17081,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "VoiceOver"
           }
         },
@@ -17153,7 +17153,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Leer anuncios con VoiceOver"
           }
         },
@@ -17165,7 +17165,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Leggere gli annunci con VoiceOver"
           }
         },
@@ -17183,8 +17183,8 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Lese opp kunngjøringer med VoiceOver"
+            "state" : "translated",
+            "value" : "Lese opp varsler med VoiceOver"
           }
         },
         "pl" : {
@@ -17237,7 +17237,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Más tarde"
           }
         },
@@ -17249,7 +17249,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Più tardi"
           }
         },
@@ -17321,8 +17321,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Algunos permisos requeridos no están configurados. Es posible que VOCR no funcione correctamente."
+            "state" : "translated",
+            "value" : "Algunos permisos requeridos no se han configurado. Es posible que VOCR no funcione correctamente."
           }
         },
         "fr" : {
@@ -17333,8 +17333,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Alcuni permessi richiesti non sono impostati. VOCR potrebbe non funzionare correttamente."
+            "state" : "translated",
+            "value" : "Alcune autorizzazioni richieste non sono impostate. VOCR potrebbe non funzionare correttamente."
           }
         },
         "ja" : {
@@ -17405,7 +17405,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Abrir permisos"
           }
         },
@@ -17417,8 +17417,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Apri permessi"
+            "state" : "translated",
+            "value" : "Apri autorizzazioni"
           }
         },
         "ja" : {
@@ -17489,8 +17489,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Permisos requeridos"
+            "state" : "translated",
+            "value" : "Se requieren permisos"
           }
         },
         "fr" : {
@@ -17501,8 +17501,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Permessi richiesti"
+            "state" : "translated",
+            "value" : "Autorizzazioni richieste"
           }
         },
         "ja" : {
@@ -17573,7 +17573,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Concede los siguientes permisos para que VOCR funcione correctamente."
           }
         },
@@ -17585,7 +17585,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Concedi le seguenti autorizzazioni per consentire a VOCR di funzionare correttamente."
           }
         },
@@ -17603,7 +17603,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Gi følgende tillatelser for at VOCR skal fungere riktig."
           }
         },
@@ -17657,7 +17657,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "No se mostrará después de guardar."
           }
         },
@@ -17741,7 +17741,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "https://"
           }
         },
@@ -17825,7 +17825,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Eres un asistente útil."
           }
         },
@@ -17909,7 +17909,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Analiza la imagen de manera completa y detallada."
           }
         },
@@ -17993,8 +17993,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "copia"
+            "state" : "translated",
+            "value" : "copiar"
           }
         },
         "fr" : {
@@ -18005,8 +18005,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "copia"
+            "state" : "translated",
+            "value" : "Copia"
           }
         },
         "ja" : {
@@ -18023,7 +18023,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "kopi"
           }
         },
@@ -18077,7 +18077,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Cargando…"
           }
         },
@@ -18161,7 +18161,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Modelo"
           }
         },
@@ -18245,7 +18245,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Proveedor"
           }
         },
@@ -18329,7 +18329,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Editar preajuste"
           }
         },
@@ -18413,7 +18413,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nuevo preajuste"
           }
         },
@@ -18497,7 +18497,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Gestor de preajustes"
           }
         },
@@ -18581,8 +18581,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Cancelado."
+            "state" : "translated",
+            "value" : "Búsqueda Cancelada."
           }
         },
         "fr" : {
@@ -18612,7 +18612,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avbrudt"
+            "value" : "Avbrutt"
           }
         },
         "pl" : {
@@ -18665,8 +18665,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Buscar texto OCR"
+            "state" : "translated",
+            "value" : "Buscar texto del OCR"
           }
         },
         "fr" : {
@@ -18696,7 +18696,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Søk i OCR tekst"
+            "value" : "Søk i OCR-tekst"
           }
         },
         "pl" : {
@@ -18749,8 +18749,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "No encontrado."
+            "state" : "translated",
+            "value" : "No se ha encontrado."
           }
         },
         "fr" : {
@@ -18780,7 +18780,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ikke funnet"
+            "value" : "Ikke funnet."
           }
         },
         "pl" : {
@@ -18833,7 +18833,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Preguntar"
           }
         },
@@ -18917,7 +18917,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Inicio"
           }
         },
@@ -19001,7 +19001,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Parte inferior"
           }
         },
@@ -19032,7 +19032,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bunden"
+            "value" : "Bunnen"
           }
         },
         "pl" : {
@@ -19085,8 +19085,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Capturar cámara"
+            "state" : "translated",
+            "value" : "Capturar con la cámara"
           }
         },
         "fr" : {
@@ -19098,7 +19098,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fotocamera d'acquisizione"
+            "value" : "Acquisisci da Fotocamera"
           }
         },
         "ja" : {
@@ -19169,7 +19169,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Abajo"
           }
         },
@@ -19253,8 +19253,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fin"
+            "state" : "translated",
+            "value" : "Final"
           }
         },
         "fr" : {
@@ -19337,7 +19337,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Salir de navegación"
           }
         },
@@ -19368,7 +19368,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Går ut av navigasjon"
+            "value" : "Avslutt navigasjon"
           }
         },
         "pl" : {
@@ -19421,7 +19421,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Explorar"
           }
         },
@@ -19505,7 +19505,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Buscar siguiente"
           }
         },
@@ -19589,7 +19589,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Buscar anterior"
           }
         },
@@ -19673,7 +19673,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Buscar texto"
           }
         },
@@ -19757,7 +19757,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Identificar objeto"
           }
         },
@@ -19788,7 +19788,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Identifiser objekter"
+            "value" : "Identifiser objekt"
           }
         },
         "pl" : {
@@ -19841,7 +19841,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Izquierda"
           }
         },
@@ -19925,7 +19925,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Siguiente carácter"
           }
         },
@@ -20009,7 +20009,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "OCR VOCursor"
           }
         },
@@ -20040,7 +20040,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OCR av VoiceOver markør"
+            "value" : "OCR ved VoiceOver-markøren"
           }
         },
         "pl" : {
@@ -20093,8 +20093,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ventana OCR"
+            "state" : "translated",
+            "value" : "Ventana de OCR"
           }
         },
         "fr" : {
@@ -20177,7 +20177,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Carácter anterior"
           }
         },
@@ -20261,7 +20261,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "OCR en tiempo real"
           }
         },
@@ -20345,7 +20345,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Informar ubicación"
           }
         },
@@ -20429,7 +20429,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Derecha"
           }
         },
@@ -20513,7 +20513,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ajustes"
           }
         },
@@ -20597,7 +20597,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Parte superior"
           }
         },
@@ -20681,7 +20681,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Arriba"
           }
         },
@@ -20765,7 +20765,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Personalizar atajos"
           }
         },
@@ -20849,7 +20849,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "La versión %@ está disponible"
           }
         },
@@ -20933,7 +20933,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Hay una actualización disponible"
           }
         },
@@ -21017,7 +21017,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Permisos de VOCR"
           }
         },
@@ -21029,8 +21029,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Permessi VOCR"
+            "state" : "translated",
+            "value" : "Autorizzazioni VOCR"
           }
         },
         "ja" : {
@@ -21048,7 +21048,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VOCR tillatelser"
+            "value" : "VOCR-tillatelser"
           }
         },
         "pl" : {

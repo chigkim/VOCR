@@ -52,7 +52,7 @@ extension AXUIElement {
             AXValueGetValue(axValue, type, &atrPtr)
             if let attribute = atrPtr as? String {
             }
-            
+
             let attribute = ""
             var attributePtr = UnsafeMutableRawPointer(Unmanaged<AnyObject>.passUnretained(attribute as AnyObject).toOpaque())
             AXValueGetValue(axValue, type, &attributePtr)

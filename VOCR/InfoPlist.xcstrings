@@ -25,7 +25,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "VOCR"
           }
         },
@@ -37,7 +37,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "VOCR"
           }
         },
@@ -103,7 +103,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Archivos de imagen"
           }
         },
@@ -187,8 +187,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Leer anuncios y capturar pantalla bajo cursor de VoiceOver"
+            "state" : "translated",
+            "value" : "Verbalizar anuncios y capturar pantalla bajo cursor de VoiceOver"
           }
         },
         "fr" : {
@@ -242,7 +242,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Leggi gli annunci e acquisisci uno screenshot in corrispondenza del cursore di VoiceOver"
+            "value" : "Legge gli annunci e acquisisce uno screenshot in corrispondenza del cursore VoiceOver"
           }
         },
         "nb" : {
@@ -271,8 +271,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Capturar foto para usar en VOCR."
+            "state" : "translated",
+            "value" : "Tomar una foto para usar en VOCR."
           }
         },
         "fr" : {
@@ -361,7 +361,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Copyright © 2019 Chi Kim. Todos los derechos reservados."
           }
         },
@@ -373,7 +373,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Copyright © 2019 Chi Kim. Tutti i diritti riservati."
           }
         },
@@ -445,7 +445,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "VOCR necesita capturar el contenido de su pantalla para realizar OCR y extraer texto de ventanas y aplicaciones."
           }
         },
@@ -457,7 +457,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "VOCR deve catturare il contenuto dello schermo per eseguire l'OCR ed estrarre il testo da finestre e applicazioni."
           }
         },

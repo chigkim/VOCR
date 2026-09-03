@@ -12,8 +12,7 @@ When implementing or revising a feature:
 6. Preserve unrelated user changes. Do not revert or overwrite changes outside the task scope.
 7. Run relevant validation after changes, such as tests, JSON parsing, linting, or builds. Report what was run and any failures.
 8. If required new code files are created, `git add` them. Do not add `plan.md`.
-9. Run `swift-format -rip .`.
-10. Summarize completed changes in bullet points.
+9. Summarize completed changes in bullet points.
 
 ## Translation
 
