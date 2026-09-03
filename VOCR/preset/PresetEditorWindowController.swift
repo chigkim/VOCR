@@ -14,6 +14,10 @@ final class PresetEditorWindowController: NSWindowController {
     /// non-nil => editing existing preset with that UUID
     private var editingPresetID: UUID?
 
+    /// Decrypted key of the preset being edited. Used only for fetching the
+    /// model list; never shown in `apiKeyField`.
+    private var savedAPIKey = ""
+
     // MARK: UI elements
 
     private let contentViewContainer = NSView()
@@ -470,6 +474,13 @@ final class PresetEditorWindowController: NSWindowController {
         promptTextView.string = preset.prompt
         apiKeyField.stringValue = ""
 
+        do {
+            savedAPIKey = try SecureCrypto.decryptAPIKey(preset.encryptedKeyCombinedBase64)
+        } catch {
+            log("PresetEditor: failed to decrypt key for preset \(preset.id.uuidString): \(error)")
+            savedAPIKey = ""
+        }
+
         updateProviderAccessibilityValue()
         updateModelAccessibilityValue()
     }
@@ -651,7 +662,9 @@ extension PresetEditorWindowController: NSMenuDelegate {
     func menuWillOpen(_ menu: NSMenu) {
         if menu == modelPickerPopUpButton.menu {
             showModelLoadingMenu()
-            OpenAIAPI.getModels(urlField.stringValue, apiKeyField.stringValue) {
+            let typedKey = apiKeyField.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+            let keyForModelList = typedKey.isEmpty ? savedAPIKey : typedKey
+            OpenAIAPI.getModels(urlField.stringValue, keyForModelList) {
                 [weak self] result in
                 DispatchQueue.main.async {
                     switch result {
