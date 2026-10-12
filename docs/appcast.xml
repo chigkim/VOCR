@@ -3,6 +3,24 @@
     <channel>
         <title>VOCR</title>
         <item>
+            <title>3.1.0</title>
+            <pubDate>Mon, 12 Oct 2026 07:00:12 -0400</pubDate>
+            <sparkle:version>73</sparkle:version>
+            <sparkle:shortVersionString>3.1.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <description>&lt;h2 id="changelog"&gt;Changelog&lt;/h2&gt;
+&lt;h3 id="reasoning-effort-for-presets"&gt;Reasoning Effort for Presets&lt;/h3&gt;
+&lt;p&gt;Each preset now has a &lt;strong&gt;Reasoning Effort&lt;/strong&gt; setting in the preset editor, below the model.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Choose a value from the Reasoning Effort popup (none, minimal, low, medium, high, xhigh, max), or type any value your model supports in the text field next to it.&lt;/li&gt;
+&lt;li&gt;Leave the field empty to use the model's default. VOCR then doesn't send any reasoning effort to the model.&lt;/li&gt;
+&lt;li&gt;The setting applies to both Ask and Computer Use.&lt;/li&gt;
+&lt;li&gt;Existing presets keep using the model's default until you set a value.&lt;/li&gt;
+&lt;li&gt;Computer Use used to always send reasoning effort "none". It now follows the preset, so set the preset to "none" if you want the old behavior.&lt;/li&gt;
+&lt;/ul&gt;</description>
+            <enclosure url="https://github.com/chigkim/VOCR/releases/download/v3.1.0/VOCR_v3.1.0.zip" length="3884939" type="application/octet-stream" sparkle:edSignature="nZuS/ylc00H3UpJWa0fbtO3VH3Sqq1PHi/Y5cEiLiZ5hd8TG2Ov+N8cKRmUZ/vvE3I1KfAqODf0abl60XGH4DQ==" />
+        </item>
+        <item>
             <title>3.0.0</title>
             <pubDate>Thu, 03 Sep 2026 09:30:59 -0400</pubDate>
             <sparkle:version>71</sparkle:version>

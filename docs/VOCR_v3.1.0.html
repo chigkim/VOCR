@@ -1,0 +1,10 @@
+<h2 id="changelog">Changelog</h2>
+<h3 id="reasoning-effort-for-presets">Reasoning Effort for Presets</h3>
+<p>Each preset now has a <strong>Reasoning Effort</strong> setting in the preset editor, below the model.</p>
+<ul>
+<li>Choose a value from the Reasoning Effort popup (none, minimal, low, medium, high, xhigh, max), or type any value your model supports in the text field next to it.</li>
+<li>Leave the field empty to use the model's default. VOCR then doesn't send any reasoning effort to the model.</li>
+<li>The setting applies to both Ask and Computer Use.</li>
+<li>Existing presets keep using the model's default until you set a value.</li>
+<li>Computer Use used to always send reasoning effort "none". It now follows the preset, so set the preset to "none" if you want the old behavior.</li>
+</ul>
