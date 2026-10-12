@@ -21,6 +21,10 @@ private enum ComputerUseApprovalDecision {
 private enum ComputerUseConfig {
     /// Per-request HTTP timeout. Long-running tool-call turns can take minutes; this caps a single call.
     static let apiTimeoutSeconds: TimeInterval = 600
+    /// Send OpenAI presets to /v1/responses. When false, every preset uses chat/completions
+    /// (gpt-6.1-sol requires the Responses API). Either way, reasoning effort is sent only
+    /// when the preset sets it.
+    static let useResponsesAPIForOpenAI = false
 }
 
 final class ComputerUseController {
@@ -467,6 +471,43 @@ extension ComputerUseController {
         let arguments: String
     }
 
+    /// Responses API reply, converted to the chat-completions shape the rest of the controller uses.
+    private struct ResponsesAPIResponse: Decodable {
+        let output: [OutputItem]
+        let usage: Usage?
+
+        struct OutputItem: Decodable {
+            let type: String
+            let content: [OutputContent]?
+            let call_id: String?
+            let name: String?
+            let arguments: String?
+        }
+
+        struct OutputContent: Decodable {
+            let type: String
+            let text: String?
+        }
+
+        var chatCompletionResponse: ChatCompletionResponse {
+            let text = output.filter { $0.type == "message" }
+                .flatMap { $0.content ?? [] }
+                .compactMap { $0.type == "output_text" ? $0.text : nil }
+                .joined(separator: "\n")
+            let toolCalls = output.compactMap { item -> ToolCall? in
+                guard item.type == "function_call", let callID = item.call_id, let name = item.name
+                else { return nil }
+                return ToolCall(
+                    id: callID, type: "function",
+                    function: ToolFunction(name: name, arguments: item.arguments ?? "{}"))
+            }
+            let message = AssistantMessage(
+                role: "assistant", content: text.isEmpty ? nil : text,
+                tool_calls: toolCalls.isEmpty ? nil : toolCalls)
+            return ChatCompletionResponse(choices: [Choice(message: message)], usage: usage)
+        }
+    }
+
     private struct ComputerAction: Decodable {
         let type: String
         let target: String?
@@ -706,15 +747,32 @@ extension ComputerUseController {
             return
         }
 
-        let body: [String: Any] = [
-            "model": preset.model,
-            "messages": requestMessages,
-            "tools": computerTools,
-            "tool_choice": "auto",
-            "reasoning_effort": "none",
-        ]
+        let useResponsesAPI = usesResponsesAPI(preset)
+        var body: [String: Any]
+        if useResponsesAPI {
+            body = [
+                "model": preset.model,
+                "input": responsesInput(requestMessages),
+                "tools": responsesTools(computerTools),
+                "tool_choice": "auto",
+                "store": false,
+            ]
+            if let reasoningEffort = preset.reasoningEffort {
+                body["reasoning"] = ["effort": reasoningEffort]
+            }
+        } else {
+            body = [
+                "model": preset.model,
+                "messages": requestMessages,
+                "tools": computerTools,
+                "tool_choice": "auto",
+            ]
+            if let reasoningEffort = preset.reasoningEffort {
+                body["reasoning_effort"] = reasoningEffort
+            }
+        }
 
-        send(body: body, preset: preset) { [weak self] result in
+        send(body: body, preset: preset, useResponsesAPI: useResponsesAPI) { [weak self] result in
             self?.handleResponseResult(result, preset: preset, messages: requestMessages)
         }
     }
@@ -722,6 +780,7 @@ extension ComputerUseController {
     private func send(
         body: [String: Any],
         preset: ActivePreset,
+        useResponsesAPI: Bool,
         completion: @escaping (Result<ChatCompletionResponse, Error>) -> Void
     ) {
         guard let base = URL(string: preset.url) else {
@@ -729,7 +788,8 @@ extension ComputerUseController {
             return
         }
 
-        let url = chatCompletionsURL(base)
+        let url =
+            useResponsesAPI ? base.appendingPathComponent("responses") : chatCompletionsURL(base)
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.timeoutInterval = ComputerUseConfig.apiTimeoutSeconds
@@ -773,7 +833,11 @@ extension ComputerUseController {
             }
 
             do {
-                let decoded = try JSONDecoder().decode(ChatCompletionResponse.self, from: data)
+                let decoded =
+                    useResponsesAPI
+                    ? try JSONDecoder().decode(ResponsesAPIResponse.self, from: data)
+                        .chatCompletionResponse
+                    : try JSONDecoder().decode(ChatCompletionResponse.self, from: data)
                 completion(.success(decoded))
             } catch {
                 completion(.failure(error))
@@ -1203,6 +1267,74 @@ extension ComputerUseController {
             return base.appendingPathComponent("completions")
         }
         return base.appendingPathComponent("chat").appendingPathComponent("completions")
+    }
+
+    /// OpenAI models only accept function tools with reasoning on the Responses API,
+    /// so OpenAI presets use it unless the URL explicitly targets chat/completions.
+    private func usesResponsesAPI(_ preset: ActivePreset) -> Bool {
+        guard ComputerUseConfig.useResponsesAPIForOpenAI,
+            let base = URL(string: preset.url), base.host == "api.openai.com"
+        else {
+            return false
+        }
+        return !base.path.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+            .hasSuffix("chat/completions")
+    }
+
+    /// Converts the chat-completions conversation into Responses API input items.
+    private func responsesInput(_ messages: [[String: Any]]) -> [[String: Any]] {
+        messages.flatMap { message -> [[String: Any]] in
+            let role = message["role"] as? String ?? "user"
+            if role == "tool" {
+                return [
+                    [
+                        "type": "function_call_output",
+                        "call_id": message["tool_call_id"] as? String ?? "",
+                        "output": message["content"] as? String ?? "",
+                    ]
+                ]
+            }
+
+            var items: [[String: Any]] = []
+            if let text = message["content"] as? String, !text.isEmpty {
+                items.append(["role": role, "content": text])
+            } else if let content = message["content"] as? [[String: Any]] {
+                items.append(["role": role, "content": content.map(responsesContentPart)])
+            }
+
+            for toolCall in message["tool_calls"] as? [[String: Any]] ?? [] {
+                let function = toolCall["function"] as? [String: Any] ?? [:]
+                items.append([
+                    "type": "function_call",
+                    "call_id": toolCall["id"] as? String ?? "",
+                    "name": function["name"] as? String ?? "",
+                    "arguments": function["arguments"] as? String ?? "{}",
+                ])
+            }
+            return items
+        }
+    }
+
+    private func responsesContentPart(_ part: [String: Any]) -> [String: Any] {
+        if part["type"] as? String == "image_url",
+            let imageURL = part["image_url"] as? [String: Any],
+            let url = imageURL["url"] as? String
+        {
+            return ["type": "input_image", "image_url": url]
+        }
+        return ["type": "input_text", "text": part["text"] as? String ?? ""]
+    }
+
+    /// Responses API tools are flat (no nested "function") and default to strict schemas.
+    private func responsesTools(_ tools: [[String: Any]]) -> [[String: Any]] {
+        tools.map { tool in
+            var converted = tool["function"] as? [String: Any] ?? tool
+            converted["type"] = "function"
+            if converted["strict"] == nil {
+                converted["strict"] = false
+            }
+            return converted
+        }
     }
 
     private func assistantMessagePayload(_ message: AssistantMessage) -> [String: Any] {

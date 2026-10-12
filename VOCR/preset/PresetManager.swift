@@ -21,7 +21,8 @@ final class PresetManager {
 
     private func presetSummary(_ preset: Preset) -> String {
         let host = URL(string: preset.url)?.host ?? preset.url
-        return "\(preset.name) id=\(preset.id.uuidString) model=\(preset.model) host=\(host)"
+        return
+            "\(preset.name) id=\(preset.id.uuidString) model=\(preset.model) host=\(host) reasoningEffort=\(preset.reasoningEffort ?? "default")"
     }
 
     private func makeDefaultPresets() {
@@ -31,6 +32,7 @@ final class PresetManager {
                 name: "Default", url: "https://api.openai.com/v1", model: "gpt-5.2",
                 systemPrompt: DefaultPrompts.system,
                 prompt: DefaultPrompts.user,
+                reasoningEffort: nil,
                 apiKeyPlaintext: "your-api-key")
             if let lastID = presets.last?.id {
                 selectPreset(id: lastID)
@@ -101,6 +103,7 @@ final class PresetManager {
         model: String,
         systemPrompt: String,
         prompt: String,
+        reasoningEffort: String?,
         apiKeyPlaintext: String
     ) throws {
 
@@ -113,6 +116,7 @@ final class PresetManager {
             model: model,
             systemPrompt: systemPrompt,
             prompt: prompt,
+            reasoningEffort: reasoningEffort,
             encryptedKeyCombinedBase64: encryptedKey
         )
 
@@ -128,6 +132,7 @@ final class PresetManager {
         model: String,
         systemPrompt: String,
         prompt: String,
+        reasoningEffort: String?,
         apiKeyPlaintext: String?
     ) throws {
 
@@ -141,6 +146,7 @@ final class PresetManager {
         updated.model = model
         updated.systemPrompt = systemPrompt
         updated.prompt = prompt
+        updated.reasoningEffort = reasoningEffort
 
         // Only rotate the key if caller provided a new plaintext
         if let rawKey = apiKeyPlaintext, !rawKey.isEmpty {
@@ -183,6 +189,7 @@ final class PresetManager {
             model: src.model,
             systemPrompt: src.systemPrompt,
             prompt: src.prompt,
+            reasoningEffort: src.reasoningEffort,
             encryptedKeyCombinedBase64: src.encryptedKeyCombinedBase64
         )
 
@@ -243,6 +250,7 @@ final class PresetManager {
                 model: preset.model,
                 systemPrompt: preset.systemPrompt,
                 prompt: preset.prompt,
+                reasoningEffort: preset.reasoningEffort,
                 apiKey: apiKey
             )
         } catch {

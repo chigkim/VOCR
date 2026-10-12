@@ -186,6 +186,10 @@ enum OpenAIAPI {
             "messages": AIConversationSession.shared.messages,
         ]
 
+        if let reasoningEffort = preset.reasoningEffort {
+            jsonBody["reasoning_effort"] = reasoningEffort
+        }
+
         if system.contains("JSON") {
             jsonBody["response_format"] = [
                 "type": "json_schema",

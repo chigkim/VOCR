@@ -28,6 +28,8 @@ final class PresetEditorWindowController: NSWindowController {
     private let apiKeyField = NSTextField()
     private let modelField = NSTextField()
     private let modelPickerPopUpButton = NSPopUpButton(frame: .zero)
+    private let reasoningEffortField = NSTextField()
+    private let reasoningEffortPopUpButton = NSPopUpButton(frame: .zero)
 
     private let systemPromptTextView = NSTextView()
     private let promptTextView = NSTextView()
@@ -54,7 +56,7 @@ final class PresetEditorWindowController: NSWindowController {
         self.editingPresetID = editPresetID
 
         let win = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 520, height: 520),
+            contentRect: NSRect(x: 0, y: 0, width: 520, height: 552),
             styleMask: [.titled, .closable],
             backing: .buffered,
             defer: false
@@ -163,7 +165,7 @@ final class PresetEditorWindowController: NSWindowController {
                 "label.userPrompt", value: "User Prompt:", comment: "Label for user prompt field"))
 
         // Text fields
-        [nameField, urlField, modelField, apiKeyField].forEach { tf in
+        [nameField, urlField, modelField, reasoningEffortField, apiKeyField].forEach { tf in
             tf.translatesAutoresizingMaskIntoConstraints = false
         }
         nameField.setAccessibilityLabel(
@@ -239,6 +241,32 @@ final class PresetEditorWindowController: NSWindowController {
                 "label.modelPicker.accessibility", value: "Model",
                 comment: "Accessibility label for model picker popup button"))
 
+        // Configure reasoning effort pop up button and field. An empty field omits the parameter.
+        reasoningEffortPopUpButton.translatesAutoresizingMaskIntoConstraints = false
+        reasoningEffortPopUpButton.removeAllItems()
+        reasoningEffortPopUpButton.addItem(withTitle: reasoningEffortTitle)
+        reasoningEffortPopUpButton.item(at: 0)?.isHidden = true
+        for value in ReasoningEffort.predefinedValues {
+            let item = NSMenuItem(
+                title: value, action: #selector(reasoningEffortPicked(_:)), keyEquivalent: "")
+            item.target = self
+            reasoningEffortPopUpButton.menu?.addItem(item)
+        }
+        reasoningEffortPopUpButton.menu?.delegate = self
+        reasoningEffortPopUpButton.selectItem(at: 0)
+        reasoningEffortPopUpButton.setAccessibilityLabel(
+            NSLocalizedString(
+                "label.reasoningEffortPicker.accessibility", value: "Reasoning Effort",
+                comment: "Accessibility label for reasoning effort popup button"))
+        reasoningEffortField.placeholderString = NSLocalizedString(
+            "placeholder.reasoningEffort", value: "Model Default",
+            comment:
+                "Placeholder for reasoning effort field; empty sends no reasoning effort parameter")
+        reasoningEffortField.setAccessibilityLabel(
+            NSLocalizedString(
+                "label.reasoningEffort.accessibility", value: "Reasoning Effort Value",
+                comment: "Accessibility label for reasoning effort field"))
+
         // Configure URL and model field delegates to detect manual changes
         urlField.delegate = self
         modelField.delegate = self
@@ -275,6 +303,7 @@ final class PresetEditorWindowController: NSWindowController {
             urlField,
             apiKeyLabel, apiKeyField,
             modelPickerPopUpButton, modelField,
+            reasoningEffortPopUpButton, reasoningEffortField,
             systemPromptLabel, systemPromptScrollView,
             promptLabel, promptScrollView,
             cancelButton, saveButton,
@@ -381,12 +410,32 @@ final class PresetEditorWindowController: NSWindowController {
                 equalTo: modelPickerPopUpButton.centerYAnchor
             ),
 
+            // Row: Reasoning Effort
+            reasoningEffortPopUpButton.leadingAnchor.constraint(
+                equalTo: nameField.leadingAnchor
+            ),
+            reasoningEffortPopUpButton.topAnchor.constraint(
+                equalTo: modelPickerPopUpButton.bottomAnchor,
+                constant: pad
+            ),
+
+            reasoningEffortField.leadingAnchor.constraint(
+                equalTo: reasoningEffortPopUpButton.trailingAnchor,
+                constant: 8
+            ),
+            reasoningEffortField.trailingAnchor.constraint(
+                equalTo: nameField.trailingAnchor
+            ),
+            reasoningEffortField.centerYAnchor.constraint(
+                equalTo: reasoningEffortPopUpButton.centerYAnchor
+            ),
+
             // Row: System Prompt
             systemPromptLabel.leadingAnchor.constraint(
                 equalTo: nameLabel.leadingAnchor
             ),
             systemPromptLabel.topAnchor.constraint(
-                equalTo: modelPickerPopUpButton.bottomAnchor,
+                equalTo: reasoningEffortPopUpButton.bottomAnchor,
                 constant: pad
             ),
             systemPromptLabel.widthAnchor.constraint(
@@ -472,6 +521,7 @@ final class PresetEditorWindowController: NSWindowController {
         modelField.stringValue = preset.model
         systemPromptTextView.string = preset.systemPrompt
         promptTextView.string = preset.prompt
+        reasoningEffortField.stringValue = preset.reasoningEffort ?? ""
         apiKeyField.stringValue = ""
 
         do {
@@ -539,6 +589,10 @@ final class PresetEditorWindowController: NSWindowController {
         )
         let systemPrompt = systemPromptTextView.string
         let prompt = promptTextView.string
+        let reasoningEffortValue = reasoningEffortField.stringValue.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+        let reasoningEffort = reasoningEffortValue.isEmpty ? nil : reasoningEffortValue
         let apiKeyCandidate = apiKeyField.stringValue.trimmingCharacters(
             in: .whitespacesAndNewlines
         )
@@ -557,6 +611,7 @@ final class PresetEditorWindowController: NSWindowController {
                     model: model,
                     systemPrompt: systemPrompt,
                     prompt: prompt,
+                    reasoningEffort: reasoningEffort,
                     apiKeyPlaintext: newKeyOrNil
                 )
             } else {
@@ -567,6 +622,7 @@ final class PresetEditorWindowController: NSWindowController {
                     model: model,
                     systemPrompt: systemPrompt,
                     prompt: prompt,
+                    reasoningEffort: reasoningEffort,
                     apiKeyPlaintext: apiKeyCandidate
                 )
             }
@@ -581,6 +637,24 @@ final class PresetEditorWindowController: NSWindowController {
             alert.informativeText = "\(error)"
             alert.runModal()
         }
+    }
+
+    // MARK: - Reasoning effort picker logic
+
+    private var reasoningEffortTitle: String {
+        NSLocalizedString(
+            "preset.editor.reasoningEffort", value: "Reasoning Effort",
+            comment: "Title for reasoning effort popup button")
+    }
+
+    private func resetReasoningEffortPopUpButton() {
+        reasoningEffortPopUpButton.selectItem(at: 0)
+        reasoningEffortPopUpButton.title = reasoningEffortTitle
+    }
+
+    @objc private func reasoningEffortPicked(_ sender: NSMenuItem) {
+        reasoningEffortField.stringValue = sender.title
+        resetReasoningEffortPopUpButton()
     }
 
     // MARK: - Model picker logic
@@ -697,6 +771,14 @@ extension PresetEditorWindowController: NSMenuDelegate {
             } else {
                 providerPopUpButton.selectItem(at: 0)
             }
+        } else if menu == reasoningEffortPopUpButton.menu {
+            let current = reasoningEffortField.stringValue.trimmingCharacters(
+                in: .whitespacesAndNewlines)
+            if let item = menu.items.dropFirst().first(where: { $0.title == current }) {
+                reasoningEffortPopUpButton.select(item)
+            } else {
+                reasoningEffortPopUpButton.selectItem(at: 0)
+            }
         }
     }
 
@@ -711,6 +793,8 @@ extension PresetEditorWindowController: NSMenuDelegate {
             providerPopUpButton.title = NSLocalizedString(
                 "preset.editor.provider", value: "Provider",
                 comment: "Title for provider popup button")
+        } else if menu == reasoningEffortPopUpButton.menu {
+            resetReasoningEffortPopUpButton()
         }
     }
 }

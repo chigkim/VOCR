@@ -33,6 +33,14 @@ struct ModelProvider {
     ]
 }
 
+/// Reasoning effort values offered by the preset editor's picker. Any value can be typed;
+/// a nil preset value omits the parameter so the endpoint uses the model default.
+enum ReasoningEffort {
+    static let predefinedValues = [
+        "none", "minimal", "low", "medium", "high", "xhigh", "max",
+    ]
+}
+
 struct ActivePreset {
     let id: UUID
     let name: String
@@ -40,6 +48,7 @@ struct ActivePreset {
     let model: String
     let systemPrompt: String
     let prompt: String
+    let reasoningEffort: String?
     let apiKey: String
 }
 
@@ -60,6 +69,9 @@ struct Preset: Codable, Equatable, Identifiable {
     var systemPrompt: String  // System / role / behavior prompt
     var prompt: String  // Default user / instruction prompt
 
+    // Request options
+    var reasoningEffort: String?  // nil => model default
+
     // Credentials (encrypted)
     var encryptedKeyCombinedBase64: String
 
@@ -70,6 +82,7 @@ struct Preset: Codable, Equatable, Identifiable {
         model: String,
         systemPrompt: String,
         prompt: String,
+        reasoningEffort: String?,
         encryptedKeyCombinedBase64: String
     ) {
         self.id = id
@@ -78,6 +91,7 @@ struct Preset: Codable, Equatable, Identifiable {
         self.model = model
         self.systemPrompt = systemPrompt
         self.prompt = prompt
+        self.reasoningEffort = reasoningEffort
         self.encryptedKeyCombinedBase64 = encryptedKeyCombinedBase64
     }
 }
