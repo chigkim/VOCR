@@ -13775,6 +13775,90 @@
         }
       }
     },
+    "navigation.compiling_models" : {
+      "comment" : "Message when a scan has to compile text recognition models first",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compiling text recognition models. Please wait. It might take up to a minute."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Texterkennungsmodelle werden kompiliert. Bitte warten. Dies kann bis zu einer Minute dauern."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Compilando los modelos de reconocimiento de texto. Espere, por favor. Puede tardar hasta un minuto."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Compilation des modèles de reconnaissance de texte. Veuillez patienter. Cela peut prendre jusqu'à une minute."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Compilazione dei modelli di riconoscimento del testo. Attendere. Potrebbe richiedere fino a un minuto."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "文字認識モデルをコンパイルしています。お待ちください。最大1分ほどかかる場合があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "텍스트 인식 모델을 컴파일하고 있습니다. 잠시 기다려 주세요. 최대 1분 정도 걸릴 수 있습니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kompilerer modeller for tekstgjenkjenning. Vent litt. Det kan ta opptil ett minutt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kompilowanie modeli rozpoznawania tekstu. Proszę czekać. Może to potrwać do minuty."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Compilando os modelos de reconhecimento de texto. Aguarde. Isso pode levar até um minuto."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Компиляция моделей распознавания текста. Пожалуйста, подождите. Это может занять до минуты."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Компіляція моделей розпізнавання тексту. Зачекайте, будь ласка. Це може тривати до хвилини."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "正在编译文字识别模型，请稍候。最多可能需要一分钟。"
+          }
+        }
+      }
+    },
     "navigation.target_window" : {
       "comment" : "Alert title for choosing target window",
       "extractionState" : "manual",

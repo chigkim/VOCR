@@ -177,12 +177,42 @@ enum Navigation {
         }
     }
 
-    static func startOCR() {
+    private(set) static var isScanning = false
+
+    /// Captures on the main thread, recognizes on a background queue so VOCR stays responsive,
+    /// and announces the results on the main thread before calling `completion`.
+    static func startOCR(completion: (() -> Void)? = nil) {
+        guard !isScanning else { return }
         if mode != .CAMERA {
             prepare()
         }
         guard let image = cgImage else { return }
-        let result = VisionOCR.observations(in: image, detectObjects: Settings.detectObject)
+        isScanning = true
+        // Tell the user why the scan is slow if Vision has to compile its models first.
+        VisionModelMonitor.start {
+            guard isScanning else { return }
+            Accessibility.speak(
+                NSLocalizedString(
+                    "navigation.compiling_models",
+                    value:
+                        "Compiling text recognition models. Please wait. It might take up to a minute.",
+                    comment: "Message when a scan has to compile text recognition models first"))
+        }
+        let detectObjects = Settings.detectObject
+        DispatchQueue.global(qos: .userInitiated).async {
+            let result = VisionOCR.observations(in: image, detectObjects: detectObjects)
+            DispatchQueue.main.async {
+                VisionModelMonitor.stop()
+                isScanning = false
+                finishOCR(result)
+                completion?()
+            }
+        }
+    }
+
+    private static func finishOCR(
+        _ result: (observations: [Observation], barcodes: [DetectedBarcode])
+    ) {
         detectedBarcodes = result.barcodes
         let barcodeDetected = !detectedBarcodes.isEmpty
         if result.observations.count == 0 {

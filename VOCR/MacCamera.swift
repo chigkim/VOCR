@@ -156,12 +156,16 @@ class MacCamera: NSObject, AVCapturePhotoCaptureDelegate {
                     log("Recognizing text in an image using VisionKit")
                     Navigation.displayResults = []
                     Navigation.cgImage = cgImage
-                    Navigation.startOCR()
-                    if !Navigation.displayResults.isEmpty || !Navigation.detectedBarcodes.isEmpty {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            NSSound(
-                                contentsOfFile: "/System/Library/Sounds/Pop.aiff", byReference: true
-                            )?.play()
+                    Navigation.startOCR {
+                        if !Navigation.displayResults.isEmpty
+                            || !Navigation.detectedBarcodes.isEmpty
+                        {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                NSSound(
+                                    contentsOfFile: "/System/Library/Sounds/Pop.aiff",
+                                    byReference: true
+                                )?.play()
+                            }
                         }
                     }
 
