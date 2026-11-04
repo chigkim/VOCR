@@ -59,7 +59,10 @@ struct DetectedBarcode: Equatable {
 
 func hide() {
     NSApplication.shared.hide(nil)
-    NSApplication.shared.windows.forEach { $0.close() }
+    // Close only VOCR's own titled windows; AppKit's borderless status bar and menu windows must be left alone.
+    NSApplication.shared.windows
+        .filter { $0.styleMask.contains(.titled) }
+        .forEach { $0.close() }
 }
 
 @discardableResult
