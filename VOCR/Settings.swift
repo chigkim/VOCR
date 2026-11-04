@@ -76,7 +76,7 @@ enum Settings {
                 NSLocalizedString(
                     "menu.settings.log", value: "Log",
                     comment: "Menu item for enabling debug logging"),
-                #selector(MenuHandler.toggleLaunch(_:)), writeLog
+                #selector(MenuHandler.toggleSetting(_:)), writeLog
             ),
             (
                 NSLocalizedString(
