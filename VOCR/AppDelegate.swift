@@ -50,7 +50,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     }
 
     func setupAutoLaunch() {
-        if LaunchAgentManager.installDefaultIfNeeded(launchOnBoot: Settings.launchOnBoot) {
+        if LaunchAgentManager.installDefaultIfNeeded() {
             Settings.launchOnBoot = true
             Settings.save()
         }

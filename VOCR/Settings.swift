@@ -503,7 +503,7 @@ extension Settings {
         let defaults = UserDefaults.standard
         Settings.positionReset = defaults.bool(forKey: "positionReset")
         Settings.positionalAudio = defaults.bool(forKey: "positionalAudio")
-        Settings.launchOnBoot = defaults.bool(forKey: "launchOnBoot")
+        Settings.launchOnBoot = LaunchAgentManager.isInstalled
         Settings.autoScan = defaults.bool(forKey: "autoScan")
         Settings.detectObject = defaults.bool(forKey: "detectObject")
         Settings.usePresetPrompt = defaults.bool(forKey: "usePresetPrompt")
@@ -552,16 +552,21 @@ enum LaunchAgentManager {
         Bundle.main.url(forResource: "com.chikim.VOCR", withExtension: "plist")
     }
 
+    /// The launch agent file is the source of truth for Launch on Login.
+    static var isInstalled: Bool {
+        FileManager.default.fileExists(atPath: launchAgentURL.path)
+    }
+
+    /// Enables Launch on Login only on first run, before the user has ever saved the setting.
+    /// A saved `false` is the user's choice, so the launch agent must not be re-created.
     @discardableResult
-    static func installDefaultIfNeeded(launchOnBoot: Bool) -> Bool {
-        let fileManager = FileManager.default
-        let launchFile = launchAgentURL
-        guard !launchOnBoot, !fileManager.fileExists(atPath: launchFile.path) else {
+    static func installDefaultIfNeeded() -> Bool {
+        guard UserDefaults.standard.object(forKey: "launchOnBoot") == nil else {
             return false
         }
 
         setLaunchOnBoot(true)
-        return fileManager.fileExists(atPath: launchFile.path)
+        return isInstalled
     }
 
     static func setLaunchOnBoot(_ enabled: Bool) {
