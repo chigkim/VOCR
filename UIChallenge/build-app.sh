@@ -10,8 +10,8 @@ INSTALL_DIR="${2:-}"
 
 swift build -c "$CONFIGURATION"
 
-BUILD_DIR=".build/arm64-apple-macosx/$CONFIGURATION"
-APP_PATH=".build/$APP_NAME.app"
+BUILD_DIR="$(swift build -c "$CONFIGURATION" --show-bin-path)"
+APP_PATH="build/$APP_NAME.app"
 CONTENTS_PATH="$APP_PATH/Contents"
 MACOS_PATH="$CONTENTS_PATH/MacOS"
 RESOURCES_PATH="$CONTENTS_PATH/Resources"
@@ -20,6 +20,8 @@ rm -rf "$APP_PATH"
 mkdir -p "$MACOS_PATH" "$RESOURCES_PATH"
 
 cp "AppBundle/Info.plist" "$CONTENTS_PATH/Info.plist"
+# Record where .env lives so Finder launches can load it; the secrets stay out of the bundle.
+plutil -insert UIChallengeEnvFile -string "$PWD/.env" "$CONTENTS_PATH/Info.plist"
 cp "$BUILD_DIR/$EXECUTABLE_NAME" "$MACOS_PATH/$EXECUTABLE_NAME"
 chmod +x "$MACOS_PATH/$EXECUTABLE_NAME"
 

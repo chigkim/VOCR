@@ -10,6 +10,10 @@ struct UIChallengeApp: App {
     private let launchPrompt = LaunchArguments.prompt
     private let launchLevel = LaunchArguments.level
 
+    init() {
+        EnvFile.load()
+    }
+
     var body: some Scene {
         WindowGroup("UI Challenge") {
             ContentView()
@@ -143,6 +147,33 @@ enum LaunchArguments {
         let next = args.index(after: index)
         guard next < args.endIndex else { return nil }
         return args[next]
+    }
+}
+
+/// Loads KEY=VALUE pairs from the .env file recorded in Info.plist by build-app.sh,
+/// so Finder launches get OPENAI_* settings. Variables already set by the launching shell win.
+enum EnvFile {
+    static func load() {
+        guard let path = Bundle.main.object(forInfoDictionaryKey: "UIChallengeEnvFile") as? String,
+            let contents = try? String(contentsOfFile: path, encoding: .utf8)
+        else { return }
+
+        for rawLine in contents.split(whereSeparator: \.isNewline) {
+            var line = rawLine.trimmingCharacters(in: .whitespaces)
+            if line.isEmpty || line.hasPrefix("#") { continue }
+            if line.hasPrefix("export ") { line.removeFirst("export ".count) }
+            guard let separator = line.firstIndex(of: "=") else { continue }
+
+            let key = line[..<separator].trimmingCharacters(in: .whitespaces)
+            var value = line[line.index(after: separator)...].trimmingCharacters(in: .whitespaces)
+            if value.count >= 2, let quote = value.first, quote == "\"" || quote == "'",
+                value.last == quote
+            {
+                value = String(value.dropFirst().dropLast())
+            }
+            guard !key.isEmpty else { continue }
+            setenv(key, value, 0)
+        }
     }
 }
 

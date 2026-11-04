@@ -26,7 +26,7 @@ After changing either permission, quit and relaunch the app.
 Launch it as a full macOS app:
 
 ```sh
-open ".build/UI Challenge.app"
+open "build/UI Challenge.app"
 ```
 
 Or launch the installed copy:
@@ -38,21 +38,17 @@ open "$HOME/Applications/UI Challenge.app"
 Run and observe logs in Terminal:
 
 ```sh
-.build/UI\ Challenge.app/Contents/MacOS/UIChallenge
+build/UI\ Challenge.app/Contents/MacOS/UIChallenge
 ```
 
 Run an automatic computer-use prompt when the app opens:
 
 ```sh
-.build/UI\ Challenge.app/Contents/MacOS/UIChallenge \
+build/UI\ Challenge.app/Contents/MacOS/UIChallenge \
   --prompt "Click Drag Source, set the slider to 75, type hello, and press Send."
 ```
 
-If launching by double-clicking in Finder, set the API key in the launch environment first:
-
-```sh
-launchctl setenv OPENAI_API_KEY "..."
-```
+For Finder launches, put the same variables in `UIChallenge/.env` (`KEY=VALUE` per line). `build-app.sh` records that file's path in the bundle, and the app loads it at startup without overriding variables already set by the launching shell.
 
 The app presents one validation level at a time. Each level shows an instruction at the top, a task UI, and a Next button. Clicking Next advances only when the current level's requirements are complete; otherwise the visible log shows a terse failure message so the model must infer what is missing from the instruction, UI state, and visible history.
 
