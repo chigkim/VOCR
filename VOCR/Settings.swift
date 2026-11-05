@@ -222,8 +222,10 @@ enum StatusMenuController {
         settingsMenu.addItem(aiInteractionMenuItem)
 
         let languageMenu = NSMenu()
+        // Read only VOCR's own setting; `UserDefaults.standard` would fall back to the system language list.
         let currentLanguage =
-            UserDefaults.standard.array(forKey: "AppleLanguages")?.first as? String
+            (UserDefaults.standard.persistentDomain(forName: Bundle.main.bundleIdentifier ?? "")?[
+                "AppleLanguages"] as? [String])?.first
 
         let systemItem = NSMenuItem(
             title: NSLocalizedString(
@@ -937,17 +939,48 @@ class MenuHandler: NSObject {
 
     @objc func selectLanguage(_ sender: NSMenuItem) {
         guard let code = sender.representedObject as? String else { return }
+
+        // The app's language is fixed at launch, so save it only when the user relaunches.
+        let alert = NSAlert()
+        alert.messageText = NSLocalizedString(
+            "dialog.language.title", value: "Relaunch VOCR?",
+            comment: "Title for the dialog shown after choosing a display language")
+        alert.informativeText = NSLocalizedString(
+            "dialog.language.message",
+            value: "The new language will be used after VOCR relaunches.",
+            comment: "Message explaining that a new display language needs a relaunch")
+        alert.addButton(
+            withTitle: NSLocalizedString(
+                "button.relaunch", value: "Relaunch", comment: "Button to relaunch VOCR now"))
+        alert.addButton(
+            withTitle: NSLocalizedString(
+                "button.cancel", value: "Cancel", comment: "Button to cancel an action"))
+        alert.buttons.last?.keyEquivalent = "\u{1b}"
+        guard showDialog(alert, focusing: alert.buttons.first) == .alertFirstButtonReturn else {
+            return
+        }
         if code == "system" {
             UserDefaults.standard.removeObject(forKey: "AppleLanguages")
         } else {
             UserDefaults.standard.set([code], forKey: "AppleLanguages")
         }
-        // Relaunch to apply the new language
-        let appURL = Bundle.main.bundleURL
+        relaunch()
+    }
+
+    /// Starts a new instance of VOCR, then quits this one.
+    /// Without `createsNewApplicationInstance`, macOS only activates the running instance,
+    /// so VOCR would quit without coming back.
+    private func relaunch() {
+        let configuration = NSWorkspace.OpenConfiguration()
+        configuration.createsNewApplicationInstance = true
         NSWorkspace.shared.openApplication(
-            at: appURL,
-            configuration: NSWorkspace.OpenConfiguration()
-        ) { _, _ in
+            at: Bundle.main.bundleURL, configuration: configuration
+        ) { _, error in
+            // Keep running if the new instance didn't start.
+            if let error {
+                log("Relaunch failed: \(error)")
+                return
+            }
             DispatchQueue.main.async { NSApp.terminate(nil) }
         }
     }
@@ -983,14 +1016,7 @@ class MenuHandler: NSObject {
             UserDefaults.standard.removePersistentDomain(forName: bundleID)
         }
 
-        // Relaunch
-        let appURL = Bundle.main.bundleURL
-        NSWorkspace.shared.openApplication(
-            at: appURL,
-            configuration: NSWorkspace.OpenConfiguration()
-        ) { _, _ in
-            DispatchQueue.main.async { NSApp.terminate(nil) }
-        }
+        relaunch()
     }
 
     @objc func openPermissionsWindow(_ sender: NSMenuItem) {
