@@ -189,7 +189,9 @@ enum Navigation {
         guard let image = cgImage else { return }
         isScanning = true
         // Tell the user why the scan is slow if Vision has to compile its models first.
-        VisionModelMonitor.start {
+        // With Write Log on, also record Vision's own messages so a failed scan can be diagnosed.
+        let writeLog = Settings.writeLog
+        VisionModelMonitor.start(captureLog: writeLog) {
             guard isScanning else { return }
             Accessibility.speak(
                 NSLocalizedString(
@@ -200,11 +202,22 @@ enum Navigation {
         }
         let detectObjects = Settings.detectObject
         DispatchQueue.global(qos: .userInitiated).async {
+            let start = Date()
             let result = Result {
                 try VisionOCR.observations(in: image, detectObjects: detectObjects)
             }
+            let duration = Date().timeIntervalSince(start)
+            let details =
+                writeLog
+                ? "\(VisionDiagnostics.environment)\n\(VisionDiagnostics.modelCache())" : ""
             DispatchQueue.main.async {
-                VisionModelMonitor.stop()
+                let messages = VisionModelMonitor.stop()
+                if writeLog {
+                    log(
+                        String(format: "Scan took %.2f s\n", duration) + details
+                            + "\nVision log (\(messages.count) messages):\n"
+                            + messages.joined(separator: "\n"))
+                }
                 isScanning = false
                 finishOCR(result)
                 completion?()
@@ -221,7 +234,7 @@ enum Navigation {
             result = value
         case .failure(let error):
             detectedBarcodes = []
-            log("OCR failed: \(error)")
+            log("OCR failed: \(VisionDiagnostics.describe(error))")
             Accessibility.speak(
                 String(
                     format: NSLocalizedString(
