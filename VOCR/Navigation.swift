@@ -200,7 +200,9 @@ enum Navigation {
         }
         let detectObjects = Settings.detectObject
         DispatchQueue.global(qos: .userInitiated).async {
-            let result = VisionOCR.observations(in: image, detectObjects: detectObjects)
+            let result = Result {
+                try VisionOCR.observations(in: image, detectObjects: detectObjects)
+            }
             DispatchQueue.main.async {
                 VisionModelMonitor.stop()
                 isScanning = false
@@ -211,8 +213,23 @@ enum Navigation {
     }
 
     private static func finishOCR(
-        _ result: (observations: [Observation], barcodes: [DetectedBarcode])
+        _ scan: Result<(observations: [Observation], barcodes: [DetectedBarcode]), Error>
     ) {
+        let result: (observations: [Observation], barcodes: [DetectedBarcode])
+        switch scan {
+        case .success(let value):
+            result = value
+        case .failure(let error):
+            detectedBarcodes = []
+            log("OCR failed: \(error)")
+            Accessibility.speak(
+                String(
+                    format: NSLocalizedString(
+                        "navigation.recognition_failed", value: "Text recognition failed. %@",
+                        comment: "Message when text recognition fails; the argument is the error"),
+                    error.localizedDescription))
+            return
+        }
         detectedBarcodes = result.barcodes
         let barcodeDetected = !detectedBarcodes.isEmpty
         if result.observations.count == 0 {

@@ -43,12 +43,16 @@ enum RealTime {
                 var oldText = ""
                 while run {
                     if let cgImage = ScreenCapture.capture(rect: rect) {
-                        let texts = VisionOCR.recognizedText(in: cgImage)
-                        let newText = texts.map { $0.topCandidates(1)[0].string }.joined(
-                            separator: " ")
-                        if let insertedText = diff(old: oldText, new: newText) {
-                            oldText = newText
-                            Accessibility.speak(insertedText)
+                        do {
+                            let texts = try VisionOCR.recognizedText(in: cgImage)
+                            let newText = texts.map { $0.topCandidates(1)[0].string }.joined(
+                                separator: " ")
+                            if let insertedText = diff(old: oldText, new: newText) {
+                                oldText = newText
+                                Accessibility.speak(insertedText)
+                            }
+                        } catch {
+                            log("OCR failed: \(error)")
                         }
                     }
                     Thread.sleep(forTimeInterval: 0.5)

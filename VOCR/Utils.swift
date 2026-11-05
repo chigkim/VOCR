@@ -333,18 +333,14 @@ enum ScreenCapture {
 }
 
 enum VisionOCR {
-    static func recognizedText(in cgImage: CGImage) -> [VNRecognizedTextObservation] {
+    static func recognizedText(in cgImage: CGImage) throws -> [VNRecognizedTextObservation] {
         let request = textRecognitionRequest()
         let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
-        do {
-            try requestHandler.perform([request])
-        } catch {
-            log("OCR failed: \(error)")
-        }
+        try requestHandler.perform([request])
         return request.results ?? []
     }
 
-    static func observations(in cgImage: CGImage, detectObjects: Bool) -> (
+    static func observations(in cgImage: CGImage, detectObjects: Bool) throws -> (
         observations: [Observation], barcodes: [DetectedBarcode]
     ) {
         let textRecognitionRequest = textRecognitionRequest()
@@ -356,11 +352,7 @@ enum VisionOCR {
             : [textRecognitionRequest, barcodeRequest]
 
         let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
-        do {
-            try requestHandler.perform(requests)
-        } catch {
-            log("OCR failed: \(error)")
-        }
+        try requestHandler.perform(requests)
 
         var barcodes: [DetectedBarcode] = []
         if let detectedBarcodes = barcodeRequest.results {
