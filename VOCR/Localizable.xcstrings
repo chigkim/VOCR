@@ -3127,7 +3127,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "¡No se ha encontrado!"
+            "value" : "¡No se ha encontrado nada!"
           }
         },
         "fr" : {
@@ -4303,7 +4303,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Este complemento utiliza un modelo de IA para controlar el ratón y el teclado de su computadora. El autor no es responsable de ninguna acción irreversible, pérdida de datos u otros daños que este complemento pueda realizar o causar. Utiliza esta herramienta de forma responsable y siempre supervisa el complemento mientras se esté ejecutando."
+            "value" : "Este complemento utiliza un modelo de IA para controlar el mouse y el teclado de tu computadora. El autor no es responsable de ninguna acción irreversible, pérdida de datos u otros daños que este complemento pueda realizar o causar. Utiliza esta herramienta de forma responsable y siempre supervisa el complemento mientras se esté ejecutando."
           }
         },
         "fr" : {
@@ -4387,7 +4387,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "USE BAJO SU PROPIO RIESGO"
+            "value" : "USA BAJO TU PROPIO RIESGO"
           }
         },
         "fr" : {
@@ -6570,7 +6570,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Esto borrará todas las opciones y presets. No se puede deshacer."
+            "value" : "Esto borrará todas las opciones y ajustes preestablecidos. No se puede deshacer."
           }
         },
         "fr" : {
@@ -11694,7 +11694,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mover el ratón"
+            "value" : "Mover el mouse"
           }
         },
         "fr" : {
@@ -12786,7 +12786,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VOCursor"
+            "value" : "Cursor de VoiceOver"
           }
         },
         "fr" : {
@@ -14718,7 +14718,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Leer texto de su pantalla para el OCR"
+            "value" : "Leer texto de tu pantalla para el OCR"
           }
         },
         "fr" : {
@@ -15558,7 +15558,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avisarle cuando haya actualizaciones disponibles"
+            "value" : "Avisarte cuando haya actualizaciones disponibles"
           }
         },
         "fr" : {
@@ -19002,7 +19002,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gestor de preajustes"
+            "value" : "Gestor de ajustes preestablecidos"
           }
         },
         "fr" : {
@@ -20514,7 +20514,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OCR VOCursor"
+            "value" : "OCR a cursor de VoiceOver"
           }
         },
         "fr" : {
@@ -20598,7 +20598,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ventana de OCR"
+            "value" : "OCR a la ventana"
           }
         },
         "fr" : {

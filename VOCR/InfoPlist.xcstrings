@@ -446,7 +446,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VOCR necesita capturar el contenido de su pantalla para realizar OCR y extraer texto de ventanas y aplicaciones."
+            "value" : "VOCR necesita capturar el contenido de tu pantalla para realizar OCR y extraer texto de ventanas y aplicaciones."
           }
         },
         "fr" : {
