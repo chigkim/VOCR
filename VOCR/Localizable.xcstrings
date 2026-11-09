@@ -8849,8 +8849,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Valore dello sforzo di ragionamento"
+            "state" : "translated",
+            "value" : "Valore del livello di ragionamento"
           }
         },
         "ja" : {
@@ -8933,8 +8933,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sforzo di ragionamento"
+            "state" : "translated",
+            "value" : "Livello di ragionamento"
           }
         },
         "ja" : {
@@ -18089,7 +18089,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Predefinito del modello"
           }
         },
@@ -18677,8 +18677,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sforzo di ragionamento"
+            "state" : "translated",
+            "value" : "Livello di ragionamento"
           }
         },
         "ja" : {
