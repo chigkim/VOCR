@@ -6,6 +6,7 @@
 # ///
 
 import argparse
+import functools
 import json
 import os
 import re
@@ -21,15 +22,11 @@ from pathlib import Path
 import markdown
 
 
-OWNER = "chigkim"
 REPO = "VOCR"
-REPO_SLUG = f"{OWNER}/{REPO}"
 ARCHIVES = Path("archives")
 DOCS = Path("docs")
-GENERATE_APPCAST = Path(
-	"~/Library/Developer/Xcode/DerivedData/VOCR-gjsqmtcgzvvuvfcpuxtfgxerxtyc/"
-	"SourcePackages/artifacts/sparkle/Sparkle/bin/generate_appcast"
-).expanduser()
+DERIVED_DATA = Path("~/Library/Developer/Xcode/DerivedData").expanduser()
+GENERATE_APPCAST_GLOB = f"{REPO}-*/SourcePackages/artifacts/sparkle/Sparkle/bin/generate_appcast"
 GH_RETRIES = 3
 
 
@@ -61,6 +58,35 @@ def gh(args, capture=False, retries=0):
 		sys.exit(f"Error: {format_cmd(cmd)} failed (exit {result.returncode})")
 
 	raise RuntimeError("unreachable")
+
+
+@functools.cache
+def repo_slug():
+	"""Return the GitHub repository (owner/name) of the current checkout."""
+	output = gh(
+		["repo", "view", "--json", "nameWithOwner", "--jq", ".nameWithOwner"],
+		capture=True,
+		retries=GH_RETRIES,
+	)
+	return output.strip()
+
+
+def find_generate_appcast():
+	"""Return Sparkle's generate_appcast, from $GENERATE_APPCAST or the newest Xcode DerivedData copy."""
+	override = os.environ.get("GENERATE_APPCAST")
+	if override:
+		path = Path(override).expanduser()
+		if not path.is_file():
+			sys.exit(f"Error: GENERATE_APPCAST not found: {path}")
+		return path
+
+	candidates = [path for path in DERIVED_DATA.glob(GENERATE_APPCAST_GLOB) if path.is_file()]
+	if not candidates:
+		sys.exit(
+			f"Error: generate_appcast not found under {DERIVED_DATA}. "
+			"Build VOCR in Xcode once so it fetches Sparkle, or set GENERATE_APPCAST."
+		)
+	return max(candidates, key=lambda path: path.stat().st_mtime)
 
 
 def normalize_tag(tag):
@@ -183,7 +209,7 @@ def create_github_release(tag, changelog):
 		"create",
 		tag,
 		"--repo",
-		REPO_SLUG,
+		repo_slug(),
 		"--title",
 		release_name(tag),
 		"--notes-file",
@@ -202,7 +228,7 @@ def update_github_release(tag, changelog):
 			"edit",
 			tag,
 			"--repo",
-			REPO_SLUG,
+			repo_slug(),
 			"--notes-file",
 			changelog,
 		],
@@ -213,7 +239,7 @@ def update_github_release(tag, changelog):
 
 def asset_download_url(tag, asset_name):
 	output = gh(
-		["release", "view", tag, "--repo", REPO_SLUG, "--json", "assets"],
+		["release", "view", tag, "--repo", repo_slug(), "--json", "assets"],
 		capture=True,
 		retries=GH_RETRIES,
 	)
@@ -225,7 +251,7 @@ def asset_download_url(tag, asset_name):
 
 def upload_release_asset(tag, zip_file):
 	gh(
-		["release", "upload", tag, zip_file, "--repo", REPO_SLUG, "--clobber"],
+		["release", "upload", tag, zip_file, "--repo", repo_slug(), "--clobber"],
 		retries=GH_RETRIES,
 	)
 	print("Asset uploaded successfully!")
@@ -317,7 +343,7 @@ def create_release(args):
 
 	create_github_release(tag, changelog)
 	note = render_release_note(changelog, archives_release_note_path(tag))
-	run([str(GENERATE_APPCAST), str(ARCHIVES)])
+	run([str(find_generate_appcast()), str(ARCHIVES)])
 	note.rename(docs_release_note_path(tag))
 
 	download = upload_release_asset(tag, zip_file)
