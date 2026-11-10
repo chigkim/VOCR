@@ -23,7 +23,7 @@ VOCR is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY
 
 ## Download
 
-Get the latest version here: [VOCR v3.0.0](https://github.com/chigkim/VOCR/releases/download/v3.0.0/VOCR_v3.0.0.zip).
+Get the latest version here: [VOCR v3.1.1-beta.3](https://github.com/chigkim/VOCR/releases/download/v3.1.1-beta.3/VOCR_v3.1.1-beta.3.zip).
 
 ---
 
