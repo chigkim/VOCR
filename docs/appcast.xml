@@ -3,6 +3,27 @@
     <channel>
         <title>VOCR</title>
         <item>
+            <title>3.1.1-beta.3</title>
+            <pubDate>Mon, 09 Nov 2026 19:32:38 -0500</pubDate>
+            <sparkle:version>80</sparkle:version>
+            <sparkle:shortVersionString>3.1.1-beta.3</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <description>&lt;h2 id="changelog"&gt;Changelog&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;On macOS Golden Gate 27, the first scan may have to compile text recognition models, which can take up to a minute. VOCR announces when this happens.&lt;/li&gt;
+&lt;li&gt;When text recognition fails, VOCR reads the error instead of saying "Nothing found."&lt;/li&gt;
+&lt;li&gt;With Log on, each scan logs extra details for troubleshooting: timing, system info, the model cache and macOS's text recognition messages.&lt;/li&gt;
+&lt;li&gt;Choosing a language now offers to relaunch VOCR, since the change takes effect only after a relaunch.&lt;/li&gt;
+&lt;li&gt;The Language menu checks System Default when no language is chosen.&lt;/li&gt;
+&lt;li&gt;Launch on Login no longer turns itself back on or shows the wrong state.&lt;/li&gt;
+&lt;li&gt;Fixed a crash when toggling items in the Settings menu.&lt;/li&gt;
+&lt;li&gt;Updated Spanish translation (#54, thanks @CarlosEstebanM and @Kiko0923).&lt;/li&gt;
+&lt;li&gt;Updated Italian translation (#53, thanks @phonegiovanni-svg).&lt;/li&gt;
+&lt;/ul&gt;</description>
+            <enclosure url="https://github.com/chigkim/VOCR/releases/download/v3.1.1-beta.3/VOCR_v3.1.1-beta.3.zip" length="3929581" type="application/octet-stream" sparkle:edSignature="qFH4S894D+r9Wd0sRTCc5wDc4ehfTLAkR4O6+HCOMFobjMO2c29Cts1dcXtaRZCeWbf9NL3B8jpWRWK5WJSTDA==" />
+            <sparkle:channel>beta</sparkle:channel>
+        </item>
+        <item>
             <title>3.1.0</title>
             <pubDate>Mon, 12 Oct 2026 07:00:12 -0400</pubDate>
             <sparkle:version>73</sparkle:version>
