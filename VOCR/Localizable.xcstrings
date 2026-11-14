@@ -13805,7 +13805,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Compilazione dei modelli di riconoscimento del testo. Attendere. Potrebbe richiedere fino a un minuto."
           }
         },
@@ -13889,7 +13889,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Riconoscimento del testo non riuscito. %@"
           }
         },
@@ -21617,7 +21617,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Riavviare VOCR?"
           }
         },
@@ -21701,8 +21701,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "La nuova lingua verrà usata dopo il riavvio di VOCR."
+            "state" : "translated",
+            "value" : "La nuova lingua verrà applicata dopo il riavvio di VOCR."
           }
         },
         "ja" : {
@@ -21785,7 +21785,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Riavvia"
           }
         },
