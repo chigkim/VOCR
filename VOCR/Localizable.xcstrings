@@ -8837,7 +8837,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Valor de esfuerzo de razonamiento"
           }
         },
@@ -8921,7 +8921,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Esfuerzo de razonamiento"
           }
         },
@@ -13793,8 +13793,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Compilando los modelos de reconocimiento de texto. Espere, por favor. Puede tardar hasta un minuto."
+            "state" : "translated",
+            "value" : "Compilando los modelos de reconocimiento de texto. Espera, por favor. Puede tardar hasta un minuto."
           }
         },
         "fr" : {
@@ -13877,7 +13877,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Error en el reconocimiento de texto. %@"
           }
         },
@@ -18665,7 +18665,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Esfuerzo de razonamiento"
           }
         },
@@ -21605,7 +21605,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "¿Reiniciar VOCR?"
           }
         },
@@ -21689,7 +21689,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "El nuevo idioma se usará después de reiniciar VOCR."
           }
         },
@@ -21773,7 +21773,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Reiniciar"
           }
         },
