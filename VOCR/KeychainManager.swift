@@ -17,16 +17,19 @@ class KeychainManager {
 
     @discardableResult
     static func store(key: String, data: Data) -> OSStatus {
-        let query =
-            [
-                kSecClass as String: kSecClassGenericPassword,
-                kSecAttrAccount as String: key,
-                kSecValueData as String: data,
-                kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked,
-            ] as [String: Any]
+        let deleteQuery: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: key,
+        ]
+        SecItemDelete(deleteQuery as CFDictionary)  // Remove any existing item with the same key
 
-        SecItemDelete(query as CFDictionary)  // Remove any existing item with the same key
-        return SecItemAdd(query as CFDictionary, nil)
+        let addQuery: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: key,
+            kSecValueData as String: data,
+            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked,
+        ]
+        return SecItemAdd(addQuery as CFDictionary, nil)
     }
 
     static func retrieveWithStatus(key: String) -> RetrievalResult {

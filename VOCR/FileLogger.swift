@@ -16,10 +16,11 @@ class FileLogger {
     private let queue = DispatchQueue(label: "com.yourapp.filelogger", qos: .background)
 
     init() {
-        let documentsDirectory = FileManager.default.urls(
-            for: .documentDirectory, in: .userDomainMask
-        )
-        .first!
+        let documentsDirectory =
+            FileManager.default.urls(
+                for: .documentDirectory, in: .userDomainMask
+            )
+            .first ?? FileManager.default.temporaryDirectory
         self.fileURL = documentsDirectory.appendingPathComponent("VOCR.txt")
         if FileManager.default.fileExists(atPath: self.fileURL.path) {
             try? FileManager.default.removeItem(at: self.fileURL)
@@ -44,11 +45,10 @@ class FileLogger {
     }
 
     func write(_ message: String) {
-        setupFileHandleIfNeeded()
-
         queue.async { [weak self] in
             guard let self = self, Settings.writeLog else { return }
 
+            self.setupFileHandleIfNeeded()
             guard let data = message.data(using: .utf8) else { return }
             self.fileHandle?.seekToEndOfFile()
             self.fileHandle?.write(data)

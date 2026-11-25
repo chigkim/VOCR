@@ -27,7 +27,7 @@ extension NSRunningApplication {
         guard result == .success else {
             return nil
         }
-        guard let focusedWindow else {
+        guard let focusedWindow, CFGetTypeID(focusedWindow) == AXUIElementGetTypeID() else {
             return nil
         }
         let window = focusedWindow as! AXUIElement

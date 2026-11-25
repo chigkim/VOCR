@@ -63,7 +63,7 @@ struct Observation {
 
     init(_ obs: VNRecognizedTextObservation) {
         self.vnObservation = obs
-        self.value = obs.topCandidates(1)[0].string
+        self.value = obs.topCandidates(1).first?.string ?? ""
         self.boundingBox = obs.boundingBox
     }
 

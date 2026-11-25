@@ -96,17 +96,17 @@ class MacCamera: NSObject, AVCapturePhotoCaptureDelegate {
         _ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto,
         error: Error?
     ) {
-        captureSession.stopRunning()
+        captureSession?.stopRunning()
         log("photo captured")
         if let error = error {
             log(error)
         }
 
         if let dataImage = photo.fileDataRepresentation() {
-            let dataProvider = CGDataProvider(data: dataImage as CFData)
-            if let cgImage = CGImage(
-                jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true,
-                intent: .defaultIntent)
+            if let dataProvider = CGDataProvider(data: dataImage as CFData),
+                let cgImage = CGImage(
+                    jpegDataProviderSource: dataProvider, decode: nil, shouldInterpolate: true,
+                    intent: .defaultIntent)
             {
                 NSSound(
                     contentsOfFile:

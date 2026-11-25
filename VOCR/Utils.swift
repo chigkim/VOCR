@@ -287,8 +287,8 @@ enum ScreenCapture {
     static func capture(rect: CGRect) -> CGImage? {
         var displayCount: UInt32 = 0
         var result = CGGetActiveDisplayList(0, nil, &displayCount)
-        guard result == .success else {
-            log("error: \(result)")
+        guard result == .success, displayCount > 0 else {
+            log("error: \(result), displayCount: \(displayCount)")
             return nil
         }
 
@@ -297,8 +297,8 @@ enum ScreenCapture {
         defer { activeDisplays.deallocate() }
 
         result = CGGetActiveDisplayList(displayCount, activeDisplays, &displayCount)
-        guard result == .success else {
-            log("error: \(result)")
+        guard result == .success, displayCount > 0 else {
+            log("error: \(result), displayCount: \(displayCount)")
             return nil
         }
 
@@ -379,7 +379,8 @@ enum VisionOCR {
             for text in texts {
                 if box.boundingBox.intersects(text.boundingBox) {
                     boxesText.append(
-                        Observation(box, value: "Text: " + text.topCandidates(1)[0].string))
+                        Observation(
+                            box, value: "Text: " + (text.topCandidates(1).first?.string ?? "")))
                     intersectsText = true
                     break
                 }
@@ -457,10 +458,13 @@ func classify(cgImage: CGImage) -> String {
 
 func runAppleScript(file: String) -> String? {
     let bundle = Bundle.main
-    let script = bundle.url(forResource: file, withExtension: "scpt")
-    log("\(script!)")
+    guard let script = bundle.url(forResource: file, withExtension: "scpt") else {
+        log("AppleScript resource not found: \(file).scpt")
+        return nil
+    }
+    log("\(script)")
     var error: NSDictionary?
-    if let scriptObject = NSAppleScript(contentsOf: script!, error: &error) {
+    if let scriptObject = NSAppleScript(contentsOf: script, error: &error) {
         var outputError: NSDictionary?
         if let output = scriptObject.executeAndReturnError(&outputError).stringValue {
             log("\(output)")

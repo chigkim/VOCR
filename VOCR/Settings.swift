@@ -13,6 +13,7 @@ import Cocoa
 enum Settings {
 
     static private var eventMonitor: Any?
+    static private var autoScanWorkItem: DispatchWorkItem?
     static var positionReset = true
     static var positionalAudio = false
     static var moveMouse = true
@@ -473,31 +474,40 @@ enum StatusMenuController {
 extension Settings {
 
     static func installMouseMonitor() {
+        guard self.eventMonitor == nil else { return }
         self.eventMonitor = NSEvent.addGlobalMonitorForEvents(
             matching: [NSEvent.EventTypeMask.leftMouseDown, NSEvent.EventTypeMask.rightMouseDown],
             handler: { (event: NSEvent) in
                 switch event.type {
                 case .leftMouseDown:
                     log("Left mouse click detected.")
-                    if Shortcuts.navigationActive {
-                        Thread.sleep(forTimeInterval: 0.5)
-                        Navigation.startOCR()
-                    }
+                    scheduleAutoScan()
                 case .rightMouseDown:
                     log("Right mouse click detected.")
-                    if Shortcuts.navigationActive {
-                        Thread.sleep(forTimeInterval: 0.5)
-                        Navigation.startOCR()
-                    }
+                    scheduleAutoScan()
                 default:
                     break
                 }
             })
     }
 
+    private static func scheduleAutoScan() {
+        guard Shortcuts.navigationActive else { return }
+        autoScanWorkItem?.cancel()
+        let workItem = DispatchWorkItem {
+            guard Settings.autoScan && Shortcuts.navigationActive else { return }
+            Navigation.startOCR()
+        }
+        autoScanWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: workItem)
+    }
+
     static func removeMouseMonitor() {
+        autoScanWorkItem?.cancel()
+        autoScanWorkItem = nil
         if let eventMonitor = self.eventMonitor {
             NSEvent.removeMonitor(eventMonitor)
+            self.eventMonitor = nil
         }
     }
 

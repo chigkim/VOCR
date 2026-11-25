@@ -45,8 +45,8 @@ enum RealTime {
                     if let cgImage = ScreenCapture.capture(rect: rect) {
                         do {
                             let texts = try VisionOCR.recognizedText(in: cgImage)
-                            let newText = texts.map { $0.topCandidates(1)[0].string }.joined(
-                                separator: " ")
+                            let newText = texts.compactMap { $0.topCandidates(1).first?.string }
+                                .joined(separator: " ")
                             if let insertedText = diff(old: oldText, new: newText) {
                                 oldText = newText
                                 Accessibility.speak(insertedText)
