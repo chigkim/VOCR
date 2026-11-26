@@ -163,6 +163,7 @@ final class ComputerUseController {
         }
 
         guard let rect = Navigation.getWindow(), rect.width > 0, rect.height > 0 else {
+            if Navigation.windowSelectionCancelled { return }
             Accessibility.speakWithSynthesizer(
                 NSLocalizedString(
                     "computerUse.noWindow", value: "Could not access the frontmost window.",

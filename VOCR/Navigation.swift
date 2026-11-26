@@ -52,11 +52,14 @@ enum Navigation {
     static var l = -1
     static var w = -1
     static var c = -1
+    /// True when the last `getWindow()` call ended because the user closed the Target Window alert.
+    private(set) static var windowSelectionCancelled = false
 
     /// Bounding-box midY tolerance used when grouping observations into lines and sorting them.
     private static let lineBreakTolerance = 0.01
 
     static func getWindow() -> CGRect? {
+        windowSelectionCancelled = false
         guard let currentApp = NSWorkspace.shared.frontmostApplication else {
             log("Failed to get frontmost application")
             return nil
@@ -94,10 +97,12 @@ enum Navigation {
             alert.addButton(
                 withTitle: NSLocalizedString(
                     "navigation.close", value: "Close", comment: "Close button"))
+            alert.buttons.last?.keyEquivalent = "\u{1b}"
             let modalResult = alert.runModal()
             hide()
             let r = modalResult.rawValue - 1000
             guard windows.indices.contains(r) else {
+                windowSelectionCancelled = true
                 return nil
             }
             window = windows[r]
@@ -178,6 +183,9 @@ enum Navigation {
         if let rect = rect {
             cgPosition = rect.origin
             cgSize = rect.size
+        }
+        if mode == .WINDOW && windowSelectionCancelled {
+            return
         }
         if cgSize != CGSize() {
             if let image = ScreenCapture.capture(rect: CGRect(origin: cgPosition, size: cgSize)) {
@@ -413,10 +421,13 @@ enum Navigation {
         return a.boundingBox.midX < b.boundingBox.midX
     }
 
+    /// True when `l` and `w` point at an observation. Unlike `correctLimit()`, it does not move the selection.
+    private static func hasSelection() -> Bool {
+        displayResults.indices.contains(l) && displayResults[l].indices.contains(w)
+    }
+
     static func location() {
-        guard !displayResults.isEmpty else { return }
-        correctLimit()
-        guard displayResults[l].indices.contains(w) else { return }
+        guard hasSelection() else { return }
         var center = convert2coordinates(displayResults[l][w].boundingBox)
         center.x -= cgPosition.x
         center.y -= cgPosition.y
@@ -442,9 +453,7 @@ enum Navigation {
     }
 
     static func identifyObject() {
-        guard !displayResults.isEmpty else { return }
-        correctLimit()
-        guard displayResults[l].indices.contains(w) else { return }
+        guard hasSelection() else { return }
         if displayResults[l][w].value == "OBJECT" {
             if let image = cgImage {
                 var rect = displayResults[l][w].boundingBox
@@ -738,12 +747,31 @@ class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDeleg
         openInDefaultBrowser(searchURL(for: barcode))
     }
 
+    /// Opens web links. Payloads with another URI scheme (mailto:, otpauth:, WIFI: ...) may hold
+    /// private data, so they are neither opened nor sent to a search engine. Plain text is searched.
     private func openInBrowser(_ barcode: DetectedBarcode) {
-        let url = uri(from: barcode.payload) ?? searchURL(for: barcode)
-        openInDefaultBrowser(url)
+        if let url = webURL(from: barcode.payload) {
+            openInDefaultBrowser(url)
+        } else if hasURIScheme(barcode.payload) {
+            Accessibility.speak(
+                NSLocalizedString(
+                    "barcodes.not_web_link", value: "This barcode is not a web link.",
+                    comment:
+                        "Message when Open in Browser is used on a barcode that is not a web link"
+                ))
+        } else {
+            openInDefaultBrowser(searchURL(for: barcode))
+        }
     }
 
-    private func uri(from payload: String) -> URL? {
+    private func hasURIScheme(_ payload: String) -> Bool {
+        let trimmed = payload.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let schemeSeparator = trimmed.firstIndex(of: ":") else { return false }
+        return trimmed[..<schemeSeparator].range(
+            of: #"^[A-Za-z][A-Za-z0-9+.-]*$"#, options: .regularExpression) != nil
+    }
+
+    private func webURL(from payload: String) -> URL? {
         let trimmed = payload.trimmingCharacters(in: .whitespacesAndNewlines)
         guard
             let url = URL(string: trimmed),

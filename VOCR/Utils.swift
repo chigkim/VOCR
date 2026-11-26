@@ -207,6 +207,8 @@ func grabImage() -> CGImage? {
         return screenshot
     } else if Navigation.mode == .CAMERA {
         return Navigation.cgImage
+    } else if Navigation.mode == .WINDOW && Navigation.windowSelectionCancelled {
+        return nil
     } else {
         Accessibility.speakWithSynthesizer(
             String(
