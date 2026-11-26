@@ -753,7 +753,8 @@ class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDeleg
         if let url = webURL(from: barcode.payload) {
             openInDefaultBrowser(url)
         } else if hasURIScheme(barcode.payload) {
-            Accessibility.speak(
+            // VoiceOver output is cut off by the focus change when the dialog closes.
+            Accessibility.speakWithSynthesizer(
                 NSLocalizedString(
                     "barcodes.not_web_link", value: "This barcode is not a web link.",
                     comment:
@@ -814,7 +815,7 @@ class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDeleg
     }
 
     private func speakCopied(_ barcode: DetectedBarcode) {
-        Accessibility.speak(
+        Accessibility.speakWithSynthesizer(
             String(
                 format: NSLocalizedString(
                     "barcodes.copied_with_type", value: "%@ copied to clipboard.",
