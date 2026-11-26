@@ -747,12 +747,25 @@ class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDeleg
         openInDefaultBrowser(searchURL(for: barcode))
     }
 
-    /// Opens web links. Payloads with another URI scheme (mailto:, otpauth:, WIFI: ...) may hold
-    /// private data, so they are neither opened nor sent to a search engine. Plain text is searched.
+    /// Opens web links in the browser and other URIs (mailto:, tel: ...) in their default apps, and
+    /// searches plain text. URI payloads (otpauth:, WIFI: ...) may hold secrets, so they are never
+    /// sent to a search engine. file: URLs are refused because they can open local files and apps.
     private func openInBrowser(_ barcode: DetectedBarcode) {
-        if let url = webURL(from: barcode.payload) {
+        let payload = barcode.payload.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard hasURIScheme(payload) else {
+            openInDefaultBrowser(searchURL(for: barcode))
+            return
+        }
+        let url = URL(string: payload)
+        let scheme = url?.scheme?.lowercased()
+        if let url, scheme == "http" || scheme == "https" {
             openInDefaultBrowser(url)
-        } else if hasURIScheme(barcode.payload) {
+        } else if let url, scheme != "file",
+            NSWorkspace.shared.urlForApplication(toOpen: url) != nil
+        {
+            // Checking for a handler first avoids the system alert, which would show the payload.
+            NSWorkspace.shared.open(url)
+        } else {
             // VoiceOver output is cut off by the focus change when the dialog closes.
             Accessibility.speakWithSynthesizer(
                 NSLocalizedString(
@@ -760,31 +773,13 @@ class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDeleg
                     comment:
                         "Message when Open in Browser is used on a barcode that is not a web link"
                 ))
-        } else {
-            openInDefaultBrowser(searchURL(for: barcode))
         }
     }
 
     private func hasURIScheme(_ payload: String) -> Bool {
-        let trimmed = payload.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard let schemeSeparator = trimmed.firstIndex(of: ":") else { return false }
-        return trimmed[..<schemeSeparator].range(
+        guard let schemeSeparator = payload.firstIndex(of: ":") else { return false }
+        return payload[..<schemeSeparator].range(
             of: #"^[A-Za-z][A-Za-z0-9+.-]*$"#, options: .regularExpression) != nil
-    }
-
-    private func webURL(from payload: String) -> URL? {
-        let trimmed = payload.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard
-            let url = URL(string: trimmed),
-            let scheme = url.scheme?.lowercased(),
-            scheme == "http" || scheme == "https",
-            let host = url.host,
-            !host.isEmpty
-        else {
-            return nil
-        }
-
-        return url
     }
 
     private func searchURL(for barcode: DetectedBarcode) -> URL {
