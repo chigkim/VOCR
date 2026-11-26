@@ -74,12 +74,15 @@ class ShortcutsWindowController: NSWindowController, NSWindowDelegate, NSTableVi
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int)
         -> NSView?
     {
+        guard let tableColumn, Shortcuts.shortcuts.indices.contains(row) else {
+            return nil
+        }
         let shortcut = Shortcuts.shortcuts[row]
 
-        switch tableColumn?.identifier {
+        switch tableColumn.identifier {
         case NSUserInterfaceItemIdentifier("NameColumn"):
             let cellView = NSTableCellView(
-                frame: NSRect(x: 0, y: 0, width: tableColumn!.width, height: tableView.rowHeight))
+                frame: NSRect(x: 0, y: 0, width: tableColumn.width, height: tableView.rowHeight))
             let textField = NSTextField(frame: cellView.bounds)
             textField.stringValue = Shortcuts.localizedName(for: shortcut.name)
             textField.isEditable = false
@@ -92,9 +95,9 @@ class ShortcutsWindowController: NSWindowController, NSWindowDelegate, NSTableVi
 
         case NSUserInterfaceItemIdentifier("HotkeyColumn"):
             let cellView = NSTableCellView(
-                frame: NSRect(x: 0, y: 0, width: tableColumn!.width, height: tableView.rowHeight))
+                frame: NSRect(x: 0, y: 0, width: tableColumn.width, height: tableView.rowHeight))
             let button = NSButton(
-                frame: NSRect(x: 0, y: 0, width: tableColumn!.width, height: tableView.rowHeight))
+                frame: NSRect(x: 0, y: 0, width: tableColumn.width, height: tableView.rowHeight))
             button.title = shortcut.keyName
             button.tag = row
             button.target = self
@@ -110,21 +113,28 @@ class ShortcutsWindowController: NSWindowController, NSWindowDelegate, NSTableVi
 
     @objc func reassignShortcut(_ sender: NSButton) {
         let shortcutIndex = sender.tag
-        let recorder = ShortcutRecorderView(frame: self.window!.contentView!.bounds)
+        guard Shortcuts.shortcuts.indices.contains(shortcutIndex),
+            let window = self.window,
+            let contentView = window.contentView
+        else { return }
+
+        let recorder = ShortcutRecorderView(frame: contentView.bounds)
         recorder.onShortcutRecorded = { [weak self] event in
-            guard let strongSelf = self else { return }
+            guard let strongSelf = self,
+                Shortcuts.shortcuts.indices.contains(shortcutIndex)
+            else { return }
             Shortcuts.shortcuts[shortcutIndex].key = UInt32(event.keyCode)
             Shortcuts.shortcuts[shortcutIndex].modifiers = event.modifierFlags.carbonFlags
             Shortcuts.shortcuts[shortcutIndex].keyName =
-                event.modifierFlags.description + event.charactersIgnoringModifiers!
+                event.modifierFlags.description + (event.charactersIgnoringModifiers ?? "")
             strongSelf.refreshTable()
             let data = try? JSONEncoder().encode(Shortcuts.shortcuts)
             UserDefaults.standard.set(data, forKey: "userShortcuts")
             Shortcuts.loadShortcuts()
         }
 
-        self.window!.contentView!.addSubview(recorder)
-        self.window!.makeFirstResponder(recorder)
+        contentView.addSubview(recorder)
+        window.makeFirstResponder(recorder)
     }
 
     override func keyDown(with event: NSEvent) {
@@ -136,8 +146,8 @@ class ShortcutsWindowController: NSWindowController, NSWindowDelegate, NSTableVi
     }
 
     func deleteSelectedRow() {
-        guard tableView.selectedRow >= 0 else { return }
         let row = tableView.selectedRow
+        guard Shortcuts.shortcuts.indices.contains(row) else { return }
 
         // Remove the shortcut from the array and update UserDefaults
         Shortcuts.shortcuts.remove(at: row)

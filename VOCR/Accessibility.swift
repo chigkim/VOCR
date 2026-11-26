@@ -123,7 +123,11 @@ enum Accessibility {
         }
 
         let bundle = Bundle.main
-        let url = bundle.url(forResource: "say", withExtension: "scpt")
+        guard let url = bundle.url(forResource: "say", withExtension: "scpt") else {
+            log("AppleScript resource not found: say.scpt")
+            speakWithSynthesizer(message)
+            return
+        }
         let parameters = NSAppleEventDescriptor.list()
         parameters.insert(NSAppleEventDescriptor(string: message), at: 0)
         let event = NSAppleEventDescriptor.appleEvent(
@@ -135,7 +139,7 @@ enum Accessibility {
             NSAppleEventDescriptor(string: "speak"), forKeyword: AEKeyword(keyASSubroutineName))
         event.setDescriptor(parameters, forKeyword: AEKeyword(keyDirectObject))
         var error: NSDictionary?
-        if let scriptObject = NSAppleScript(contentsOf: url!, error: &error) {
+        if let scriptObject = NSAppleScript(contentsOf: url, error: &error) {
             var outputError: NSDictionary?
             if let output = scriptObject.executeAppleEvent(event, error: &outputError).stringValue {
                 if let outputError {
@@ -146,7 +150,7 @@ enum Accessibility {
                 log("Output Error: \(String(describing: outputError))")
             }
         } else {
-            log("\(error!)")
+            log("Failed to load AppleScript: \(String(describing: error))")
         }
     }
 

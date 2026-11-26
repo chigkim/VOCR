@@ -52,20 +52,30 @@ enum Navigation {
     static var l = -1
     static var w = -1
     static var c = -1
+    /// True when the last `getWindow()` call ended because the user closed the Target Window alert.
+    private(set) static var windowSelectionCancelled = false
 
     /// Bounding-box midY tolerance used when grouping observations into lines and sorting them.
     private static let lineBreakTolerance = 0.01
 
     static func getWindow() -> CGRect? {
-        let currentApp = NSWorkspace.shared.frontmostApplication
-        appName = currentApp!.localizedName!
-        let windows = currentApp?.windows()
-
-        if windows!.isEmpty {
+        windowSelectionCancelled = false
+        guard let currentApp = NSWorkspace.shared.frontmostApplication else {
+            log("Failed to get frontmost application")
             return nil
         }
-        var window = currentApp?.focusedWindow() ?? windows![0]
-        if Settings.targetWindow && windows!.count > 1 {
+        appName =
+            currentApp.localizedName
+            ?? NSLocalizedString(
+                "navigation.unknown_app", value: "Unknown App",
+                comment: "Default app name when unknown")
+        let windows = currentApp.windows()
+
+        if windows.isEmpty {
+            return nil
+        }
+        var window = currentApp.focusedWindow() ?? windows[0]
+        if Settings.targetWindow && windows.count > 1 {
             let alert = NSAlert()
             alert.alertStyle = .informational
             alert.messageText = NSLocalizedString(
@@ -74,7 +84,7 @@ enum Navigation {
             alert.informativeText = NSLocalizedString(
                 "navigation.choose_window", value: "Choose an window to scan.",
                 comment: "Alert message for choosing target window")
-            for window in windows! {
+            for window in windows {
                 var title = window.value(of: "AXTitle")
                 if title == "" {
                     title = NSLocalizedString(
@@ -87,10 +97,15 @@ enum Navigation {
             alert.addButton(
                 withTitle: NSLocalizedString(
                     "navigation.close", value: "Close", comment: "Close button"))
+            alert.buttons.last?.keyEquivalent = "\u{1b}"
             let modalResult = alert.runModal()
             hide()
             let r = modalResult.rawValue - 1000
-            window = windows![r]
+            guard windows.indices.contains(r) else {
+                windowSelectionCancelled = true
+                return nil
+            }
+            window = windows[r]
         }
 
         windowName = window.value(of: "AXTitle")
@@ -100,24 +115,37 @@ enum Navigation {
         AXUIElementCopyAttributeValue(window, "AXPosition" as CFString, &position)
         AXUIElementCopyAttributeValue(window, "AXSize" as CFString, &size)
 
-        if position != nil && size != nil {
+        if let position,
+            let size,
+            CFGetTypeID(position) == AXValueGetTypeID(),
+            CFGetTypeID(size) == AXValueGetTypeID()
+        {
+            let positionValue = position as! AXValue
+            let sizeValue = size as! AXValue
             var windowPosition = CGPoint()
             var windowSize = CGSize()
-            AXValueGetValue(position as! AXValue, AXValueType.cgPoint, &windowPosition)
-            AXValueGetValue(size as! AXValue, AXValueType.cgSize, &windowSize)
-            let rect = CGRect(origin: windowPosition, size: windowSize)
-            log(rect)
-            return rect
-        } else {
-            log("Failed to get position or size")
+            if AXValueGetValue(positionValue, AXValueType.cgPoint, &windowPosition),
+                AXValueGetValue(sizeValue, AXValueType.cgSize, &windowSize)
+            {
+                let rect = CGRect(origin: windowPosition, size: windowSize)
+                log(rect)
+                return rect
+            }
         }
+        log("Failed to get position or size")
         return nil
     }
 
     static func getVOCursor() -> CGRect? {
         if let output = runAppleScript(file: "VOCursor") {
             let strings = output.split(separator: ",")
-            let cgFloats = strings.compactMap { CGFloat(Double($0) ?? 0) }
+            let cgFloats = strings.compactMap {
+                Double($0.trimmingCharacters(in: .whitespacesAndNewlines)).map(CGFloat.init)
+            }
+            guard cgFloats.count >= 4 else {
+                log("Invalid VOCursor coordinates: \(output)")
+                return nil
+            }
             let position = CGPoint(x: cgFloats[0], y: cgFloats[1])
             let size = CGSize(
                 width: (cgFloats[2] - cgFloats[0]), height: (cgFloats[3] - cgFloats[1]))
@@ -155,6 +183,9 @@ enum Navigation {
         if let rect = rect {
             cgPosition = rect.origin
             cgSize = rect.size
+        }
+        if mode == .WINDOW && windowSelectionCancelled {
+            return
         }
         if cgSize != CGSize() {
             if let image = ScreenCapture.capture(rect: CGRect(origin: cgPosition, size: cgSize)) {
@@ -327,7 +358,9 @@ enum Navigation {
     }
 
     static func decode(message: String) -> [GPTObservation]? {
-        let jsonData = message.data(using: .utf8)!
+        guard let jsonData = message.data(using: .utf8) else {
+            return nil
+        }
         do {
             let elements = try JSONDecoder().decode(GPTObservations.self, from: jsonData).elements
             for element in elements {
@@ -343,6 +376,7 @@ enum Navigation {
     }
 
     static func process(_ results: [Observation]) {
+        guard !results.isEmpty else { return }
         let sorted = results.sorted(by: sort)
         var line: [Observation] = []
         var y = sorted[0].boundingBox.midY
@@ -387,7 +421,13 @@ enum Navigation {
         return a.boundingBox.midX < b.boundingBox.midX
     }
 
+    /// True when `l` and `w` point at an observation. Unlike `correctLimit()`, it does not move the selection.
+    private static func hasSelection() -> Bool {
+        displayResults.indices.contains(l) && displayResults[l].indices.contains(w)
+    }
+
     static func location() {
+        guard hasSelection() else { return }
         var center = convert2coordinates(displayResults[l][w].boundingBox)
         center.x -= cgPosition.x
         center.y -= cgPosition.y
@@ -395,10 +435,15 @@ enum Navigation {
     }
 
     static func correctLimit() {
+        guard !displayResults.isEmpty else { return }
         if l < 0 {
             l = 0
         } else if l >= displayResults.count {
             l = displayResults.count - 1
+        }
+        if displayResults[l].isEmpty {
+            w = 0
+            return
         }
         if w < 0 {
             w = 0
@@ -408,6 +453,7 @@ enum Navigation {
     }
 
     static func identifyObject() {
+        guard hasSelection() else { return }
         if displayResults[l][w].value == "OBJECT" {
             if let image = cgImage {
                 var rect = displayResults[l][w].boundingBox
@@ -519,6 +565,7 @@ enum Navigation {
         if displayResults.count == 0 {
             return
         }
+        correctLimit()
         w = displayResults[l].count - 2
         right()
     }
@@ -528,21 +575,21 @@ enum Navigation {
             return
         }
         correctLimit()
-        if let obs = displayResults[l][w].vnObservation {
-            let candidate = obs.topCandidates(1)[0]
+        guard displayResults[l].indices.contains(w) else { return }
+        if let obs = displayResults[l][w].vnObservation,
+            let candidate = obs.topCandidates(1).first
+        {
             var str = candidate.string
-            c += 1
-            if c >= str.count {
-                c = str.count - 1
-            }
+            guard !str.isEmpty else { return }
+            c = min(max(c + 1, 0), str.count - 1)
             do {
                 let start = str.index(str.startIndex, offsetBy: c)
                 let end = str.index(str.startIndex, offsetBy: c + 1)
                 let range = start..<end
                 let character = str[range]
                 str = String(character)
-                var box: CGRect
-                try box = candidate.boundingBox(for: range)!.boundingBox
+                guard let rectObservation = try candidate.boundingBox(for: range) else { return }
+                let box = rectObservation.boundingBox
                 CGWarpMouseCursorPosition(convert2coordinates(box))
                 Accessibility.speak(str)
             } catch {
@@ -555,13 +602,13 @@ enum Navigation {
             return
         }
         correctLimit()
-        if let obs = displayResults[l][w].vnObservation {
-            let candidate = obs.topCandidates(1)[0]
+        guard displayResults[l].indices.contains(w) else { return }
+        if let obs = displayResults[l][w].vnObservation,
+            let candidate = obs.topCandidates(1).first
+        {
             var str = candidate.string
-            c -= 1
-            if c < 0 {
-                c = 0
-            }
+            guard !str.isEmpty else { return }
+            c = min(max(c - 1, 0), str.count - 1)
 
             do {
                 let start = str.index(str.startIndex, offsetBy: c)
@@ -569,8 +616,8 @@ enum Navigation {
                 let range = start..<end
                 let character = str[range]
                 str = String(character)
-                var box: CGRect
-                try box = candidate.boundingBox(for: range)!.boundingBox
+                guard let rectObservation = try candidate.boundingBox(for: range) else { return }
+                let box = rectObservation.boundingBox
 
                 CGWarpMouseCursorPosition(convert2coordinates(box))
                 Accessibility.speak(str)
@@ -700,23 +747,39 @@ class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDeleg
         openInDefaultBrowser(searchURL(for: barcode))
     }
 
+    /// Opens web links in the browser and other URIs (mailto:, tel: ...) in their default apps, and
+    /// searches plain text. URI payloads (otpauth:, WIFI: ...) may hold secrets, so they are never
+    /// sent to a search engine. file: URLs are refused because they can open local files and apps.
     private func openInBrowser(_ barcode: DetectedBarcode) {
-        let url = uri(from: barcode.payload) ?? searchURL(for: barcode)
-        openInDefaultBrowser(url)
+        let payload = barcode.payload.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard hasURIScheme(payload) else {
+            openInDefaultBrowser(searchURL(for: barcode))
+            return
+        }
+        let url = URL(string: payload)
+        let scheme = url?.scheme?.lowercased()
+        if let url, scheme == "http" || scheme == "https" {
+            openInDefaultBrowser(url)
+        } else if let url, scheme != "file",
+            NSWorkspace.shared.urlForApplication(toOpen: url) != nil
+        {
+            // Checking for a handler first avoids the system alert, which would show the payload.
+            NSWorkspace.shared.open(url)
+        } else {
+            // VoiceOver output is cut off by the focus change when the dialog closes.
+            Accessibility.speakWithSynthesizer(
+                NSLocalizedString(
+                    "barcodes.not_web_link", value: "This barcode is not a web link.",
+                    comment:
+                        "Message when Open in Browser is used on a barcode that is not a web link"
+                ))
+        }
     }
 
-    private func uri(from payload: String) -> URL? {
-        guard
-            let schemeSeparator = payload.firstIndex(of: ":"),
-            payload[..<schemeSeparator].range(
-                of: #"^[A-Za-z][A-Za-z0-9+.-]*$"#, options: .regularExpression) != nil,
-            let url = URL(string: payload),
-            url.scheme != nil
-        else {
-            return nil
-        }
-
-        return url
+    private func hasURIScheme(_ payload: String) -> Bool {
+        guard let schemeSeparator = payload.firstIndex(of: ":") else { return false }
+        return payload[..<schemeSeparator].range(
+            of: #"^[A-Za-z][A-Za-z0-9+.-]*$"#, options: .regularExpression) != nil
     }
 
     private func searchURL(for barcode: DetectedBarcode) -> URL {
@@ -747,7 +810,7 @@ class BarcodeDialogController: NSObject, NSTableViewDataSource, NSTableViewDeleg
     }
 
     private func speakCopied(_ barcode: DetectedBarcode) {
-        Accessibility.speak(
+        Accessibility.speakWithSynthesizer(
             String(
                 format: NSLocalizedString(
                     "barcodes.copied_with_type", value: "%@ copied to clipboard.",

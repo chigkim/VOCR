@@ -163,6 +163,7 @@ final class ComputerUseController {
         }
 
         guard let rect = Navigation.getWindow(), rect.width > 0, rect.height > 0 else {
+            if Navigation.windowSelectionCancelled { return }
             Accessibility.speakWithSynthesizer(
                 NSLocalizedString(
                     "computerUse.noWindow", value: "Could not access the frontmost window.",
@@ -1823,14 +1824,14 @@ extension ComputerUseController {
         }
 
         // Fallback: character-by-character CGEvent input
-        for scalar in text.unicodeScalars {
-            var value = UniChar(scalar.value)
+        for character in text {
+            var utf16 = Array(character.utf16)
             let down = CGEvent(keyboardEventSource: nil, virtualKey: 0, keyDown: true)
-            down?.keyboardSetUnicodeString(stringLength: 1, unicodeString: &value)
+            down?.keyboardSetUnicodeString(stringLength: utf16.count, unicodeString: &utf16)
             down?.post(tap: .cghidEventTap)
             Thread.sleep(forTimeInterval: 0.05)
             let up = CGEvent(keyboardEventSource: nil, virtualKey: 0, keyDown: false)
-            up?.keyboardSetUnicodeString(stringLength: 1, unicodeString: &value)
+            up?.keyboardSetUnicodeString(stringLength: utf16.count, unicodeString: &utf16)
             up?.post(tap: .cghidEventTap)
             Thread.sleep(forTimeInterval: 0.05)
         }
